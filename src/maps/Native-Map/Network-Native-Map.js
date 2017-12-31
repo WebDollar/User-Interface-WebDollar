@@ -53,18 +53,18 @@ class NetworkNativeMaps {
         });
 
         //Waitlist p2p
-        WebDollar.Node.NodesWaitList.registerEvent("new-node-waitlist", {type: ["all"]}, async (err, nodesWaitListObject)=>{
+        WebDollar.Node.NodesWaitlist.registerEvent("new-node-waitlist", {type: ["all"]}, async (err, nodesWaitlistObject)=>{
 
-            let geoLocation = await nodesWaitListObject.sckAddresses[0].getGeoLocation();
+            let geoLocation = await nodesWaitlistObject.sckAddresses[0].getGeoLocation();
 
-            this._addMarker(geoLocation, nodesWaitListObject);
+            this._addMarker(geoLocation, nodesWaitlistObject);
 
         });
 
-        NodesWaitList.registerEvent("delete-node-waitlist", {type: ["all"]}, async (err, nodesWaitListObject)=>{
+        WebDollar.Node.NodesWaitlist.registerEvent("delete-node-waitlist", {type: ["all"]}, async (err, nodesWaitlistObject)=>{
 
             //deleting the marker
-            let markerIndex = this._findMarkerIndexBySocket(nodesWaitListObject);
+            let markerIndex = this._findMarkerIndexBySocket(nodesWaitlistObject);
 
             if (markerIndex !== -1) this._removeMarker(this._markers[markerIndex])
         });
@@ -74,7 +74,7 @@ class NetworkNativeMaps {
     }
 
     async _showMyself(){
-        let geoLocation = await GeoHelper.getLocationFromAddress('', true);
+        let geoLocation = await WebDollar.Applications.GeoHelper.getLocationFromAddress('', true);
 
         this._addMarker( geoLocation, 'myself');
     }
@@ -173,12 +173,12 @@ class NetworkNativeMaps {
             nodeProtocol = socket.node.type;
             nodeIndex = socket.node.index;
         }
-        else if (socket instanceof NodesWaitListObject ){ //its a waitlist
+        else if (socket instanceof nodesWaitlistObject ){ //its a waitlist
 
             address = socket;
 
             switch (socket.type){
-                case NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER: nodeType = 'browser'; break;
+                case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER: nodeType = 'browser'; break;
                 case NODES_WAITLIST_OBJECT_TYPE.NODE_PEER_TERMINAL_SERVER: nodeType = 'terminal'; break;
             }
 

@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "open_browser": "node src/open-browser",
-    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ stringify --extensions [.html .css] ] -t [ babelify --presets [ es2017 ] ]   && npm run open_browser"
+    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ stringify --extensions [.html .css .text] ] -t [ babelify --presets [ es2017 ] ]   && npm run open_browser"
   },
   "stringify":{
     "name": "myProject",
     "version": "1.0.0",
     "stringify": {
-      "appliesTo": { "includeExtensions": [".html",".css"] },
+      "appliesTo": { "includeExtensions": [".html",".css",".text"] },
       "minify": true
     }
   },

@@ -4,7 +4,7 @@
   "description": "User Interface for WebDollar",
   "main": "index.js",
   "scripts": {
-    "build_browser": "browserify src/main.js -o dist_bundle/User-Interface-bundle.js -t [ babelify --presets [ es2017 ] ] && npm run dist_bundle/User-Interface-bundle.js"
+    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ babelify --presets [ es2017 ] ]"
   },
   "repository": {
     "type": "git",

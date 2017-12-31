@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "open_browser": "node src/open-browser",
-    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ babelify --presets [ es2017 ] ] && npm run open_browser"
+    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ babelify --presets [ es2017 ] ] -t [ stringify --extensions [.html .css]  && npm run open_browser"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/WebDollar/User-Interface-WebDollar#readme",
   "dependencies": {
-    "opn": "^5.1.0"
+    "opn": "^5.1.0",
+    "stringify": "^5.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

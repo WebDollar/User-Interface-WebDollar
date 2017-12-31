@@ -35,6 +35,11 @@ class InitializeParams{
 
         if (this.maps.activated === false) return false;
 
+        if (document.getElementById(this.maps.id) === null){
+            console.log("The element "+this.maps.id+" was not found in your document");
+            return false;
+        }
+
         if (this.maps.type === "NativeMap"){
 
             NetworkNativeMapDOM.addCSS(this.maps.style);
@@ -42,6 +47,8 @@ class InitializeParams{
 
             NetworkNativeMap.createMap(this.maps.id);
             await NetworkNativeMap.initialize();
+
+            NetworkNativeMap.createTestConnections();
         }
 
     }

@@ -37,6 +37,7 @@ class InitializeParams{
 
         if (this.maps.type === "NativeMap"){
 
+            NetworkNativeMapDOM.addCSS(this.maps.style);
             NetworkNativeMapDOM.addHTML(this.maps.id);
 
             NetworkNativeMap.createMap(this.maps.id);

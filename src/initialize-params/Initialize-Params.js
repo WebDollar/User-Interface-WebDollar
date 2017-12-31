@@ -4,6 +4,9 @@ import NetworkNativeMap from "maps/Native-Map/Network-Native-Map"
 import NetworkNativeMapDOM from "maps/Native-Map/Network-Native-Map-DOM"
 import NetworkGoogleMaps from "maps/Google-Maps/Network-Google-Maps.js"
 
+import Mining from "mining/Mining"
+import MiningDOM from "mining/Mining-DOM"
+
 class InitializeParams{
 
     constructor(){
@@ -13,6 +16,12 @@ class InitializeParams{
             type: "NativeMap",
             style: "dark",
             id: "map",
+        };
+
+        this.mining = {
+            activated: true,
+            type: "dark",
+            id: "dashboardMining",
         };
 
 
@@ -28,6 +37,7 @@ class InitializeParams{
 
     load(){
         this.loadMaps();
+        this.loadMining();
     }
 
 
@@ -50,6 +60,16 @@ class InitializeParams{
 
             NetworkNativeMap.createTestConnections();
         }
+
+    }
+
+    async loadMining(){
+
+        if (this.maps.activated === false) return false;
+
+        MiningDOM.addCSS(this.mining.style);
+        MiningDOM.addHTML(this.mining.id);
+
 
     }
 

@@ -21,8 +21,8 @@ module.exports =  exportObject;
 
 //browser minimized script
 if ( typeof global.window !== 'undefined')
-    global.window.WebDollar = exportObject;
+    global.window.WebDollarUserInterface = exportObject;
 
 if ( typeof window !== 'undefined')
-    window.WebDollar = exportObject;
+    window.WebDollarUserInterface = exportObject;
 

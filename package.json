@@ -1,5 +1,5 @@
 {
-  "name": "@webdollar/user-interface-webdollar",
+  "name": "@webdollar/user-interface-webdollar", 
   "version": "0.0.1",
   "description": "User Interface for WebDollar",
   "main": "index.js",

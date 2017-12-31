@@ -1,6 +1,8 @@
 import MapsTester from "./../Maps.tester"
-import NodesList from 'node/lists/nodes-list'
-import GeoHelper from 'node/lists/geolocation-lists/geo-helpers/geo-helper'
+
+
+// import NodesList from 'node/lists/nodes-list'
+// import GeoHelper from 'node/lists/geolocation-lists/geo-helpers/geo-helper'
 import NetworkMapStyleLight from './styles/network-map-style-light';
 
 class NetworkGoogleMaps {

@@ -5,7 +5,15 @@
   "main": "index.js",
   "scripts": {
     "open_browser": "node src/open-browser",
-    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ babelify --presets [ es2017 ] ] -t [ stringify --extensions [ .html .css ] ]  && npm run open_browser"
+    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ stringify --extensions [.html .css] ] -t [ babelify --presets [ es2017 ] ]   && npm run open_browser"
+  },
+  "stringify":{
+    "name": "myProject",
+    "version": "1.0.0",
+    "stringify": {
+      "appliesTo": { "includeExtensions": [".html",".css"] },
+      "minify": true
+    }
   },
   "repository": {
     "type": "git",
@@ -25,6 +33,8 @@
   },
   "homepage": "https://github.com/WebDollar/User-Interface-WebDollar#readme",
   "dependencies": {
+    "brfs": "^1.4.3",
+    "browserify-fs": "^1.0.0",
     "opn": "^5.1.0",
     "stringify": "^5.2.0"
   },

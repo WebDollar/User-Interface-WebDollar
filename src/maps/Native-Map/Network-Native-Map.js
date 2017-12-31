@@ -14,7 +14,7 @@ import CellCounter from "./helpers/Cell-Counter";
 
 class NetworkNativeMaps {
 
-    constructor(map) {
+    constructor() {
 
         this._markers = [];
         this._markerMyself = null;

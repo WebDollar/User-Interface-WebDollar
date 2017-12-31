@@ -23,7 +23,8 @@
     display: inline-block;
     vertical-align: top;
     height: 315px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     width: 100%;
 }
 

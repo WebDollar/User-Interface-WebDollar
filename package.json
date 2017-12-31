@@ -1,0 +1,35 @@
+{
+  "name": "user-interface-webdollar",
+  "version": "0.0.1",
+  "description": "User Interface for WebDollar",
+  "main": "index.js",
+  "scripts": {
+    "build_browser": "browserify src/main.js -o dist_bundle/User-Interface-bundle.js -t [ babelify --presets [ es2017 ] ] && npm run dist_bundle/User-Interface-bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebDollar/User-Interface-WebDollar.git"
+  },
+  "keywords": [
+    "WebDollar",
+    "User Interface",
+    "UI",
+    "UX",
+    "User Experience"
+  ],
+  "author": "WebDollar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebDollar/User-Interface-WebDollar/issues"
+  },
+  "homepage": "https://github.com/WebDollar/User-Interface-WebDollar#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2017": "^6.24.1",
+    "browserify": "^14.5.0",
+    "babelify": "^7.3.0",
+    "babel-plugin-module-alias": "^1.6.0"
+  }
+}

@@ -7,6 +7,9 @@ import NetworkGoogleMaps from "maps/Google-Maps/Network-Google-Maps.js"
 import Mining from "mining/Mining"
 import MiningDOM from "mining/Mining-DOM"
 
+import Wallet from "wallet/Wallet"
+import WalletDOM from "wallet/Wallet-DOM"
+
 class InitializeParams{
 
     constructor(){
@@ -20,8 +23,14 @@ class InitializeParams{
 
         this.mining = {
             activated: true,
-            type: "dark",
+            style: "dark",
             id: "dashboardMining",
+        };
+
+        this.wallet = {
+            activated: true,
+            style: "dark",
+            id: "dashboardWallet",
         };
 
 
@@ -38,6 +47,7 @@ class InitializeParams{
     load(){
         this.loadMaps();
         this.loadMining();
+        this.loadWallet();
     }
 
 
@@ -65,11 +75,19 @@ class InitializeParams{
 
     async loadMining(){
 
-        if (this.maps.activated === false) return false;
+        if (this.mining.activated === false) return false;
 
         MiningDOM.addCSS(this.mining.style);
         MiningDOM.addHTML(this.mining.id);
 
+    }
+
+    async loadWallet(){
+
+        if (this.wallet.activated === false) return false;
+
+        WalletDOM.addCSS(this.wallet.style);
+        WalletDOM.addHTML(this.wallet.id);
 
     }
 

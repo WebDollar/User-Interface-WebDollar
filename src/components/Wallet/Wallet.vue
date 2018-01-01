@@ -2,14 +2,14 @@
 
     <div class="dashboardWallet" >
 
-        <div id="walletButton" onclick="WebDollarUserInterface.Wallet.toggleWallet()" style="margin-bottom: 30px">
+        <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? '375px': '30px'}">
             <span id="walletButtonText">
-                <i class="fa fa-chevron-up" ></i>
-                <spanWalletText>Wallet 0.0</spanWalletText>
+                <icon :icon="this.opened ? 'chevron-down' : 'chevron-down'"></icon>
+                Wallet 0.0
             </span>
         </div>
 
-        <div id="walletMenu" ref="walletMenu" style="margin-bottom: -320px">
+        <div id="walletMenu" ref="walletMenu" :style="{marginBottom: this.opened ? '26px': '-320px' }">
 
             <div id="dashboardWallet">
 
@@ -22,6 +22,17 @@
 
                 <div class="walletSection walletsContainer">
                     <div id="allWalets">
+
+                        <Address v-for="walletAddress in this.addresses"
+
+                                     :key="walletAddress.address"
+                                     :id="'address'+walletAddress.address"
+                                     :walletAddress="walletAddress"
+                                     style="padding-right: 20px"
+
+                        >
+
+                        </Address>
 
                     </div>
                 </div>
@@ -37,11 +48,80 @@
 <script>
 
     import icon from "components/UI/icons/icon.vue"
+    import Address from "./Address/Address.vue"
 
     export default{
 
         components:{
             "icon":icon,
+            "Address":Address,
+        },
+
+        data:  () => {
+            return {
+                opened: false,
+                addresses: [],
+            }
+        },
+
+
+        mounted(){
+
+            //in browser
+          if (typeof window === "undefined") return false;
+
+          WebDollar.Blockchain.Wallet.emitter.on("wallet-address-changes", (address)=>{
+              this.addNewAddress(address);
+          });
+
+          WebDollar.Blockchain.Wallet.emitter.on("wallet-changes", ()=>{
+              this.loadAllAddresses();
+          })
+
+        },
+
+        methods: {
+
+            toggleWallet(){
+
+                this.opened = !this.opened;
+
+            },
+
+            addNewAddress(address){
+
+                if (address === null || address === undefined) return false;
+
+                for (let i=0; i<this.addresses.length; i++)
+                    if (address.toString() === this.addresses.toString()){
+                        return false;
+                    }
+
+                this.addresses.push(address);
+            },
+
+            loadAllAddresses(){
+
+                this.addresses = [];
+
+                for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++)
+                    this.addresses.push(WebDollar.Blockchain.Wallet.addresses[i].address);
+
+            },
+
+            deleteAddress(address){
+
+                if (address === null || address === undefined) return false;
+
+                for (let i=0; i<this.addresses.length; i++)
+                    if (address.toString() === this.addresses.toString()){
+                        this.addresses.splice(i,1);
+                        return true;
+                    }
+
+                return false;
+            }
+
         }
 
     }
@@ -141,12 +221,10 @@
     @media only screen and (max-width : 831px) {
         #walletMenu{
             width: 100%;
-            margin-bottom: 94px;
         }
         #walletButton{
             width: 100%!important;
             border-radius: 0;
-            margin-bottom: 93px;
             z-index: 1200;
             margin-bottom: 90px;
         }

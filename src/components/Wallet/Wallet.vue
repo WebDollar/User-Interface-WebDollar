@@ -170,14 +170,14 @@
         background-color: #313131;
     }
 
-    .walletController .btn{
+    .walletController svg{
+        margin-top: 5px;
         display: inline-block;
-        padding: 6px 10px 0px 10px;
-        height: 32px;
+        padding: 0px 10px 2px 10px;
         background-color: #1f1f1f;
     }
 
-    .walletController .btn:hover{
+    .walletController svg:hover{
         background-color: #000000;
     }
 

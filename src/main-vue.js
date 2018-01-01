@@ -1,20 +1,12 @@
-import MultiVue from 'vue-multivue';
-//import AwesomeComponent from './Components/AwesomeComponent.vue';
-
-// new MultiVue('.my-app', {
-//     components: {
-//         AwesomeComponent
-//     }
-// });
-
 var Vue = require('vue')
 
-import Profile from './Components/Profile.vue';
+import Dashboard from './Components/Dashboard.vue';
 
-new Vue({
-    el: '#app',
-    components: { Profile }
-})
+window.onload = () => {
 
+    new Vue({
+        el: '#app',
+        render: h => h(Dashboard)
+    })
 
-console.log("hello world vue",Profile);
+};

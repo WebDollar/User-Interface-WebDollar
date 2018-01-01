@@ -8,8 +8,6 @@ import Wallet from "wallet/Wallet"
 
 require('./main-vue');
 
-console.log("hello world");
-
 let exportObject = {
     Network:{
         NativeMap: NetworkNativeMap,

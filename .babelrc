@@ -3,6 +3,7 @@
   "plugins": [
     ["module-alias", [
       {"src": "./src/helpers",  "expose": "helpers"},
+      {"src": "./src/components",  "expose": "components"},
       {"src": "./src/initialize-params",  "expose": "initialize-params"},
       {"src": "./src/maps",  "expose": "maps"},
       {"src": "./src/mining",  "expose": "mining"},

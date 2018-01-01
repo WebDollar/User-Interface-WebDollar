@@ -59,7 +59,7 @@ class InitializeParams{
         let font = document.getElementById("webdollarFont");
 
         if (font === null)
-            document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",`<link id="webdollarFont" href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">`);
+            document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",`<link id="webdollarFont" href="http://192.168.1.2:8080/public/assets/fonts/avenir-light.woff" rel="stylesheet">`);
 
         FontsDOM.addCSS();
 

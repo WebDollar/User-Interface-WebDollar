@@ -15,14 +15,15 @@
 
                 <div class="walletController">
 
-                    <icon icon="plus" />
-                    <icon icon="lock-open" />
+                    <icon class="btn" icon="plus" />
+                    <icon class="btn" icon="lock-open" />
 
                 </div>
 
                 <div class="walletSection walletsContainer">
                     <div id="allWalets">
 
+<<<<<<< Updated upstream
                         <Address v-for="walletAddress in this.addresses"
 
                                      :key="walletAddress.address"
@@ -34,6 +35,8 @@
 
                         </Address>
 
+=======
+>>>>>>> Stashed changes
                     </div>
                 </div>
             </div>
@@ -128,23 +131,15 @@
 
 </script>
 
-
-
-
-
-
-
 <style>
     #walletButton {
-        /*display: none;*/
         margin: 0 auto;
         position: fixed;
         z-index: 100;
         bottom: 0;
-        width: 300px!important;
+        width: 298px!important;
         right: 0;
         text-align: center;
-        width: 300px;
         height: 50px;
         border-top-left-radius: 60px;
         cursor: pointer;
@@ -173,19 +168,18 @@
     .walletController{
         position: relative;
         width: 100%;
-        border-bottom: solid 1px #737373;
+        border-bottom: solid 1px #333333;
         background-color: #313131;
     }
 
-    .walletController .webdollarFont{
+    .walletController .btn{
         display: inline-block;
-        width: 12px;
-        padding: 5px 10px;
-        border-right: solid 1px #545454;
+        padding: 6px 10px 0px 10px;
+        height: 32px;
         background-color: #1f1f1f;
     }
 
-    .walletController .webdollarFont:hover{
+    .walletController .btn:hover{
         background-color: #000000;
     }
 
@@ -222,14 +216,12 @@
         margin-bottom:-100px;
         z-index: 900;
         transition: all .3s linear;
-        border-top: solid 1px #000000;
+        border-top: solid 1px #3d3d3d;
         border-left: solid 1px #444;
     }
 
-
-
     /* Small Devices, Tablets */
-    @media only screen and (max-width : 768px) {
+    @media only screen and (max-width : 831px) {
         #walletMenu{
             width: 100%;
         }
@@ -237,6 +229,8 @@
             width: 100%!important;
             border-radius: 0;
             z-index: 1200;
+            margin-bottom: 90px;
         }
     }
+
 </style>

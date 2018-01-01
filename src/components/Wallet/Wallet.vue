@@ -2,7 +2,6 @@
 
     <div class="dashboardWallet" >
 
-        {{this.opened}}
         <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? '375px': '30px'}">
             <span id="walletButtonText">
                 <icon :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
@@ -16,8 +15,8 @@
 
                 <div class="walletController">
 
-                    <icon class="btn" icon="plus" />
-                    <icon class="btn" icon="lock-open" />
+                    <icon class="btn" icon="plus" @click="this.handleAddNewAddress" />
+                    <icon class="btn" icon="lock-open" @click="this.handleLockWallet" />
 
                 </div>
 
@@ -26,9 +25,9 @@
 
                         <Address v-for="walletAddress in this.addresses"
 
-                                     :key="walletAddress.address"
-                                     :id="'address'+walletAddress.address"
-                                     :walletAddress="walletAddress"
+                                     :key="walletAddress"
+                                     :id="'address'+walletAddress"
+                                     :address="walletAddress"
                                      style="padding-right: 20px"
 
                         >
@@ -89,12 +88,20 @@
 
             },
 
+            handleAddNewAddress(){
+                WebDollar.Blockchain.Wallet.createNewAddress();
+            },
+
+            handleLockWallet(){
+
+            },
+
             addNewAddress(address){
 
                 if (address === null || address === undefined) return false;
 
                 for (let i=0; i<this.addresses.length; i++)
-                    if (address.toString() === this.addresses.toString()){
+                    if (address.toString() === this.addresses[i].toString()){
                         return false;
                     }
 
@@ -158,7 +165,7 @@
         display: inline-block;
         vertical-align: top;
         height: 315px;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
         width: 100%;
     }

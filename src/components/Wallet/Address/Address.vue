@@ -1,15 +1,34 @@
 <template>
     <div class="walletAdress" @click="this.handleTransferFunds">
 
-        <img class="walletAddressImage" src="https://www.gravatar.com/avatar/0000000000000000000000000000000?d=retro&f=y">
+        <img class="walletAddressImage" :src="this.getAddressPic">
 
-        <b class="walletAddressValue">0.0 WBD</b>
+        <b>0.0 WBD</b>
+
     </div>
 </template>
 
 
 <script>
     export default{
+
+        props:{
+            address:{default:''},
+        },
+
+        computed: {
+            getAddressPic(){
+                return WebDollar.Blockchain.Wallet.getAddressPic(this.address);
+            }
+        },
+
+        methods:{
+
+            handleTransferFunds(){
+
+            }
+
+        }
 
     }
 </script>

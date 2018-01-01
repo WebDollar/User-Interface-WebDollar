@@ -21,8 +21,6 @@
 
         <p class="WEBD"> 0.0 <b class="whiteText">WBD MINED</b></p>
 
-
-
     </div>
 </template>
 
@@ -45,16 +43,7 @@
 
 </script>
 
-
-
-
-
-
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
 
     #dashboardMining{
         overflow: hidden;
@@ -69,21 +58,6 @@
         z-index: 1000;
         border-top: solid 1px #444444;
     }
-
-    #webDollar{
-        font-family: 'avenir',sans-serif;
-    }
-
-
-    /* Medium Devices, Desktops */
-    @media only screen and (max-width : 992px) {
-        #dashboardMining{
-            background-color: #424242;
-            border-bottom: solid 2px #000;
-        }
-    }
-
-
 
     .walletSection{
         display: inline-block;
@@ -296,6 +270,22 @@
         border-left: solid 1px #444444;
 
         margin-top: 0;
+    }
+
+    @media only screen and (max-width : 831px) {
+        #dashboardMining{
+            height: 90px;
+            margin-bottom: 0;
+            height: 33px;
+        }
+        #minningController, .walletStartMining, .WEBD{
+            display: block;
+            width: 100%;
+        }
+        .walletStartMining{
+            position: absolute;
+            top: 0;
+        }
     }
 
 </style>

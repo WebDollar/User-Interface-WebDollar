@@ -5,7 +5,7 @@ import Dashboard from './Components/Dashboard.vue';
 window.onload = () => {
 
     new Vue({
-        el: '#app',
+        el: '#webDollar',
         render: h => h(Dashboard)
     })
 

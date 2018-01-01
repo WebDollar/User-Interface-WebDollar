@@ -1,23 +1,30 @@
 // AwesomeComponent.vue
 <template>
     <div>
-        <p>Salutare</p>
-        <button @click="doSomethingCool"></button>
+
+        <Mining></Mining>
+        <Wallet></Wallet>
+
     </div>
 </template>
 
 <script>
+
+    import Wallet from "./Wallet/Wallet.vue"
+    import Mining from "./Mining/Mining.vue"
+
     export default {
+
+        components:{
+            "Wallet":Wallet,
+            "Mining":Mining,
+        },
+
         data () {
-            return {
-                isDoingSomethingCool: false
-            }
         },
 
         methods: {
-            doSomethingCool () {
-                this.isDoingSomethingCool = true;
-            }
+
         }
     }
 </script>

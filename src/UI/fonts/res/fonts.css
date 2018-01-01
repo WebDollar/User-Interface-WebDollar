@@ -3,6 +3,7 @@
     color: #f6cd69;
     transition: all .5s linear;
     text-decoration: none;
+    padding-right: 10px;
 }
 
 .webdollarFont path{

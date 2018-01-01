@@ -9,7 +9,7 @@
             </span>
         </div>
 
-        <div id="walletMenu" ref="walletMenu" :style="{marginBottom: this.opened ? '26px': '-320px' }">
+        <div id="walletMenu" ref="walletMenu" :style="{marginBottom: this.opened ? '26px': '-317px' }">
 
             <div id="dashboardWallet">
 
@@ -227,6 +227,16 @@
     .buttonIcon{
         display: inline-block;
         margin-right: 10px;
+    }
+
+    #walletButton .buttonIcon{
+        fill: #000;
+        transition: all .3s linear;
+    }
+
+    #walletButton:hover .buttonIcon{
+        fill: #fff;
+        transition: all .3s linear;
     }
 
     /* Small Devices, Tablets */

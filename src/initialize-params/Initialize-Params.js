@@ -4,13 +4,6 @@ import NetworkNativeMap from "maps/Native-Map/Network-Native-Map"
 import NetworkNativeMapDOM from "maps/Native-Map/Network-Native-Map-DOM"
 import NetworkGoogleMaps from "maps/Google-Maps/Network-Google-Maps.js"
 
-import Mining from "mining/Mining"
-import MiningDOM from "mining/Mining-DOM"
-
-import Wallet from "wallet/Wallet"
-import WalletDOM from "wallet/Wallet-DOM"
-
-import FontsDOM from "UI/fonts/Fonts-DOM"
 
 class InitializeParams{
 
@@ -49,9 +42,6 @@ class InitializeParams{
     load(){
         this.loadGlobal();
         this.loadMaps();
-
-        // this.loadMining();
-        // this.loadWallet();
     }
 
     loadGlobal(){
@@ -61,9 +51,6 @@ class InitializeParams{
 
         if (document.getElementById("webdollarViewPort") === null)
             document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", `<meta id="webdollarViewPort" name="viewport" content="width=device-width, initial-scale=1.0"/>`)
-
-        FontsDOM.addCSS();
-
     }
 
 
@@ -89,31 +76,6 @@ class InitializeParams{
 
     }
 
-    async loadMining(){
-
-        if (this.mining.activated === false) return false;
-
-        if (document.getElementById(this.mining.id) === null)
-            document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", `<div id="${this.mining.id}">`);
-
-        MiningDOM.addCSS(this.mining.style);
-        MiningDOM.addHTML(this.mining.id);
-
-    }
-
-    async loadWallet(){
-
-        if (this.wallet.activated === false) return false;
-
-        if (document.getElementById(this.mining.id) === null)
-            document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", `<div id="${this.mining.id}">`);
-
-        WalletDOM.addCSS(this.wallet.style);
-        WalletDOM.addHTML(this.wallet.id);
-
-        Wallet.initializeWallet();
-
-    }
 
 }
 

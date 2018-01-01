@@ -50,15 +50,6 @@
         border-top: solid 1px #444444;
     }
 
-    .walletSection{
-        display: inline-block;
-        vertical-align: top;
-        height: 315px;
-        overflow: scroll;
-        width: 100%;
-    }
-
-
     .miningPowerThreads{
         font-size: 14px;
         display: inline-block;

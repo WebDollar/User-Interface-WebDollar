@@ -5,13 +5,15 @@
 
         <b>0.0 WBD</b>
 
+        <TransactionModal ref="refTransactionModal"></TransactionModal>
+
     </div>
 </template>
 
 
 <script>
 
-    import TransactionModal from "./"
+    import TransactionModal from "./Transactions/Transaction.modal.vue"
 
     export default{
 
@@ -28,6 +30,8 @@
         methods:{
 
             handleTransferFunds(){
+
+                this.$refs['refTransactionModal'].showModal();
 
             }
 

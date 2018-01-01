@@ -31,7 +31,8 @@
     "md5": "^2.2.1",
     "opn": "^5.1.0",
     "stringify": "^5.2.0",
-    "vue": "^2.5.13"
+    "vue": "^2.5.13",
+    "vue-clipboards": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

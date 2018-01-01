@@ -1,5 +1,6 @@
 import Address from "./address/Address.js";
 import AddressDOM from "./address/Address-DOM.js";
+import WalletDOM from "./Wallet-DOM"
 
 class Wallet {
 
@@ -63,23 +64,6 @@ class Wallet {
         this.setWalletOpened(!this._walletOpened)
     }
 
-    /*
-        It will refresh the wallet list by adding new elements
-     */
-    refreshWalletList(){
-
-        let allWallets = document.getElementById("allWalets");
-
-        //remove previous elements
-
-        while (allWallets.firstChild)
-            allWallets.removeChild(allWallets.firstChild);
-
-        for (let i=0; i<this._walletsAddresses.length; i++){
-            AddressDOM.addHTML(allWallets, this._walletsAddresses[i]);
-        }
-
-    }
 
     addNewAddress(address){
 
@@ -93,7 +77,7 @@ class Wallet {
         this._walletsAddresses.push(address);
 
         //it should only add this new address
-        this.refreshWalletList();
+        WalletDOM.refreshWalletList(this._walletsAddresses);
     }
 
     deleteAddress(address){
@@ -103,7 +87,7 @@ class Wallet {
         for (let i=0; i<this._walletsAddresses.length; i++)
             if (address.toString() === this._walletsAddresses.toString()){
                 this._walletsAddresses.splice(i,1);
-                this.refreshWalletList();
+                WalletDOM.refreshWalletList(this._walletsAddresses);
                 return true;
             }
 
@@ -117,7 +101,7 @@ class Wallet {
         for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++)
             this._walletsAddresses.push(WebDollar.Blockchain.Wallet.addresses[i].address);
 
-        return this.refreshWalletList();
+        return WalletDOM.refreshWalletList(this._walletsAddresses);
 
     }
 

@@ -39,7 +39,6 @@ class MininDOM{
 
         parent.insertAdjacentHTML( 'beforeend', html);
 
-        parent.classList.add("walletSection");
         document.getElementById("threadsNumber").style.background="#d23c25";
 
     }

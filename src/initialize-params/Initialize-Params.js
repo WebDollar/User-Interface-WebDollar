@@ -26,13 +26,13 @@ class InitializeParams{
         this.mining = {
             activated: true,
             style: "dark",
-            id: "dashboardMining",
+            id: "webDollar",
         };
 
         this.wallet = {
             activated: true,
             style: "dark",
-            id: "dashboardWallet",
+            id: "webDollar",
         };
 
 
@@ -49,6 +49,7 @@ class InitializeParams{
     load(){
         this.loadGlobal();
         this.loadMaps();
+
         this.loadMining();
         this.loadWallet();
     }
@@ -91,6 +92,9 @@ class InitializeParams{
 
         if (this.mining.activated === false) return false;
 
+        if (document.getElementById(this.mining.id) === null)
+            document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", `<div id="${this.mining.id}">`);
+
         MiningDOM.addCSS(this.mining.style);
         MiningDOM.addHTML(this.mining.id);
 
@@ -99,6 +103,9 @@ class InitializeParams{
     async loadWallet(){
 
         if (this.wallet.activated === false) return false;
+
+        if (document.getElementById(this.mining.id) === null)
+            document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend", `<div id="${this.mining.id}">`);
 
         WalletDOM.addCSS(this.wallet.style);
         WalletDOM.addHTML(this.wallet.id);

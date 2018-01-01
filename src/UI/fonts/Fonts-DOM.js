@@ -1,47 +1,37 @@
+let svgs = {
+    "key": require('./res/svg-key.svg'),
+    "lock-closed":require('./res/svg-lock-closed.svg'),
+    "lock-open": require('./res/svg-lock-open.svg'),
+    "plus": require('./res/svg-plus.svg'),
+    "plus-square": require('./res/svg-plus-square.svg'),
+    "x": require('./res/svg-x.svg'),
+};
 
-var Html = require('./res/wallet.html');
-
-class WalletDOM{
+class FontsDOM{
 
     constructor(){
 
 
     }
 
-    addCSS(type){
+    addHTML(parent, icon, newId){
 
-        if (document.getElementById(CSSId) !== null) return false;
+        if (typeof parent === "string")
+            parent = document.getElementById(parent);
 
-        let parent = document.getElementsByTagName("head")[0];
+        let iconFound;
+        for (const key in svgs)
+            if (svgs.hasOwnProperty(key))
+                if (key === icon)
+                    iconFound = svgs[key];
 
-        parent.insertAdjacentHTML( 'beforeend',CSS);
+        iconFound = iconFound.replace("<svg",`<svg id="${newId}" `);
 
-        AddressDOM.addCSS(type);
-    }
-
-    addHTML(divId){
-
-        let parent = document.getElementById(divId);
-
-        let html = Html;
-
-        console.log("parent", parent);
-
-        if (parent === null) {
-
-            parent = document.getElementsByTagName("body")[0];
-
-            parent.insertAdjacentHTML( 'beforeend',`<div id="${divId}"> </div>`);
-            parent = document.getElementById(divId);
-
-        } else{
-
-        }
-
-        parent.insertAdjacentHTML( 'beforeend', html);
+        if (iconFound )
+            parent.insertAdjacentHTML( 'beforeend', iconFound);
 
     }
 
 }
 
-export default new WalletDOM();
+export default new FontsDOM();

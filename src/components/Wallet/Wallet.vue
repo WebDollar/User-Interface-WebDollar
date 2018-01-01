@@ -2,7 +2,7 @@
 
     <div class="dashboardWallet" >
 
-        <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? '375px': '30px'}">
+        <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? this.walletButtonMargin+'px': this.walletButtonMargin+'px'}">
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet 0.0
@@ -61,9 +61,9 @@
             return {
                 opened: false,
                 addresses: [],
+                walletButtonMargin: 30,
             }
         },
-
 
         mounted(){
 
@@ -83,6 +83,16 @@
         methods: {
 
             toggleWallet(){
+
+                if (window.screenWidth < 831){
+
+                    this.walletButtonMargin = 375;
+
+                }else{
+
+                    this.walletButtonMargin = 30;
+
+                }
 
                 this.opened = !this.opened;
 

@@ -1,4 +1,5 @@
 import AddressDOM from './address/Address-DOM';
+import FontsDOM from "UI/fonts/Fonts-DOM"
 
 var CSSId = "css"+Math.floor(Math.random()*100000);
 var CSS = "<style id='"+CSSId+"'>"+require('./res/wallet.css')+"</style>";
@@ -42,6 +43,32 @@ class WalletDOM{
         }
 
         parent.insertAdjacentHTML( 'beforeend', html);
+
+        //add icons
+        parent = document.querySelector("#dashboardWallet .walletController");
+
+        FontsDOM.addHTML(parent, "plus", "walletControllerPlus");
+        FontsDOM.addHTML(parent, "lock-open", "walletControllerLock");
+
+    }
+
+
+
+    /*
+        It will refresh the wallet list by adding new elements
+    */
+    refreshWalletList(walletAddresses){
+
+        let allWallets = document.getElementById("allWalets");
+
+        //remove previous elements
+
+        while (allWallets.firstChild)
+            allWallets.removeChild(allWallets.firstChild);
+
+        for (let i=0; i<walletAddresses.length; i++){
+            AddressDOM.addHTML(allWallets, walletAddresses[i]);
+        }
 
     }
 

@@ -49,6 +49,7 @@
 
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
+    import BrowserHelpers from "helpers/Browser.helpers"
 
     export default{
 
@@ -76,7 +77,17 @@
 
           WebDollar.Blockchain.Wallet.emitter.on("wallet-changes", ()=>{
               this.loadAllAddresses();
-          })
+          });
+
+          //onLoad
+          BrowserHelpers.addEvent(window, "load", (event) => {
+            //this.walletButtonMargin  = 33;
+          });
+
+          //onResize
+          BrowserHelpers.addEvent(window, "resize", (event) => {
+              //this.walletButtonMargin  = 33;
+          });
 
         },
 

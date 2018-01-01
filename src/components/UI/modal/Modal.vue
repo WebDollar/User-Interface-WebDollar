@@ -102,7 +102,7 @@
         margin: 10px 0;
     }
 
-    .modalBackground{
+    #WebDollarModalBackground{
         position: fixed;
         width: 100%;
         height: 100%;

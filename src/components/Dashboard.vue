@@ -1,4 +1,3 @@
-// AwesomeComponent.vue
 <template>
     <div id="webDollar">
 
@@ -26,7 +25,10 @@
             "Mining":Mining,
         },
 
-        data () {
+        data: () => {
+            return {
+
+            }
         },
 
         methods: {

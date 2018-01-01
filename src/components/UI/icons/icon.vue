@@ -1,6 +1,6 @@
 <template>
 
-    <div style="display: inline;">
+    <div style="display: inline;" @click="this.handleClick">
 
         <svgChevronUp v-if="this.icon === 'chevron-up'"></svgChevronUp>
         <svgChevronDown v-if="this.icon === 'chevron-down'"></svgChevronDown>
@@ -42,6 +42,14 @@
             "svgPlus": svgPlus,
             "svgPlusSquare": svgPlusSquare,
             "svgX": svgX,
+        },
+
+        methods:{
+
+            handleClick(e){
+                this.$emit('click',e );
+            }
+
         }
 
     }

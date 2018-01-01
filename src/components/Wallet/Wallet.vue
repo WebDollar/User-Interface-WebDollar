@@ -15,6 +15,9 @@
 
                 <div class="walletController">
 
+                    <icon icon="plus" />
+                    <icon icon="lock-open" />
+
                 </div>
 
                 <div class="walletSection walletsContainer">
@@ -32,12 +35,15 @@
 
 
 
-
-
 <script>
+
+    import icon from "components/UI/icons/icon.vue"
 
     export default{
 
+        components:{
+            "icon":icon,
+        }
 
     }
 

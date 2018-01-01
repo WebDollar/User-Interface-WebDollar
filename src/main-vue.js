@@ -1,6 +1,6 @@
 var Vue = require('vue')
 
-import Dashboard from './Components/Dashboard.vue';
+import Dashboard from 'components/Dashboard.vue';
 
 window.onload = () => {
 

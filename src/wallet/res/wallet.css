@@ -12,10 +12,15 @@
     border-top-left-radius: 60px;
     cursor: pointer;
     background-color: #fec02c;
-    color: #fff;
+    color: #1f1f1f;
     margin-bottom: 20px;
     border: solid 1px #444444;
     border-right: solid 1px #fec02c;
+    transition: all .3s linear;
+}
+
+#walletButton:hover{
+    color: #fff;
     transition: all .3s linear;
 }
 
@@ -35,18 +40,15 @@
     background-color: #313131;
 }
 
-.walletController .btn{
+.walletController .webdollarFont{
     display: inline-block;
-}
-
-.walletController .btn .fa{
-    display: block;
+    width: 12px;
     padding: 5px 10px;
     border-right: solid 1px #545454;
     background-color: #1f1f1f;
 }
 
-.walletController .btn .fa:hover{
+.walletController .webdollarFont:hover{
     background-color: #000000;
 }
 
@@ -56,20 +58,19 @@
 
 #walletButton:hover{
     background-color: #1f1f1f;
+    border-right: solid 1px #444444;
     transition: all .3s linear;
 }
 
 #walletButton span{
     width: 100%;
-    line-height: 56px;
+    line-height: 50px;
     font-size: 20px;
-    color: #1f1f1f;
     font-weight: bolder;
     transition: all .3s linear;
 }
 
 #walletButton span:hover{
-    color: #fff;
     transition: all .3s linear;
 }
 
@@ -87,6 +88,8 @@
     border-top: solid 1px #000000;
     border-left: solid 1px #444;
 }
+
+
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {

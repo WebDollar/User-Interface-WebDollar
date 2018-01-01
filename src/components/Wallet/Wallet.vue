@@ -221,10 +221,12 @@
     @media only screen and (max-width : 831px) {
         #walletMenu{
             width: 100%;
+            margin-bottom: 94px;
         }
         #walletButton{
             width: 100%!important;
             border-radius: 0;
+            margin-bottom: 93px;
             z-index: 1200;
             margin-bottom: 90px;
         }

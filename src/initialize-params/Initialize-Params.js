@@ -10,6 +10,8 @@ import MiningDOM from "mining/Mining-DOM"
 import Wallet from "wallet/Wallet"
 import WalletDOM from "wallet/Wallet-DOM"
 
+import FontsDOM from "UI/fonts/Fonts-DOM"
+
 class InitializeParams{
 
     constructor(){
@@ -57,6 +59,8 @@ class InitializeParams{
 
         if (font === null)
             document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",`<link id="webdollarFont" href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">`);
+
+        FontsDOM.addCSS();
 
     }
 

@@ -1,3 +1,6 @@
+var CSSId = "cssFont"+Math.floor(Math.random()*100000);
+var CSS = "<style id='"+CSSId+"'>"+require('./res/fonts.css')+"</style>";
+
 let svgs = {
     "key": require('./res/svg-key.svg'),
     "lock-closed":require('./res/svg-lock-closed.svg'),
@@ -12,6 +15,14 @@ class FontsDOM{
     constructor(){
 
 
+    }
+
+    addCSS(style){
+        if (document.getElementById(CSSId) !== null) return false;
+
+        let parent = document.getElementsByTagName("head")[0];
+
+        parent.insertAdjacentHTML( 'beforeend',CSS);
     }
 
     addHTML(parent, icon, newId){

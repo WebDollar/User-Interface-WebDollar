@@ -9,6 +9,11 @@
     right: 0;
     z-index: 1000;
     border-top: solid 1px #444444;
+    font-family: 'avenir',sans-serif;
+}
+
+#dashboardWallet{
+    font-family: 'avenir',sans-serif;
 }
 
 
@@ -100,6 +105,20 @@
     background-color: #1f1f1f;
 }
 
+#threadsControll .leftButton {
+    float: left;
+}
+
+#threadsControll .rightButton {
+    float: right;
+}
+
+#threadsControll .button p{
+    padding-bottom: 4px;
+    line-height: 27px;
+    margin: 0;
+}
+
 #allWalets{
     /*border-top: solid 1px #7b7b7b;*/
     display: block;
@@ -119,10 +138,11 @@
 
 
 .miningPowerText .secondWord{
-    letter-spacing: 1px;
     height: auto;
     line-height: 10px;
     margin: 0;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 
@@ -152,9 +172,10 @@
 #threadsNumber{
     font-size: 20px;
     padding: 0 10px;
-    width: 40px;
+    width: 20px;
     text-align: center;
-    line-height: 26px;
+    padding-bottom: 5px;
+    line-height: 21px;
     display: inline-block;
     color: #fff;
     background-color: #d23c25;

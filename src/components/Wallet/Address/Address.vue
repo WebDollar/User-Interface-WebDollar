@@ -11,14 +11,6 @@
 <script>
     export default{
 
-        methods:{
-
-            handleTransferFunds(){
-
-            }
-
-        }
-
     }
 </script>
 

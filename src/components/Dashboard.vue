@@ -26,10 +26,7 @@
             "Mining":Mining,
         },
 
-        data:  () => {
-            return {
-
-            }
+        data () {
         },
 
         methods: {

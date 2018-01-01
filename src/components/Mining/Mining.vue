@@ -29,15 +29,6 @@
     export default{
 
 
-        methods:{
-            destroyOneMiningWorker(){
-
-            },
-
-            createMiningWorker(){
-
-            },
-        }
 
     }
 
@@ -276,15 +267,51 @@
         #dashboardMining{
             height: 90px;
             margin-bottom: 0;
-            height: 33px;
         }
         #minningController, .walletStartMining, .WEBD{
             display: block;
             width: 100%;
         }
+        #minningController{
+            background-color: #0000;
+            margin-bottom: 0;
+            height: 33px;
+            border-top: solid 1px #fec02c;
+            margin-top: 50px;
+        }
         .walletStartMining{
-            position: absolute;
-            top: 0;
+            margin-top: -86px;
+        }
+        #threadsControll .button p{
+            line-height: 43px;
+        }
+        #threadsControll .button{
+            width: 80px;
+        }
+        .miningPowerThreads{
+            line-height: 38px;
+            font-size: 16px;
+            margin-right: -4px;
+        }
+        #miningDetails{
+            display: none;
+        }
+        .miningPowerText{
+            display: none;
+        }
+        #threadsNumber{
+            margin: 0 auto;
+            text-align: center;
+            float:left;
+            position: relative;
+            display: block;
+            line-height: 31px;
+            width: 63px;
+        }
+        .WEBD{
+            margin-top: -35px;
+            text-align: right;
+            margin-right: 10px;
         }
     }
 

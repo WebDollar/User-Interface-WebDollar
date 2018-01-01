@@ -50,8 +50,8 @@ class InitializeParams{
         this.loadGlobal();
         this.loadMaps();
 
-        this.loadMining();
-        this.loadWallet();
+        // this.loadMining();
+        // this.loadWallet();
     }
 
     loadGlobal(){

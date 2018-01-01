@@ -1,0 +1,25 @@
+<div id="dashboardMining" class="walletSection" >
+
+    <div id="minningController">
+        <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
+        <strong id="threadsNumber">1</strong>
+        <div id="miningDetails">
+            <p class="">20+ hashes/sec</p>
+        </div>
+    </div>
+
+    <div type="button" class="walletStartMining">
+        <div id="threadsControll">
+            <div class="button leftButton" type="button" @click="this.destroyOneMiningWorker"> <p>-</p>
+            </div>
+            <p class="miningPowerThreads">Threads</p>
+            <div class="button rightButton" type="button"  @click="this.createMiningWorker"> <p>+</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="WEBD"> 0.0 <b class="whiteText">WBD MINED</b></p>
+
+
+
+</div>

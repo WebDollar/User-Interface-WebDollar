@@ -45,9 +45,19 @@ class InitializeParams{
     }
 
     load(){
+        this.loadGlobal();
         this.loadMaps();
         this.loadMining();
         this.loadWallet();
+    }
+
+    loadGlobal(){
+
+        let font = document.getElementById("webdollarFont");
+
+        if (font === null)
+            document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",`<link id="webdollarFont" href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">`);
+
     }
 
 

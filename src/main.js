@@ -6,6 +6,8 @@ import InitializeParams from "initialize-params/Initialize-Params"
 import Mining from "mining/Mining"
 import Wallet from "wallet/Wallet"
 
+require('./main-vue');
+
 console.log("hello world");
 
 let exportObject = {

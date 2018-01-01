@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "open_browser": "node src/open-browser",
-    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   && npm run open_browser",
+    "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t vueify -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   && npm run open_browser",
     "test": "npm run build"
   },
   "repository": {
@@ -30,14 +30,16 @@
     "browserify-fs": "^1.0.0",
     "md5": "^2.2.1",
     "opn": "^5.1.0",
-    "stringify": "^5.2.0"
+    "stringify": "^5.2.0",
+    "vue-multivue": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-module-alias": "^1.6.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2017": "^6.24.1",
-    "browserify": "^14.5.0",
     "babelify": "^7.3.0",
-    "babel-plugin-module-alias": "^1.6.0"
+    "browserify": "^14.5.0",
+    "vueify": "^9.4.1"
   }
 }

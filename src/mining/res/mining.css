@@ -1,3 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: #000;
+    color: #D5D5D5;
+    font-family: avenir;
+}
+
+input:focus, textarea:focus{
+    outline: none;
+}
+
+h1{
+    letter-spacing: 2px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+    color: #ffc12c;
+    line-height: 2.2em;
+    font-size: 36px;
+    word-wrap: break-word;
+    transition: all .5s linear;
+}
+
+h2{
+    color: #8e8e8e;
+    letter-spacing: 5px;
+    font-size: 22px;
+    line-height: 60px;
+    transition: all .5s linear;
+}
+
+h3{
+    color: #8e8e8e;
+    letter-spacing: 4px;
+    font-size: 18px;
+    margin-top: 30px;
+    line-height: 50px;
+    color: #fff;
+    transition: all .5s linear;
+}
+
+h4{
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #fff;
+}
+
+h5{
+    display: block;
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+span{
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    line-height: 30px;
+    letter-spacing: 1px;
+    color: #989898;
+}
+
+a{
+    cursor: pointer;
+    color:#f6cd69;
+    transition: all .5s linear;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #fff;
+    transition: all .5s linear;
+}
+
+
 #dashboardMining{
     overflow: hidden;
     position: fixed;
@@ -6,6 +91,7 @@
     background-color: #262626;
     display: block;
     left: 0;
+    padding-bottom: 3px;
     right: 0;
     z-index: 1000;
     border-top: solid 1px #444444;
@@ -83,6 +169,7 @@
 
 .minningController p{
     font-size: 20px;
+    margin-right: -4px;
 }
 
 #miningDetails{
@@ -114,6 +201,7 @@
 }
 
 #threadsControll .button p{
+    padding-top: 3px;
     padding-bottom: 4px;
     line-height: 27px;
     margin: 0;
@@ -142,7 +230,8 @@
     line-height: 10px;
     margin: 0;
     font-weight: bold;
-    letter-spacing: 1px;
+    color: #fff;
+    margin-right: -4px;
 }
 
 
@@ -174,14 +263,15 @@
     padding: 0 10px;
     width: 20px;
     text-align: center;
-    padding-bottom: 5px;
-    line-height: 21px;
+    padding-bottom: 4px;
+    line-height: 25px;
     display: inline-block;
     color: #fff;
     background-color: #d23c25;
     vertical-align: top;
     padding-top: 4px;
     border-right: solid 1px #444;
+    margin-right: -4px;
 }
 
 .whiteText{
@@ -226,7 +316,7 @@
     font-size: 20px;
     color: #fec02c;
     vertical-align: top;
-    padding-top: 6px;
+    padding-top: 3px;
     float: right;
     min-width: 300px;
     text-align: center;

@@ -78,6 +78,32 @@
 
 
 <style>
+
+    .modal{
+        width: 50%;
+        height: auto;
+        border-radius: 5px;
+        max-width: 550px;
+        position: fixed;
+        margin: 0 auto;
+        border: solid 1px #313131;
+        left: 0;
+        right: 0;
+        text-align: center;
+        background-color: #1f1f1f;
+        display: none;
+        z-index: 1600;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .modal #walletID{
+        word-wrap: break-word;
+        display: block;
+        line-height: 12px;
+        margin: 10px 0;
+    }
+
     .modalBackground{
         position: fixed;
         width: 100%;
@@ -88,4 +114,40 @@
         top:0;
         left: 0;
     }
+
+    .modal .close{
+        position: fixed;
+        top: -5px;
+        right: 10px!important;
+        font-size: 40px;
+        display: block;
+        color: #ffc12c;
+        cursor: pointer;
+    }
+
+    .modal .footer{
+
+    }
+
+    .modal .title{
+        background-color: #262626;
+        padding: 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        line-height: 22px;
+        color: #ffc12c;
+    }
+
+    .modal .footer .button{
+        display: inline;
+        cursor: pointer;
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (max-width : 768px) {
+        .modal{
+            width: 100%;
+        }
+    }
+
 </style>

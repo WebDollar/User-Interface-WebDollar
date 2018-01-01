@@ -31,6 +31,15 @@
     export default{
 
 
+        methods:{
+            destroyOneMiningWorker(){
+
+            },
+
+            createMiningWorker(){
+
+            },
+        }
 
     }
 

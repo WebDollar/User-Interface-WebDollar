@@ -20,7 +20,10 @@
             "Mining":Mining,
         },
 
-        data () {
+        data:  () => {
+            return {
+
+            }
         },
 
         methods: {

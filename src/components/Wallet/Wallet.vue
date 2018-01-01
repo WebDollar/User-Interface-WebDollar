@@ -23,6 +23,16 @@
                 <div class="walletSection walletsContainer">
                     <div id="allWalets">
 
+                        <Address v-for="walletAddress in this.walletAddresses"
+
+                                     :key="walletAddress.address"
+                                     :id="'address'+walletAddress.address"
+                                     :walletAddress="walletAddress"
+                                     style="padding-right: 20px"
+
+                        >
+
+                        </Address>
 
                     </div>
                 </div>
@@ -38,11 +48,19 @@
 <script>
 
     import icon from "components/UI/icons/icon.vue"
+    import Address from "./Address/Address.vue"
 
     export default{
 
         components:{
             "icon":icon,
+            "Address":Address,
+        },
+
+        computed:{
+            walletAddresses(){
+                return WebDollarUserInterface.Wallet._walletsAddresses;
+            }
         }
 
     }

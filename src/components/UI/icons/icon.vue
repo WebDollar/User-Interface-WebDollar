@@ -42,5 +42,15 @@
 </script>
 
 <style>
+    .webdollarFont{
+        cursor: pointer;
+        color: #f6cd69;
+        transition: all .5s linear;
+        text-decoration: none;
+        padding-right: 10px;
+    }
 
+    .webdollarFont path{
+        fill: #f6cd69;
+    }
 </style>

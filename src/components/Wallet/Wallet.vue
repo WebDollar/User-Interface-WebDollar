@@ -2,9 +2,10 @@
 
     <div class="dashboardWallet" >
 
+        {{this.opened}}
         <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? '375px': '30px'}">
             <span id="walletButtonText">
-                <icon :icon="this.opened ? 'chevron-down' : 'chevron-down'"></icon>
+                <icon :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet 0.0
             </span>
         </div>

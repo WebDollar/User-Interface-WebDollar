@@ -1,8 +1,9 @@
 <template>
 
     <div style="display: inline;">
-        <svgChevronUp v-if="this.icon === 'chevron-down'"></svgChevronUp>
-        <svgChevronDown v-if="this.icon === 'chevron-up'"></svgChevronDown>
+
+        <svgChevronUp v-if="this.icon === 'chevron-up'"></svgChevronUp>
+        <svgChevronDown v-if="this.icon === 'chevron-down'"></svgChevronDown>
         <svgKey v-if="this.icon === 'key'"></svgKey>
         <svgLockClosed v-if="this.icon === 'lock-closed'"></svgLockClosed>
         <svgLockOpen v-if="this.icon === 'lock-open'"></svgLockOpen>

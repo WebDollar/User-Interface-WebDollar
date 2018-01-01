@@ -56,10 +56,11 @@ class InitializeParams{
 
     loadGlobal(){
 
-        let font = document.getElementById("webdollarFont");
-
-        if (font === null)
+        if (document.getElementById("webdollarFont") === null)
             document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",`<link id="webdollarFont" href="http://192.168.1.2:8080/public/assets/fonts/avenir-light.woff" rel="stylesheet">`);
+
+        if (document.getElementById("webdollarViewPort") === null)
+            document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", `<meta id="webdollarViewPort" name="viewport" content="width=device-width, initial-scale=1.0"/>`)
 
         FontsDOM.addCSS();
 

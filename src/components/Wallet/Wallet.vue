@@ -2,7 +2,7 @@
 
     <div class="dashboardWallet" >
 
-        <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? this.walletButtonMargin+'px': this.walletButtonMargin+'px'}">
+        <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet 0.0
@@ -62,7 +62,8 @@
             return {
                 opened: false,
                 addresses: [],
-                walletButtonMargin: 30,
+                walletButtonMarginOpened: 375,
+                walletButtonMarginClosed: 30,
             }
         },
 
@@ -81,29 +82,35 @@
 
           //onLoad
           BrowserHelpers.addEvent(window, "load", (event) => {
-            //this.walletButtonMargin  = 33;
+              this.changeScreenBehavoir();
           });
 
           //onResize
           BrowserHelpers.addEvent(window, "resize", (event) => {
-              //this.walletButtonMargin  = 33;
+              this.changeScreenBehavior()
           });
 
         },
 
         methods: {
 
-            toggleWallet(){
+            changeScreenBehavior(){
 
                 if (window.screenWidth < 831){
 
-                    this.walletButtonMargin = 375;
+                    this.walletButtonMarginOpened = 375;
+                    this.walletButtonMarginClosed = 94;
 
                 }else{
 
-                    this.walletButtonMargin = 30;
+                    this.walletButtonMarginOpened = 375;
+                    this.walletButtonMarginClosed = 30;
 
                 }
+
+            },
+
+            toggleWallet(){
 
                 this.opened = !this.opened;
 

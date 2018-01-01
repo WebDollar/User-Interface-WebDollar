@@ -27,6 +27,7 @@
   "dependencies": {
     "brfs": "^1.4.3",
     "browserify-fs": "^1.0.0",
+    "md5": "^2.2.1",
     "opn": "^5.1.0",
     "stringify": "^5.2.0"
   },

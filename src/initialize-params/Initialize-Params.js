@@ -89,6 +89,8 @@ class InitializeParams{
         WalletDOM.addCSS(this.wallet.style);
         WalletDOM.addHTML(this.wallet.id);
 
+        Wallet.initializeWallet();
+
     }
 
 }

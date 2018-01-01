@@ -56,7 +56,7 @@
         left: 0;
         padding-bottom: 3px;
         right: 0;
-        z-index: 1000;
+        z-index: 95;
         border-top: solid 1px #444444;
     }
 

@@ -14,9 +14,9 @@
                             Address
                         </div>
 
-                        <b style="color:gray" id="walletID">{{this.address.toString()}}</b>
+                        <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
 
-                        <div class="copyToClipboard" @click="this.copyToClipboard()">
+                        <div class="copyToClipboard" @click="this.copyTextArea">
                             Copy to Clipboard
                         </div>
 
@@ -35,20 +35,50 @@
                 </div>
 
                 <div class="adressActions">
-                    <div class="actionButton activeActionButton">
+                    <div @click="this.showTransfer" :class="[ this.isTransfer ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Transfer
                     </div>
-                    <div class="actionButton">
+                    <div @click="this.showBuy" :class="[ this.isBuy ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Buy
                     </div>
-                    <div class="actionButton">
+                    <div @click="this.showSell" :class="[ this.isSell ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Sell
                     </div>
                 </div>
 
-                <form class="transfer">
+                <form class="transfer" :style="{display: this.isTransfer ? 'block': 'none'}">
 
                     <p class="title">Transfer WBD</p>
+
+                    <input class="adress" placeholder="Recipient Adress"/>
+                    <!--{{this.toAddress||''.toString() }}-->
+
+                    <input class="amount" placeholder="WBD Amount"/>
+                    <!--{{this.toAmount||0.0.toString() }}-->
+
+                    <button type="submit" class="button">
+                        SEND WBD
+                    </button>
+                </form>
+
+                <form class="buy" :style="{display: this.isBuy ? 'block': 'none'}">
+
+                    <p class="title">Buy WBD</p>
+
+                    <input class="adress" placeholder="Recipient Adress"/>
+                    <!--{{this.toAddress||''.toString() }}-->
+
+                    <input class="amount" placeholder="WBD Amount"/>
+                    <!--{{this.toAmount||0.0.toString() }}-->
+
+                    <button type="submit" class="button">
+                        SEND WBD
+                    </button>
+                </form>
+
+                <form class="sell" :style="{display: this.isSell ? 'block': 'none'}">
+
+                    <p class="title">Sell WBD</p>
 
                     <input class="adress" placeholder="Recipient Adress"/>
                     <!--{{this.toAddress||''.toString() }}-->
@@ -88,8 +118,31 @@
             "Modal":Modal,
         },
 
+        data:  () => {
+            return {
+                isTransfer: false,
+                isSell: false,
+                isBuy: false,
+            }
+        },
+
         methods:{
 
+            showTransfer(){
+                this.isTransfer = true;
+                this.isSell = false;
+                this.isBuy = false;
+            },
+            showBuy(){
+                this.isTransfer = false;
+                this.isSell = false;
+                this.isBuy = true;
+            },
+            showSell(){
+                this.isTransfer = false;
+                this.isSell = true;
+                this.isBuy = false;
+            },
             closeModal(){
                 this.$refs['refModal'].closeModal();
             },
@@ -97,12 +150,9 @@
             showModal(){
                 this.$refs['refModal'].showModal();
             },
-
-            copyToClipboard(){
-                var copyText = document.getElementById("walletID").innerHTML;
-                copyText.select();
-                document.execCommand("Copy");
-                alert("Copied the text: " + copyText.value);
+            copyTextArea() {
+//                this.$refs.address.select();
+//                document.execCommand('copy');
             }
 
         }

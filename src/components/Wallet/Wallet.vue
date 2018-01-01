@@ -9,7 +9,7 @@
             </span>
         </div>
 
-        <div id="walletMenu" ref="walletMenu" :style="{marginBottom: this.opened ? '26px': '-317px' }">
+        <div id="walletMenu" ref="walletMenu" :style="{marginBottom: this.opened ? this.walletMarginOpened+'px': this.walletMarginClosed+'px' }">
 
             <div id="dashboardWallet">
 
@@ -64,6 +64,8 @@
                 addresses: [],
                 walletButtonMarginOpened: 375,
                 walletButtonMarginClosed: 30,
+                walletMarginOpened: 26,
+                walletMarginClosed: -325,
             }
         },
 
@@ -98,13 +100,17 @@
 
                 if (window.screenWidth < 831){
 
-                    this.walletButtonMarginOpened = 375;
+                    this.walletButtonMarginOpened = 392;
                     this.walletButtonMarginClosed = 94;
+                    this.walletMarginOpened = 34;
+                    this.walletMarginClosed = -325;
 
                 }else{
 
-                    this.walletButtonMarginOpened = 375;
+                    this.walletButtonMarginOpened = 392;
                     this.walletButtonMarginClosed = 30;
+                    this.walletMarginOpened = 34;
+                    this.walletMarginClosed = -325;
 
                 }
 
@@ -168,9 +174,9 @@
     #walletButton {
         margin: 0 auto;
         position: fixed;
-        z-index: 100;
+        z-index: 85;
         bottom: 0;
-        width: 298px!important;
+        width: 299px!important;
         right: 0;
         text-align: center;
         height: 50px;
@@ -244,9 +250,9 @@
         right: 0;
         width: 300px;
         background-color: #1f1f1f;
-        height: 350px;
+        height: 358px;
         margin-bottom:-100px;
-        z-index: 900;
+        z-index: 90;
         transition: all .3s linear;
         border-top: solid 1px #3d3d3d;
         border-left: solid 1px #444;
@@ -277,7 +283,6 @@
             width: 100%!important;
             border-radius: 0;
             margin-bottom: 93px;
-            z-index: 1200;
             margin-bottom: 90px;
         }
     }

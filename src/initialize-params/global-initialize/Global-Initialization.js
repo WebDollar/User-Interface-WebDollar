@@ -19,9 +19,6 @@ class GlobalInitialization{
         if (document.getElementById("WebdollarViewPort") === null)
             document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", `<meta id="WebdollarViewPort" name="viewport" content="width=device-width, initial-scale=1.0"/>`)
 
-        if (document.getElementById("WebDollarModalBackground") === null)
-            document.getElementsByTagName("body")[0].insertAdjacentHTML("afterbegin", `<div id="WebDollarModalBackground" > </div>`);
-
         window.screenHeight = window.innerHeight;
         window.screenWidth = window.innerWidth;
 

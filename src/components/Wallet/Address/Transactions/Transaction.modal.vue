@@ -16,7 +16,7 @@
 
                         <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
 
-                        <div class="copyToClipboard" @click="this.copyTextArea">
+                        <div class="copyToClipboard" v-clipboard="this.copyData" @success="this.handleCopySuccess" @error="this.handleCopyError">
                             Copy to Clipboard
                         </div>
 
@@ -103,6 +103,9 @@
 <script>
 
     import Modal from "components/UI/modal/Modal.vue"
+    import VueClipboards from 'vue-clipboards';
+
+    Vue.use(VueClipboards);
 
     export default{
 
@@ -111,7 +114,7 @@
             address: {default: null},
             toAddress: {default: null},
             toAmount: {default: 0.0},
-
+            copyData: this.address
         },
 
         components:{
@@ -153,7 +156,13 @@
             copyTextArea() {
 //                this.$refs.address.select();
 //                document.execCommand('copy');
-            }
+            },
+            handleCopySuccess(e) {
+                console.log(e);
+            },
+            handleCopyError(e) {
+                console.log(e);
+            },
 
         }
 

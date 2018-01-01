@@ -23,7 +23,6 @@
                 <div class="walletSection walletsContainer">
                     <div id="allWalets">
 
-<<<<<<< Updated upstream
                         <Address v-for="walletAddress in this.addresses"
 
                                      :key="walletAddress.address"
@@ -35,8 +34,6 @@
 
                         </Address>
 
-=======
->>>>>>> Stashed changes
                     </div>
                 </div>
             </div>

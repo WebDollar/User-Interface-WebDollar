@@ -15,10 +15,9 @@
     right: 0;
     z-index: 1000;
     border-top: solid 1px #444444;
-    font-family: 'avenir',sans-serif;
 }
 
-#dashboardWallet{
+#webDollar{
     font-family: 'avenir',sans-serif;
 }
 

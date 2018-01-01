@@ -1,6 +1,6 @@
 <template>
 
-    <div style="display: inline;" @click="this.handleClick">
+    <div @click="this.handleClick">
 
         <svgChevronUp v-if="this.icon === 'chevron-up'"></svgChevronUp>
         <svgChevronDown v-if="this.icon === 'chevron-down'"></svgChevronDown>

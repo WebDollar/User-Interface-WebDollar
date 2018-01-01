@@ -1,3 +1,5 @@
+import AddressDOM from './address/Address-DOM';
+
 var CSSId = "css"+Math.floor(Math.random()*100000);
 var CSS = "<style id='"+CSSId+"'>"+require('./res/wallet.css')+"</style>";
 var Html = require('./res/wallet.html');
@@ -16,6 +18,8 @@ class WalletDOM{
         let parent = document.getElementsByTagName("head")[0];
 
         parent.insertAdjacentHTML( 'beforeend',CSS);
+
+        AddressDOM.addCSS(type);
     }
 
     addHTML(divId){

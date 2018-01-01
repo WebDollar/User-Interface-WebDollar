@@ -31,8 +31,6 @@
 
         <!--</div>-->
 
-        <div class="modalBackground" ref="modalBackground" > </div>
-
     </div>
 
 </template>
@@ -55,15 +53,15 @@
 
             closeModal(){
 
-                this.$refs['modalBackground'].setAttribute('style', 'display:none !important');
+                document.getElementById("WebDollarModalBackground").setAttribute('style', 'display:none !important');
                 this.$refs['modal'].setAttribute('style', 'display:none !important');
 
             },
 
             showModal(){
 
-                this.$refs["modalBackground"].setAttribute('style', 'display:block !important');
-                this.$refs["modalBackground"].onclick=this.closeModal;
+                document.getElementById("WebDollarModalBackground").setAttribute('style', 'display:block !important');
+                document.getElementById("WebDollarModalBackground").onclick=this.closeModal;
 
                 this.$refs['modal'].setAttribute('style', 'display:block !important');
 

@@ -4,8 +4,8 @@
 
         <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? '375px': '30px'}">
             <span id="walletButtonText">
-                <i class="fa fa-chevron-up" ></i>
-                <p>Wallet 0.0</p>
+                <icon :icon="this.opened ? 'chevron-down' : 'chevron-down'"></icon>
+                Wallet 0.0
             </span>
         </div>
 

@@ -1,7 +1,8 @@
 <template>
 
-    <div>
-
+    <div style="display: inline;">
+        <svgChevronUp v-if="this.icon === 'chevron-down'"></svgChevronUp>
+        <svgChevronDown v-if="this.icon === 'chevron-up'"></svgChevronDown>
         <svgKey v-if="this.icon === 'key'"></svgKey>
         <svgLockClosed v-if="this.icon === 'lock-closed'"></svgLockClosed>
         <svgLockOpen v-if="this.icon === 'lock-open'"></svgLockOpen>
@@ -16,6 +17,8 @@
 
 <script>
 
+    import svgChevronDown from "./res/svg-chevron-down.vue"
+    import svgChevronUp from "./res/svg-chevron-up.vue"
     import svgKey from "./res/svg-key.vue"
     import svgLockClosed from "./res/svg-lock-closed.vue"
     import svgLockOpen from "./res/svg-lock-open.vue"
@@ -31,6 +34,8 @@
 
         components:{
             "svgKey": svgKey,
+            "svgChevronDown": svgChevronDown,
+            "svgChevronUp": svgChevronUp,
             "svgLockClosed": svgLockClosed,
             "svgLockOpen": svgLockOpen,
             "svgPlus": svgPlus,

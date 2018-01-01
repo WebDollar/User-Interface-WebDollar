@@ -10,6 +10,9 @@
 
 
 <script>
+
+    import TransactionModal from "./"
+
     export default{
 
         props:{

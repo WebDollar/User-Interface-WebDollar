@@ -1,0 +1,10 @@
+.webdollarFont{
+    cursor: pointer;
+    color: #f6cd69;
+    transition: all .5s linear;
+    text-decoration: none;
+}
+
+.webdollarFont path{
+    fill: #f6cd69;
+}

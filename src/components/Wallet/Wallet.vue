@@ -4,7 +4,7 @@
 
         <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? '375px': '30px'}">
             <span id="walletButtonText">
-                <icon :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
+                <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet 0.0
             </span>
         </div>
@@ -177,14 +177,13 @@
         background-color: #313131;
     }
 
-    .walletController svg{
-        margin-top: 5px;
+    .walletController .btn{
         display: inline-block;
-        padding: 0px 10px 2px 10px;
+        padding: 6px 12px 6px 12px;
         background-color: #1f1f1f;
     }
 
-    .walletController svg:hover{
+    .walletController .btn:hover{
         background-color: #000000;
     }
 
@@ -223,6 +222,11 @@
         transition: all .3s linear;
         border-top: solid 1px #3d3d3d;
         border-left: solid 1px #444;
+    }
+
+    .buttonIcon{
+        display: inline-block;
+        margin-right: 10px;
     }
 
     /* Small Devices, Tablets */

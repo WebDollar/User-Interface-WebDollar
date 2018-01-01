@@ -5,7 +5,7 @@
 
         <b>0.0 WBD</b>
 
-        <TransactionModal ref="refTransactionModal"></TransactionModal>
+        <TransactionModal ref="refTransactionModal" :address="this.address" />
 
     </div>
 </template>
@@ -19,6 +19,10 @@
 
         props:{
             address:{default:''},
+        },
+
+        components:{
+            "TransactionModal":TransactionModal,
         },
 
         computed: {

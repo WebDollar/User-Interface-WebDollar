@@ -2,7 +2,7 @@
 
     <div v-if="this.address !== null && this.address !== undefined">
 
-        <Modal title="Wallet Adress" ref="modal">
+        <Modal title="Wallet Adress" ref="refModal">
 
             <div slot="content">
 
@@ -11,7 +11,7 @@
                     <div class="section">
 
                         <div style="font-size: 20px">
-                            Adress
+                            Address
                         </div>
 
                         <b style="color:gray" id="walletID">{{this.address.toString()}}</b>
@@ -85,19 +85,17 @@
         },
 
         components:{
-
             "Modal":Modal,
-
         },
 
         methods:{
 
             closeModal(){
-                this.$refs['modal'].closeModal();
+                this.$refs['refModal'].closeModal();
             },
 
             showModal(){
-                this.$refs['modal'].showModal();
+                this.$refs['refModal'].showModal();
             },
 
             copyToClipboard(){

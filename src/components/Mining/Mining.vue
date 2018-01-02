@@ -108,6 +108,10 @@
 
 <style>
 
+    #threadsNumber{
+        width: 40px;
+    }
+
     #dashboardMining{
         overflow: hidden;
         position: fixed;

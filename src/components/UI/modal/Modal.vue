@@ -318,6 +318,10 @@
         }
         .modal .twoColums{
             width: 100%;
+            grid-template-columns: 1fr;
+        }
+        .modal{
+            min-width: auto;
         }
     }
 

@@ -397,7 +397,7 @@
             background-color: #0000;
             margin-bottom: 0;
             height: 33px;
-            border-top: solid 1px #fec02c;
+            border-top: solid 1px #616161;
             margin-top: 50px;
         }
         .walletStartMining{
@@ -426,7 +426,7 @@
             float:left;
             position: relative;
             display: block;
-            line-height: 31px;
+            line-height: 34px;
             width: 63px;
         }
         .WEBD{
@@ -471,7 +471,7 @@
         }
 
         .WEBD{
-            margin-top: -30px;
+            margin-top: -33px;
             font-size:14px;
         }
 

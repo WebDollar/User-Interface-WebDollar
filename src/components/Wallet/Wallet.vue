@@ -89,11 +89,15 @@
                 //in browser
               if (typeof window === "undefined") return false;
 
-              WebDollar.Blockchain.Wallet.emitter.on("wallet-address-changes", (address)=>{
+              WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
                   this.addNewAddress(address);
               });
 
-              WebDollar.Blockchain.Wallet.emitter.on("wallet-changes", ()=>{
+            WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
+                this.addNewAddress(address);
+            });
+
+              WebDollar.Blockchain.Wallet.emitter.on("wallet/changes", ()=>{
                   this.loadAllAddresses();
               });
 

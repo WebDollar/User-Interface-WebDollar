@@ -3,9 +3,9 @@
 
         <div id="minningController">
             <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
-            <strong id="threadsNumber" :style="{background: this.miningWorkersCount ? 0 : '#d23c25'}">{{this.miningWorkersCount}}>1</strong>
+            <strong id="threadsNumber" :style="{background: this.miningWorkersCount ? 0 : '#d23c25'}">{{this.miningWorkersCount}}</strong>
             <div id="miningDetails">
-                <p class="">{{this.statusMining||(this.hashesPerSecond.toString()+' hashes/sec')}} </p>
+                <p class="">{{this.started ? this.hashesPerSecond : 0}} hashes/sec</p>
             </div>
         </div>
 
@@ -14,12 +14,12 @@
                 <div class="button leftButton" type="button" @click="this.destroyOneMiningWorker"> <p>-</p>
                 </div>
                 <p class="miningPowerThreads">Threads</p>
-                <div class="button rightButton" type="button"  @click="this.createMiningWorker"> <p>+</p>
+                <div class="button rightButton" type="button"  @click="this.createOneMiningWorker"> <p>+</p>
                 </div>
             </div>
         </div>
 
-        <p class="WEBD"> {{ Math.round(this.reward * 10000000) / 10000000 }} <b class="whiteText">WBD MINED</b></p>
+        <p class="WEBD"> 0.0 <b class="whiteText">WBD MINED</b></p>
 
     </div>
 </template>
@@ -35,130 +35,69 @@
 
         data: function () {
             return {
-                hashesPerSecondFuture: 0,
+
+                started: false,
                 hashesPerSecond: 0,
 
-                hashesGeneratedBestFuture: '',
-                hashesGeneratedBest: '',
-
-                reward: 0,
-
-                hashesPerSecondClearInterval: null,
-
-                miningWorkers: [],
-                miningWorkersCount: 0,
-
-                statusMining:'',
+                miningWorkersCount:0,
             }
         },
 
         computed:{
-
-            startedMining(){
-                return this.$store.state.mining.startedMining;
-            },
-
         },
 
         props:{
-            rewardPerHash: {default: 0.0000052},
+
         },
 
-        methods:{
+        mounted() {
 
-            createMiningWorker(){
+            if (typeof window === 'undefined') return;
 
-                if(typeof(Worker) !== "undefined") {
+            WebDollar.Blockchain.Mining.emitter.on("mining/hash-rate", (hashesPerSecond)=>{
+                this.hashesPerSecond = hashesPerSecond;
+            });
 
+            WebDollar.Blockchain.Mining.emitter.on("mining/status-changed", (status)=>{
 
-                    let worker = new Worker("/public/WebDollar-dist/WebDollarMinerWorker.js");
+                this.started = WebDollar.Blockchain.Mining.started;
 
-                    worker.onmessage = this.puzzleReceivedFromWorker;
+            });
 
-                    this.miningWorkers.push(worker);
-                    this.miningWorkersCount += 1;
+            WebDollar.Blockchain.Mining.emitter.on("mining/reset", ()=>{
 
-                } else {
-                    alert("Sorry! No Web Worker support.");
-                }
+                this.started = WebDollar.Blockchain.Mining.started;
 
-                if (this.miningWorkersCount === 1) {
-                    this.statusMining = 'starting...';
-                    this.initializeHashesPerSecondClearInterval();
-                }
+            });
 
-                this.$store.dispatch('MINING_CHANGE_WORKERS', {workers: this.miningWorkersCount});
+        },
 
-            },
+        methods: {
 
-            stopAllMiningWorkers(){
+            startStopMining() {
 
-                for (let i=this.miningWorkers.length-1; i>=0; i--)
-                    this.destroyOneMiningWorker();
+                if (!WebDollar.Blockchain.Mining.started)
+                    WebDollar.Blockchain.Mining.startMining();
+                else
+                    WebDollar.Blockchain.Mining.stopMining();
 
             },
 
             destroyOneMiningWorker(){
 
-                if (this.miningWorkers.length > 0){
-                    let minerWorker = this.miningWorkers.pop();
-                    minerWorker.terminate();
-                    minerWorker = undefined;
-                    this.miningWorkersCount -= 1;
-                }
-
-                if (this.miningWorkersCount === 0){
-                    this.suspendHashesPerSecondClearInterval();
-                }
-
-                this.$store.dispatch('MINING_CHANGE_WORKERS', {workers: this.miningWorkersCount});
             },
 
-            initializeHashesPerSecondClearInterval(){
-                //Setting HashesPerSecond Clear Interval
+            createOneMiningWorker(){
 
-                let that = this;
-                this.hashesPerSecondClearInterval = setInterval( function(){ that.hashesPerSecondClearTick() }, 1000);
-            },
-
-            suspendHashesPerSecondClearInterval(){
-                clearInterval(this.hashesPerSecondClearInterval);
-                this.statusMining = 'stopped';
-            },
-
-            hashesPerSecondClearTick(){
-                this.hashesPerSecond = this.hashesPerSecondFuture;
-                this.hashesGeneratedBest = this.hashesGeneratedBestFuture;
-
-
-                this.reward += this.hashesPerSecond * this.rewardPerHash;
-
-
-                this.hashesPerSecondFuture = 0;
-                this.hashesGeneratedBestFuture = '1';
-
-                this.statusMining = '';
-            },
-
-            startStopMining(){
-                console.log('this.startedMining',this.startedMining);
-                if (this.startedMining)  this.stopAllMiningWorkers();
-                else this.createMiningWorker();
-            },
-
-
-            puzzleReceivedFromWorker(event) {
-                this.hashesPerSecondFuture += event.data.count;
-
-                //console.log(this.hashesGeneratedBest, event.data.hashesGeneratedBest,this.hashesGeneratedBest > event.data.hashesGeneratedBest);
-
-                if (this.hashesGeneratedBestFuture > event.data.hashesGeneratedBest)
-                    this.hashesGeneratedBestFuture = event.data.hashesGeneratedBest;
-
-                this.hashesGeneratedBestZeros = event.data.hashesGeneratedBestZeros;
+                this.startStopMining();
 
             },
 
+            mounted(){
+
+
+
+            }
         }
 
     }

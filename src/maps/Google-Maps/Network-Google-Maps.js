@@ -70,7 +70,7 @@ class NetworkGoogleMaps {
             return false;
         }
 
-        WebDollar.Node.NodesList.emitter.on("connected", async (nodesListObject) => {
+        WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (nodesListObject) => {
 
             let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
 
@@ -80,7 +80,7 @@ class NetworkGoogleMaps {
 
         } );
 
-        WebDollar.Node.NodesList.emitter.on("disconnected", async (nodesListObject) => {
+        WebDollar.Node.NodesList.emitter.on("nodes-list/disconnected", async (nodesListObject) => {
 
             //deleting the marker
 

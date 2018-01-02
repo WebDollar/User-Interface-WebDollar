@@ -1,8 +1,8 @@
 <template>
 
-    <div>
-        <div id="WebDollarModalBackground" style="display:none !important;"> </div>
-        <div class="modal" ref="modal">
+    <div v-if="this.modalOpened">
+        <div id="WebDollarModalBackground" @click="this.closeModal"> </div>
+        <div class="modal" ref="refModal">
 
             <div class="close" @click="this.closeModal">
                 x
@@ -30,6 +30,12 @@
 
         name: "Modal",
 
+        data: () => {
+            return {
+                modalOpened: false,
+            }
+        },
+
         props:{
 
             title: {default: 'Modal Title'},
@@ -41,18 +47,14 @@
 
             closeModal(){
 
-                document.getElementById("WebDollarModalBackground").setAttribute('style', 'display:none !important');
-                this.$refs['modal'].setAttribute('style', 'display:none !important');
-
+                console.log("closeModal");
+                this.modalOpened = false;
             },
 
             showModal(){
 
-                document.getElementById("WebDollarModalBackground").setAttribute('style', 'display:block !important');
-                document.getElementById("WebDollarModalBackground").onclick=this.closeModal;
-
-                this.$refs['modal'].setAttribute('style', 'display:block !important');
-
+                console.log("showModal");
+                this.modalOpened = true;
             }
 
         }
@@ -82,7 +84,6 @@
         right: 0;
         text-align: center;
         background-color: #1f1f1f;
-        display: none;
         z-index: 1600;
         top: 50%;
         transform: translateY(-50%);

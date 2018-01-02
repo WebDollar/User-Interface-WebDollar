@@ -2,7 +2,7 @@
 
     <div v-if="this.address !== null && this.address !== undefined">
 
-        <Modal title="Wallet Adress" ref="refModal">
+        <Modal title="Wallet Address" ref="refModal">
 
             <div slot="content">
 
@@ -16,7 +16,7 @@
 
                         <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
 
-                        <div ref="clipboardCopyAddress" :class="[ this.clipboardText!='Copyed' ? 'copyToClipboard' : 'copyToClipboardSuccess' ]">
+                        <div id='refClipboardCopyAddress' ref="refClipboardCopyAddress" :class=" this.clipboardText!='Copied' ? 'copyToClipboard' : 'copyToClipboardSuccess' ">
                             {{this.clipboardText}}
                         </div>
 
@@ -112,7 +112,6 @@
             address: {default: null},
             toAddress: {default: null},
             toAmount: {default: 0.0},
-            clipboardText: 'Copy to Clipboard'
         },
 
         components: {
@@ -124,6 +123,7 @@
                 isTransfer: false,
                 isSell: false,
                 isBuy: false,
+                clipboardText: 'Copy to Clipboard',
             }
         },
 
@@ -153,6 +153,12 @@
             },
 
             addressClipboardCopiedSuccessfully(e) {
+                this.clipboardText='Copied';
+                console.log(e);
+            },
+
+            addressClipboardCopiedError(e) {
+                this.clipboardText="Copy didn't work";
                 console.log(e);
             }
 
@@ -164,7 +170,7 @@
 
             if (typeof window === 'undefined') return;
 
-            var clipboard = new Clipboard(this.$refs['clipboardCopyAddress'], {
+            var clipboard = new Clipboard('#refClipboardCopyAddress', {
                 text: () => {
                     return this.address;
                 }
@@ -172,11 +178,10 @@
 
             clipboard.on('success', (e) => {
                 this.addressClipboardCopiedSuccessfully(e);
-                this.clipboardText='Copyed';
             });
 
             clipboard.on('error', (e) => {
-                console.log(e);
+                this.addressClipboardCopiedError(e);
             });
         },
 

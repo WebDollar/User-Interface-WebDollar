@@ -217,17 +217,6 @@
 
 <style>
 
-    #WebDollarModalBackground{
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        display: block;
-        z-index: 1000;
-        top:0;
-        left: 0;
-        background-color: #000;
-    }
-
     #walletButton {
         margin: 0 auto;
         position: fixed;

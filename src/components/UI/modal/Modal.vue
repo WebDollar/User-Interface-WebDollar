@@ -1,7 +1,7 @@
 <template>
 
     <div v-if="this.modalOpened">
-        <div id="WebDollarModalBackground" @click="this.closeModal"> </div>
+        <div class="modalBackground" @click="this.closeModal"> </div>
         <div class="modal" ref="refModal">
 
             <div class="close" @click="this.closeModal">
@@ -102,15 +102,15 @@
         font-weight: 100;
     }
 
-    #modalBackground{
+    .modalBackground{
         position: fixed;
-        width: 100%;
-        top: 0;
-        left: 0;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.82);
-        z-index: 1500;
-        display: none;
+        width: 100%;
+        display: block;
+        z-index: 1000;
+        top:0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.83);
     }
 
     .modal .close{

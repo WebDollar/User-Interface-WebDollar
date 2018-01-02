@@ -79,7 +79,6 @@
                 walletMenuMarginTopClose: 0,
                 walletMenuHeightOpen: 0,
                 walletMenuHeightClosed: 0,
-                showMining: true,
             }
         },
 
@@ -131,23 +130,22 @@
                     this.walletMenuHeightOpen='100%';
                     this.walletMenuHeightClosed='358px';
 
-                    this.showMining = false;
-
                 }else{
 
                     this.walletButtonMarginOpened = 392;
                     this.walletButtonMarginClosed = 30;
+
                     this.walletMarginOpened = 34;
                     this.walletMarginClosed = -325;
+
                     this.buttonTopDistanceOpen = 'auto';
                     this.buttonTopDistanceClose = 'auto';
+
                     this.walletMenuMarginTopOpen=this.$refs.walletMenuButton.clientHeight;
                     this.walletMenuMarginTopClose='0';
 
                     this.walletMenuHeightOpen='358px';
                     this.walletMenuHeightClosed='358px';
-
-                    this.showMining = true;
 
                 }
 
@@ -156,6 +154,16 @@
             toggleWallet(){
 
                 this.opened = !this.opened;
+
+                if(window.screenWidth < 831){
+                    if (this.opened==true){
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:none');
+                    }else{
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+                    }
+                }else{
+                    document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+                }
 
             },
 

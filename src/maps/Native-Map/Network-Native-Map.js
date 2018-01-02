@@ -25,11 +25,11 @@ class NetworkNativeMaps {
 
         if (mapSelector[0] !== '#') mapSelector = '#'+mapSelector;
 
-        mapSelector = (mapSelector || '#map')+ ' svg';
+        mapSelector = (mapSelector || '#WebDollarMap')+ ' svg';
 
         this._mapElem = document.querySelector(mapSelector);
         if (this._mapElem === null){
-            throw "map is not specified. Invalid selector"+mapSelector+". Try '#map svg'";
+            throw "map is not specified. Invalid selector"+mapSelector+". Try '#WebDollarMap svg'";
         }
 
         this._circleMap = new CircleMap(this._mapElem);

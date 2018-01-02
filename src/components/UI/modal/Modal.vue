@@ -65,6 +65,10 @@
 
 <style>
 
+    .modal input:focus, .modal textarea:focus{
+        outline: none;
+    }
+
     .modal{
         width: 50%;
         height: auto;
@@ -254,6 +258,11 @@
     .copyToClipboard:hover{
         background-color: #000;
         transition: all 0.5s ease
+    }
+
+    .copyToClipboardSuccess{
+        color: #149008;
+        font-size: 14px;
     }
 
     @media (min-width:600px)  {

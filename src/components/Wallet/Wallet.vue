@@ -124,7 +124,7 @@
                     this.buttonTopDistanceOpen = '0';
                     this.buttonTopDistanceClose = 'auto';
 
-                    this.walletMenuMarginTopOpen=this.$refs.walletMenuButton.clientHeight;
+                    this.walletMenuMarginTopOpen=this.$refs['walletMenuButton'].clientHeight;
                     this.walletMenuMarginTopClose='0';
 
                     this.walletMenuHeightOpen='100%';
@@ -141,7 +141,7 @@
                     this.buttonTopDistanceOpen = 'auto';
                     this.buttonTopDistanceClose = 'auto';
 
-                    this.walletMenuMarginTopOpen=this.$refs.walletMenuButton.clientHeight;
+                    this.walletMenuMarginTopOpen=this.$refs['walletMenuButton'].clientHeight;
                     this.walletMenuMarginTopClose='0';
 
                     this.walletMenuHeightOpen='358px';
@@ -156,7 +156,7 @@
                 this.opened = !this.opened;
 
                 if(window.screenWidth < 831){
-                    if (this.opened==true){
+                    if (this.opened===true){
                         document.getElementById('dashboardMining').setAttribute('style', 'display:none');
                     }else{
                         document.getElementById('dashboardMining').setAttribute('style', 'display:block');

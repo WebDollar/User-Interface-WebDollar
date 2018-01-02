@@ -16,7 +16,7 @@
 
                         <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
 
-                        <div class="copyToClipboard" v-clipboard="this.copyData" @success="this.handleCopySuccess" @error="this.handleCopyError">
+                        <div ref="clipboardCopyAddress" class="copyToClipboard"   >
                             Copy to Clipboard
                         </div>
 
@@ -103,9 +103,7 @@
 <script>
 
     import Modal from "components/UI/modal/Modal.vue"
-    import VueClipboards from 'vue-clipboards';
-
-    Vue.use(VueClipboards);
+    const Clipboard = require('clipboard')
 
     export default{
 
@@ -114,7 +112,6 @@
             address: {default: null},
             toAddress: {default: null},
             toAmount: {default: 0.0},
-            copyData: this.address
         },
 
         components:{
@@ -153,18 +150,33 @@
             showModal(){
                 this.$refs['refModal'].showModal();
             },
-            copyTextArea() {
-//                this.$refs.address.select();
-//                document.execCommand('copy');
-            },
-            handleCopySuccess(e) {
-                console.log(e);
-            },
-            handleCopyError(e) {
-                console.log(e);
-            },
 
-        }
+            addressClipboardCopiedSuccessfully(e){
+                console.log(e);
+            }
+
+        },
+
+        mounted(){
+
+            if (typeof window === 'undefined') return ;
+
+            var clipboard = new Clipboard(this.$refs['clipboardCopyAddress'], {
+                text: () => {
+                    return this.address;
+                }
+            });
+
+
+            clipboard.on('success', (e) => {
+                this.addressClipboardCopiedSuccessfully(e);
+            });
+            clipboard.on('error', (e) => {
+                console.log(e);
+            });
+        },
+
+
 
     }
 

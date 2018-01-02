@@ -1,5 +1,5 @@
 <template>
-    <div class="walletAdress" @click="this.handleTransferFunds">
+    <div class="walletAdress" v-on:click.stop="handleTransferFunds">
 
         <img class="walletAddressImage" :src="this.getAddressPic">
 
@@ -33,9 +33,9 @@
 
         methods:{
 
-            handleTransferFunds(){
+            handleTransferFunds(e){
 
-                this.$refs['refTransactionModal'].showModal();
+                this.$refs['refTransactionModal'].showModal(e);
 
             }
 

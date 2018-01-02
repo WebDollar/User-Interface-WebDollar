@@ -148,8 +148,9 @@
                 this.$refs['refModal'].closeModal();
             },
 
-            showModal() {
-                this.$refs['refModal'].showModal();
+            showModal(e) {
+                if (this.$refs['refModal'].modalOpened === false)
+                    this.$refs['refModal'].showModal();
             },
 
             addressClipboardCopiedSuccessfully(e) {

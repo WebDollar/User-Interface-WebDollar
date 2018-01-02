@@ -100,12 +100,12 @@
     #modalBackground{
         position: fixed;
         width: 100%;
+        top: 0;
+        left: 0;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.82);
         z-index: 1500;
         display: none;
-        top:0;
-        left: 0;
     }
 
     .modal .close{
@@ -266,12 +266,54 @@
         font-size: 14px;
     }
 
-    @media (min-width:600px)  {
+    @media (max-width:831px){
 
-        width: 100%;
-        max-width: none;
-        min-width: none;
+        #walletID{
+            font-size: 12px!important;
+            line-height: 14px!important;
+        }
 
+    }
+
+    @media (max-width:600px)  {
+
+        .modal{
+            width: 100%;
+            max-width: none;
+            min-width: none;
+        }
+        .twoColums{
+            display: inline-block;
+        }
+        .twoColums .section:first-child {
+            border-bottom: solid 1px #313131;
+            border-right: none;
+        }
+        .modal .ballance{
+            margin-top: 0;
+        }
+        .adressActions .actionButton{
+            line-height: 50px;
+            font-size: 20px;
+        }
+        .modal .transfer input{
+            padding: 15px 0 15px 10px;
+            font-size: 16px;
+        }
+        .modal .transfer .button{
+            line-height: 26px;
+            font-size: 20px;
+        }
+        .modal .title{
+            padding: 20px 0;
+        }
+        .modal .close{
+            top:0;
+            right: 30px!important;
+        }
+        .modal .twoColums{
+            width: 100%;
+        }
     }
 
 </style>

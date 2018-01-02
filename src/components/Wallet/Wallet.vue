@@ -2,14 +2,21 @@
 
     <div class="dashboardWallet" >
 
-        <div id="walletButton" @click="this.toggleWallet" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
+        <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
+                    marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
+                    top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose}">
+
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet 0.0
             </span>
         </div>
 
-        <div id="walletMenu" ref="walletMenu" :style="{marginBottom: this.opened ? this.walletMarginOpened+'px': this.walletMarginClosed+'px' }">
+        <div id="walletMenu" ref="walletMenu" :style="{
+                    marginBottom: this.opened ? this.walletMarginOpened+'px': this.walletMarginClosed+'px',
+                    top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
+                    marginTop: this.opened ? this.walletMenuMarginTopOpen : this.walletMenuMarginTopClose,
+                    height: this.opened ? this.walletMenuHeightOpen : this.walletMenuHeightClosed}">
 
             <div id="dashboardWallet">
 
@@ -62,35 +69,44 @@
             return {
                 opened: false,
                 addresses: [],
-                walletButtonMarginOpened: 375,
-                walletButtonMarginClosed: 30,
-                walletMarginOpened: 26,
-                walletMarginClosed: -325,
+                walletButtonMarginOpened: 0,
+                walletButtonMarginClosed: 0,
+                buttonTopDistanceOpen: 0,
+                buttonTopDistanceClose: 0,
+                walletMarginOpened: 0,
+                walletMarginClosed: 0,
+                walletMenuMarginTopOpen: 0,
+                walletMenuMarginTopClose: 0,
+                walletMenuHeightOpen: 0,
+                walletMenuHeightClosed: 0,
+                showMining: true,
             }
         },
 
         mounted(){
 
-            //in browser
-          if (typeof window === "undefined") return false;
+            this.changeScreenBehavior();
 
-          WebDollar.Blockchain.Wallet.emitter.on("wallet-address-changes", (address)=>{
-              this.addNewAddress(address);
-          });
+                //in browser
+              if (typeof window === "undefined") return false;
 
-          WebDollar.Blockchain.Wallet.emitter.on("wallet-changes", ()=>{
-              this.loadAllAddresses();
-          });
+              WebDollar.Blockchain.Wallet.emitter.on("wallet-address-changes", (address)=>{
+                  this.addNewAddress(address);
+              });
 
-          //onLoad
-          BrowserHelpers.addEvent(window, "load", (event) => {
-              this.changeScreenBehavoir();
-          });
+              WebDollar.Blockchain.Wallet.emitter.on("wallet-changes", ()=>{
+                  this.loadAllAddresses();
+              });
 
-          //onResize
-          BrowserHelpers.addEvent(window, "resize", (event) => {
-              this.changeScreenBehavior()
-          });
+              //onLoad
+              BrowserHelpers.addEvent(window, "load", (event) => {
+                  this.changeScreenBehavoir();
+              });
+
+              //onResize
+              BrowserHelpers.addEvent(window, "resize", (event) => {
+                  this.changeScreenBehavior()
+              });
 
         },
 
@@ -100,10 +116,22 @@
 
                 if (window.screenWidth < 831){
 
-                    this.walletButtonMarginOpened = 392;
+                    this.walletButtonMarginOpened = 452;
                     this.walletButtonMarginClosed = 94;
-                    this.walletMarginOpened = 34;
+
+                    this.walletMarginOpened = 95;
                     this.walletMarginClosed = -325;
+
+                    this.buttonTopDistanceOpen = '0';
+                    this.buttonTopDistanceClose = 'auto';
+
+                    this.walletMenuMarginTopOpen=this.$refs.walletMenuButton.clientHeight;
+                    this.walletMenuMarginTopClose='0';
+
+                    this.walletMenuHeightOpen='100%';
+                    this.walletMenuHeightClosed='358px';
+
+                    this.showMining = false;
 
                 }else{
 
@@ -111,6 +139,15 @@
                     this.walletButtonMarginClosed = 30;
                     this.walletMarginOpened = 34;
                     this.walletMarginClosed = -325;
+                    this.buttonTopDistanceOpen = 'auto';
+                    this.buttonTopDistanceClose = 'auto';
+                    this.walletMenuMarginTopOpen=this.$refs.walletMenuButton.clientHeight;
+                    this.walletMenuMarginTopClose='0';
+
+                    this.walletMenuHeightOpen='358px';
+                    this.walletMenuHeightClosed='358px';
+
+                    this.showMining = true;
 
                 }
 

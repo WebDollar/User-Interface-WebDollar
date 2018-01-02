@@ -221,6 +221,10 @@
 
 <style>
 
+    #walletButtonText{
+        color: #1f1f1f;
+    }
+
     #walletButton {
         margin: 0 auto;
         position: fixed;

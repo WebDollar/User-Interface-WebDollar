@@ -28,11 +28,11 @@
   "dependencies": {
     "brfs": "^1.4.3",
     "browserify-fs": "^1.0.0",
+    "clipboard": "^1.7.1",
     "md5": "^2.2.1",
     "opn": "^5.1.0",
     "stringify": "^5.2.0",
-    "vue": "^2.5.13",
-    "vue-clipboards": "*"
+    "vue": "^2.5.13"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

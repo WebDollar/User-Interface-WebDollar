@@ -5,7 +5,7 @@
             <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
             <strong id="threadsNumber" :style="{background: this.miningWorkersCount ? 0 : '#d23c25'}">{{this.miningWorkersCount}}</strong>
             <div id="miningDetails">
-                <p class="">{{this.started ? this.hashesPerSecond : 0}} hashes/sec</p>
+                <p class="">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
             </div>
         </div>
 
@@ -74,12 +74,14 @@
 
         methods: {
 
-            startStopMining() {
+            async startStopMining() {
 
                 if (!WebDollar.Blockchain.Mining.started)
                     WebDollar.Blockchain.Mining.startMining();
                 else
                     WebDollar.Blockchain.Mining.stopMining();
+
+                return true;
 
             },
 
@@ -87,7 +89,7 @@
 
             },
 
-            createOneMiningWorker(){
+            async createOneMiningWorker(){
 
                 this.startStopMining();
 

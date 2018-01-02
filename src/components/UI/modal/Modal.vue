@@ -45,17 +45,22 @@
 
         methods:{
 
-            closeModal(){
+            closeModal(e){
 
-                console.log("closeModal");
+                e.stopPropagation();
+
                 this.modalOpened = false;
+                console.log("closeModal2");
             },
 
-            showModal(){
+            showModal(e){
+
+                if (e !== undefined)
+                    e.stopPropagation();
 
                 console.log("showModal");
                 this.modalOpened = true;
-            }
+            },
 
         }
 

@@ -43,7 +43,7 @@ class NetworkNativeMaps {
     async initialize(){
 
 
-        WebDollar.Node.NodesList.emitter.on("connected", async (nodesListObject) => {
+        WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (nodesListObject) => {
 
             let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
 
@@ -51,7 +51,7 @@ class NetworkNativeMaps {
 
         } );
 
-        WebDollar.Node.NodesList.emitter.on("disconnected", async (nodesListObject) => {
+        WebDollar.Node.NodesList.emitter.on("nodes-list/disconnected", async (nodesListObject) => {
 
             //deleting the marker
             let markerIndex = this._findMarkerIndexBySocket(nodesListObject.socket);
@@ -60,7 +60,7 @@ class NetworkNativeMaps {
         });
 
         //Waitlist p2p
-        WebDollar.Node.NodesWaitlist.emitter.on("new-node-waitlist", async (nodesWaitlistObject)=>{
+        WebDollar.Node.NodesWaitlist.emitter.on("waitlist/new-node", async (nodesWaitlistObject)=>{
 
             let geoLocation = await nodesWaitlistObject.sckAddresses[0].getGeoLocation();
 
@@ -68,7 +68,7 @@ class NetworkNativeMaps {
 
         });
 
-        WebDollar.Node.NodesWaitlist.emitter.on("delete-node-waitlist", async (nodesWaitlistObject)=>{
+        WebDollar.Node.NodesWaitlist.emitter.on("waitlist/delete-node", async (nodesWaitlistObject)=>{
 
             //deleting the marker
             let markerIndex = this._findMarkerIndexBySocket(nodesWaitlistObject);

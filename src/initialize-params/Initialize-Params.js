@@ -14,19 +14,19 @@ class InitializeParams{
             activated: true,
             type: "NativeMap",
             style: "dark",
-            id: "map",
+            id: "WebDollarMap",
         };
 
         this.mining = {
             activated: true,
             style: "dark",
-            id: "webDollar",
+            id: "WebDollar",
         };
 
         this.wallet = {
             activated: true,
             style: "dark",
-            id: "webDollar",
+            id: "WebDollar",
         };
 
 

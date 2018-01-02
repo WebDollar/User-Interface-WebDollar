@@ -9,8 +9,11 @@ import Dashboard from 'components/Dashboard.vue';
 
 window.onload = () => {
 
+    if (document.getElementById('WebDollar') === null)
+        document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend",`<div id="WebDollar" > </div>`);
+
     new Vue({
-        el: '#webDollar',
+        el: '#WebDollar',
         render: h => h(Dashboard)
     })
 

@@ -116,9 +116,9 @@
                 if (window.screenWidth < 831){
 
                     this.walletButtonMarginOpened = 452;
-                    this.walletButtonMarginClosed = 94;
+                    this.walletButtonMarginClosed = 43;
 
-                    this.walletMarginOpened = 95;
+                    this.walletMarginOpened = 42;
                     this.walletMarginClosed = -325;
 
                     this.buttonTopDistanceOpen = '0';
@@ -318,6 +318,10 @@
         transition: all .3s linear;
     }
 
+    .walletAdress b{
+        font-weight:100;
+    }
+
     /* Small Devices, Tablets */
     @media only screen and (max-width : 831px) {
         #walletMenu{
@@ -329,6 +333,22 @@
             border-radius: 0;
             margin-bottom: 93px;
             margin-bottom: 90px;
+        }
+        .walletController .btn{
+            padding: 16px 22px 16px 22px!important;
+        }
+        .webdollarFont{
+            width: 24px!important;
+        }
+        #allWalets .walletAdress{
+            margin: 15px 0 0 5px!important;
+        }
+        #allWalets .walletAdress img{
+            height: 60px!important;
+        }
+        .walletAdress b{
+            font-size: 22px!important;
+            line-height: 60px!important;
         }
     }
 

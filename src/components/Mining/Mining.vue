@@ -81,7 +81,6 @@
         left: 0;
         right: 0;
         font-size: 20px;
-        background-color: #ffffff;
         color: #f20;
         display: inline-block;
         width: 230px;
@@ -314,6 +313,47 @@
             text-align: right;
             margin-right: 10px;
         }
+        #threadsNumber{
+            width: 30px;
+        }
+        .miningPowerThreads{
+            display:none;
+        }
+        #threadsControll .button{
+            float:left;
+        }
+        .walletStartMining{
+            margin-top:-33px;
+            margin-left:50px;
+        }
+        #threadsControll{
+            background-color: #f200;
+        }
+        #threadsControll .button p {
+            line-height: 34px;
+        }
+        #minningController{
+            margin-top:0
+        }
+        #dashboardMining{
+            height:40px;
+        }
+        .walletStartMining:hover{
+            background-color: #f200;
+        }
+    }
+
+    @media only screen and (max-width : 451px) {
+
+        #threadsControll .button{
+            width: 50px;
+        }
+
+        .WEBD{
+            margin-top: -30px;
+            font-size:14px;
+        }
+
     }
 
 </style>

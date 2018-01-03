@@ -63,32 +63,14 @@
 
                 <form class="buy" :style="{display: this.isBuy ? 'block': 'none'}">
 
-                    <p class="title">Buy WBD</p>
+                    <p class="title">Temoporary unavaible</p>
 
-                    <input class="adress" placeholder="Recipient Adress"/>
-                    <!--{{this.toAddress||''.toString() }}-->
-
-                    <input class="amount" placeholder="WBD Amount"/>
-                    <!--{{this.toAmount||0.0.toString() }}-->
-
-                    <button type="submit" class="button">
-                        SEND WBD
-                    </button>
                 </form>
 
                 <form class="sell" :style="{display: this.isSell ? 'block': 'none'}">
 
-                    <p class="title">Sell WBD</p>
+                    <p class="title">Temoporary unavaible</p>
 
-                    <input class="adress" placeholder="Recipient Adress"/>
-                    <!--{{this.toAddress||''.toString() }}-->
-
-                    <input class="amount" placeholder="WBD Amount"/>
-                    <!--{{this.toAmount||0.0.toString() }}-->
-
-                    <button type="submit" class="button">
-                        SEND WBD
-                    </button>
                 </form>
 
             </div>

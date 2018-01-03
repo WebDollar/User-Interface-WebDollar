@@ -149,7 +149,7 @@
                     this.walletMenuMarginTopClose='0';
 
                     this.walletMenuHeightOpen='358px';
-                    this.walletMenuHeightClosed='358px';
+                    this.walletMenuHeightClosed='0';
 
                 }
 
@@ -314,6 +314,7 @@
         transition: all .3s linear;
         border-top: solid 1px #3d3d3d;
         border-left: solid 1px #444;
+        transition: all .3s linear;
     }
 
     .buttonIcon{
@@ -339,22 +340,28 @@
     @media only screen and (max-width : 831px) {
         #walletMenu{
             width: 100%;
-            margin-bottom: 94px;
+            margin-top: 64px!important;
         }
         #walletButton{
             width: 100%!important;
             border-radius: 0;
-            margin-bottom: 93px;
+            border:0;
+            height: 65px;
             margin-bottom: 90px;
         }
+        #walletButton span{
+            line-height: 65px;
+            font-size: 26px;
+        }
         .walletController .btn{
-            padding: 16px 22px 16px 22px!important;
+            padding: 16px 19px 16px 19px!important;
+            margin-left: 10px;
         }
         .webdollarFont{
             width: 24px!important;
         }
         #allWalets .walletAdress{
-            margin: 15px 0 0 5px!important;
+            margin: 15px 0 0 10px!important;
         }
         #allWalets .walletAdress img{
             height: 60px!important;
@@ -362,6 +369,13 @@
         .walletAdress b{
             font-size: 22px!important;
             line-height: 60px!important;
+        }
+        .walletController{
+            position: relative;
+            width: 100%;
+            border-bottom: solid 5px #333333;
+            background-color: #313131;
+            border-top: solid 5px #313131;
         }
     }
 

@@ -108,15 +108,11 @@
 
 <style>
 
-    #threadsNumber{
-        width: 40px;
-    }
-
     #dashboardMining{
         overflow: hidden;
         position: fixed;
         bottom: 0px;
-        height: 30px;
+        height: 33px;
         background-color: #262626;
         display: block;
         left: 0;
@@ -264,7 +260,6 @@
     #threadsNumber{
         font-size: 20px;
         padding: 0 10px;
-        width: 20px;
         text-align: center;
         padding-bottom: 4px;
         line-height: 25px;
@@ -275,6 +270,7 @@
         padding-top: 4px;
         border-right: solid 1px #444;
         margin-right: -4px;
+        width: 40px;
     }
 
     .whiteText{
@@ -320,18 +316,17 @@
         font-size: 20px;
         color: #fec02c;
         vertical-align: top;
-        padding-top: 3px;
+        margin-top: 0;
         float: right;
         min-width: 300px;
         text-align: center;
         border-left: solid 1px #444444;
-
-        margin-top: 0;
+        padding-top: 6px;
     }
 
     @media only screen and (max-width : 831px) {
         #dashboardMining{
-            height: 90px;
+            height: 45px!important;
             margin-bottom: 0;
         }
         #minningController, .walletStartMining, .WEBD{
@@ -342,7 +337,7 @@
             background-color: #0000;
             margin-bottom: 0;
             height: 33px;
-            border-top: solid 1px #616161;
+            border-top: none;
             margin-top: 50px;
         }
         .walletStartMining{
@@ -373,14 +368,13 @@
             display: block;
             line-height: 34px;
             width: 63px;
+            padding-top: 6px;
+            padding-left: 0;
         }
         .WEBD{
             margin-top: -35px;
             text-align: right;
             margin-right: 10px;
-        }
-        #threadsNumber{
-            width: 30px;
         }
         .miningPowerThreads{
             display:none;
@@ -396,7 +390,12 @@
             background-color: #f200;
         }
         #threadsControll .button p {
-            line-height: 34px;
+            line-height: 35px;
+            font-size: 35px;
+            padding-top: 7px;
+        }
+        #threadsControll .button:first-child{
+            border:none;
         }
         #minningController{
             margin-top:0
@@ -416,7 +415,7 @@
         }
 
         .WEBD{
-            margin-top: -33px;
+            margin-top: -35px;
             font-size:14px;
         }
 

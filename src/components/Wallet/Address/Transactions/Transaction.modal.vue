@@ -149,8 +149,9 @@
             },
 
             showModal(e) {
-                if (this.$refs['refModal'].modalOpened === false)
+                if (this.$refs['refModal'].modalOpened === false){
                     this.$refs['refModal'].showModal();
+                }
             },
 
             addressClipboardCopiedSuccessfully(e) {

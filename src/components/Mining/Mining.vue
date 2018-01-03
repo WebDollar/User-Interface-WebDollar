@@ -87,11 +87,13 @@
 
             destroyOneMiningWorker(){
 
+                WebDollar.Blockchain.Mining.decreaseWorkers(1);
+
             },
 
-            async createOneMiningWorker(){
+            createOneMiningWorker(){
 
-                this.startStopMining();
+                WebDollar.Blockchain.Mining.increaseWorkers(1);
 
             },
 

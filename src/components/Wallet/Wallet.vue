@@ -225,6 +225,10 @@
         color: #1f1f1f;
     }
 
+    #walletButton:hover #walletButtonText{
+        color: #fff;
+    }
+
     #walletButton {
         margin: 0 auto;
         position: fixed;

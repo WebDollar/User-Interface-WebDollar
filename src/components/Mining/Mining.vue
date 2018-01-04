@@ -3,7 +3,7 @@
 
         <div id="minningController">
             <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
-            <strong id="threadsNumber" :style="{background: this.miningWorkersCount ? 0 : '#d23c25'}">{{this.miningWorkersCount}}</strong>
+            <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
             <div id="miningDetails">
                 <p class="">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
             </div>
@@ -39,7 +39,7 @@
                 started: false,
                 hashesPerSecond: 0,
 
-                miningWorkersCount:0,
+                workers: 0,
             }
         },
 
@@ -67,6 +67,12 @@
             WebDollar.Blockchain.Mining.emitter.on("mining/reset", ()=>{
 
                 this.started = WebDollar.Blockchain.Mining.started;
+
+            });
+
+            WebDollar.Blockchain.Mining.emitter.on("mining/workers-changed", ()=>{
+
+                this.workers = WebDollar.Blockchain.Mining.workers;
 
             });
 

@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <p class="WEBD"> <ShowBalance address="321321" currency="1"/>  <b class="whiteText">WBD MINED</b></p>
+        <p class="WEBD"> <ShowBalance :address="4444" currency="1"/>  <b class="whiteText">WBD MINED</b></p>
 
     </div>
 </template>
@@ -43,6 +43,7 @@
                 hashesPerSecond: 0,
 
                 workers: 0,
+                test:0,
             }
         },
 
@@ -106,12 +107,8 @@
 
             },
 
-            mounted(){
-
-
-
-            }
         }
+
 
     }
 

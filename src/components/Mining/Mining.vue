@@ -19,18 +19,21 @@
             </div>
         </div>
 
-        <p class="WEBD"> 0.0 <b class="whiteText">WBD MINED</b></p>
+        <p class="WEBD"> <ShowBalance address="321321" currency="1"/>  <b class="whiteText">WBD MINED</b></p>
 
     </div>
 </template>
 
 <script>
 
+    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue";
+
     export default{
 
         name: 'Mining',
 
         components: {
+            "ShowBalance":ShowBalance,
         },
 
         data: function () {

@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <p class="WEBD"> <ShowBalance :address="4444" currency="1"/>  <b class="whiteText">WBD MINED</b></p>
+        <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="1"/>  <b class="whiteText">WBD MINED</b></p>
 
     </div>
 </template>
@@ -43,7 +43,7 @@
                 hashesPerSecond: 0,
 
                 workers: 0,
-                test:0,
+                minerAddress:'',
             }
         },
 
@@ -78,6 +78,11 @@
 
                 this.workers = WebDollar.Blockchain.Mining.workers;
 
+            });
+
+            this.minerAddress = WebDollar.Blockchain.Mining.minerAddress;
+            WebDollar.Blockchain.Mining.emitter.on("mining/miner-address-changed", (minerAddress)=>{
+                this.minerAddress = minerAddress;
             });
 
         },

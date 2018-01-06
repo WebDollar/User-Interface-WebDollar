@@ -1,7 +1,7 @@
 <template>
 
     <span>
-        {{ (this.balances !== null && this.balances.hasOwnProperty(this.currency)) ? this.balances[this.currency] : 0 }}
+        {{ (this.balances !== null && this.balances.hasOwnProperty(this.currency)) ? Math.round(this.balances[this.currency] * 100000)/100000 : 0 }}
     </span>
 
 </template>

@@ -67,8 +67,7 @@
 <style>
     .show-balance-span{
         display: inline-block;
-        margin-left: 20px;
-        font-size: 20px;
+        margin-right: 10px;
         color: #fec02c;
         vertical-align: top;
         margin-top: 0;

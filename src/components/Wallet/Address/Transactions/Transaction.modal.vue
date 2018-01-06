@@ -44,6 +44,9 @@
                     <div @click="this.showSell" :class="[ this.isSell ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Sell
                     </div>
+                    <div @click="this.showTransactions" :class="[ this.isTransactionList ? 'actionButton activeActionButton' : 'actionButton' ]">
+                        Transactions
+                    </div>
                 </div>
 
                 <form class="transfer" :style="{display: this.isTransfer ? 'block': 'none'}">
@@ -60,6 +63,171 @@
                         SEND WBD
                     </button>
                 </form>
+
+                <div class="transferList" :style="{display: this.isTransactionList ? 'block': 'none'}">
+
+                    <!--<div class="header">-->
+
+                        <!--<span class="headerElement">-->
+                            <!--Adress Source-->
+                        <!--</span>-->
+
+                        <!--<span class="headerElement">-->
+                            <!--Destination-->
+                        <!--</span>-->
+
+                        <!--<div class="headerElement">-->
+                            <!--Ammount & currency-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+                    <ul class="transferListContainer">
+
+                        <li class="transferListElement">
+
+                            <span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>
+
+                            <ul class="destinations">
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="transferListElement pairListElement">
+
+                            <span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>
+
+                            <ul class="destinations">
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="transferListElement">
+
+                            <span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>
+
+                            <ul class="destinations">
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="transferListElement pairListElement">
+
+                            <span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>
+
+                            <ul class="destinations">
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="transferListElement">
+
+                            <span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>
+
+                            <ul class="destinations">
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="transferListElement pairListElement">
+
+                            <span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>
+
+                            <ul class="destinations">
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="transferListElement">
+
+                            <span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>
+
+                            <ul class="destinations">
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                                <li class="destinationElement">
+                                    <span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>
+                                    <div class="money" title="Ammount & Currency">
+                                        <span class="ammount">20</span><span class="currency">WEBD</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
 
                 <form class="buy" :style="{display: this.isBuy ? 'block': 'none'}">
 
@@ -107,6 +275,7 @@
                 isTransfer: false,
                 isSell: false,
                 isBuy: false,
+                isTransactionList: false,
                 clipboardText: 'Copy to Clipboard',
             }
         },
@@ -117,16 +286,25 @@
                 this.isTransfer = true;
                 this.isSell = false;
                 this.isBuy = false;
+                this.isTransactionList=false;
             },
             showBuy() {
                 this.isTransfer = false;
                 this.isSell = false;
                 this.isBuy = true;
+                this.isTransactionList = false;
             },
             showSell() {
                 this.isTransfer = false;
                 this.isSell = true;
                 this.isBuy = false;
+                this.isTransactionList = false;
+            },
+            showTransactions(){
+                this.isTransfer = false;
+                this.isSell = false;
+                this.isBuy = false;
+                this.isTransactionList = true;
             },
             closeModal() {
                 this.$refs['refModal'].closeModal();

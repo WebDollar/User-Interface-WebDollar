@@ -29,10 +29,11 @@
 }
 
 .map-dialog {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
     width: 100%;
-    /* padding-bottom: 32px; */
     text-align: center;
-    /* height: 64px; */
     pointer-events: none;
 }
 

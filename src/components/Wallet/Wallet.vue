@@ -69,6 +69,8 @@
             return {
                 opened: false,
                 addresses: [],
+                subscriptions: [],
+
                 walletButtonMarginOpened: 0,
                 walletButtonMarginClosed: 0,
                 buttonTopDistanceOpen: 0,
@@ -188,16 +190,21 @@
                         return false;
                     }
 
-                this.addresses.push(address);
+                this.addAddressToWalletWatch(address);
             },
 
             loadAllAddresses(){
 
                 this.addresses = [];
 
-                for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++)
-                    this.addresses.push(WebDollar.Blockchain.Wallet.addresses[i].address);
+                for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++) {
+                    this.addAddressToWalletWatch(WebDollar.Blockchain.Wallet.addresses[i].address);
+                }
 
+            },
+
+            addAddressToWalletWatch(address){
+                this.addresses.push(address);
             },
 
             deleteAddress(address){
@@ -332,7 +339,7 @@
         transition: all .3s linear;
     }
 
-    .walletAdress b{
+    .walletAddress b{
         font-weight:100;
     }
 
@@ -360,13 +367,13 @@
         .webdollarFont{
             width: 24px!important;
         }
-        #allWalets .walletAdress{
+        #allWalets .walletAddress{
             margin: 15px 0 0 10px!important;
         }
-        #allWalets .walletAdress img{
+        #allWalets .walletAddress img{
             height: 60px!important;
         }
-        .walletAdress b{
+        .walletAddress b{
             font-size: 22px!important;
             line-height: 60px!important;
         }

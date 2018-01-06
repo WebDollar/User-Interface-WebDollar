@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="1"/>  <b class="whiteText">WBD MINED</b></p>
+        <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/>  <b class="whiteText">WBD MINED</b></p>
 
     </div>
 </template>
@@ -299,19 +299,19 @@
         display: inline-block;
     }
 
-    #createWalletAdress{
+    #createWalletAddress{
         border: solid 1px #7b7b7b;
         padding-bottom: 0;
         margin-bottom: 15px;
         display: inline-block;
     }
 
-    #createWalletAdress p:hover{
+    #createWalletAddress p:hover{
         background-color: #191919;
         transition: all .3s linear;
     }
 
-    #createWalletAdress p{
+    #createWalletAddress p{
         padding: 10px;
         padding-top: 14px;
         background-color: #353535;

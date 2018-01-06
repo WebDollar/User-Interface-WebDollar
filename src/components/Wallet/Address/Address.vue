@@ -1,9 +1,9 @@
 <template>
-    <div class="walletAdress" v-on:click.stop="handleTransferFunds">
+    <div class="walletAddress" v-on:click.stop="handleTransferFunds">
 
         <img class="walletAddressImage" :src="this.getAddressPic">
 
-        <b>0.0 WBD</b>
+        <b><ShowBalance :address="this.address" currency="0x01"/> WBD</b>
 
         <TransactionModal ref="refTransactionModal" :address="this.address" />
 
@@ -14,6 +14,7 @@
 <script>
 
     import TransactionModal from "./Transactions/Transaction.modal.vue"
+    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
 
     export default{
 
@@ -23,6 +24,7 @@
 
         components:{
             "TransactionModal":TransactionModal,
+            "ShowBalance":ShowBalance,
         },
 
         computed: {
@@ -56,7 +58,7 @@
 
     }
 
-    #allWalets .walletAdress{
+    #allWalets .walletAddress{
         padding: 0!important;
         padding-right: 0;
         background-color: #272626;
@@ -65,22 +67,22 @@
         cursor: pointer;
     }
 
-    #allWalets .walletAdress:last-child{
+    #allWalets .walletAddress:last-child{
         margin-bottom: 1px;
     }
 
-    #allWalets .walletAdress img{
+    #allWalets .walletAddress img{
         height: 40px;
         display: inline-block;
         vertical-align: top;
     }
 
-    #allWalets .walletAdress:hover{
+    #allWalets .walletAddress:hover{
         background-color: #000;
         transition: all .3s linear;
     }
 
-    .walletAdress b{
+    .walletAddress b{
         text-align: center;
         display: inline-block;
         color: #fddb0c;

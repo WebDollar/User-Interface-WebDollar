@@ -8,7 +8,8 @@
 
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
-                Wallet 0.0
+                Wallet
+                <!--<ShowSumBalances :addresses="this.addresses" :currency="this.currency" />-->
             </span>
         </div>
 
@@ -32,9 +33,9 @@
 
                         <Address v-for="walletAddress in this.addresses"
 
-                                     :key="walletAddress"
-                                     :id="'address'+walletAddress"
-                                     :address="walletAddress"
+                                     :key="walletAddress.address"
+                                     :id="'address'+walletAddress.address"
+                                     :address="walletAddress.address"
                                      style="padding-right: 20px"
 
                         >
@@ -57,19 +58,21 @@
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
+    import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
 
     export default{
 
         components:{
             "icon":icon,
             "Address":Address,
+            "ShowSumBalances":ShowSumBalances,
         },
 
         data:  () => {
             return {
                 opened: false,
                 addresses: [],
-                subscriptions: [],
+                currency: "0x01",
 
                 walletButtonMarginOpened: 0,
                 walletButtonMarginClosed: 0,
@@ -186,7 +189,7 @@
                 if (address === null || address === undefined) return false;
 
                 for (let i=0; i<this.addresses.length; i++)
-                    if (address.toString() === this.addresses[i].toString()){
+                    if (address.toString() === this.addresses[i].address.toString()){
                         return false;
                     }
 
@@ -194,6 +197,9 @@
             },
 
             loadAllAddresses(){
+
+                for (let i=0; i<this.addresses.length; i++)
+                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[i].subscription);
 
                 this.addresses = [];
 
@@ -204,7 +210,21 @@
             },
 
             addAddressToWalletWatch(address){
-                this.addresses.push(address);
+
+                let element = {address: address, balances: {}};
+
+
+                let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
+                    element.balances = data.balances;
+                });
+
+                if (data !== null) {
+                    element.subscription = data.subscription;
+                    element.balances = data.balances;
+                }
+
+                this.addresses.push(element);
+
             },
 
             deleteAddress(address){
@@ -212,7 +232,9 @@
                 if (address === null || address === undefined) return false;
 
                 for (let i=0; i<this.addresses.length; i++)
-                    if (address.toString() === this.addresses.toString()){
+                    if (address.toString() === this.addresses.address.toString()){
+
+                        WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[i].subscription);
                         this.addresses.splice(i,1);
                         return true;
                     }

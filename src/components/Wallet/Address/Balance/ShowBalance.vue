@@ -1,7 +1,7 @@
 <template>
 
     <span>
-        {{ (this.balance !== null && this.balance.hasOwnProperty(this.currency)) ? this.balance[this.currency] : 0 }}
+        {{ (this.balances !== null && this.balances.hasOwnProperty(this.currency)) ? this.balances[this.currency] : 0 }}
     </span>
 
 </template>
@@ -16,7 +16,7 @@
 
         data(){
           return {
-              balance: {},
+              balances: {},
               subscription: null,
             }
         },
@@ -27,13 +27,13 @@
 
             this.currency = this.currency || '0x01';
 
-            let data = WebDollar.Blockchain.Balances.subscribeBalanceChanges(this.address, (data)=>{
-                this.balance = data.balance;
+            let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(this.address, (data)=>{
+                this.balances = data.balances;
             });
 
             if (data !== null) {
                 this.subscription = data.subscription;
-                this.balance = data.balance;
+                this.balances = data.balances;
             }
 
         },
@@ -41,17 +41,16 @@
         watch: {
             address: function (newVal, oldVal) { // watch it
 
-                WebDollar.Blockchain.Balances.unsusbribeBalanceChanges(this.subscription);
+                WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.subscription);
 
-                let data = WebDollar.Blockchain.Balances.subscribeBalanceChanges(newVal, (data)=>{
-                    console.log("new balances");
-                    this.balance = data.balance;
+                let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(newVal, (data)=>{
+                    this.balances = data.balances;
                 });
 
 
                 if (data !== null) {
                     this.subscription = data.subscription;
-                    this.balance = data.balance;
+                    this.balances = data.balances;
                 }
 
             },

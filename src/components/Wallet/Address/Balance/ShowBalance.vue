@@ -1,8 +1,8 @@
 <template>
 
-    <span>
+    <div class="show-balance-span">
         {{ (this.balances !== null && this.balances.hasOwnProperty(this.currency)) ? Math.round(this.balances[this.currency] * 100000)/100000 : 0 }}
-    </span>
+    </div>
 
 </template>
 
@@ -63,3 +63,15 @@
     }
 
 </script>
+
+<style>
+    .show-balance-span{
+        display: inline-block;
+        margin-left: 20px;
+        font-size: 20px;
+        color: #fec02c;
+        vertical-align: top;
+        margin-top: 0;
+        text-align: center;
+    }
+</style>

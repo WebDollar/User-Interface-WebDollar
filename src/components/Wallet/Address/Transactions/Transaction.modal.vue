@@ -28,7 +28,7 @@
                             Balance
                         </div>
 
-                        <b class="ballance" style="color:gray">0.0 WEBD</b>
+                        <b class="ballance" style="color:gray"> <ShowBalance :address="this.address" currency="0x01"/>WEBD</b>
 
                     </div>
 
@@ -86,6 +86,7 @@
 
     import Modal from "components/UI/modal/Modal.vue"
     const Clipboard = require('clipboard')
+    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
 
     export default {
 
@@ -98,6 +99,7 @@
 
         components: {
             "Modal": Modal,
+            "ShowBalance":ShowBalance,
         },
 
         data: () => {

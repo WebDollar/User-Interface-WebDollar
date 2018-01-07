@@ -5,7 +5,7 @@
             <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
             <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
             <div id="miningDetails">
-                <p class="">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
+                <p class="">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p> <span class="testnet">TEST NET #1</span>
             </div>
         </div>
 
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/>  <b class="whiteText">WBD MINED</b></p>
+        <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
 
     </div>
 </template>
@@ -337,6 +337,17 @@
         padding-top: 6px;
     }
 
+    .testnet{
+        display: inline-block;
+        color: #0f0;
+        margin-left: 10px;
+        font-size: 12px;
+    }
+
+    #miningDetails p{
+        display: inline-block;
+    }
+
     @media only screen and (max-width : 831px) {
         #dashboardMining{
             height: 45px!important;
@@ -419,6 +430,7 @@
         .walletStartMining:hover{
             background-color: #f200;
         }
+
     }
 
     @media only screen and (max-width : 451px) {

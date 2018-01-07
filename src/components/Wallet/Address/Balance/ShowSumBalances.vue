@@ -28,6 +28,8 @@
 
             refreshSum(addresses, currency){
 
+                alert(addresses);
+
                 let newSum = 0;
 
                 //it should to math using BigNumber
@@ -43,6 +45,7 @@
                 }
 
                 this.sum = newSum;
+
             }
 
         },

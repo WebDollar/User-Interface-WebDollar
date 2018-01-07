@@ -9,7 +9,7 @@
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet
-                <!--<ShowSumBalances :addresses="this.addresses" :currency="this.currency" />-->
+                <ShowSumBalances :addresses="this.addresses" :currency="this.currency" />
             </span>
         </div>
 

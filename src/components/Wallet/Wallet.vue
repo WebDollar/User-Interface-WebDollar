@@ -54,6 +54,7 @@
 
 
 <script>
+    var Vue = require('vue')
 
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
@@ -71,7 +72,7 @@
         data:  () => {
             return {
                 opened: false,
-                addresses: [],
+                addresses: {},
                 currency: "0x01",
 
                 walletButtonMarginOpened: 0,
@@ -198,10 +199,12 @@
 
             loadAllAddresses(){
 
-                for (let i=0; i<this.addresses.length; i++)
-                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[i].subscription);
+                for (let address in this.addresses){
+                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[address].subscription);
+                }
 
-                this.addresses = [];
+
+                this.addresses = {};
 
                 for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++) {
                     this.addAddressToWalletWatch(WebDollar.Blockchain.Wallet.addresses[i].address);
@@ -211,19 +214,20 @@
 
             addAddressToWalletWatch(address){
 
-                let element = {address: address, balances: {}};
+                this.addresses[address] = {address: address, balances: {}};
 
 
                 let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
-                    element.balances = data.balances;
+                    console.log("balance changed", address, data);
+                    this.addresses[address].balances = data.balances;
+                    this.addresses = Object.assign( {}, this.addresses, { });
+
                 });
 
                 if (data !== null) {
-                    element.subscription = data.subscription;
-                    element.balances = data.balances;
+                    this.addresses[address].subscription = data.subscription;
+                    this.addresses[address].balances = data.balances;
                 }
-
-                this.addresses.push(element);
 
             },
 
@@ -231,10 +235,10 @@
 
                 if (address === null || address === undefined) return false;
 
-                for (let i=0; i<this.addresses.length; i++)
-                    if (address.toString() === this.addresses.address.toString()){
+                for (let keyAddress in this.addresses)
+                    if (address.toString() === this.addresses[keyAddress].address.toString()){
 
-                        WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[i].subscription);
+                        WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[keyAddress].subscription);
                         this.addresses.splice(i,1);
                         return true;
                     }

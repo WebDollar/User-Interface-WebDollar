@@ -231,13 +231,13 @@
 
                 <form class="buy" :style="{display: this.isBuy ? 'block': 'none'}">
 
-                    <p class="title">Temoporary unavaible</p>
+                    <p class="title">Temporary unavailable</p>
 
                 </form>
 
                 <form class="sell" :style="{display: this.isSell ? 'block': 'none'}">
 
-                    <p class="title">Temoporary unavaible</p>
+                    <p class="title">Temporary unavailable</p>
 
                 </form>
 

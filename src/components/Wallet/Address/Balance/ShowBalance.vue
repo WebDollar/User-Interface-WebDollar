@@ -27,6 +27,11 @@
 
             this.currency = this.currency || '0x01';
 
+            if (typeof this.address === "object" && typeof this.address.hasOwnProperty("balances") ){ //it is an address object
+                this.balances = this.address.balances;
+                return;
+            }
+
             let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(this.address, (data)=>{
                 this.balances = data.balances;
             });
@@ -40,6 +45,11 @@
 
         watch: {
             address: function (newVal, oldVal) { // watch it
+
+                if (typeof newVal === "object" && typeof newVal.hasOwnProperty("balances") ){ //it is an address object
+                    this.balances = newVal.balances;
+                    return;
+                }
 
                 WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.subscription);
 

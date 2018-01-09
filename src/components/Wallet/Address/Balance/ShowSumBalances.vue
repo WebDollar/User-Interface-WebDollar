@@ -1,6 +1,6 @@
 <template>
 
-    <span>
+    <span class="show-sum-balances">
         {{  Math.round(this.sum * 100000)/100000 }}
     </span>
 
@@ -66,3 +66,10 @@
     }
 
 </script>
+
+<style>
+    .show-sum-balances{
+        display: inline;
+        color: #1f1f1f;
+    }
+</style>

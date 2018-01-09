@@ -87,8 +87,10 @@
 
             });
 
-            this.minerAddress = WebDollar.Blockchain.Mining.minerAddress;
+            this.minerAddress = WebDollar.Blockchain.Mining.minerAddressBase;
+            console.log("mining/miner-address-changed", this.minerAddress);
             WebDollar.Blockchain.Mining.emitter.on("mining/miner-address-changed", (minerAddress)=>{
+                console.log("mining/miner-address-changed", minerAddress);
                 this.minerAddress = minerAddress;
             });
 
@@ -123,7 +125,7 @@
 
                 if ( value < this.workers ){
 
-                    while (value!=this.workers){
+                    while (value!==this.workers){
 
                         this.workers--;
                         this.destroyOneMiningWorker();
@@ -132,7 +134,7 @@
 
                 }else{
 
-                    while (value!=this.workers){
+                    while (value!==this.workers){
 
                         this.workers++;
                         this.createOneMiningWorker();

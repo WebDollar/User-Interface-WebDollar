@@ -10,7 +10,19 @@
             <slider @sliderChanged="this.changeWorkers"/>
         </div>
         <div id="miningDetails">
-            <p class="">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
+            <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
+            <svg :style="{display: this.hashesPerSecond==0 && this.started==true ? 'inline-block' : 'none'}" version="1.1" id="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                  <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                    <animateTransform attributeType="xml"
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 25 25"
+                      to="360 25 25"
+                      dur="0.6s"
+                      repeatCount="indefinite"/>
+                    </path>
+            </svg>
         </div>
 
         <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
@@ -140,6 +152,12 @@
 
 <style>
 
+    #miningLoader{
+        vertical-align: top;
+        width: 30px;
+        height: 30px;
+    }
+
     #dashboardMining{
         overflow: hidden;
         position: fixed;
@@ -203,9 +221,10 @@
     }
 
     #miningDetails{
+        vertical-align: top;
         display: inline-block;
         line-height: 32px;
-        margin-top: 2px;
+        margin-top: 1;
     }
 
     #miningDetails p{
@@ -370,7 +389,7 @@
             margin-bottom: 0;
         }
         #minningController, .walletStartMining, .WEBD{
-            display: block;
+            display: inline-block;
             width: 100%;
         }
         #minningController{

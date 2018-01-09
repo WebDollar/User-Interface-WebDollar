@@ -16,7 +16,7 @@
 
                         <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
 
-                        <div id='refClipboardCopyAddress' ref="refClipboardCopyAddress" :class=" this.clipboardText!='Copied' ? 'copyToClipboard' : 'copyToClipboardSuccess' ">
+                        <div @click="copyToClipboard" :class=" this.clipboardText!='Copied' ? 'copyToClipboard' : 'copyToClipboardSuccess' ">
                             {{this.clipboardText}}
                         </div>
 
@@ -68,17 +68,17 @@
 
                     <!--<div class="header">-->
 
-                        <!--<span class="headerElement">-->
-                            <!--Adress Source-->
-                        <!--</span>-->
+                    <!--<span class="headerElement">-->
+                    <!--Adress Source-->
+                    <!--</span>-->
 
-                        <!--<span class="headerElement">-->
-                            <!--Destination-->
-                        <!--</span>-->
+                    <!--<span class="headerElement">-->
+                    <!--Destination-->
+                    <!--</span>-->
 
-                        <!--<div class="headerElement">-->
-                            <!--Ammount & currency-->
-                        <!--</div>-->
+                    <!--<div class="headerElement">-->
+                    <!--Ammount & currency-->
+                    <!--</div>-->
 
                     <!--</div>-->
 
@@ -251,10 +251,14 @@
 </template>
 
 <script>
+    var Vue = require('vue')
 
     import Modal from "components/UI/modal/Modal.vue"
-    const Clipboard = require('clipboard')
+    import Clipboard from './../../../../../node_modules/v-clipboard'
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
+
+
+    Vue.use(Clipboard)
 
     export default {
 
@@ -315,15 +319,9 @@
                     this.$refs['refModal'].showModal();
                 }
             },
-
-            addressClipboardCopiedSuccessfully(e) {
-                this.clipboardText='Copied';
-                console.log(e);
-            },
-
-            addressClipboardCopiedError(e) {
-                this.clipboardText="Copy didn't work";
-                console.log(e);
+            copyToClipboard(){
+                this.clipboardText = 'Copied';
+                this.$clipboard(this.address)
             }
 
         },
@@ -334,19 +332,6 @@
 
             if (typeof window === 'undefined') return;
 
-            var clipboard = new Clipboard('#refClipboardCopyAddress', {
-                text: () => {
-                    return this.address;
-                }
-            });
-
-            clipboard.on('success', (e) => {
-                this.addressClipboardCopiedSuccessfully(e);
-            });
-
-            clipboard.on('error', (e) => {
-                this.addressClipboardCopiedError(e);
-            });
         },
 
     }

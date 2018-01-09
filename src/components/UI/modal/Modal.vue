@@ -357,6 +357,8 @@
             width: 100%;
             max-width: none;
             min-width: none;
+            top: 0;
+            transform:none;
         }
         .twoColums{
             display: inline-block;

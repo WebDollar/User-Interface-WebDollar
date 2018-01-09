@@ -32,7 +32,7 @@
 
                 //it should use BigNumber as math...
 
-                console.log('changed to newxxxx', addresses);
+                //console.log('changed to newxxxx', addresses);
 
                 if (addresses === undefined || addresses === null) return ;
 

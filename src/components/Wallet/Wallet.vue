@@ -94,18 +94,15 @@
 
         mounted(){
 
-            this.changeScreenBehavior();
-
                 //in browser
               if (typeof window === "undefined") return false;
 
+              this.changeScreenBehavior();
+
               WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
+                  console.log("wallet/address-changes", address)
                   this.addNewAddress(address);
               });
-
-            WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
-                this.addNewAddress(address);
-            });
 
               WebDollar.Blockchain.Wallet.emitter.on("wallet/changes", ()=>{
                   this.loadAllAddresses();
@@ -120,6 +117,8 @@
               BrowserHelpers.addEvent(window, "resize", (event) => {
                   this.changeScreenBehavior()
               });
+
+              this.loadAllAddresses();
 
         },
 

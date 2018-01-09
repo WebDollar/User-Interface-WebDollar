@@ -385,7 +385,6 @@
         }
 
         #dashboardMining{
-            height: 45px!important;
             margin-bottom: 0;
         }
         #minningController, .walletStartMining, .WEBD{
@@ -432,7 +431,7 @@
             padding-left: 0;
         }
         .WEBD{
-            margin-top: -43px;
+            margin-top: -38px;
             text-align: right;
             margin-right: 10px;
         }
@@ -443,7 +442,7 @@
             float:left;
         }
         .walletStartMining{
-            margin-top:-42px;
+            margin-top:-29px;
             margin-left:40px;
         }
         #threadsControll{
@@ -480,7 +479,7 @@
         }
 
         .WEBD{
-            margin-top: -43px;
+            margin-top: -38px;
             font-size:14px;
         }
 

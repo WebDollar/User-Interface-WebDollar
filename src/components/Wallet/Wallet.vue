@@ -9,7 +9,7 @@
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet
-                <ShowSumBalances :addresses="this.addresses" :currency="this.currency" />
+                <ShowSumBalances :addresses="this.addresses" :currency="this.currency" ref="showSumBalances" />
             </span>
         </div>
 
@@ -203,12 +203,12 @@
 
             loadAllAddresses(){
 
-                for (let address in this.addresses){
-                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[address].subscription);
+                for (let index in this.addresses){
+                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
                 }
 
 
-                this.addresses = {};
+                this.addresses = [];
 
                 for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++) {
                     this.addAddressToWalletWatch(WebDollar.Blockchain.Wallet.addresses[i].address);
@@ -218,19 +218,32 @@
 
             addAddressToWalletWatch(address){
 
-                this.addresses[address] = {address: address, balances: {}};
-
 
                 let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
                     console.log("balance changed", address, data);
-                    this.addresses[address].balances = data.balances;
-                    this.addresses = Object.assign( {}, this.addresses, { });
+
+                    for (let i=0; i<this.addresses.length; i++)
+                        if (this.addresses[i].address === address ){
+
+                            this.addresses[i].balances = data.balances;
+                            this.addresses[i] = Object.assign( {}, this.addresses[i], { });
+                            this.$refs['showSumBalances'].refreshSum(this.addresses, this.currency);
+
+                            break;
+                        }
+
+                    // immutable array
+                    // this.addresses = Object.assign( {}, this.addresses, { });
+
+                    this.$forceUpdate();
 
                 });
 
                 if (data !== null) {
-                    this.addresses[address].subscription = data.subscription;
-                    this.addresses[address].balances = data.balances;
+
+                    let element =  {address: address, balances: data.balances, subscription: data.subscription};
+                    this.addresses.push (element);
+
                 }
 
             },

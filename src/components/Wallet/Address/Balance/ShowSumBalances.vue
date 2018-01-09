@@ -32,12 +32,14 @@
 
                 //it should use BigNumber as math...
 
+                console.log('changed to newxxxx', addresses);
+
                 if (addresses === undefined || addresses === null) return ;
 
-                for (let address in this.addresses){
+                for (let index in this.addresses){
 
-                    if (addresses[address].balances !== undefined && addresses[address].balances !== null && addresses[address].balances[currency] !== undefined)
-                        newSum += parseFloat( addresses[address].balances[currency]);
+                    if (addresses[index].balances !== undefined && addresses[index].balances !== null && addresses[index].balances[currency] !== undefined)
+                        newSum += parseFloat( addresses[index].balances[currency]);
                 }
 
                 this.sum = newSum;

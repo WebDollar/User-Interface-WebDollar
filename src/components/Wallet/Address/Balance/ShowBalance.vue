@@ -77,7 +77,7 @@
 <style>
     .show-balance-span{
         display: inline-block;
-        margin-right: 10px;
+        margin-right: 4px;
         color: #fec02c;
         vertical-align: top;
         margin-top: 0;

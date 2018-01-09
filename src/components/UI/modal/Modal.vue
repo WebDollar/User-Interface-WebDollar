@@ -357,6 +357,8 @@
             width: 100%;
             max-width: none;
             min-width: none;
+            max-height: 100%;
+            overflow-y: auto;
         }
         .twoColums{
             display: inline-block;
@@ -379,6 +381,7 @@
         .modal .transfer .button{
             line-height: 26px;
             font-size: 20px;
+            margin-bottom: 50px;
         }
         .modal .title{
             padding: 20px 0;

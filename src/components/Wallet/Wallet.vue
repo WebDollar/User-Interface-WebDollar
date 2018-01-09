@@ -76,7 +76,7 @@
         data:  () => {
             return {
                 opened: false,
-                addresses: {},
+                addresses: [],
                 currency: "0x01",
 
                 walletButtonMarginOpened: 0,

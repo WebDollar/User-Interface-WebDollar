@@ -54,17 +54,16 @@
 
 
 <style>
-    .allWaletsContaier{
-
-    }
 
     #allWalets .walletAddress{
         padding: 0!important;
         padding-right: 0;
-        background-color: #272626;
-        margin: 5px;
         width: 100%;
         cursor: pointer;
+        border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px;
+        margin: 15px 10px;
+        transition: all .3s linear;
     }
 
     #allWalets .walletAddress:last-child{
@@ -75,10 +74,12 @@
         height: 40px;
         display: inline-block;
         vertical-align: top;
+        border-radius: 100%;
     }
 
     #allWalets .walletAddress:hover{
-        background-color: #000;
+        margin: 15px 20px;
+        background-color: #313131;
         transition: all .3s linear;
     }
 
@@ -88,8 +89,9 @@
         color: #fddb0c;
         line-height: 40px;
         padding-top: 1px;
-        margin-left: 10px;
+        margin-left: 7px;
         font-size: 12px;
         vertical-align: top;
     }
+
 </style>

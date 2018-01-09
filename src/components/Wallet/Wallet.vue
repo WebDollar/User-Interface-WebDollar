@@ -23,8 +23,12 @@
 
                 <div class="walletController">
 
-                    <icon class="btn" icon="plus" @click="this.handleAddNewAddress" />
-                    <icon class="btn" icon="lock-open" @click="this.handleLockWallet" />
+                    <div class="btn" @click="this.handleAddNewAddress">
+                        Add Adress
+                    </div>
+                    <div class="btn" @click="this.handleLockWallet">
+                        Lock Wallet
+                    </div>
 
                 </div>
 
@@ -271,10 +275,6 @@
         color: #1f1f1f;
     }
 
-    #walletButton:hover #walletButtonText{
-        color: #fff;
-    }
-
     #walletButton {
         margin: 0 auto;
         position: fixed;
@@ -295,7 +295,7 @@
     }
 
     #walletButton:hover{
-        color: #fff;
+        background-color: #fec02c;
         transition: all .3s linear;
     }
 
@@ -309,6 +309,8 @@
     }
 
     .walletController{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;
@@ -316,13 +318,19 @@
     }
 
     .walletController .btn{
-        display: inline-block;
-        padding: 6px 12px 6px 12px;
-        background-color: #1f1f1f;
+        text-align: center;
+        color: #b5b5b5;
+        padding: 5px 0;
+        cursor: pointer;
     }
 
     .walletController .btn:hover{
-        background-color: #000000;
+        background-color: #44403f;
+        transition: all .3s linear;
+    }
+
+    .walletController .btn:first-child{
+        border-right: solid 1px #3c3b3b;
     }
 
     .allWallets div{
@@ -330,8 +338,6 @@
     }
 
     #walletButton:hover{
-        background-color: #1f1f1f;
-        border-right: solid 1px #444444;
         transition: all .3s linear;
     }
 
@@ -357,7 +363,6 @@
         height: 358px;
         margin-bottom:-100px;
         z-index: 90;
-        transition: all .3s linear;
         border-top: solid 1px #3d3d3d;
         border-left: solid 1px #444;
         transition: all .3s linear;
@@ -370,11 +375,6 @@
 
     #walletButton .buttonIcon{
         fill: #000;
-        transition: all .3s linear;
-    }
-
-    #walletButton:hover .buttonIcon{
-        fill: #fff;
         transition: all .3s linear;
     }
 

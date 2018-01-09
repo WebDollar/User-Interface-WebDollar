@@ -4,19 +4,13 @@
         <div id="minningController">
             <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
             <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
-            <div id="miningDetails">
-                <p class="">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p> <span class="testnet">TEST NET #1</span>
-            </div>
         </div>
 
         <div type="button" class="walletStartMining">
-            <div id="threadsControll">
-                <div class="button leftButton" type="button" @click="this.destroyOneMiningWorker"> <p>-</p>
-                </div>
-                <p class="miningPowerThreads">Threads</p>
-                <div class="button rightButton" type="button"  @click="this.createOneMiningWorker"> <p>+</p>
-                </div>
-            </div>
+            <slider @sliderChanged="this.changeWorkers"/>
+        </div>
+        <div id="miningDetails">
+            <p class="">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
         </div>
 
         <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
@@ -27,6 +21,7 @@
 <script>
 
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue";
+    import slider from "./slider.vue";
 
     export default{
 
@@ -34,6 +29,7 @@
 
         components: {
             "ShowBalance":ShowBalance,
+            "slider":slider
         },
 
         data: function () {
@@ -41,7 +37,6 @@
 
                 started: false,
                 hashesPerSecond: 0,
-
                 workers: 0,
                 minerAddress:'',
             }
@@ -112,6 +107,30 @@
 
             },
 
+            changeWorkers(value){
+
+                if ( value < this.workers ){
+
+                    while (value!=this.workers){
+
+                        this.workers--;
+                        this.destroyOneMiningWorker();
+
+                    }
+
+                }else{
+
+                    while (value!=this.workers){
+
+                        this.workers++;
+                        this.createOneMiningWorker();
+
+                    }
+
+                }
+
+            }
+
         }
 
 
@@ -150,15 +169,14 @@
 
 
     .walletStartMining{
-        position: absolute;
-        display: block;
-        margin: 0 auto;
+        position: relative;
+        display: inline-block!important;
+        vertical-align: top;
         left: 0;
         right: 0;
         font-size: 20px;
         color: #f20;
         display: inline-block;
-        width: 230px;
         cursor: pointer;
         text-align: center;
         transition: all .3s linear;
@@ -187,8 +205,7 @@
     #miningDetails{
         display: inline-block;
         line-height: 32px;
-        margin-left: 10px;
-        margin-top: 0;
+        margin-top: 2px;
     }
 
     #miningDetails p{
@@ -274,21 +291,21 @@
         font-size: 20px;
         padding: 0 10px;
         text-align: center;
-        padding-bottom: 4px;
+        padding-bottom: 8px;
         line-height: 25px;
         display: inline-block;
         color: #fff;
         background-color: #d23c25;
         vertical-align: top;
-        padding-top: 4px;
+        padding-top: 6px;
         border-right: solid 1px #444;
-        margin-right: -4px;
         width: 40px;
+        padding-left: 0;
+        padding-right:0;
     }
 
     .whiteText{
         color: #c5c5c5;
-        margin-left: 10px;
         font-weight: 100;
     }
 
@@ -297,6 +314,7 @@
         padding-bottom: 0;
         margin-bottom: 15px;
         display: inline-block;
+        vertical-align: top;
     }
 
     #createWalletAddress{
@@ -337,18 +355,16 @@
         padding-top: 6px;
     }
 
-    .testnet{
-        display: inline-block;
-        color: #0f0;
-        margin-left: 10px;
-        font-size: 12px;
-    }
-
     #miningDetails p{
         display: inline-block;
     }
 
     @media only screen and (max-width : 831px) {
+
+        .show-balance-span{
+            font-size: 20px;
+        }
+
         #dashboardMining{
             height: 45px!important;
             margin-bottom: 0;
@@ -361,6 +377,7 @@
             background-color: #0000;
             margin-bottom: 0;
             height: 33px;
+            width: 400px;
             border-top: none;
             margin-top: 50px;
         }
@@ -391,12 +408,12 @@
             position: relative;
             display: block;
             line-height: 34px;
-            width: 63px;
+            width: 35px;
             padding-top: 6px;
             padding-left: 0;
         }
         .WEBD{
-            margin-top: -35px;
+            margin-top: -40px;
             text-align: right;
             margin-right: 10px;
         }
@@ -407,8 +424,8 @@
             float:left;
         }
         .walletStartMining{
-            margin-top:-33px;
-            margin-left:50px;
+            margin-top:-42px;
+            margin-left:40px;
         }
         #threadsControll{
             background-color: #f200;
@@ -435,12 +452,16 @@
 
     @media only screen and (max-width : 451px) {
 
+        .whiteText{
+            display: none;
+        }
+
         #threadsControll .button{
             width: 50px;
         }
 
         .WEBD{
-            margin-top: -35px;
+            margin-top: -43px;
             font-size:14px;
         }
 

@@ -110,7 +110,7 @@
 
               //onLoad
               BrowserHelpers.addEvent(window, "load", (event) => {
-                  this.changeScreenBehavoir();
+                  this.changeScreenBehavior();
               });
 
               //onResize
@@ -219,7 +219,7 @@
 
 
                 let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
-                    console.log("balance changed", address, data);
+                    //console.log("balance changed", address, data);
 
                     for (let i=0; i<this.addresses.length; i++)
                         if (this.addresses[i].address === address ){

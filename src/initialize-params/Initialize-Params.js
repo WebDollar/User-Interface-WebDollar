@@ -4,6 +4,8 @@ import NetworkNativeMap from "maps/Native-Map/Network-Native-Map"
 import NetworkNativeMapDOM from "maps/Native-Map/Network-Native-Map-DOM"
 import NetworkGoogleMaps from "maps/Google-Maps/Network-Google-Maps.js"
 
+import GlobalInitialization from "./global-initialize/Global-Initialization"
+
 class InitializeParams{
 
     constructor(){
@@ -12,7 +14,19 @@ class InitializeParams{
             activated: true,
             type: "NativeMap",
             style: "dark",
-            id: "map",
+            id: "WebDollarMap",
+        };
+
+        this.mining = {
+            activated: true,
+            style: "dark",
+            id: "WebDollar",
+        };
+
+        this.wallet = {
+            activated: true,
+            style: "dark",
+            id: "WebDollar",
         };
 
 
@@ -27,13 +41,18 @@ class InitializeParams{
     }
 
     load(){
+        GlobalInitialization.initializeGlobalSettings();
         this.loadMaps();
     }
-
 
     async loadMaps(){
 
         if (this.maps.activated === false) return false;
+
+        if (document.getElementById(this.maps.id) === null){
+            console.log("The element "+this.maps.id+" was not found in your document");
+            return false;
+        }
 
         if (this.maps.type === "NativeMap"){
 
@@ -42,9 +61,12 @@ class InitializeParams{
 
             NetworkNativeMap.createMap(this.maps.id);
             await NetworkNativeMap.initialize();
+
+            NetworkNativeMap.createTestConnections();
         }
 
     }
+
 
 }
 

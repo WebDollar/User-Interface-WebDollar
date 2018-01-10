@@ -29,10 +29,11 @@
 }
 
 .map-dialog {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
     width: 100%;
-    /* padding-bottom: 32px; */
     text-align: center;
-    /* height: 64px; */
     pointer-events: none;
 }
 
@@ -41,7 +42,7 @@
     display: inline-block;
 }
 
-#map svg {
+#WebDollarMap svg {
 
     margin: auto;
     opacity: 1;
@@ -53,7 +54,7 @@
 }
 
 
-#map svg.hide-circles circle {
+#WebDollarMap svg.hide-circles circle {
     fill: #26292b;
 }
 
@@ -94,7 +95,7 @@
 
 
 @media  screen and  (max-width: 480px) {
-    #map svg{
+    #WebDollarMap svg{
         box-sizing: border-box;
         transform: scale(1.15);
     }
@@ -109,7 +110,7 @@
         will-change: initial;
     }
 
-    #map svg{
+    #WebDollarMap svg{
         box-sizing: border-box;
         transform: scale(1.05);
     }
@@ -120,14 +121,14 @@
 /* Large Screen */
 
 @media screen and (min-width: 1080px) {
-    #map svg {
+    #WebDollarMap svg {
         box-sizing: border-box;
         transform: scale(0.9);
     }
 }
 
 @media screen and (min-width: 1400px) {
-    #map svg {
+    #WebDollarMap svg {
         box-sizing: border-box;
         transform: scale(0.8);
     }

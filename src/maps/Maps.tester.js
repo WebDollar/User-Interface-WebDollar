@@ -33,7 +33,7 @@ class MapsTester{
 
         setTimeout( ()=>{
 
-            console.log("coordinates", coordinates);
+            //console.log("coordinates", coordinates);
             this.parent._addMarker(coordinates, "fake");
 
         }, timeOut)

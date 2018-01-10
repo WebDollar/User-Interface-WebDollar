@@ -23,9 +23,15 @@ class NetworkNativeMaps {
 
     createMap(mapSelector){
 
-        mapSelector = mapSelector || '#map svg';
+        if (mapSelector[0] !== '#') mapSelector = '#'+mapSelector;
+
+        mapSelector = (mapSelector || '#WebDollarMap')+ ' svg';
 
         this._mapElem = document.querySelector(mapSelector);
+        if (this._mapElem === null){
+            throw "map is not specified. Invalid selector"+mapSelector+". Try '#WebDollarMap svg'";
+        }
+
         this._circleMap = new CircleMap(this._mapElem);
 
         this._mapModal = new MapModal();
@@ -36,7 +42,8 @@ class NetworkNativeMaps {
 
     async initialize(){
 
-        WebDollar.Node.NodesList.registerEvent("connected", {type: ["all"]}, async (err, nodesListObject) => {
+
+        WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (nodesListObject) => {
 
             let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
 
@@ -44,7 +51,7 @@ class NetworkNativeMaps {
 
         } );
 
-        WebDollar.Node.NodesList.registerEvent("disconnected", {type: ["all"]}, async (err, nodesListObject) => {
+        WebDollar.Node.NodesList.emitter.on("nodes-list/disconnected", async (nodesListObject) => {
 
             //deleting the marker
             let markerIndex = this._findMarkerIndexBySocket(nodesListObject.socket);
@@ -53,7 +60,7 @@ class NetworkNativeMaps {
         });
 
         //Waitlist p2p
-        WebDollar.Node.NodesWaitlist.registerEvent("new-node-waitlist", {type: ["all"]}, async (err, nodesWaitlistObject)=>{
+        WebDollar.Node.NodesWaitlist.emitter.on("waitlist/new-node", async (nodesWaitlistObject)=>{
 
             let geoLocation = await nodesWaitlistObject.sckAddresses[0].getGeoLocation();
 
@@ -61,7 +68,7 @@ class NetworkNativeMaps {
 
         });
 
-        WebDollar.Node.NodesWaitlist.registerEvent("delete-node-waitlist", {type: ["all"]}, async (err, nodesWaitlistObject)=>{
+        WebDollar.Node.NodesWaitlist.emitter.on("waitlist/delete-node", async (nodesWaitlistObject)=>{
 
             //deleting the marker
             let markerIndex = this._findMarkerIndexBySocket(nodesWaitlistObject);
@@ -173,13 +180,13 @@ class NetworkNativeMaps {
             nodeProtocol = socket.node.type;
             nodeIndex = socket.node.index;
         }
-        else if (socket instanceof nodesWaitlistObject ){ //its a waitlist
+        else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject ){ //its a waitlist
 
             address = socket;
 
             switch (socket.type){
                 case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER: nodeType = 'browser'; break;
-                case NODES_WAITLIST_OBJECT_TYPE.NODE_PEER_TERMINAL_SERVER: nodeType = 'terminal'; break;
+                case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.NODE_PEER_TERMINAL_SERVER: nodeType = 'terminal'; break;
             }
 
             status = "not connected";

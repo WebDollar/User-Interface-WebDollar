@@ -1,0 +1,20 @@
+if(( typeof window !== 'undefined' && !window._babelPolyfill) ||
+    ( typeof global !== 'undefined' && !global._babelPolyfill)) {
+    require('babel-polyfill')
+}
+
+var Vue = require('vue')
+
+import Dashboard from 'components/Dashboard.vue';
+
+window.onload = () => {
+
+    if (document.getElementById('WebDollar') === null)
+        document.getElementsByTagName("body")[0].insertAdjacentHTML("beforeend",`<div id="WebDollar" > </div>`);
+
+    new Vue({
+        el: '#WebDollar',
+        render: h => h(Dashboard)
+    })
+
+};

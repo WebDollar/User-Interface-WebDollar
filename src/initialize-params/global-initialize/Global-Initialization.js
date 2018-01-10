@@ -1,20 +1,20 @@
 import BrowserHelpers from "helpers/Browser.helpers"
 
-class GlobalInitialization{
+class GlobalInitialization {
 
-    constructor(){
+    constructor() {
 
     }
 
 
-    initializeGlobalSettings(){
+    initializeGlobalSettings() {
 
         //-----------------------
         // Int Script
         //-----------------------
 
         if (document.getElementById("WebdollarFont") === null)
-            document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend",`<link id="WebdollarFont" href="http://192.168.1.2:8080/public/assets/fonts/avenir-light.woff" rel="stylesheet">`);
+            document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", `<link id="WebdollarFont" href="public/assets/fonts/avenir-light.woff" rel="stylesheet">`);
 
         if (document.getElementById("WebdollarViewPort") === null)
             document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", `<meta id="WebdollarViewPort" name="viewport" content="width=device-width, initial-scale=1.0"/>`)

@@ -81,9 +81,9 @@
 
             });
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/workers-changed", ()=>{
+            WebDollar.Blockchain.Mining.emitter.on("mining/workers-changed", (workers)=>{
 
-                this.workers = WebDollar.Blockchain.Mining.workers;
+                this.workers = workers;
 
             });
 
@@ -109,39 +109,21 @@
 
             },
 
-            destroyOneMiningWorker(){
+            destroyOneMiningWorker(number){
 
-                WebDollar.Blockchain.Mining.decreaseWorkers(1);
+                WebDollar.Blockchain.Mining.decreaseWorkers(number||1);
 
             },
 
-            createOneMiningWorker(){
+            createOneMiningWorker(number){
 
-                WebDollar.Blockchain.Mining.increaseWorkers(1);
+                WebDollar.Blockchain.Mining.increaseWorkers(number||1);
 
             },
 
             changeWorkers(value){
 
-                if ( value < this.workers ){
-
-                    while (value!==this.workers){
-
-                        this.workers--;
-                        this.destroyOneMiningWorker();
-
-                    }
-
-                }else{
-
-                    while (value!==this.workers){
-
-                        this.workers++;
-                        this.createOneMiningWorker();
-
-                    }
-
-                }
+                WebDollar.Blockchain.Mining.setWorkers(value);
 
             }
 

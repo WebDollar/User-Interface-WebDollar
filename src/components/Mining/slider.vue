@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vue-slider class="miningSlider" @callback="this.change" :piecewise="true" :width="this.screenWidth < 750 ? 180 : 330" :tooltip="false" :min="0" :max="10" v-model="value"></vue-slider>
+        <vue-slider class="miningSlider" @callback="this.change" :piecewise="true" :width="this.screenWidth < 750 ? 180 : 330" :tooltip="false" :min="0" :max="this.logicalProcessors" v-model="value"></vue-slider>
     </div>
 </template>
 <script>
@@ -46,6 +46,8 @@
             });
 
             this.screenWidth = window.innerWidth;
+
+            this.logicalProcessors = 2 * window.navigator.hardwareConcurrency;
 
         }
     }

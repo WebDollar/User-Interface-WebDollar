@@ -1,8 +1,8 @@
 <template>
     <div>
-        <vue-slider class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
+        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
                     :width="this.screenWidth < 750 ? 180 : 330" :tooltip="false" :min="0" :max="this.logicalProcessors"
-                    v-model="value"></vue-slider>
+                    v-model="value" :disabled="this.disabled"></vue-slider>
     </div>
 </template>
 
@@ -21,13 +21,16 @@
         data() {
             return {
                 value: 0,
+                disabled:true,
                 screenWidth: window.innerWidth,
-                logicalProcessors: 0,
+                logicalProcessors: 8,
             }
         },
 
         methods: {
             change(value) {
+
+                console.log("value", value);
 
                 if (value > (this.value||1) *3){
 

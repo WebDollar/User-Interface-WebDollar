@@ -7,7 +7,7 @@
         </div>
 
         <div type="button" class="walletStartMining">
-            <slider @sliderChanged="this.changeWorkers"/>
+            <slider ref="refMiningSlider" @sliderChanged="this.changeWorkers"/>
         </div>
         <div id="miningDetails">
             <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
@@ -84,14 +84,22 @@
             WebDollar.Blockchain.Mining.emitter.on("mining/workers-changed", (workers)=>{
 
                 this.workers = workers;
+                if (this.workers !== this.$refs['refMiningSlider'].data)
+                    this.$refs['refMiningSlider'].$refs['slider'].setValue(this.workers);
 
             });
 
             this.minerAddress = WebDollar.Blockchain.Mining.minerAddressBase;
-            console.log("mining/miner-address-changed", this.minerAddress);
             WebDollar.Blockchain.Mining.emitter.on("mining/miner-address-changed", (minerAddress)=>{
-                console.log("mining/miner-address-changed", minerAddress);
                 this.minerAddress = minerAddress;
+            });
+
+
+            WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=> {
+
+                if (data.message === "Ready")
+                    this.$refs['refMiningSlider'].disabled = false;
+
             });
 
         },

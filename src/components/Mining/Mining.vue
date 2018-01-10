@@ -1,5 +1,5 @@
 <template>
-    <div id="dashboardMining" class="walletSection">
+    <div id="dashboardMining" class="walletSection" >
 
         <div id="minningController">
             <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
@@ -7,11 +7,10 @@
         </div>
 
         <div type="button" class="walletStartMining">
-            <slider @sliderChanged="this.changeWorkers"/>
+            <slider ref="refMiningSlider" @sliderChanged="this.changeWorkers"/>
         </div>
         <div id="miningDetails">
-            <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">
-                {{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
+            <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
             <svg :style="{display: this.hashesPerSecond==0 && this.started==true ? 'inline-block' : 'none'}" version="1.1" id="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                  width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                   <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
@@ -24,14 +23,9 @@
                       repeatCount="indefinite"/>
                     </path>
             </svg>
-            <p id="incognitoMode" v-if="isIncognitoMode">Incognito mode detected! The wallet won't be saved if you close
-                this tab!</p>
         </div>
 
-
-        <p class="WEBD">
-            <ShowBalance :address="this.minerAddress" currency="0x01"/>
-            <b class="whiteText">WBD MINED</b></p>
+        <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
 
     </div>
 </template>
@@ -41,13 +35,13 @@
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue";
     import slider from "./slider.vue";
 
-    export default {
+    export default{
 
         name: 'Mining',
 
         components: {
-            "ShowBalance": ShowBalance,
-            "slider": slider
+            "ShowBalance":ShowBalance,
+            "slider":slider
         },
 
         data: function () {
@@ -56,59 +50,56 @@
                 started: false,
                 hashesPerSecond: 0,
                 workers: 0,
-                minerAddress: '',
-                isIncognitoMode: false
+                minerAddress:'',
             }
         },
 
-        computed: {},
+        computed:{
+        },
 
-        props: {},
+        props:{
+
+        },
 
         mounted() {
 
             if (typeof window === 'undefined') return;
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/hash-rate", (hashesPerSecond) => {
+            WebDollar.Blockchain.Mining.emitter.on("mining/hash-rate", (hashesPerSecond)=>{
                 this.hashesPerSecond = hashesPerSecond;
             });
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/status-changed", (status) => {
+            WebDollar.Blockchain.Mining.emitter.on("mining/status-changed", (status)=>{
 
                 this.started = WebDollar.Blockchain.Mining.started;
 
             });
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/reset", () => {
+            WebDollar.Blockchain.Mining.emitter.on("mining/reset", ()=>{
 
                 this.started = WebDollar.Blockchain.Mining.started;
 
             });
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/workers-changed", (workers) => {
+            WebDollar.Blockchain.Mining.emitter.on("mining/workers-changed", (workers)=>{
 
                 this.workers = workers;
+                if (this.workers !== this.$refs['refMiningSlider'].data)
+                    this.$refs['refMiningSlider'].$refs['slider'].setValue(this.workers);
 
             });
 
             this.minerAddress = WebDollar.Blockchain.Mining.minerAddressBase;
-            console.log("mining/miner-address-changed", this.minerAddress);
-            WebDollar.Blockchain.Mining.emitter.on("mining/miner-address-changed", (minerAddress) => {
-                console.log("mining/miner-address-changed", minerAddress);
+            WebDollar.Blockchain.Mining.emitter.on("mining/miner-address-changed", (minerAddress)=>{
                 this.minerAddress = minerAddress;
             });
 
 
-            //detect if browser is in incognito mode
-            let fs = window.RequestFileSystem || window.webkitRequestFileSystem;
-            if (!fs) {
-                console.log("Failed to check incognito mode");
-                this.isIncognitoMode = true;
-            }
-            fs(window.TEMPORARY, 100, function (fs) {
-                this.isIncognitoMode = false;
-            }, function (err) {
-                this.isIncognitoMode = true;
+            WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=> {
+
+                if (data.message === "Ready")
+                    this.$refs['refMiningSlider'].disabled = false;
+
             });
 
         },
@@ -126,19 +117,19 @@
 
             },
 
-            destroyOneMiningWorker(number) {
+            destroyOneMiningWorker(number){
 
-                WebDollar.Blockchain.Mining.decreaseWorkers(number || 1);
-
-            },
-
-            createOneMiningWorker(number) {
-
-                WebDollar.Blockchain.Mining.increaseWorkers(number || 1);
+                WebDollar.Blockchain.Mining.decreaseWorkers(number||1);
 
             },
 
-            changeWorkers(value) {
+            createOneMiningWorker(number){
+
+                WebDollar.Blockchain.Mining.increaseWorkers(number||1);
+
+            },
+
+            changeWorkers(value){
 
                 WebDollar.Blockchain.Mining.setWorkers(value);
 
@@ -152,19 +143,14 @@
 </script>
 
 <style>
-    #incognitoMode {
-        color: #ffc12c;
-        margin-left: auto;
-        margin-right: auto;
-    }
 
-    #miningLoader {
+    #miningLoader{
         vertical-align: top;
         width: 30px;
         height: 30px;
     }
 
-    #dashboardMining {
+    #dashboardMining{
         overflow: hidden;
         position: fixed;
         bottom: 0px;
@@ -178,7 +164,7 @@
         border-top: solid 1px #444444;
     }
 
-    .miningPowerThreads {
+    .miningPowerThreads{
         font-size: 14px;
         display: inline-block;
         padding: 0 10px;
@@ -191,9 +177,10 @@
         margin: 0;
     }
 
-    .walletStartMining {
+
+    .walletStartMining{
         position: relative;
-        display: inline-block !important;
+        display: inline-block!important;
         vertical-align: top;
         left: 0;
         right: 0;
@@ -205,40 +192,40 @@
         transition: all .3s linear;
     }
 
-    .walletStartMining a {
+    .walletStartMining a{
         padding-top: 5px;
         display: block;
         color: #000;
     }
 
-    .walletStartMining a:hover {
+    .walletStartMining a:hover{
         color: #ffc12c;
     }
 
-    .walletStartMining:hover {
+    .walletStartMining:hover{
         background-color: #191919;
         transition: all .3s linear;
     }
 
-    .minningController p {
+    .minningController p{
         font-size: 20px;
         margin-right: -4px;
     }
 
-    #miningDetails {
+    #miningDetails{
         vertical-align: top;
         display: inline-block;
         line-height: 32px;
         margin-top: 1;
     }
 
-    #miningDetails p {
+    #miningDetails p{
         margin-top: 0;
         font-size: 12px;
         color: #D5D5D5;
     }
 
-    #threadsControll {
+    #threadsControll{
         display: inline-block;
         vertical-align: top;
         width: 100%;
@@ -253,20 +240,21 @@
         float: right;
     }
 
-    #threadsControll .button p {
+    #threadsControll .button p{
         padding-top: 3px;
         padding-bottom: 4px;
         line-height: 27px;
         margin: 0;
     }
 
-    #allWalets {
+    #allWalets{
         /*border-top: solid 1px #7b7b7b;*/
         display: block;
         /*padding-top: 10px;*/
     }
 
-    .miningPowerText {
+
+    .miningPowerText{
         font-size: 10px;
         display: inline-block;
         padding: 0 10px;
@@ -276,7 +264,8 @@
         color: #fff;
     }
 
-    .miningPowerText .secondWord {
+
+    .miningPowerText .secondWord{
         height: auto;
         line-height: 10px;
         margin: 0;
@@ -285,7 +274,8 @@
         margin-right: -4px;
     }
 
-    #threadsControll .button {
+
+    #threadsControll .button{
         display: inline-block;
         background-color: #1f1f1f;
         color: #fff;
@@ -299,16 +289,16 @@
         transition: all .3s linear;
     }
 
-    #threadsControll .button:hover {
+    #threadsControll .button:hover{
         background-color: #000;
         transition: all .3s linear;
     }
 
-    #threadsControll .button:first-child {
+    #threadsControll .button:first-child{
         margin-top: 0;
     }
 
-    #threadsNumber {
+    #threadsNumber{
         font-size: 20px;
         padding: 0 10px;
         text-align: center;
@@ -322,35 +312,35 @@
         border-right: solid 1px #444;
         width: 40px;
         padding-left: 0;
-        padding-right: 0;
+        padding-right:0;
     }
 
-    .whiteText {
+    .whiteText{
         color: #c5c5c5;
         font-weight: 100;
     }
 
-    #minningController {
-        border-top: none;
+    #minningController{
+        border-top:none;
         padding-bottom: 0;
         margin-bottom: 15px;
         display: inline-block;
         vertical-align: top;
     }
 
-    #createWalletAddress {
+    #createWalletAddress{
         border: solid 1px #7b7b7b;
         padding-bottom: 0;
         margin-bottom: 15px;
         display: inline-block;
     }
 
-    #createWalletAddress p:hover {
+    #createWalletAddress p:hover{
         background-color: #191919;
         transition: all .3s linear;
     }
 
-    #createWalletAddress p {
+    #createWalletAddress p{
         padding: 10px;
         padding-top: 14px;
         background-color: #353535;
@@ -362,7 +352,7 @@
         transition: all .3s linear;
     }
 
-    .WEBD {
+    .WEBD{
         display: inline-block;
         margin-left: 20px;
         font-size: 20px;
@@ -376,26 +366,24 @@
         padding-top: 6px;
     }
 
-    #miningDetails p {
+    #miningDetails p{
         display: inline-block;
     }
 
-    @media only screen and (max-width: 831px) {
+    @media only screen and (max-width : 831px) {
 
-        .show-balance-span {
+        .show-balance-span{
             font-size: 20px;
         }
 
-        #dashboardMining {
+        #dashboardMining{
             margin-bottom: 0;
         }
-
-        #minningController, .walletStartMining, .WEBD {
+        #minningController, .walletStartMining, .WEBD{
             display: inline-block;
             width: 100%;
         }
-
-        #minningController {
+        #minningController{
             background-color: #0000;
             margin-bottom: 0;
             height: 33px;
@@ -403,37 +391,30 @@
             border-top: none;
             margin-top: 50px;
         }
-
-        .walletStartMining {
+        .walletStartMining{
             margin-top: -86px;
         }
-
-        #threadsControll .button p {
+        #threadsControll .button p{
             line-height: 43px;
         }
-
-        #threadsControll .button {
+        #threadsControll .button{
             width: 80px;
         }
-
-        .miningPowerThreads {
+        .miningPowerThreads{
             line-height: 38px;
             font-size: 16px;
             margin-right: -4px;
         }
-
-        #miningDetails {
+        #miningDetails{
             display: none;
         }
-
-        .miningPowerText {
+        .miningPowerText{
             display: none;
         }
-
-        #threadsNumber {
+        #threadsNumber{
             margin: 0 auto;
             text-align: center;
-            float: left;
+            float:left;
             position: relative;
             display: block;
             line-height: 34px;
@@ -441,67 +422,57 @@
             padding-top: 6px;
             padding-left: 0;
         }
-
-        .WEBD {
+        .WEBD{
             margin-top: -38px;
             text-align: right;
             margin-right: 10px;
         }
-
-        .miningPowerThreads {
-            display: none;
+        .miningPowerThreads{
+            display:none;
         }
-
-        #threadsControll .button {
-            float: left;
+        #threadsControll .button{
+            float:left;
         }
-
-        .walletStartMining {
-            margin-top: -29px;
-            margin-left: 40px;
+        .walletStartMining{
+            margin-top:-29px;
+            margin-left:40px;
         }
-
-        #threadsControll {
+        #threadsControll{
             background-color: #f200;
         }
-
         #threadsControll .button p {
             line-height: 35px;
             font-size: 35px;
             padding-top: 7px;
         }
-
-        #threadsControll .button:first-child {
-            border: none;
+        #threadsControll .button:first-child{
+            border:none;
         }
-
-        #minningController {
-            margin-top: 0
+        #minningController{
+            margin-top:0
         }
-
-        #dashboardMining {
-            height: 40px;
+        #dashboardMining{
+            height:40px;
         }
-
-        .walletStartMining:hover {
+        .walletStartMining:hover{
             background-color: #f200;
         }
 
     }
 
-    @media only screen and (max-width: 451px) {
+    @media only screen and (max-width : 451px) {
 
-        .whiteText {
+        .whiteText{
             display: none;
         }
 
-        #threadsControll .button {
+        #threadsControll .button{
             width: 50px;
         }
 
-        .WEBD {
+        .WEBD{
             margin-top: -38px;
-            font-size: 14px;
+            font-size:14px;
         }
 
     }

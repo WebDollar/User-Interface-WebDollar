@@ -1,10 +1,12 @@
 <template>
     <div>
-        <vue-slider class="miningSlider" @callback="this.change" :piecewise="true"
+        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
                     :width="this.screenWidth < 750 ? 180 : 330" :tooltip="false" :min="0" :max="this.logicalProcessors"
-                    v-model="value"></vue-slider>
+                    v-model="value" :disabled="this.disabled"></vue-slider>
     </div>
 </template>
+
+
 <script>
 
     import vueSlider from './../../../node_modules/vue-slider-component';
@@ -19,12 +21,25 @@
         data() {
             return {
                 value: 0,
-                screenWidth: window.innerWidth
+                disabled:true,
+                screenWidth: window.innerWidth,
+                logicalProcessors: 8,
             }
         },
 
         methods: {
             change(value) {
+
+                console.log("value", value);
+
+                if (value > (this.value||1) *3){
+
+                    value = (this.value||1) *3;
+                    this.$refs['slider'].setValue(value);
+                    return;
+
+                }
+
                 this.$emit('sliderChanged', value)
             },
             addEvent(object, type, callback) {
@@ -40,6 +55,8 @@
         },
 
         mounted() {
+
+            if (typeof window === "undefined") return false;
 
             this.addEvent(window, "resize", (event) => {
 

@@ -9,6 +9,7 @@
 
 <style>
     ::-webkit-scrollbar {
+        width: 0;
     }
 
     /* Track */

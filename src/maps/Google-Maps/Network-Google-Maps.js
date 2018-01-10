@@ -1,8 +1,5 @@
 import MapsTester from "./../Maps.tester"
 
-
-// import NodesList from 'node/lists/nodes-list'
-// import GeoHelper from 'node/lists/geolocation-lists/geo-helpers/geo-helper'
 import NetworkMapStyleLight from './styles/network-map-style-light';
 
 class NetworkGoogleMaps {
@@ -73,7 +70,7 @@ class NetworkGoogleMaps {
             return false;
         }
 
-        NodesList.registerEvent("connected", {type: ["all"]}, async (err, nodesListObject) => {
+        WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (nodesListObject) => {
 
             let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
 
@@ -83,7 +80,7 @@ class NetworkGoogleMaps {
 
         } );
 
-        NodesList.registerEvent("disconnected", {type: ["all"]}, async (err, nodesListObject) => {
+        WebDollar.Node.NodesList.emitter.on("nodes-list/disconnected", async (nodesListObject) => {
 
             //deleting the marker
 
@@ -186,7 +183,7 @@ class NetworkGoogleMaps {
     }
 
     async _showMyself(){
-        let geoLocation = await GeoHelper.getLocationFromAddress('', true);
+        let geoLocation = await WebDollar.Applications.GeoHelper.getLocationFromAddress('', true);
 
         this._addMarker( geoLocation, 'myself');
     }

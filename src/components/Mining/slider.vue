@@ -25,6 +25,7 @@
 
         methods: {
             change(value) {
+                console.log("value", value, this.value);
                 this.$emit('sliderChanged', value)
             },
             addEvent(object, type, callback) {

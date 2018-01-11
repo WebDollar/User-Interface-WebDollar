@@ -1,4 +1,4 @@
-import MapsTester from "./../Maps.tester"
+import MapsTester from "../Maps.tester"
 
 import NetworkMapStyleLight from './styles/network-map-style-light';
 

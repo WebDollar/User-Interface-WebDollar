@@ -1,9 +1,5 @@
 import BrowserHelpers from "helpers/Browser.helpers"
 
-import NetworkNativeMap from "maps/Native-Map/Network-Native-Map"
-import NetworkNativeMapDOM from "maps/Native-Map/Network-Native-Map-DOM"
-import NetworkGoogleMaps from "maps/Google-Maps/Network-Google-Maps.js"
-
 import GlobalInitialization from "./global-initialize/Global-Initialization"
 
 class InitializeParams{
@@ -36,36 +32,20 @@ class InitializeParams{
         BrowserHelpers.addEvent(window, "load", (event) => {
             console.log("User-Interface-Loaded");
             this.load();
+
         });
+
+        require('./vue/Main-vue');
+        require('./vue/Network-Native-Map-main-vue');
 
     }
 
     load(){
         GlobalInitialization.initializeGlobalSettings();
+
         this.loadMaps();
     }
 
-    async loadMaps(){
-
-        if (this.maps.activated === false) return false;
-
-        if (document.getElementById(this.maps.id) === null){
-            console.log("The element "+this.maps.id+" was not found in your document");
-            return false;
-        }
-
-        if (this.maps.type === "NativeMap"){
-
-            NetworkNativeMapDOM.addCSS(this.maps.style);
-            NetworkNativeMapDOM.addHTML(this.maps.id);
-
-            NetworkNativeMap.createMap(this.maps.id);
-            await NetworkNativeMap.initialize();
-
-            NetworkNativeMap.createTestConnections();
-        }
-
-    }
 
 
 }

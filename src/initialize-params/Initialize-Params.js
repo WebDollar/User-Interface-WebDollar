@@ -42,8 +42,6 @@ class InitializeParams{
 
     load(){
         GlobalInitialization.initializeGlobalSettings();
-
-        this.loadMaps();
     }
 
 

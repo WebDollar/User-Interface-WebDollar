@@ -8,6 +8,13 @@
 </template>
 
 <style>
+
+    #webDollar *{
+        -webkit-box-sizing: inherit!important;
+        -moz-box-sizing: inherit!important;
+        box-sizing: inherit!important;
+    }
+
     ::-webkit-scrollbar {
         width: 0;
     }

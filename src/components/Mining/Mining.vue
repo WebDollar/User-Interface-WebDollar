@@ -4,28 +4,28 @@
         <div id="minningController">
             <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
             <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
-        </div>
 
-        <div type="button" class="walletStartMining">
-            <slider ref="refMiningSlider" @sliderChanged="this.changeWorkers"/>
-        </div>
-        <div id="miningDetails">
-            <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
-            <svg :style="{display: this.hashesPerSecond==0 && this.started==true ? 'inline-block' : 'none'}" version="1.1" id="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                  <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                    <animateTransform attributeType="xml"
-                      attributeName="transform"
-                      type="rotate"
-                      from="0 25 25"
-                      to="360 25 25"
-                      dur="0.6s"
-                      repeatCount="indefinite"/>
-                    </path>
-            </svg>
-        </div>
+            <div type="button" class="miningBar">
+                <slider ref="refMiningSlider" @sliderChanged="this.changeWorkers"/>
+            </div>
 
-        <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
+            <div id="miningDetails">
+                <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
+                <svg :style="{display: this.hashesPerSecond==0 && this.started==true ? 'inline-block' : 'none'}" version="1.1" id="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                      <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                        <animateTransform attributeType="xml"
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 25 25"
+                          to="360 25 25"
+                          dur="0.6s"
+                          repeatCount="indefinite"/>
+                        </path>
+                </svg>
+            </div>
+            <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
+        </div>
 
     </div>
 </template>
@@ -186,7 +186,6 @@
         right: 0;
         font-size: 20px;
         color: #f20;
-        display: inline-block;
         cursor: pointer;
         text-align: center;
         transition: all .3s linear;
@@ -321,6 +320,7 @@
     }
 
     #minningController{
+        width: 100%;
         border-top:none;
         padding-bottom: 0;
         margin-bottom: 15px;
@@ -363,14 +363,24 @@
         min-width: 300px;
         text-align: center;
         border-left: solid 1px #444444;
-        padding-top: 6px;
+        line-height: 42px;
     }
 
     #miningDetails p{
         display: inline-block;
     }
 
+    .miningBar{
+        display: inline-block;
+        width: 330px;
+        margin-left: 0;
+    }
+
     @media only screen and (max-width : 831px) {
+
+        .miningBar{
+            padding: 4px 0px;
+        }
 
         .show-balance-span{
             font-size: 20px;
@@ -387,12 +397,8 @@
             background-color: #0000;
             margin-bottom: 0;
             height: 33px;
-            width: 400px;
             border-top: none;
             margin-top: 50px;
-        }
-        .walletStartMining{
-            margin-top: -86px;
         }
         #threadsControll .button p{
             line-height: 43px;
@@ -423,9 +429,12 @@
             padding-left: 0;
         }
         .WEBD{
-            margin-top: -38px;
             text-align: right;
             margin-right: 10px;
+            min-width: auto;
+            width: auto;
+            border:none;
+            line-height: 42px;
         }
         .miningPowerThreads{
             display:none;
@@ -435,7 +444,6 @@
         }
         .walletStartMining{
             margin-top:-29px;
-            margin-left:40px;
         }
         #threadsControll{
             background-color: #f200;
@@ -460,19 +468,18 @@
 
     }
 
-    @media only screen and (max-width : 451px) {
+        @media only screen and (max-width : 600px) {
 
-        .whiteText{
-            display: none;
+            .whiteText{
+                display: none;
+            }
+
         }
 
-        #threadsControll .button{
-            width: 50px;
-        }
+        @media only screen and (max-width : 500px) {
 
-        .WEBD{
-            margin-top: -38px;
-            font-size:14px;
+        .miningBar{
+            width: 60%;
         }
 
     }

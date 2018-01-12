@@ -1,7 +1,7 @@
 <template>
     <div>
         <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
-                    :width="this.screenWidth < 750 ? 180 : 330" :tooltip="false" :min="0" :max="this.logicalProcessors"
+                    :width="this.screenWidth < 750 ? this.sliderMobileWidth : 330" :tooltip="false" :min="0" :max="this.logicalProcessors"
                     v-model="value" :disabled="this.disabled"></vue-slider>
     </div>
 </template>
@@ -24,6 +24,7 @@
                 disabled:true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: 8,
+                sliderMobileWidth: 200,
             }
         },
 
@@ -62,9 +63,20 @@
 
                 this.screenWidth = window.innerWidth;
 
+                if (window.innerWidth<550){
+                    this.sliderMobileWidth = window.innerWidth-150+'px';
+                }else{
+                    this.sliderMobileWidth = '100%';
+                }
+
             });
 
             this.screenWidth = window.innerWidth;
+            if (window.innerWidth<550){
+                this.sliderMobileWidth = window.innerWidth-150+'px';
+            }else{
+                this.sliderMobileWidth = '100%';
+            }
 
             this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 8 : 2 * window.navigator.hardwareConcurrency;
 

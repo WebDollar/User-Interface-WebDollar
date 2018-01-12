@@ -359,8 +359,9 @@
     .walletController .btn{
         text-align: center;
         color: #b5b5b5;
-        padding: 5px 0;
         cursor: pointer;
+        padding: 6px 19px 6px 19px!important;
+        margin-left: 10px;
     }
 
     .walletController .btn:hover{

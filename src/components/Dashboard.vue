@@ -9,10 +9,16 @@
 
 <style>
 
-    #webDollar *{
-        -webkit-box-sizing: inherit!important;
-        -moz-box-sizing: inherit!important;
-        box-sizing: inherit!important;
+    #webDollar * {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+    #webDollar *:before,
+    #webDollar *:after {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
     }
 
     ::-webkit-scrollbar {

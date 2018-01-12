@@ -253,7 +253,6 @@
         /*padding-top: 10px;*/
     }
 
-
     .miningPowerText{
         font-size: 10px;
         display: inline-block;

@@ -222,7 +222,7 @@
         margin-top: 0;
         font-size: 12px;
         color: #D5D5D5;
-        margin-left: 55px;
+        margin-left: 35px;
     }
 
     #threadsControll{

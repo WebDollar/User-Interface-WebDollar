@@ -1,7 +1,7 @@
 <template>
 
     <div class="show-balance-span">
-        {{ (this.balances !== null && this.balances !== undefined && this.balances.hasOwnProperty(this.currency)) ? Math.round(this.balances[this.currency] * 100000)/100000 : 0 }}
+        {{ (this.balances !== null && this.balances !== undefined && this.balances.hasOwnProperty(this.currency)) ? Math.round(this.balances[this.currency] * 1000)/1000 : 0 }}
     </div>
 
 </template>

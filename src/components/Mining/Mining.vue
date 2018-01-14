@@ -215,14 +215,14 @@
         vertical-align: top;
         display: inline-block;
         line-height: 32px;
-        margin-top: 1;
+        margin-top: 1px;
+        margin-left: 35px;
     }
 
     #miningDetails p{
         margin-top: 0;
         font-size: 12px;
         color: #D5D5D5;
-        margin-left: 35px;
     }
 
     #threadsControll{

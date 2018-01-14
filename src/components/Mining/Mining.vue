@@ -479,7 +479,7 @@
         @media only screen and (max-width : 500px) {
 
         .miningBar{
-            width: 60%;
+            width: 50%;
         }
 
     }

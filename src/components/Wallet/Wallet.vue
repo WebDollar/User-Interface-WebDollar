@@ -310,6 +310,10 @@
 
 <style>
 
+    .vue-slider-component.vue-slider-horizontal .vue-slider-dot{
+        left:-5px;
+    }
+
     #walletButtonText{
         color: #1f1f1f;
     }
@@ -464,6 +468,7 @@
             background-color: #313131;
             border-top: solid 5px #313131;
         }
+
     }
 
 </style>

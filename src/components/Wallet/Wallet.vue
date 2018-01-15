@@ -445,7 +445,7 @@
             font-size: 22px;
         }
         .walletController .btn{
-            padding: 6px 19px 6px 19px!important;
+            padding: 10px 19px 6px 19px!important;
             margin-left: 10px;
         }
         .webdollarFont{

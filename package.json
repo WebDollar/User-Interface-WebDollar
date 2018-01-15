@@ -1,12 +1,11 @@
-
 {
   "name": "@webdollar/user-interface-webdollar",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "User Interface for WebDollar",
   "main": "index.js",
   "scripts": {
     "open_browser": "node src/open-browser",
-    "build_frontend": "browserify src/main.js -o node_modules/frontend-WebDollar/public/WebDollar-dist/WebDollar-User-Interface-bundle.js -t vueify -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   ",
+    "build_frontend": "browserify src/main.js -o node_modules/@webdollar/front-webdollar/public/WebDollar-dist/WebDollar-User-Interface-bundle.js -t vueify -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   ",
     "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t vueify -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   && npm run open_browser && npm run build_frontend",
     "test": "npm run build"
   },
@@ -36,7 +35,7 @@
     "stringify": "^5.2.0",
     "vue": "^2.5.13",
     "vue-slider-component": "*",
-    "frontend-WebDollar": "github:WebDollar/vue-Frontend"
+    "@webdollar/front-webdollar": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

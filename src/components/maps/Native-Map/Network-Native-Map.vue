@@ -2,7 +2,7 @@
 
     <div>
         <NetworkNativeMapCanvas />
-        <NetworkNativeMapDialog />
+        <NetworkNativeMapDialog ref="refDialog" />
     </div>
 
 </template>
@@ -10,7 +10,6 @@
 <script>
 
     import CircleMap from "./helpers/Circle-Map";
-    import MapModal from "./helpers/Map-Modal";
     import CellCounter from "./helpers/Cell-Counter";
     import MapsTester from "./../Maps.tester";
 
@@ -30,11 +29,13 @@
 
         mounted() {
 
+            if (typeof window === "undefined") return;
+
             this._markers = [];
             this._markerMyself = null;
 
             this.createMap();
-            this.createTestConnections();
+            //this.createTestConnections();
         },
 
         methods:{
@@ -52,7 +53,6 @@
 
                 this._circleMap = new CircleMap(this._mapElem);
 
-                this._mapModal = new MapModal();
                 this._mapElem.onmousemove = e => this._mapHighlight(e);
 
                 this._cellCounter = new CellCounter();
@@ -202,7 +202,7 @@
                 }
                 else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject ){ //its a waitlist
 
-                    address = socket;
+                    address = socket.sckAddresses[0].toString();
 
                     switch (socket.type){
                         case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER: nodeType = 'browser'; break;
@@ -234,9 +234,9 @@
 
                 if (e.target.data) {
                     const data = e.target.data;
-                    this._mapModal.show(data);
+                    this.$refs['refDialog'].show(data);
                 } else
-                    this._mapModal.hide();
+                    this.$refs['refDialog'].hide();
 
             },
 

@@ -3,7 +3,7 @@
 
         <img class="walletAddressImage" :src="this.getAddressPic">
 
-        <b><ShowBalance :address="this.address" currency="0x01"/> WBD</b>
+        <b><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
 
         <TransactionModal ref="refTransactionModal" :address="this.address" />
 

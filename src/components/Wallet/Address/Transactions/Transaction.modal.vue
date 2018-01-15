@@ -51,16 +51,16 @@
 
                 <form class="transfer" :style="{display: this.isTransfer ? 'block': 'none'}">
 
-                    <p class="title">Transfer WBD</p>
+                    <p class="title">Transfer WEBD</p>
 
                     <input class="adress" placeholder="Recipient Adress"/>
                     <!--{{this.toAddress||''.toString() }}-->
 
-                    <input class="amount" placeholder="WBD Amount"/>
+                    <input class="amount" placeholder="WEBD Amount"/>
                     <!--{{this.toAmount||0.0.toString() }}-->
 
                     <button type="submit" class="button">
-                        SEND WBD
+                        SEND WEBD
                     </button>
                 </form>
 

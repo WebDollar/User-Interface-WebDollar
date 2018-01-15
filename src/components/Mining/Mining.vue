@@ -24,7 +24,7 @@
                         </path>
                 </svg>
             </div>
-            <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
+            <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WEBD MINED</b></p>
         </div>
 
     </div>

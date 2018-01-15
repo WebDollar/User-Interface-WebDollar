@@ -8,6 +8,19 @@
 </template>
 
 <style>
+
+    #webDollar * {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+    #webDollar *:before,
+    #webDollar *:after {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+
     ::-webkit-scrollbar {
         width: 0;
     }

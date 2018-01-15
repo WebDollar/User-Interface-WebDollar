@@ -1,10 +1,12 @@
 <template>
 
-    <div class="dashboardWallet" >
+    <div class="dashboardWallet" ref="dashboardWallet">
 
         <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
                     marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
-                    top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose}">
+                    top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
+                    borderTopLeftRadius: this.opened ? this.walletButtonRadiusLeftOpen+'px' : this.walletButtonRadiusLeftClose+'px',
+                    borderTopRightRadius: this.opened ? this.walletButtonRadiusRightOpen+'px' : this.walletButtonRadiusRightClose+'px'}">
 
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
@@ -32,7 +34,8 @@
 
                 </div>
 
-                <div class="walletSection walletsContainer">
+                <div class="walletSection walletsContainer" :style="{
+                    height: this.walletContentHeight}">
                     <div id="allWalets">
 
                         <Address v-for="walletAddress in this.addresses"
@@ -89,6 +92,11 @@
                 walletMenuMarginTopClose: 0,
                 walletMenuHeightOpen: 0,
                 walletMenuHeightClosed: 0,
+                walletContentHeight: 315,
+                walletButtonRadiusLeftOpen: 0,
+                walletButtonRadiusLeftClose: 0,
+                walletButtonRadiusRightOpen: 0,
+                walletButtonRadiusRightClose: 0
             }
         },
 
@@ -111,11 +119,13 @@
               //onLoad
               BrowserHelpers.addEvent(window, "load", (event) => {
                   this.changeScreenBehavior();
+                  this.walletResizeFix();
               });
 
               //onResize
               BrowserHelpers.addEvent(window, "resize", (event) => {
-                  this.changeScreenBehavior()
+                  this.changeScreenBehavior();
+                  this.walletResizeFix();
               });
 
               this.loadAllAddresses();
@@ -143,7 +153,17 @@
                     this.walletMenuHeightOpen='100%';
                     this.walletMenuHeightClosed='358px';
 
+                    this.walletContentHeight= window.outerHeight-90;
+
+                    this.walletButtonRadiusLeftOpen= 0;
+                    this.walletButtonRadiusLeftClose= 15;
+
+                    this.walletButtonRadiusRightOpen= 0;
+                    this.walletButtonRadiusRightClose= 15;
+
                 }else{
+
+                    this.walletContentHeight= 315;
 
                     this.walletButtonMarginOpened = 392;
                     this.walletButtonMarginClosed = 30;
@@ -160,6 +180,12 @@
                     this.walletMenuHeightOpen='358px';
                     this.walletMenuHeightClosed='0';
 
+                    this.walletButtonRadiusLeftOpen= 60;
+                    this.walletButtonRadiusLeftClose= 60;
+
+                    this.walletButtonRadiusRightOpen= 0;
+                    this.walletButtonRadiusRightClose= 0;
+
                 }
 
             },
@@ -167,6 +193,20 @@
             toggleWallet(){
 
                 this.opened = !this.opened;
+
+                if(window.screenWidth < 831){
+                    if (this.opened===true){
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:none');
+                    }else{
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+                    }
+                }else{
+                    document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+                }
+
+            },
+
+            walletResizeFix(){
 
                 if(window.screenWidth < 831){
                     if (this.opened===true){
@@ -270,6 +310,10 @@
 
 <style>
 
+    .vue-slider-component.vue-slider-horizontal .vue-slider-dot{
+        left:-5px;
+    }
+
     #walletButtonText{
         color: #1f1f1f;
     }
@@ -319,8 +363,9 @@
     .walletController .btn{
         text-align: center;
         color: #b5b5b5;
-        padding: 5px 0;
         cursor: pointer;
+        padding: 6px 19px 6px 19px!important;
+        margin-left: 10px;
     }
 
     .walletController .btn:hover{
@@ -385,21 +430,22 @@
     @media only screen and (max-width : 831px) {
         #walletMenu{
             width: 100%;
-            margin-top: 64px!important;
+            margin-top: 40px!important;
         }
         #walletButton{
             width: 100%!important;
-            border-radius: 0;
             border:0;
-            height: 65px;
+            height: 40px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
             margin-bottom: 90px;
         }
         #walletButton span{
-            line-height: 65px;
-            font-size: 26px;
+            line-height: 40px;
+            font-size: 22px;
         }
         .walletController .btn{
-            padding: 16px 19px 16px 19px!important;
+            padding: 6px 19px 6px 19px!important;
             margin-left: 10px;
         }
         .webdollarFont{
@@ -422,6 +468,7 @@
             background-color: #313131;
             border-top: solid 5px #313131;
         }
+
     }
 
 </style>

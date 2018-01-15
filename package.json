@@ -35,7 +35,8 @@
     "opn": "^5.1.0",
     "stringify": "^5.2.0",
     "vue": "^2.5.13",
-    "vue-slider-component": "*"
+    "vue-slider-component": "*",
+    "frontend-WebDollar": "github:WebDollar/vue-Frontend"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

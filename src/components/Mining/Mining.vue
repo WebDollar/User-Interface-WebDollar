@@ -24,7 +24,7 @@
                         </path>
                 </svg>
             </div>
-            <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WBD MINED</b></p>
+            <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WEBD MINED</b></p>
         </div>
 
     </div>
@@ -215,14 +215,14 @@
         vertical-align: top;
         display: inline-block;
         line-height: 32px;
-        margin-top: 1;
+        margin-top: 1px;
+        margin-left: 35px;
     }
 
     #miningDetails p{
         margin-top: 0;
         font-size: 12px;
         color: #D5D5D5;
-        margin-left: 55px;
     }
 
     #threadsControll{
@@ -479,7 +479,7 @@
         @media only screen and (max-width : 500px) {
 
         .miningBar{
-            width: 60%;
+            width: 50%;
         }
 
     }

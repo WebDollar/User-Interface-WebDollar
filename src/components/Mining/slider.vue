@@ -9,7 +9,7 @@
 
 <script>
 
-    import vueSlider from './../../../node_modules/vue-slider-component';
+    import vueSlider from 'vue-slider-component';
 
     export default {
         name: 'slider',

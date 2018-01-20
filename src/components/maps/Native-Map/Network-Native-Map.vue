@@ -10,7 +10,7 @@
 <script>
 
     import CircleMap from "./helpers/Circle-Map";
-    import CellCounter from "./helpers/Cell-Counter";
+    import Circles from "./helpers/Circles";
     import MapsTester from "./../Maps.tester";
 
 
@@ -55,7 +55,7 @@
 
                 this._mapElem.onmousemove = e => this._mapHighlight(e);
 
-                this._cellCounter = new CellCounter();
+                this._circles = new Circles();
 
                 this.initialize();
             },
@@ -132,7 +132,7 @@
 
                     this._circleMap.highlightCell(cell, 'peer-own', marker.desc);
 
-                    this._cellCounter.incCellCount(cell);
+                    this._circles.inc(cell);
 
                     //add links to current nodes
                     for (let i = 0; i< this._markers.length; i++)
@@ -157,7 +157,7 @@
 
                     this._circleMap.highlightCell(cell, cellClass , marker.desc);
 
-                    this._cellCounter.incCellCount(cell);
+                    this._circles.inc(cell);
 
                     //add links to the myselfMarker
                     if (marker.desc.status === "connected")
@@ -245,9 +245,9 @@
                 if (marker.cell !== undefined && marker.cell !== null) {
 
                     // Only remove highlight if there are no more peers on this cell.
-                    if (this._cellCounter.decCellCount(marker.cell) === 0) {
+                    if (this._circles.del(marker.cell) === 0) {
                         // Either change class if there are still known peers there.
-                        if (this._cellCounter.getCellCount(marker.cell) > 0) {
+                        if (this._circles.get(marker.cell) > 0) {
                             this._circleMap.highlightCell(marker.cell, 'peer-connected-browser', undefined);
                         }
                         // Or remove class at all.

@@ -1,4 +1,4 @@
-import RobinsonProjection from "./RobinsonProjection"
+import Projection from "./Projection"
 
 class CircleMap {
 
@@ -58,7 +58,7 @@ class CircleMap {
         // the computation on the full/original map, so we calculate the full size.
         let fullMapWidth = 1.0946808510638297 * mapDimensions.width;
         let fullMapHeight = fullMapWidth / 1.97165551906973; // RobinsonProjection maps have a fixed aspect ratio
-        let projection = new RobinsonProjection(fullMapWidth, fullMapHeight);
+        let projection = new Projection(fullMapWidth, fullMapHeight);
         let point = projection.project(latitude, longitude);
         // the origin is centered in the middle of the map, so we translate it
         // to the top left corner

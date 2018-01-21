@@ -117,7 +117,8 @@
                 this._markers.push(marker);
 
                 if (socket === "myself") this.highlightMe(marker); else
-                if (socket === "fake") this.highlightConnectedPeer(marker); else
+                if (socket === "fake") this.highlightConnectedPeer(marker);
+                else
                     this.highlightConnectedPeer(marker)
 
             },
@@ -138,6 +139,8 @@
                     for (let i = 0; i< this._markers.length; i++)
                         if (this._markers[i] !== marker && this._markers[i].status === "connected")
                             this._circleMap.addLink(cell, this._markers[i].cell);
+
+                    this._circleMap.putCellOnTop(cell);
 
                 }
             },
@@ -163,6 +166,8 @@
                     if (marker.desc.status === "connected")
                         if (this._markerMyself !== null && this._markerMyself !== undefined && this._markerMyself !== marker)
                             this._circleMap.addLink(cell, this._markerMyself.cell);
+
+                    this._circleMap.putCellOnTop(cell);
 
                 }
             },

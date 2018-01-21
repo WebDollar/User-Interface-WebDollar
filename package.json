@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "open_browser": "node src/open-browser",
-    "build_frontend": "browserify src/main.js -o node_modules/@webdollar/front-webdollar/public/WebDollar-dist/WebDollar-User-Interface-bundle.js -t vueify -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   ",
+    "build_frontend": "browserify src/main.js -o dist_bundle/../../vue-Frontend/public/WebDollar-dist/WebDollar-User-Interface-bundle.js -t vueify -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   ",
     "build": "browserify src/main.js -o dist_bundle/WebDollar-User-Interface-bundle.js -t vueify -t [ stringify --extensions [ .html .css .text .svg ] ] -t [ babelify --presets [ es2017 ] ]   && npm run open_browser && npm run build_frontend",
     "test": "npm run build"
   },

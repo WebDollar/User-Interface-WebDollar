@@ -37,19 +37,25 @@ class CircleMap {
         cell.data = null;
     }
 
+    putCellOnTop(cell){
+        // put my own cell on top of everything else. In svg the stacking is not affected by z-index, but
+        // only by document order. So we make the cell the last child
+        cell.parentElement.appendChild(cell);
+    }
+
     highlightCell(cell, className, data) {
+
+        if (cell.getAttribute('class') === 'peer-own') return;
+
         cell.setAttribute('class', className);
 
-        if (className === 'own-peer') {
-            // put my own cell on top of everything else. In svg the stacking is not affected by z-index, but
-            // only by document order. So we make the cell the last child
-            cell.parentElement.appendChild(cell);
-        }
+        // if (className === 'peer-own')
+        //     cell.parentElement.appendChild(cell);
+
 
         // XXX another hack
-        if (data) {
+        if (data)
             cell.data = data;
-        }
     }
 
     _convertCoordinates(latitude, longitude) {
@@ -123,17 +129,13 @@ class CircleMap {
 
     addLink(startCell, endCell) {
 
-        if (!startCell || !endCell) {
+        if (!startCell || !endCell)
             return;
-        }
 
         // search whether we already drew that link
-        for (let i=0, link; link = this._links[i]; ++i) {
-            if (link.start === startCell && link.end === endCell
-                || link.end === startCell && link.start === endCell) {
+        for (let i=0, link; link = this._links[i]; ++i)
+            if (link.start === startCell && link.end === endCell || link.end === startCell && link.start === endCell)
                 return;
-            }
-        }
 
         // draw the link
         let svgBoundingRect = this.getDimensions();
@@ -142,8 +144,7 @@ class CircleMap {
         let viewBoxHeight = viewBox.baseVal.height;
         let pathEl = document.createElementNS(this._svg.namespaceURI, 'path');
 
-        let path = 'M'+(startCell.centerX*viewBoxWidth)+' '+(startCell.centerY*viewBoxHeight)
-            +'L'+(endCell.centerX*viewBoxWidth)+' '+(endCell.centerY*viewBoxHeight);
+        let path = 'M'+(startCell.centerX*viewBoxWidth)+' '+(startCell.centerY*viewBoxHeight) +'L'+(endCell.centerX*viewBoxWidth)+' '+(endCell.centerY*viewBoxHeight);
 
         pathEl.setAttributeNS(null,'d', path);
         pathEl.classList.add('link');
@@ -160,15 +161,15 @@ class CircleMap {
     }
 
     removeLink(startCell, endCell) {
-        for (let i=0, link; link = this._links[i]; ++i) {
-            if (link.start === startCell && link.end === endCell
-                || link.end === startCell && link.start === endCell) {
+
+        for (let i=0, link; link = this._links[i]; ++i)
+            if (link.start === startCell && link.end === endCell || link.end === startCell && link.start === endCell) {
                 // we found the link
                 startCell.parentElement.removeChild(link.path);
                 this._links.splice(i, 1);
                 return;
             }
-        }
+
     }
 }
 

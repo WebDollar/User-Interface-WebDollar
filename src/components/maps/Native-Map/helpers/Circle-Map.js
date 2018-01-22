@@ -32,9 +32,9 @@ class CircleMap {
         return this._svg.getBoundingClientRect();
     }
 
-    unhighlightCell(cell) {
+    unhighlightCell(cell, index) {
         cell.setAttribute('class', '');
-        cell.data = null;
+        delete cell.data[index]
     }
 
     putCellOnTop(cell){
@@ -43,19 +43,23 @@ class CircleMap {
         cell.parentElement.appendChild(cell);
     }
 
-    highlightCell(cell, className, data) {
+    highlightCell(cell, className, data, index) {
 
         if (cell.getAttribute('class') === 'peer-own') return;
 
         cell.setAttribute('class', className);
+
+        // deleted
 
         // if (className === 'peer-own')
         //     cell.parentElement.appendChild(cell);
 
 
         // XXX another hack
-        if (data)
-            cell.data = data;
+        if (data) {
+            if (cell.data === undefined) cell.data = {};
+            cell.data[index] = data;
+        }
     }
 
     _convertCoordinates(latitude, longitude) {

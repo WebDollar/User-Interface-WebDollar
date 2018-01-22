@@ -2127,7 +2127,7 @@
 
     .peer-connected-browser {
         display: block !important;
-        fill: #12428c !important;
+        fill: #ff0000 !important;
         -webkit-animation: connected 1800ms ease 10;
         animation: connected 1800ms ease 3;
     }

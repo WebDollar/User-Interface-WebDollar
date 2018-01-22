@@ -15,7 +15,7 @@
 
 
     import NetworkNativeMapCanvas from "./res/Network-Native-Map-Canvas.vue"
-    import NetworkNativeMapDialog from "./res/Network-Native-Map-Dialog.vue"
+    import NetworkNativeMapDialog from "./res/dialog/Network-Native-Map-Dialog.vue"
 
 
     export default{
@@ -131,7 +131,7 @@
                 if (cell) {
                     marker.cell = cell;
 
-                    this._circleMap.highlightCell(cell, 'peer-own', marker.desc);
+                    this._circleMap.highlightCell(cell, 'peer-own', marker.desc, marker.desc.uuid);
 
                     this._circles.inc(cell);
 
@@ -158,7 +158,7 @@
                     if (marker.desc.nodeType === "browser") cellClass = "peer-connected-browser";
                     if (marker.desc.nodeType === "terminal") cellClass = "peer-connected-terminal";
 
-                    this._circleMap.highlightCell(cell, cellClass , marker.desc);
+                    this._circleMap.highlightCell(cell, cellClass , marker.desc, marker.desc.uuid);
 
                     this._circles.inc(cell);
 
@@ -175,15 +175,17 @@
 
             _getInfoWindowContent(geoLocation, socket){
 
-                let address = '', nodeType = '', status = "node", nodeProtocol = '', nodeIndex=0;
+                let address = '', nodeType = '', status = "node", nodeProtocol = '', nodeIndex=0, uuid='';
 
                 if (socket === 'myself') {
                     status = "connected";
                     address = geoLocation.address;
+                    uuid = '0';
                     nodeType = "myself";
                 } else
                 if (socket === 'fake') {
                     address = geoLocation.country;
+                    uuid = geoLocation.city;
 
                     if (Math.floor(Math.random()*2) === 0) status = "connected";
                     else  status = "not connected";
@@ -194,6 +196,8 @@
                 } else
                 if (typeof socket === "object" && socket.node !== undefined && socket.node.protocol !== undefined && socket.node.protocol.helloValidated ) {
                     address = socket.node.sckAddress.toString();
+                    uuid = socket.node.sckAddress.uuid;
+
                     status = "connected";
 
                     switch (socket.node.type){
@@ -208,6 +212,7 @@
                 else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject ){ //its a waitlist
 
                     address = socket.sckAddresses[0].toString();
+                    uuid = socket.sckAddresses[0].uuid;
 
                     switch (socket.type){
                         case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER: nodeType = 'browser'; break;
@@ -226,8 +231,8 @@
                     city: geoLocation.city||'',
                     country: geoLocation.country||'',
                     address: address,
+                    uuid: uuid||nodeIndex,
                     protocol: nodeProtocol,
-                    index: nodeIndex,
                     isp: geoLocation.isp||'',
                     pos: position,
                     nodeType: nodeType,
@@ -253,11 +258,11 @@
                     if (this._circles.del(marker.cell) === 0) {
                         // Either change class if there are still known peers there.
                         if (this._circles.get(marker.cell) > 0) {
-                            this._circleMap.highlightCell(marker.cell, 'peer-connected-browser', undefined);
+                            this._circleMap.highlightCell(marker.cell, 'peer-connected-browser', undefined, marker.desc.uuid);
                         }
                         // Or remove class at all.
                         else
-                            this._circleMap.unhighlightCell(marker.cell);
+                            this._circleMap.unhighlightCell(marker.cell, marker.desc.uuid);
 
                         if (this._markerMyself !== marker && this._markerMyself !== null)
                             this._circleMap.removeLink(this._markerMyself.cell, marker.cell);
@@ -299,10 +304,10 @@
                 this._circleMap.addLink(cell2, cell3);
                 this._circleMap.addLink(cell3, cell4);
 
-                this._circleMap.highlightCell(cell1, 'known-peer', data);
-                this._circleMap.highlightCell(cell2, 'own-peer', data);
-                this._circleMap.highlightCell(cell3, 'own-peer', data);
-                this._circleMap.highlightCell(cell4, 'own-peer', data);
+                this._circleMap.highlightCell(cell1, 'known-peer', data, 1);
+                this._circleMap.highlightCell(cell2, 'own-peer', data, 2);
+                this._circleMap.highlightCell(cell3, 'own-peer', data, 3);
+                this._circleMap.highlightCell(cell4, 'own-peer', data, 4);
 
             },
 

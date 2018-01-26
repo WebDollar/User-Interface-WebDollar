@@ -25,12 +25,9 @@
 
                 <div class="walletController">
 
-                    <div class="btn" @click="this.handleAddNewAddress">
-                        Add Adress
-                    </div>
-                    <div class="btn" @click="this.handleLockWallet">
-                        Lock Wallet
-                    </div>
+                    <icon class="btn" alt="Add New adress" text="Add New adress" icon="plus" @click="this.handleAddNewAddress"/>
+                    <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" @click="this.handleLockWallet" />
+                    <icon class="btn" alt="Import/Export wallet" text="Import/Export wallet" icon="lock-open" v-on:click.stop="handleImExWallet"/>
 
                 </div>
 
@@ -133,6 +130,10 @@
         },
 
         methods: {
+
+            handleImExWallet(){
+
+            },
 
             changeScreenBehavior(){
 
@@ -353,7 +354,7 @@
 
     .walletController{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;
@@ -365,7 +366,6 @@
         color: #b5b5b5;
         cursor: pointer;
         padding: 6px 19px 6px 19px!important;
-        margin-left: 10px;
     }
 
     .walletController .btn:hover{
@@ -446,7 +446,6 @@
         }
         .walletController .btn{
             padding: 10px 19px 6px 19px!important;
-            margin-left: 10px;
         }
         .webdollarFont{
             width: 24px!important;

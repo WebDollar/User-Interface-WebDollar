@@ -1,82 +1,82 @@
 <template>
 
-    <div v-if="this.address !== null && this.address !== undefined">
+    <div>
 
         <Modal title="Wallet Address" ref="refModal">
 
-            <div slot="content">
+            <!--<div slot="content">-->
 
-                <div class="twoColums">
+                <!--<div class="twoColums">-->
 
-                    <div class="section">
+                    <!--<div class="section">-->
 
-                        <div style="font-size: 20px">
-                            Address
-                        </div>
+                        <!--<div style="font-size: 20px">-->
+                            <!--Address-->
+                        <!--</div>-->
 
-                        <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
+                        <!--<b style="color:gray" id="walletID" >{{this.address.toString()}}</b>-->
 
-                        <div @click="copyToClipboard" :class=" this.clipboardText!='Copied' ? 'copyToClipboard' : 'copyToClipboardSuccess' ">
-                            {{this.clipboardText}}
-                        </div>
+                        <!--<div @click="copyToClipboard" :class=" this.clipboardText!='Copied' ? 'copyToClipboard' : 'copyToClipboardSuccess' ">-->
+                            <!--{{this.clipboardText}}-->
+                        <!--</div>-->
 
-                    </div>
+                    <!--</div>-->
 
-                    <div class="section">
+                    <!--<div class="section">-->
 
-                        <div style="font-size: 20px">
-                            Balance
-                        </div>
+                        <!--<div style="font-size: 20px">-->
+                            <!--Balance-->
+                        <!--</div>-->
 
-                        <b class="ballance" style="color:gray"> <ShowBalance :address="this.address" currency="0x01"/>WEBD</b>
+                        <!--<b class="ballance" style="color:gray"> <ShowBalance :address="this.address" currency="0x01"/>WEBD</b>-->
 
-                    </div>
+                    <!--</div>-->
 
-                </div>
+                <!--</div>-->
 
-                <div class="adressActions">
-                    <div @click="this.showTransfer" :class="[ this.isTransfer ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Transfer
-                    </div>
-                    <div @click="this.showBuy" :class="[ this.isBuy ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Buy
-                    </div>
-                    <div @click="this.showSell" :class="[ this.isSell ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Sell
-                    </div>
-                    <div @click="this.showTransactions" :class="[ this.isTransactionList ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Transactions
-                    </div>
-                </div>
+                <!--<div class="adressActions">-->
+                    <!--<div @click="this.showTransfer" :class="[ this.isTransfer ? 'actionButton activeActionButton' : 'actionButton' ]">-->
+                        <!--Transfer-->
+                    <!--</div>-->
+                    <!--<div @click="this.showBuy" :class="[ this.isBuy ? 'actionButton activeActionButton' : 'actionButton' ]">-->
+                        <!--Buy-->
+                    <!--</div>-->
+                    <!--<div @click="this.showSell" :class="[ this.isSell ? 'actionButton activeActionButton' : 'actionButton' ]">-->
+                        <!--Sell-->
+                    <!--</div>-->
+                    <!--<div @click="this.showTransactions" :class="[ this.isTransactionList ? 'actionButton activeActionButton' : 'actionButton' ]">-->
+                        <!--Transactions-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                <form class="transfer" :style="{display: this.isTransfer ? 'block': 'none'}">
+                <!--<form class="transfer" :style="{display: this.isTransfer ? 'block': 'none'}">-->
 
-                    <p class="title">Transfer WEBD</p>
+                    <!--<p class="title">Transfer WEBD</p>-->
 
-                    <input class="adress" placeholder="Recipient Adress"/>
-                    <!--{{this.toAddress||''.toString() }}-->
+                    <!--<input class="adress" placeholder="Recipient Adress"/>-->
+                    <!--&lt;!&ndash;{{this.toAddress||''.toString() }}&ndash;&gt;-->
 
-                    <input class="amount" placeholder="WEBD Amount"/>
-                    <!--{{this.toAmount||0.0.toString() }}-->
+                    <!--<input class="amount" placeholder="WEBD Amount"/>-->
+                    <!--&lt;!&ndash;{{this.toAmount||0.0.toString() }}&ndash;&gt;-->
 
-                    <button type="submit" class="button">
-                        SEND WEBD
-                    </button>
-                </form>
+                    <!--<button type="submit" class="button">-->
+                        <!--SEND WEBD-->
+                    <!--</button>-->
+                <!--</form>-->
 
-                <form class="buy" :style="{display: this.isBuy ? 'block': 'none'}">
+                <!--<form class="buy" :style="{display: this.isBuy ? 'block': 'none'}">-->
 
-                    <p class="title">Temporary unavailable</p>
+                    <!--<p class="title">Temporary unavailable</p>-->
 
-                </form>
+                <!--</form>-->
 
-                <form class="sell" :style="{display: this.isSell ? 'block': 'none'}">
+                <!--<form class="sell" :style="{display: this.isSell ? 'block': 'none'}">-->
 
-                    <p class="title">Temporary unavailable</p>
+                    <!--<p class="title">Temporary unavailable</p>-->
 
-                </form>
+                <!--</form>-->
 
-            </div>
+            <!--</div>-->
 
 
         </Modal>
@@ -89,6 +89,7 @@
     var Vue = require('vue')
 
     import ImExModal from "../Import/import.modal.vue"
+    import Clipboard from './../../../../../node_modules/v-clipboard'
 
     Vue.use(Clipboard)
 

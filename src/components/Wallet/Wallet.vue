@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <ImExModal ref="refImExModal" :address="this.address" />
+        <ImExModal ref="refImExModal"/>
 
     </div>
 
@@ -137,7 +137,7 @@
 
             handleImExWallet(){
 
-                this.$refs['refImExModal'].showModal(e);
+                this.$refs['refImExModal'].showModal();
 
             },
 
@@ -379,8 +379,12 @@
         transition: all .3s linear;
     }
 
-    .walletController .btn:first-child{
+    .walletController .btn{
         border-right: solid 1px #3c3b3b;
+    }
+
+    .walletController .btn:last-child{
+        border:none;
     }
 
     .allWallets div{

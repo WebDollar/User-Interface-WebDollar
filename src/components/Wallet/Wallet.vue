@@ -27,7 +27,7 @@
 
                     <icon class="btn" alt="Add New adress" text="Add New adress" icon="plus" @click="this.handleAddNewAddress"/>
                     <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" @click="this.handleLockWallet" />
-                    <icon class="btn" alt="Import/Export wallet" text="Import/Export wallet" icon="lock-open" v-on:click.stop="handleImExWallet"/>
+                    <icon class="btn" alt="Import/Export wallet" text="Import/Export wallet" icon="lock-open" v-on:click.stop="handleImportWallet"/>
 
                 </div>
 
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <ImExModal ref="refImExModal"/>
+        <ImportModal ref="refImportModal"/>
 
     </div>
 
@@ -66,7 +66,7 @@
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
     import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
-    import ImExModal from "./Address/Import/import.modal.vue"
+    import ImportModal from "./Address/Import/Import.modal.vue"
 
     export default{
 
@@ -74,7 +74,7 @@
             "icon":icon,
             "Address":Address,
             "ShowSumBalances":ShowSumBalances,
-            "ImExModal":ImExModal,
+            "ImportModal":ImportModal,
         },
 
         data:  () => {
@@ -135,9 +135,9 @@
 
         methods: {
 
-            handleImExWallet(){
+            handleImportWallet(e){
 
-                this.$refs['refImExModal'].showModal(e);
+                this.$refs['refImportModal'].showModal(e);
 
             },
 

@@ -87,8 +87,8 @@
 
 <script>
     var Vue = require('vue')
+    import Modal from "components/UI/modal/Modal.vue"
 
-    import ImExModal from "../Import/import.modal.vue"
     import Clipboard from './../../../../../node_modules/v-clipboard'
 
     Vue.use(Clipboard)
@@ -103,7 +103,7 @@
         },
 
         components: {
-            "ImExModal":ImExModal,
+            "Modal":Modal,
         },
 
         data: () => {
@@ -147,7 +147,12 @@
             },
 
             showModal(e) {
+
+                console.log("teeest showModal", this.$refs['refModal']);
+                console.log("teeest showModal", this.$refs['refModal'].modalOpened);
+
                 if (this.$refs['refModal'].modalOpened === false){
+                    console.log("shooow modal");
                     this.$refs['refModal'].showModal();
                 }
             },

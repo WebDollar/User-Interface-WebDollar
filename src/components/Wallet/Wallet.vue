@@ -51,6 +51,8 @@
             </div>
         </div>
 
+        <ImExModal ref="refImExModal" :address="this.address" />
+
     </div>
 
 </template>
@@ -64,6 +66,7 @@
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
     import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
+    import ImExModal from "./Address/Import/import.modal.vue"
 
     export default{
 
@@ -71,6 +74,7 @@
             "icon":icon,
             "Address":Address,
             "ShowSumBalances":ShowSumBalances,
+            "ImExModal":ImExModal,
         },
 
         data:  () => {
@@ -132,6 +136,8 @@
         methods: {
 
             handleImExWallet(){
+
+                this.$refs['refImExModal'].showModal(e);
 
             },
 

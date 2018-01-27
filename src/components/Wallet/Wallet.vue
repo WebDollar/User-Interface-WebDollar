@@ -135,7 +135,7 @@
 
         methods: {
 
-            handleImExWallet(){
+            handleImExWallet(e){
 
                 this.$refs['refImExModal'].showModal(e);
 

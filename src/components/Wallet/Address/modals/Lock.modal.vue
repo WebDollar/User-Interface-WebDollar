@@ -2,7 +2,7 @@
 
     <div>
 
-        <Modal title="Wallet Address" ref="refModal">
+        <Modal title="Secure Address" ref="refModal">
 
             <div slot="content">
 
@@ -24,7 +24,7 @@
 
                     <div class="section">
 
-                        <div @click="" class="copyToClipboard">
+                        <div @click="" class="modalButton">
                             Export
                         </div>
 

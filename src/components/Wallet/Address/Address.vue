@@ -1,11 +1,29 @@
 <template>
-    <div class="walletAddress" v-on:click.stop="handleTransferFunds">
+    <div class="walletAddress">
 
-        <img class="walletAddressImage" :src="this.getAddressPic">
+        <div class="adressIdentityBox" v-on:click.stop="handleTransferFunds">
+            <img class="walletAddressImage" :src="this.getAddressPic" >
 
-        <b><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
+            <b><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
+        </div>
+
+        <div class="actionsBox">
+            <div class="adrressButton" v-on:click.stop="handleExport">
+                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" />
+            </div>
+
+            <div class="adrressButton" v-on:click.stop="handleLock">
+                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" />
+            </div>
+
+            <div class="adrressButton" v-on:click.stop="handleDelete">
+                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" />
+            </div>
+        </div>
 
         <TransactionModal ref="refTransactionModal" :address="this.address" />
+        <LockModal ref="refLockModal" :address="this.address" />
+        <DeleteModal ref="refDeleteModal" :address="this.address" />
 
     </div>
 </template>
@@ -13,7 +31,10 @@
 
 <script>
 
-    import TransactionModal from "./Transactions/Transaction.modal.vue"
+    import icon from "components/UI/icons/icon.vue"
+    import TransactionModal from "./Modals/Transaction.modal.vue"
+    import LockModal from "./Modals/Lock.modal.vue"
+    import DeleteModal from "./Modals/Delete.modal.vue"
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
 
     export default{
@@ -25,6 +46,9 @@
         components:{
             "TransactionModal":TransactionModal,
             "ShowBalance":ShowBalance,
+            "icon":icon,
+            "LockModal":LockModal,
+            "DeleteModal":DeleteModal,
         },
 
         computed: {
@@ -39,19 +63,30 @@
 
                 this.$refs['refTransactionModal'].showModal(e);
 
-            }
+            },
+
+            handleExport(e){
+
+                //To do Download key
+
+            },
+
+            handleLock(e){
+
+                this.$refs['refLockModal'].showModal(e);
+
+            },
+
+            handleDelete(e){
+
+                this.$refs['refDeleteModal'].showModal(e);
+
+            },
 
         }
 
     }
 </script>
-
-
-
-
-
-
-
 
 <style>
 
@@ -59,11 +94,14 @@
         padding: 0!important;
         padding-right: 0;
         width: 100%;
-        cursor: pointer;
         border-top-left-radius: 50px;
         border-bottom-left-radius: 50px;
         margin: 15px 10px;
         transition: all .3s linear;
+    }
+
+    #allWalets .walletAddress .adressIdentityBox{
+        cursor: pointer;
     }
 
     #allWalets .walletAddress:last-child{
@@ -86,12 +124,37 @@
     .walletAddress b{
         text-align: center;
         display: inline-block;
-        color: #fddb0c;
+        color: #fcbd2d;
         line-height: 40px;
         padding-top: 1px;
         margin-left: 7px;
         font-size: 12px;
         vertical-align: top;
+    }
+
+    .adrressButton{
+        display:inline-block;
+        padding: 7px 12px;
+        vertical-align: top;
+        height: 27px;
+        margin-right: -4px;
+        cursor: pointer;
+        transition: all .3s linear;
+    }
+
+    .adrressButton:hover{
+        background-color: #1f1f1f;
+        transition: all .3s linear;
+    }
+
+    .actionsBox{
+        float: right;
+        display: inline-block;
+        margin-right: 25px;
+    }
+
+    .adressIdentityBox{
+        display: inline-block;
     }
 
 </style>

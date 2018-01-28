@@ -25,9 +25,12 @@
 
                 <div class="walletController">
 
-                    <icon class="btn" alt="Add New adress" text="Add New adress" icon="plus" @click="this.handleAddNewAddress"/>
-                    <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" @click="this.handleLockWallet" />
-                    <icon class="btn" alt="Import/Export wallet" text="Import/Export wallet" icon="lock-open" v-on:click.stop="handleImportWallet"/>
+                    <div class="btn" @click="this.handleAddNewAddress">
+                        Add Adress
+                    </div>
+                    <div class="btn" @click="this.importAdress">
+                        Import Adress
+                    </div>
 
                 </div>
 
@@ -51,8 +54,6 @@
             </div>
         </div>
 
-        <ImportModal ref="refImportModal"/>
-
     </div>
 
 </template>
@@ -66,7 +67,6 @@
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
     import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
-    import ImportModal from "./Address/Import/Import.modal.vue"
 
     export default{
 
@@ -74,7 +74,6 @@
             "icon":icon,
             "Address":Address,
             "ShowSumBalances":ShowSumBalances,
-            "ImportModal":ImportModal,
         },
 
         data:  () => {
@@ -134,12 +133,6 @@
         },
 
         methods: {
-
-            handleImportWallet(e){
-
-                this.$refs['refImportModal'].showModal(e);
-
-            },
 
             changeScreenBehavior(){
 
@@ -231,7 +224,9 @@
                 WebDollar.Blockchain.Wallet.createNewAddress();
             },
 
-            handleLockWallet(){
+            importAdress(){
+
+                //To add Uploader
 
             },
 
@@ -360,7 +355,7 @@
 
     .walletController{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;
@@ -371,7 +366,7 @@
         text-align: center;
         color: #b5b5b5;
         cursor: pointer;
-        padding: 6px 19px 6px 19px!important;
+        padding: 8px 19px 6px 19px!important;
     }
 
     .walletController .btn:hover{
@@ -379,12 +374,8 @@
         transition: all .3s linear;
     }
 
-    .walletController .btn{
+    .walletController .btn:first-child{
         border-right: solid 1px #3c3b3b;
-    }
-
-    .walletController .btn:last-child{
-        border:none;
     }
 
     .allWallets div{
@@ -456,6 +447,7 @@
         }
         .walletController .btn{
             padding: 10px 19px 6px 19px!important;
+            margin-left: 10px;
         }
         .webdollarFont{
             width: 24px!important;

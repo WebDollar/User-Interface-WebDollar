@@ -257,7 +257,6 @@
     import Clipboard from './../../../../../node_modules/v-clipboard'
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
 
-
     Vue.use(Clipboard)
 
     export default {

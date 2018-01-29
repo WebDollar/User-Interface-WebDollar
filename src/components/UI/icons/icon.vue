@@ -1,3 +1,7 @@
+<!--
+Download svgs from https://icomoon.io/app/#/select/image
+-->
+
 <template>
 
     <div @click="this.handleClick">
@@ -10,6 +14,8 @@
         <svgPlus v-if="this.icon === 'plus'"></svgPlus>
         <svgPlusSquare v-if="this.icon === 'plus-square'"></svgPlusSquare>
         <svgX v-if="this.icon === 'x'"></svgX>
+        <svgUpload v-if="this.icon === 'upload'"></svgUpload>
+        <svgDownload v-if="this.icon === 'download'"></svgDownload>
 
     </div>
 
@@ -26,6 +32,8 @@
     import svgPlus from "./res/svg-plus.vue"
     import svgPlusSquare from "./res/svg-plus-square.vue"
     import svgX from "./res/svg-x.vue"
+    import svgUpload from "./res/svg-upload.vue"
+    import svgDownload from "./res/svg-download.vue"
 
     export default{
 
@@ -42,6 +50,8 @@
             "svgPlus": svgPlus,
             "svgPlusSquare": svgPlusSquare,
             "svgX": svgX,
+            "svgDownload": svgDownload,
+            "svgUpload": svgUpload,
         },
 
         methods:{

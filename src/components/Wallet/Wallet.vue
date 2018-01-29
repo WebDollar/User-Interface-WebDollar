@@ -26,10 +26,10 @@
                 <div class="walletController">
 
                     <div class="btn" @click="this.handleAddNewAddress">
-                        Add Adress
+                        Add Address
                     </div>
-                    <div class="btn" @click="this.importAdress">
-                        Import Adress
+                    <div class="btn" @click="this.importAddress">
+                        Import Address
                     </div>
 
                 </div>
@@ -61,7 +61,7 @@
 
 
 <script>
-    var Vue = require('vue')
+    var Vue = require('vue');
 
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
@@ -224,7 +224,7 @@
                 WebDollar.Blockchain.Wallet.createNewAddress();
             },
 
-            importAdress(){
+            importAddress(){
 
                 //To add Uploader
 

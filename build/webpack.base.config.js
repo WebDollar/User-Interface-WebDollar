@@ -5,12 +5,14 @@ const vueConfig = require('./vue-loader.config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var WebpackDevServer = require('webpack-dev-server');
 
 const isProd = process.env.NODE_ENV === 'production'
 //const isAnalyze = process.argv.includes('--analyze') || process.argv.includes('--analyse');
 const isAnalyze = false
 
-module.exports = {
+
+let webpackConfig = {
 
     //define entry point
     entry: ['babel-regenerator-runtime'],
@@ -85,4 +87,7 @@ module.exports = {
                 new FriendlyErrorsPlugin()
             ]
 
-}
+};
+
+
+module.exports = webpackConfig;

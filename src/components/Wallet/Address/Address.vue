@@ -8,16 +8,16 @@
         </div>
 
         <div class="actionsBox">
-            <div class="adrressButton" v-on:click.stop="handleExport">
+            <div class="addressButton" v-on:click.stop="handleExport">
+                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="download" />
+            </div>
+
+            <div class="addressButton" v-on:click.stop="handleLock">
                 <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" />
             </div>
 
-            <div class="adrressButton" v-on:click.stop="handleLock">
-                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" />
-            </div>
-
-            <div class="adrressButton" v-on:click.stop="handleDelete">
-                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" />
+            <div class="addressButton" v-on:click.stop="handleDelete">
+                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="x" />
             </div>
         </div>
 
@@ -132,7 +132,7 @@
         vertical-align: top;
     }
 
-    .adrressButton{
+    .addressButton{
         display:inline-block;
         padding: 7px 12px;
         vertical-align: top;
@@ -142,7 +142,7 @@
         transition: all .3s linear;
     }
 
-    .adrressButton:hover{
+    .addressButton:hover{
         background-color: #1f1f1f;
         transition: all .3s linear;
     }

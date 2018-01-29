@@ -8,7 +8,7 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 
 const isProd = process.env.NODE_ENV === 'production'
 //const isAnalyze = process.argv.includes('--analyze') || process.argv.includes('--analyse');
-const isAnalyze = false;
+const isAnalyze = true
 
 module.exports = {
 

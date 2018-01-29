@@ -3,7 +3,7 @@ if ((typeof window !== 'undefined' && !window._babelPolyfill) ||
     require('babel-polyfill')
 }
 
-var Vue = require('vue')
+var Vue = require('vue/dist/vue');
 
 import NetworkNativeMap from 'components/maps/Native-Map/Network-Native-Map.vue';
 

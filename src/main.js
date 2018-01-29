@@ -11,7 +11,8 @@ let exportObject = {
 };
 
 
-module.exports =  exportObject;
+if (!process.env.BROWSER)
+    module.exports =  exportObject;
 
 //browser minimized script
 if ( typeof global.window !== 'undefined')

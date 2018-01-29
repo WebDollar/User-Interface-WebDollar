@@ -28,7 +28,7 @@
                     <div class="btn" @click="this.handleAddNewAddress">
                         Add Address
                     </div>
-                    <label class="myLabel">
+                    <label @click="this.importAddress" class="myLabel">
                         <input type="file" required/>
                         <div class="btn">
                             Import Address
@@ -229,7 +229,7 @@
 
             importAddress(){
 
-                //To add Uploader
+                alert("handle file");
 
             },
 

@@ -7,8 +7,8 @@
     "open_browser": "node src/open-browser",
     "build_frontend": "webpack --config build/webpack.browser-frontend.config.js",
     "build_user_interface": "webpack --config build/webpack.browser.config.js",
-    "build": "npm run build_user_interface  && npm run open_browser && npm run build_frontend",
-    "test": "npm run build"
+    "build": "npm run build_frontend",
+    "dev": "webpack-dev-server --config=./build/webpack.browser-hot-loader.config.js --content-base dist_bundle --hot --inline"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "@webdollar/front-webdollar": "*",
-    "opn": "^5.1.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-module-alias": "^1.6.0",
     "babel-preset-env": "^1.6.0",
@@ -43,11 +42,15 @@
     "css-loader": "^0.28.9",
     "extract-text-webpack-plugin": "^3.0.2",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "opn": "^5.1.0",
+    "source-map": "^0.7.0",
     "vue-hot-reload-loader": "^0.1.5",
     "vue-loader": "^13.7.0",
     "vueify": "^9.4.1",
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.9.2",
+    "webpack-dev-server": "^2.11.1",
+    "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^4.1.1"
   }
 }

@@ -28,9 +28,12 @@
                     <div class="btn" @click="this.handleAddNewAddress">
                         Add Address
                     </div>
-                    <div class="btn" @click="this.importAddress">
-                        Import Address
-                    </div>
+                    <label class="myLabel">
+                        <input type="file" required/>
+                        <div class="btn">
+                            Import Address
+                        </div>
+                    </label>
 
                 </div>
 
@@ -312,6 +315,10 @@
 
 <style>
 
+    #myWalletImport{
+        display: none;
+    }
+
     .vue-slider-component.vue-slider-horizontal .vue-slider-dot{
         left:-5px;
     }
@@ -425,6 +432,11 @@
 
     .walletAddress b{
         font-weight:100;
+    }
+
+    label.myLabel input[type="file"] {
+        position: fixed;
+        top: -1000px;
     }
 
     /* Small Devices, Tablets */

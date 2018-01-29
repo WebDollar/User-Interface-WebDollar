@@ -61,7 +61,7 @@
 
 
 <script>
-    var Vue = require('vue');
+    var Vue = require('vue/dist/vue.min.js');
 
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"

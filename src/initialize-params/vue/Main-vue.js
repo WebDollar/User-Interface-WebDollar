@@ -3,7 +3,7 @@ if ((typeof window !== 'undefined' && !window._babelPolyfill) ||
     require('babel-polyfill')
 }
 
-var Vue = require('vue/dist/vue');
+var Vue = require('vue/dist/vue.min.js');
 
 import Dashboard from 'components/Dashboard.vue';
 

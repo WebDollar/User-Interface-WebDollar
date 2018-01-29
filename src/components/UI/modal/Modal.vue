@@ -47,10 +47,11 @@
 
             closeModal(e){
 
-                e.stopPropagation();
+                if(e!=undefined) e.stopPropagation();
 
                 this.modalOpened = false;
                 console.log("closeModal2");
+
             },
 
             showModal(e){

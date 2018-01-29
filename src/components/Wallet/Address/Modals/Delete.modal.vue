@@ -2,7 +2,7 @@
 
     <div>
 
-        <Modal title="Delete Adress" ref="refModal">
+        <Modal title="Delete Adress" ref="refDeleteModal">
 
             <div slot="content">
 
@@ -14,9 +14,9 @@
 
                 <div >
 
-                    <input class="inputDeleteModal"/>
+                    <input v-model="inputValue" class="inputDeleteModal"/>
 
-                    <div @click="" class="modalButton">
+                    <div @click="this.deleteAddress" class="modalButton">
                         Delete
                     </div>
 
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
     var Vue = require('vue/dist/vue.min.js');
     import Modal from "components/UI/modal/Modal.vue"
 
@@ -41,10 +42,10 @@
     export default {
 
         props: {
-
             address: {default: null},
             toAddress: {default: null},
             toAmount: {default: 0.0},
+
         },
 
         components: {
@@ -53,64 +54,40 @@
 
         data: () => {
             return {
-                isTransfer: false,
-                isSell: false,
-                isBuy: false,
-                isTransactionList: false,
-                clipboardText: 'Copy to Clipboard',
+                inputValue: ''
             }
         },
 
         methods: {
 
-            showTransfer() {
-                this.isTransfer = true;
-                this.isSell = false;
-                this.isBuy = false;
-                this.isTransactionList=false;
+            deleteAddress(){
+
+                if (this.inputValue.toUpperCase().trim() == 'DELETE'){
+
+                    // WebDollar.Blockchain.wallet. - DELETE
+                    alert("to do delete, BUDISTEANULEEE :))");
+                    this.$refs['refDeleteModal'].closeModal();
+
+                }
+
             },
-            showBuy() {
-                this.isTransfer = false;
-                this.isSell = false;
-                this.isBuy = true;
-                this.isTransactionList = false;
-            },
-            showSell() {
-                this.isTransfer = false;
-                this.isSell = true;
-                this.isBuy = false;
-                this.isTransactionList = false;
-            },
-            showTransactions(){
-                this.isTransfer = false;
-                this.isSell = false;
-                this.isBuy = false;
-                this.isTransactionList = true;
-            },
-            closeModal() {
-                this.$refs['refModal'].closeModal();
+
+            closeModal(e) {
+                this.$refs['refDeleteModal'].closeModal(e);
             },
 
             showModal(e) {
 
-                console.log("teeest showModal", this.$refs['refModal']);
-                console.log("teeest showModal", this.$refs['refModal'].modalOpened);
-
-                if (this.$refs['refModal'].modalOpened === false){
+                if (this.$refs['refDeleteModal'].modalOpened === false){
                     console.log("shooow modal");
-                    this.$refs['refModal'].showModal();
+                    this.$refs['refDeleteModal'].showModal(e);
                 }
-            },
-            copyToClipboard(){
-                this.clipboardText = 'Copied';
-                this.$clipboard(this.address)
+
             }
 
         },
 
         mounted() {
-
-            this.clipboardText = 'Copy to Clipboard';
 
             if (typeof window === 'undefined') return;
 
@@ -164,5 +141,6 @@
         color: #000000;
         transition: all .3s linear;
     }
+
 </style>
 

@@ -1,4 +1,4 @@
-var Vue = require('vue/dist/vue');
+var Vue = require('vue/dist/vue.min.js');
 const path = require('path')
 const webpack = require('webpack')
 const vueConfig = require('./vue-loader.config')

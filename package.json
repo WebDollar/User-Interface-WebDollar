@@ -28,23 +28,17 @@
   },
   "homepage": "https://github.com/WebDollar/User-Interface-WebDollar#readme",
   "dependencies": {
-    "brfs": "^1.4.3",
-    "browserify-fs": "^1.0.0",
     "v-clipboard": "*",
-    "md5": "^2.2.1",
-    "opn": "^5.1.0",
-    "stringify": "^5.2.0",
     "vue": "^2.5.13",
-    "vue-slider-component": "*",
-    "@webdollar/front-webdollar": "*"
+    "vue-slider-component": "*"
   },
   "devDependencies": {
+    "@webdollar/front-webdollar": "*",
+    "opn": "^5.1.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-module-alias": "^1.6.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2017": "^6.24.1",
-    "babelify": "^7.3.0",
-    "browserify": "^14.5.0",
     "compression-webpack-plugin": "^1.1.3",
     "css-loader": "^0.28.9",
     "extract-text-webpack-plugin": "^3.0.2",

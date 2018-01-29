@@ -251,7 +251,7 @@
 </template>
 
 <script>
-    var Vue = require('vue/dist/vue');
+    var Vue = require('vue/dist/vue.min.js');
 
     import Modal from "components/UI/modal/Modal.vue"
     import Clipboard from './../../../../../node_modules/v-clipboard'

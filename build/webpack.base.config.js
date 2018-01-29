@@ -8,13 +8,15 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 
 const isProd = process.env.NODE_ENV === 'production'
 //const isAnalyze = process.argv.includes('--analyze') || process.argv.includes('--analyse');
-const isAnalyze = true
+const isAnalyze = false
 
 module.exports = {
 
     //define entry point
     entry: ['babel-regenerator-runtime'],
-
+    devtool: isProd
+        ? false
+        : '#cheap-module-source-map',
     // send to distribution
     output: {
         path: path.resolve(__dirname, '../dist_bundle'),

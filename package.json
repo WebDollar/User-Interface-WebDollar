@@ -47,6 +47,7 @@
     "vue-hot-reload-loader": "^0.1.5",
     "vue-loader": "^13.7.0",
     "vueify": "^9.4.1",
+    "file-saver": "*",
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-server": "^2.11.1",

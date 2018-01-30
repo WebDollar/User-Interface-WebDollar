@@ -31,6 +31,7 @@
 
 <script>
 
+    import FileSaver from './../../../../node_modules/file-saver'
     import icon from "components/UI/icons/icon.vue"
     import TransactionModal from "./Modals/Transaction.modal.vue"
     import LockModal from "./Modals/Lock.modal.vue"
@@ -67,7 +68,8 @@
 
             handleExport(e){
 
-                //To do Download key
+                var addressFile = new Blob(["cheie prvata"], {type: "text/plain;charset=utf-8"});
+                FileSaver.saveAs(addressFile, this.address + ".webd");
 
             },
 

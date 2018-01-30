@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack');
 const base = require('./webpack.browser.config');
 const merge = require('webpack-merge');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const config = merge(base, {
 
@@ -20,8 +21,12 @@ const config = merge(base, {
 
 
     devServer: {
-        port: 9000
-    }
+        port: 8085
+    },
+
+    plugins: [
+        new OpenBrowserPlugin({ url: 'http://localhost:8085' })
+    ]
 
 });
 

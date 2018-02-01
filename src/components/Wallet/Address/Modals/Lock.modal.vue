@@ -2,28 +2,24 @@
 
     <div>
 
-        <Modal title="Wallet Address Secure" ref="refModal">
+        <Modal title="Wallet Address Secure" ref="refPassModal">
 
             <div slot="content">
-
-                <div class="descriptionTextPass">
-
-                    Set your password
-
-                </div>
 
                 <div >
 
                     <div class="inputAndGeneratorPass">
                         <div>
-                            <input v-Model="this.walletAddressPassword" class="inputDeleteModalPass"/>
+                            <input placeholder="Your 12 words Password" v-model="walletAddressPassword" class="inputDeleteModalPass"/>
                         </div>
                         <div>
-                            <div @click="" class="modalButtonPass generatorButtonPass">
-                                Generate
+                            <div @click="this.generatePasswrod" class="modalButtonPass generatorButtonPass">
+                                Generate random password
                             </div>
                         </div>
                     </div>
+
+                    <span class="errorMessage">{{this.errorMessage}}</span>
 
                     <div @click="this.encryptPassword" class="modalButtonPass">
                         Set Password
@@ -63,37 +59,98 @@
         data: () => {
             return {
                 clipboardText: 'Copy to Clipboard',
-                walletAddressPassword: ''
+                walletAddressPassword: '',
+                errorMessage: ''
             }
         },
 
         methods: {
 
             closeModal() {
-                this.$refs['refModal'].closeModal();
+                this.$refs['refPassModal'].closeModal();
             },
 
             showModal(e) {
 
-                if (this.$refs['refModal'].modalOpened === false){
-                    console.log("shooow modal");
-                    this.$refs['refModal'].showModal();
+                if (this.$refs['refPassModal'].modalOpened === false){
+                    this.$refs['refPassModal'].showModal();
                 }
 
             },
             copyToClipboard(){
 
                 this.clipboardText = 'Copied';
-                this.$clipboard(this.address)
+                this.$clipboard(this.walletAddressPassword);
+
+            },
+
+            generatePasswrod(){
+
+                var wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z'];
+                this.walletAddressPassword = wordsArray[Math.floor(Math.random()*wordsArray.length)];
+
+                for (var i=0;i<=11;i++){
+
+                    var randomWord = wordsArray[Math.floor(Math.random()*wordsArray.length)];
+                    var index = this.walletAddressPassword.lastIndexOf(randomWord);
+
+
+                    if (index==-1){
+                        this.walletAddressPassword += (" "+randomWord);
+                    }else{
+                        i--;
+                    }
+
+                }
 
             },
 
             encryptPassword(){
 
+                var okPassword=true;
                 var wordsArray = this.walletAddressPassword.split(' ');
-                console.log(this.walletAddressPassword);
+                var wordsArraySize = wordsArray.length-1;
+
+                if (wordsArraySize != 12){
+
+                    this.errorMessage = "The password should contain 12 words, but you have only "+wordsArraySize+" words.";
+                    okPassword=false;
+
+                }
+
+                if (okPassword==true){
+
+                    for (var i=0; i<=wordsArraySize; i++){
+
+                        var index = wordsArray.lastIndexOf(wordsArray[i]);
+
+                        if  (index != i){
+
+                            this.errorMessage = "The password should contain different words, but you are repeating '"+wordsArray[i]+"' word.";
+                            okPassword=false;
+
+                        }
+
+                    }
+
+                }
+
+                if(okPassword==true){
+
+                    this.errorMessage = '';
+                    this.setPassword();
+
+                }
 
             }
+
+        },
+
+        setPassword(){
+
+            this.copyToClipboard();
+            this.closeModal();
+            alert('Your password was saved in clipboard');
 
         },
 
@@ -141,7 +198,6 @@
         margin: 0 auto;
         cursor: pointer;
         border: solid 1px #5f5d5d;
-        margin-bottom: 20px;
         transition: all .3s linear;
     }
 
@@ -152,10 +208,10 @@
     }
 
     .inputAndGeneratorPass{
-        width: 90%;
+        width: 100%;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 1fr;
         border: solid 1px #5f5d5d;
         margin-bottom: 20px;
     }
@@ -167,6 +223,12 @@
         border: none;
         height: 15px!important;
         padding: 8px 0!important;
+    }
+
+    .errorMessage{
+        color: #de604d;
+        padding-bottom: 20px;
+        display: block;
     }
 
 </style>

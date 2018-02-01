@@ -77,6 +77,11 @@
         outline: none;
     }
 
+    .content{
+        padding: 20px;
+        padding-top: 30px;
+    }
+
     .modal{
         width: 50%;
         height: auto;

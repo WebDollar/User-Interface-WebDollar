@@ -347,6 +347,10 @@
         color: #1f1f1f;
     }
 
+    .mainAddress{
+        background-color: #fec02c14;
+    }
+
     #walletButton {
         margin: 0 auto;
         position: fixed;

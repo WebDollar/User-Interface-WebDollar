@@ -229,26 +229,28 @@
 
             importAddress(){
 
-                //To review
-
-                var fileInput = document.getElementById('importedAddress');
-
-                var file = fileInput.files[0];
-                var textType = /text.*/;
-
-                console.log(file);
-
-                if (file.type.match(textType)) {
-                    var reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        console.log(reader.result);
-                    }
-
-                    reader.readAsText(file);
-                } else {
-                    fileDisplayArea.innerText = "File not supported!"
-                }
+                alert("import");
+//
+//                //To review
+//
+//                var fileInput = document.getElementById('importedAddress');
+//
+//                var file = fileInput.files[0];
+//                var textType = /text.*/;
+//
+//                console.log(file);
+//
+//                if (file.type.match(textType)) {
+//                    var reader = new FileReader();
+//
+//                    reader.onload = function(e) {
+//                        console.log(reader.result);
+//                    }
+//
+//                    reader.readAsText(file);
+//                } else {
+//                    fileDisplayArea.innerText = "File not supported!"
+//                }
 
             },
 

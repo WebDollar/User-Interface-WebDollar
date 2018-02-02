@@ -29,10 +29,13 @@
                         Add Address
                     </div>
                     <label class="myLabel">
-                        <input type="file" v-on:change="this.importAddress" required/>
-                        <div id="importedAddress" class="btn">
+
+                        <input ref="importedAddress" type="file" v-on:change="this.importAddress" multiple size="50" />
+
+                        <div class="btn">
                             Import Address
                         </div>
+
                     </label>
 
                 </div>
@@ -198,28 +201,28 @@
                 this.opened = !this.opened;
 
                 if(window.screenWidth < 831){
-                    if (this.opened===true){
+                    if (this.opened===true)
                         document.getElementById('dashboardMining').setAttribute('style', 'display:none');
-                    }else{
+                    else
                         document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-                    }
-                }else{
+
+                }else
                     document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-                }
+
 
             },
 
             walletResizeFix(){
 
-                if(window.screenWidth < 831){
-                    if (this.opened===true){
+                if(window.screenWidth < 831)
+                    if (this.opened===true)
                         document.getElementById('dashboardMining').setAttribute('style', 'display:none');
-                    }else{
+                    else
                         document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-                    }
-                }else{
+
+                else
                     document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-                }
+
 
             },
 
@@ -227,30 +230,66 @@
                 WebDollar.Blockchain.Wallet.createNewAddress();
             },
 
-            importAddress(){
+            async importAddress(){
 
-                alert("import");
-//
-//                //To review
-//
-//                var fileInput = document.getElementById('importedAddress');
-//
-//                var file = fileInput.files[0];
-//                var textType = /text.*/;
-//
-//                console.log(file);
-//
-//                if (file.type.match(textType)) {
-//                    var reader = new FileReader();
-//
-//                    reader.onload = function(e) {
-//                        console.log(reader.result);
-//                    }
-//
-//                    reader.readAsText(file);
-//                } else {
-//                    fileDisplayArea.innerText = "File not supported!"
-//                }
+                // dropzone tutorial https://www.html5rocks.com/en/tutorials/file/dndfiles/
+
+                // Check for the various File API support.
+                if ((window.File && window.FileReader && window.FileList && window.Blob) === false){
+                    alert('The File APIs are not fully supported in this browser.');
+                }
+
+                let fileInput = this.$refs['importedAddress'];
+
+                if ('files' in fileInput) {
+                    if (fileInput.files.length === 0) {
+                        alert ( "Select one or more files." );
+                    } else {
+
+                        for (let i = 0; i < fileInput.files.length; i++) {
+
+                            let file = fileInput.files[i];
+                            let extension = file.name.split('.').pop();
+
+//                            console.log(file);
+//                            console.log(extension);
+
+                            if (extension === "webd") {
+                                let reader = new FileReader();
+
+                                try {
+                                    reader.onload = async (e) => {
+
+                                        //console.log(reader.result);
+                                        let data = JSON.parse(reader.result);
+
+                                        let answer = await WebDollar.Blockchain.Wallet.importAddressFromPrivateKey(data);
+
+                                        if (answer.result === true){
+                                            console.log("Address Imported", answer.address);
+                                        } else {
+                                            alert(answer.message);
+                                        }
+
+
+                                    };
+
+                                } catch (exception){
+                                    alert("Your Uploaded file is not JSON");
+                                }
+
+                                reader.readAsText(file);
+                            } else {
+                                alert ( "File not supported!" )
+                            }
+
+                        }
+
+
+                    }
+                }
+
+
 
             },
 

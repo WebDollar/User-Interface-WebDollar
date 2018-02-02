@@ -9,15 +9,15 @@
 
         <div class="actionsBox hoverAdress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
             <div class="addressButton" v-on:click.stop="handleExport">
-                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="download" />
+                <icon class="btn" alt="Secure Wallet" text="Download Address" icon="download" />
             </div>
 
             <div class="addressButton" v-on:click.stop="handleLock">
-                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="lock-open" />
+                <icon class="btn" alt="Secure Wallet" text="Lock Address" icon="lock-open" />
             </div>
 
             <div class="addressButton" v-on:click.stop="handleDelete">
-                <icon class="btn" alt="Secure Wallet" text="Secure Wallet" icon="x" />
+                <icon class="btn" alt="Secure Wallet" text="Delete Address" icon="x" />
             </div>
         </div>
 
@@ -66,10 +66,18 @@
 
             },
 
-            handleExport(e){
+            async handleExport(e){
 
-                var addressFile = new Blob(["cheie prvata"], {type: "text/plain;charset=utf-8"});
-                FileSaver.saveAs(addressFile, this.address + ".webd");
+                let answer = await WebDollar.Blockchain.Wallet.exportPrivateKeyFromAddress(this.address);
+
+                if (answer.result){
+
+                    let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
+                    FileSaver.saveAs(addressFile, this.address + ".webd");
+
+                } else {
+                    alert(answer.message)
+                }
 
             },
 

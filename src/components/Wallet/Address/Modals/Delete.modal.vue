@@ -2,13 +2,13 @@
 
     <div>
 
-        <Modal title="Delete Adress" ref="refDeleteModal">
+        <Modal title="Delete Address" ref="refModal">
 
             <div slot="content">
 
                 <div class="descriptionText">
 
-                    For Delete this Adress Type DELETE below
+                    For Delete this Address Type <b>DELETE</b> below
 
                 </div>
 
@@ -60,27 +60,31 @@
 
         methods: {
 
-            deleteAddress(){
+            async deleteAddress(){
 
-                if (this.inputValue.toUpperCase().trim() == 'DELETE'){
+                if (this.inputValue.toUpperCase().trim() === 'DELETE'){
 
                     // WebDollar.Blockchain.wallet. - DELETE
-                    alert("to do delete, BUDISTEANULEEE :))");
-                    this.$refs['refDeleteModal'].closeModal();
+                    let answer = await WebDollar.Blockchain.Wallet.deleteAddress(this.address);
 
+                    console.log(answer);
                 }
+
+                this.closeModal();
 
             },
 
             closeModal(e) {
-                this.$refs['refDeleteModal'].closeModal(e);
+
+                if (this.$refs['refModal'] !== undefined)
+                    this.$refs['refModal'].closeModal(e);
             },
 
             showModal(e) {
 
-                if (this.$refs['refDeleteModal'].modalOpened === false){
+                if (this.$refs['refModal'].modalOpened === false){
                     console.log("shooow modal");
-                    this.$refs['refDeleteModal'].showModal(e);
+                    this.$refs['refModal'].showModal(e);
                 }
 
             }

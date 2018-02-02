@@ -171,4 +171,29 @@
         display: inline-block;
     }
 
+    @media only screen and (max-width : 831px) {
+
+        .actionsBox{
+            display: block;
+        }
+
+        .addressButton{
+            padding: 17px 12px;
+            margin: 0 5px;
+        }
+
+    }
+
+    @media only screen and (max-width : 400px) {
+
+        .addressButton{
+            margin: 0;
+        }
+
+        .webdollarFont {
+            width: 16px!important;
+        }
+
+    }
+
 </style>

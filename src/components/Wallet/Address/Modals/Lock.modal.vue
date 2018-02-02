@@ -142,15 +142,15 @@
 
                 }
 
+            },
+
+            setPassword(){
+
+                this.copyToClipboard();
+                this.closeModal();
+                alert('Your password was saved in clipboard');
+
             }
-
-        },
-
-        setPassword(){
-
-            this.copyToClipboard();
-            this.closeModal();
-            alert('Your password was saved in clipboard');
 
         },
 

@@ -170,7 +170,7 @@
         color: #fff
     }
 
-    .modal .transfer .adress{
+    .modal .transfer .address{
         width: 100%;
         display: block;
     }
@@ -212,14 +212,14 @@
         grid-template-columns: 1fr 1fr;
     }
 
-    .adressActions{
+    .addressActions{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         border-bottom: solid 1px #313131;
         border-top: solid 3px #000;
     }
 
-    .adressActions .actionButton{
+    .addressActions .actionButton{
         display: inline-block;
         background-color: #333;
         color: #ffc12c;
@@ -230,13 +230,13 @@
         transition: all 0.5s ease
     }
 
-    .adressActions .actionButton:hover{
+    .addressActions .actionButton:hover{
         background-color: #232222;
         color: #ffdd8c;
         transition: all 0.5s ease
     }
 
-    .adressActions .actionButton:first-child{
+    .addressActions .actionButton:first-child{
         border-left:none;
     }
 
@@ -302,11 +302,11 @@
         padding: 0;
     }
 
-    .money, .destinationAdress{
+    .money, .destinationAddress{
         display: inline-block;
     }
 
-    .destinationAdress{
+    .destinationAddress{
         width: 70%;
         overflow: hidden;
     }
@@ -376,7 +376,7 @@
         .modal .ballance{
             margin-top: 0;
         }
-        .adressActions .actionButton{
+        .addressActions .actionButton{
             line-height: 50px;
             font-size: 20px;
         }

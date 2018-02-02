@@ -40115,6 +40115,9 @@ class MainBlockchainWallet{
             await blockchainAddress.createNewAddress(undefined, privateKeyWIF);
 
             this.addresses.push(blockchainAddress);
+            this.emitter.emit('wallet/address-changes', blockchainAddress.address );
+
+            await this.saveAddresses();
 
             return {
                 result:true,

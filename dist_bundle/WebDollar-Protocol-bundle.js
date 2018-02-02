@@ -1949,8 +1949,8 @@ let consts = {}
 
 consts.UUID = uuid.v4();
 
-consts.NODE_VERSION = "0.22";
-consts.NODE_VERSION_COMPATIBILITY = "0.21";
+consts.NODE_VERSION = "0.241";
+consts.NODE_VERSION_COMPATIBILITY = "0.241";
 consts.WALLET_VERSION = "0.1";
 
 consts.NODE_PROTOCOL = "WebDollar";
@@ -2392,11 +2392,13 @@ class Serialization{
 
         let result = new Buffer(noBytes);
 
-        for (let i=0; i<buffer.length; i++)
-            result[i]= buffer[i];
+        let c = 0;
+        for (let i=buffer.length-1; i>=0; i--){
+            c++;
+            result[noBytes-c]= buffer[i];
+        }
 
         return result;
-
     }
 
     serializeBufferRemovingLeadingZeros(buffer){
@@ -11594,9 +11596,9 @@ class BlockchainGenesis{
 
         this.hashPrev = new Buffer("7bb3e84e6892c7e76be2beedb94a1035b7f095d50b5462806b92be0cbccd31fa", "hex")
 
-        this.timeStamp = 0x5A733DAE;
+        this.timeStamp = 1517598169;
 
-        this.difficultyTarget = new Buffer ( "02978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "hex" ); //hard difficulty
+        this.difficultyTarget = new Buffer ( "00878112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "hex" ); //hard difficulty
         //this.difficultyTarget = new Buffer ( "00178112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "hex" ); //hard difficulty
         //this.difficultyTarget = new Buffer ( [0xff, 0xff, 0xff] ); // easy difficulty
 
@@ -15966,6 +15968,7 @@ class InterfaceBlockchainFork {
                 //propagating valid blocks
                 if (forkedSuccessfully) {
                     this.blockchain.save();
+                    this.blockchain.mining.resetMining();
                     this.blockchain.propagateBlocks(this.forkStartingHeight, this.sockets);
                 }
 
@@ -16292,7 +16295,7 @@ class InterfaceBlockchainProtocol {
 
         __WEBPACK_IMPORTED_MODULE_3_common_sockets_protocol_node_protocol__["a" /* default */].broadcastRequest( "blockchain/header/new-block", block.getBlockHeader(), "all", socketsAvoidBroadcast);
 
-        console.log("WEbDollar Hash", block.serializeBlock().toString("hex"));
+        //console.log("WEbDollar Hash", block.serializeBlock().toString("hex"));
 
     }
 
@@ -23592,10 +23595,10 @@ class InterfaceBlockchainProtocolForkSolver{
 
                 let answer = await socket.node.sendRequestWaitOnce("blockchain/headers-info/request-header-info-by-height", { height: currentBlockchainLength-2 }, currentBlockchainLength-2 );
 
-                if (answer === null) throw "connection dropped headers-info";
-                if (answer === undefined || answer === null || answer.result !== true || answer.header === undefined || !Buffer.isBuffer(answer.header.hash) ) throw "connection headers-info malformed";
+                if (answer === null || answer === undefined) throw "connection dropped headers-info";
+                if (answer.result !== true || answer.header === undefined || !Buffer.isBuffer(answer.header.hash) ) throw "connection headers-info malformed";
 
-                if (answer.header.hash.equals( this.blockchain.getBlockchainLastBlock().hash ))
+                if (answer.header.hash.equals( this.blockchain.last.hash ))
 
                     binarySearchResult = {
                         position : currentBlockchainLength - 1,
@@ -23638,8 +23641,8 @@ class InterfaceBlockchainProtocolForkSolver{
 
                 let answer = await socket.node.sendRequestWaitOnce("blockchain/headers-info/request-header-info-by-height", { height: newChainStartingPoint }, newChainStartingPoint );
 
-                if (answer === null) throw "connection dropped headers-info newChainStartingPoint";
-                if (answer === null || answer === undefined || answer.result !== true || answer.header === undefined) throw "headers-info 0 malformed"
+                if (answer === null || answer === undefined ) throw "connection dropped headers-info newChainStartingPoint";
+                if (answer.result !== true || answer.header === undefined) throw "headers-info 0 malformed"
 
                 binarySearchResult = {position: newChainStartingPoint, header: answer.header};
 
@@ -23750,8 +23753,6 @@ class InterfaceBlockchainProtocolForkSolver{
 
                     if (answer === null || answer === undefined)
                         throw "block never received "+ nextBlockHeight;
-
-                    console.log("answer", answer, Buffer.isBuffer(answer.block))
 
                     if (answer !== undefined && answer !== null && answer.result === true && answer.block !== undefined  && Buffer.isBuffer(answer.block) ) {
 
@@ -30125,13 +30126,13 @@ class InterfaceBlockchain {
         if (await block.validateBlock(block.height, prevDifficultyTarget, prevHash, blockValidationType) === false) throw ('block validation failed');
 
         //recalculate next target difficulty
-        //console.log("block.difficultyTarget", prevDifficultyTarget, prevTimeStamp, block.timeStamp, block.height);
+        console.log("block.difficultyTarget", prevDifficultyTarget, prevTimeStamp, block.timeStamp, block.height);
         block.difficultyTarget = __WEBPACK_IMPORTED_MODULE_5_common_blockchain_global_difficulty_Blockchain_Difficulty__["a" /* default */].getDifficulty( prevDifficultyTarget, prevTimeStamp, block.timeStamp, block.height );
-        //console.log("block.difficultyTarget", block.difficultyTarget);
+        console.log("block.difficultyTarget", block.difficultyTarget);
 
         block.difficultyTarget = __WEBPACK_IMPORTED_MODULE_11_common_utils_Serialization__["a" /* default */].serializeToFixedBuffer(__WEBPACK_IMPORTED_MODULE_10_consts_const_global__["a" /* default */].BLOCKS_POW_LENGTH, __WEBPACK_IMPORTED_MODULE_11_common_utils_Serialization__["a" /* default */].serializeBigInteger(block.difficultyTarget));
 
-        //console.log(" computed ", block.difficultyTarget.toString("hex"), " from ", prevDifficultyTarget.toString("hex") )
+        console.log(" computed ", block.difficultyTarget.toString("hex"), " from ", prevDifficultyTarget.toString("hex") )
 
         return true;
 
@@ -30269,8 +30270,8 @@ class InterfaceBlockchain {
 
             let indexStart = 0;
 
-            if (this.agent.light) {
-                indexStart = numBlocks - validateLastBlocks-1;
+            if (this.agent.light === true) {
+                indexStart = Math.max(0, numBlocks - validateLastBlocks-1);
 
                 for (let i=0; i<indexStart; i++)
                     this.blocks.push(undefined);
@@ -31106,7 +31107,7 @@ class BlockchainDifficulty{
 
         //ethereum changed from .plus to .minus
 
-        let blockDiff = prevBlockDifficulty.minus(  prevBlockDifficulty.divide(2048).times  //parent_diff + parent_diff // 2048 *
+        let blockDiff = prevBlockDifficulty.plus(  prevBlockDifficulty.divide(2048).times  //parent_diff + parent_diff // 2048 *
                                                     (equationTwo )
                                                );
 
@@ -31202,7 +31203,7 @@ class InterfaceBlockchainForksAdministrator {
         if (header === null || header === undefined) return null;
 
         for (let i=0; i<this.forks.length; i++)
-            if ( this.forks[i].forkHeader !== null && (this.forks[i].forkHeader === header || this.forks[i].forkHeader.hash.equals( header.hash )) )
+            if ( this.forks[i].forkHeader !== null && this.forks[i].forkHeader.hash !== undefined && this.forks[i].forkHeader.hash !== null && (this.forks[i].forkHeader === header || this.forks[i].forkHeader.hash.equals( header.hash )) )
                 return this.forks[i];
 
         return null;
@@ -33853,14 +33854,12 @@ class MiniBlockchainAccountantTree extends __WEBPACK_IMPORTED_MODULE_0_common_tr
         //if (this.checkBalanceSubscribed("balances/changes/"+BufferExtended.toBase(address))){
 
         let addressWIF = __WEBPACK_IMPORTED_MODULE_3_common_utils_BufferExtended__["a" /* default */].toBase(__WEBPACK_IMPORTED_MODULE_4_common_blockchain_interface_blockchain_addresses_Interface_Blockchain_Address_Helper__["a" /* default */].generateAddressWIF(address));
-        this.emitter.emit("balances/changes/"+__WEBPACK_IMPORTED_MODULE_3_common_utils_BufferExtended__["a" /* default */].toBase(address), {address: addressWIF, balances: (resultUpdate !== null ? node.getBalances() : null)} );
+        this.emitter.emit("balances/changes/"+__WEBPACK_IMPORTED_MODULE_3_common_utils_BufferExtended__["a" /* default */].toBase(address), { address: addressWIF, balances: (resultUpdate !== null ? node.getBalances() : null) } );
 
-        if (resultUpdate === null){
+        if (resultUpdate === null) {
             this.delete(address)
-        }
-
-        if (resultUpdate === null)
             return null;
+        }
 
         this._changedNode( node );
 
@@ -75341,9 +75340,9 @@ class MiniBlockchainLight extends  __WEBPACK_IMPORTED_MODULE_1__Mini_Blockchain_
 
             this._addTreeSerialization(block.height);
 
-            // console.log("BLOCK ", block.serializeBlock().toString("hex"));
-            // console.log(" difficulty", block.difficultyTarget.toString("hex"));
-            // console.log(" prev difficulty ", block.difficultyTargetPrev.toString("hex"));
+            console.log("BLOCK ", block.serializeBlock().toString("hex"));
+            console.log(" difficulty", block.difficultyTarget.toString("hex"));
+            console.log(" prev difficulty ", block.difficultyTargetPrev.toString("hex"));
             // console.log(" prev hash ", block.hashPrev.toString("hex"));
 
         } else {
@@ -75489,7 +75488,7 @@ class MiniBlockchainLight extends  __WEBPACK_IMPORTED_MODULE_1__Mini_Blockchain_
         } catch (exception){
 
             console.log(colors.red("Couldn't load MiniBlockchain"), exception);
-            this.accountantTree = new __WEBPACK_IMPORTED_MODULE_2__state_Mini_Blockchain_Accountant_Tree__["a" /* default */](this.db);
+            this.accountantTree.root = this.accountantTree._createNode(null,  [], null )
             this._initializeMiniBlockchainLight();
 
             return false;
@@ -75685,7 +75684,6 @@ class InterfaceBlockchainBrowserMining extends __WEBPACK_IMPORTED_MODULE_0__Inte
     _getWorker(){
         //let code = require('./Browser-Mining-Web-Worker.js');
         let code = /*require.resolve*/(713);
-        console.log("WORKER", code);
         return __WEBPACK_IMPORTED_MODULE_1_webworkify_webpack___default()(code);
     }
 

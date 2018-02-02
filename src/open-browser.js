@@ -1,3 +1,3 @@
 const opn = require('opn')
 
-opn('dist_bundle/demo.html') // Opens the url in the default browser
+opn('dist_bundle/index.html') // Opens the url in the default browser

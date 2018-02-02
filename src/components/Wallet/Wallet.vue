@@ -309,6 +309,8 @@
 
                 for (let index in this.addresses){
                     WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
+                    this.addresses[ index ].subscription = null;
+                    console.log("unsubscribe....");
                 }
 
 
@@ -323,7 +325,6 @@
             addAddressToWalletWatch(address){
 
                 let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
-                    //console.log("balance changed", address, data);
 
                     for (let i=0; i<this.addresses.length; i++)
                         if (this.addresses[i].address === address ){

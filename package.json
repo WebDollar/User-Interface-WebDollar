@@ -7,7 +7,8 @@
     "open_browser": "node src/open-browser",
     "build_frontend": "webpack --config build/webpack.browser-frontend.config.js",
     "build_user_interface": "webpack --config build/webpack.browser.config.js",
-    "build": "npm run build_frontend",
+    "build": "npm run build_frontend && npm run build_user_interface",
+    "test": "npm run build_frontend && npm run open_browser",
     "dev": "webpack-dev-server --config=./build/webpack.browser-hot-loader.config.js --content-base dist_bundle --hot --inline"
   },
   "repository": {

@@ -1,13 +1,13 @@
 <template>
-    <div class="walletAddress hoverAdress">
+    <div class="walletAddress hoverAddress">
 
-        <div class="adressIdentityBox" v-on:click.stop="handleTransferFunds">
+        <div class="addressIdentityBox" v-on:click.stop="handleTransferFunds">
             <img class="walletAddressImage" :src="this.getAddressPic" >
 
             <b><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
         </div>
 
-        <div class="actionsBox hoverAdress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
+        <div class="actionsBox hoverAddress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
             <div class="addressButton" v-on:click.stop="handleExport">
                 <icon class="btn" alt="Secure Wallet" text="Download Address" icon="download" />
             </div>
@@ -110,7 +110,7 @@
         transition: all .3s linear;
     }
 
-    #allWalets .walletAddress .adressIdentityBox{
+    #allWalets .walletAddress .addressIdentityBox{
         cursor: pointer;
     }
 
@@ -163,11 +163,11 @@
         margin-right: 25px;
     }
 
-    .adressIdentityBox{
+    .addressIdentityBox{
         display: inline-block;
     }
 
-    .hoverAdress:hover .actionsBox{
+    .hoverAddress:hover .actionsBox{
         display: inline-block;
     }
 

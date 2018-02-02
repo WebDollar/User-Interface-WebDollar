@@ -34,7 +34,7 @@
 
                 </div>
 
-                <div class="adressActions">
+                <div class="addressActions">
                     <div @click="this.showTransfer" :class="[ this.isTransfer ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Transfer
                     </div>
@@ -53,7 +53,7 @@
 
                     <p class="title">Transfer WEBD</p>
 
-                    <input class="adress" placeholder="Recipient Adress"/>
+                    <input class="address" placeholder="Recipient Address"/>
                     <!--{{this.toAddress||''.toString() }}-->
 
                     <input class="amount" placeholder="WEBD Amount"/>
@@ -69,7 +69,7 @@
                     <!--<div class="header">-->
 
                     <!--<span class="headerElement">-->
-                    <!--Adress Source-->
+                    <!--Address Source-->
                     <!--</span>-->
 
                     <!--<span class="headerElement">-->
@@ -88,17 +88,17 @@
 
                         <!--<li class="transferListElement">-->
 
-                            <!--<span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>-->
+                            <!--<span class="source" title="Address Source"> dadsa dasdasdasdas das das</span>-->
 
                             <!--<ul class="destinations">-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">dsad dsaas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
                                 <!--</li>-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">ds dsad a dasadas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
@@ -108,17 +108,17 @@
                         <!--</li>-->
                         <!--<li class="transferListElement pairListElement">-->
 
-                            <!--<span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>-->
+                            <!--<span class="source" title="Address Source"> dadsa dasdasdasdas das das</span>-->
 
                             <!--<ul class="destinations">-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">dsad dsaas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
                                 <!--</li>-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">ds dsad a dasadas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
@@ -128,17 +128,17 @@
                         <!--</li>-->
                         <!--<li class="transferListElement">-->
 
-                            <!--<span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>-->
+                            <!--<span class="source" title="Address Source"> dadsa dasdasdasdas das das</span>-->
 
                             <!--<ul class="destinations">-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">dsad dsaas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
                                 <!--</li>-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">ds dsad a dasadas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
@@ -148,17 +148,17 @@
                         <!--</li>-->
                         <!--<li class="transferListElement pairListElement">-->
 
-                            <!--<span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>-->
+                            <!--<span class="source" title="Address Source"> dadsa dasdasdasdas das das</span>-->
 
                             <!--<ul class="destinations">-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">dsad dsaas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
                                 <!--</li>-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">ds dsad a dasadas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
@@ -168,17 +168,17 @@
                         <!--</li>-->
                         <!--<li class="transferListElement">-->
 
-                            <!--<span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>-->
+                            <!--<span class="source" title="Address Source"> dadsa dasdasdasdas das das</span>-->
 
                             <!--<ul class="destinations">-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">dsad dsaas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
                                 <!--</li>-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">ds dsad a dasadas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
@@ -188,17 +188,17 @@
                         <!--</li>-->
                         <!--<li class="transferListElement pairListElement">-->
 
-                            <!--<span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>-->
+                            <!--<span class="source" title="Address Source"> dadsa dasdasdasdas das das</span>-->
 
                             <!--<ul class="destinations">-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">dsad dsaas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
                                 <!--</li>-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">ds dsad a dasadas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
@@ -208,17 +208,17 @@
                         <!--</li>-->
                         <!--<li class="transferListElement">-->
 
-                            <!--<span class="source" title="Adress Source"> dadsa dasdasdasdas das das</span>-->
+                            <!--<span class="source" title="Address Source"> dadsa dasdasdasdas das das</span>-->
 
                             <!--<ul class="destinations">-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">dsad dsaas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">dsad dsaas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->
                                 <!--</li>-->
                                 <!--<li class="destinationElement">-->
-                                    <!--<span class="destinationAdress" title="Adress Destination">ds dsad a dasadas dasd as das dasd as</span>-->
+                                    <!--<span class="destinationAddress" title="Address Destination">ds dsad a dasadas dasd as das dasd as</span>-->
                                     <!--<div class="money" title="Ammount & Currency">-->
                                         <!--<span class="ammount">20</span><span class="currency">WEBD</span>-->
                                     <!--</div>-->

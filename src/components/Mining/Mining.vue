@@ -317,6 +317,7 @@
     .whiteText{
         color: #c5c5c5;
         font-weight: 100;
+        margin-left: 5px;
     }
 
     #minningController{

@@ -8,7 +8,7 @@
 
                 <div class="descriptionText">
 
-                    For Delete this Address Type <b>DELETE</b> below
+                    For Delete this Address Type <span class="coloredText">DELETE</span> below
 
                 </div>
 
@@ -102,6 +102,7 @@
 </script>
 
 <style>
+
     .descriptionText{
 
         color: #bdbdbd;
@@ -144,6 +145,10 @@
         background-color: #f6ba2c;
         color: #000000;
         transition: all .3s linear;
+    }
+
+    .coloredText{
+        color: #f6ba2c;
     }
 
 </style>

@@ -13,7 +13,7 @@
                             <input placeholder="Your 12 words Password" v-model="walletAddressPassword" class="inputDeleteModalPass"/>
                         </div>
                         <div>
-                            <div @click="this.generatePasswrod" class="modalButtonPass generatorButtonPass">
+                            <div @click="this.generateRandomPassword" class="modalButtonPass generatorButtonPass">
                                 Generate random password
                             </div>
                         </div>
@@ -21,7 +21,7 @@
 
                     <span class="errorMessage">{{this.errorMessage}}</span>
 
-                    <div @click="this.encryptPassword" class="modalButtonPass">
+                    <div @click="this.createPassword" class="modalButtonPass">
                         Set Password
                     </div>
 
@@ -84,18 +84,18 @@
 
             },
 
-            generatePasswrod(){
+            generateRandomPassword(){
 
-                var wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z'];
+                let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z'];
                 this.walletAddressPassword = wordsArray[Math.floor(Math.random()*wordsArray.length)];
 
-                for (var i=0;i<=11;i++){
+                for (let i=0;i<=11;i++){
 
-                    var randomWord = wordsArray[Math.floor(Math.random()*wordsArray.length)];
-                    var index = this.walletAddressPassword.lastIndexOf(randomWord);
+                    let randomWord = wordsArray[Math.floor(Math.random()*wordsArray.length)];
+                    let index = this.walletAddressPassword.lastIndexOf(randomWord);
 
 
-                    if (index==-1){
+                    if (index === -1){
                         this.walletAddressPassword += (" "+randomWord);
                     }else{
                         i--;
@@ -105,26 +105,26 @@
 
             },
 
-            encryptPassword(){
+            async createPassword(){
 
-                var okPassword=true;
-                var wordsArray = this.walletAddressPassword.split(' ');
-                var wordsArraySize = wordsArray.length-1;
+                let okPassword = true;
+                let wordsArray = this.walletAddressPassword.split(' ');
+                let wordsArraySize = wordsArray.length - 1;
 
-                if (wordsArraySize != 12){
+                if (wordsArraySize !== 12){
 
                     this.errorMessage = "The password should contain 12 words, but you have only "+wordsArraySize+" words.";
                     okPassword=false;
 
                 }
 
-                if (okPassword==true){
+                if (okPassword===true){
 
-                    for (var i=0; i<=wordsArraySize; i++){
+                    for (let i=0; i<=wordsArraySize; i++){
 
-                        var index = wordsArray.lastIndexOf(wordsArray[i]);
+                        let index = wordsArray.lastIndexOf(wordsArray[i]);
 
-                        if  (index != i){
+                        if  (index !== i){
 
                             this.errorMessage = "The password should contain different words, but you are repeating '"+wordsArray[i]+"' word.";
                             okPassword=false;
@@ -135,18 +135,19 @@
 
                 }
 
-                if(okPassword==true){
+                if(okPassword === true){
 
                     this.errorMessage = '';
-                    this.setPassword();
+                    await this.setPassword(wordsArray);
 
                 }
 
             },
 
-            setPassword(){
+            async setPassword(wordsArray){
 
                 this.copyToClipboard();
+                await WebDollar.Blockchain.encryptAddress(address, wordsArray);
                 this.closeModal();
                 alert('Your password was saved in clipboard');
 

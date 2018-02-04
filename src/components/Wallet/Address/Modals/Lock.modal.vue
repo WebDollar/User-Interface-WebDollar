@@ -150,13 +150,13 @@
                             alert('Your old have ' + oldPassword.length + ' words! It should have 12.');
                             return;
                         }
+
+                        if ( (await this.setPassword(oldPassword, wordsArray)) === false)
+                            alert('Your old password is incorrect!!!');
                     }
 
-                    let response = await this.setPassword(oldPassword, wordsArray);
-                    if (response === false)
-                        alert('Your old password is incorrect!!!');
-                    else
-                        this.walletAddressPassword = "";
+                    await this.setPassword(oldPassword, wordsArray);
+                    this.walletAddressPassword = "";
                 }
 
             },

@@ -37,7 +37,7 @@
 
 <script>
 
-    var Vue = require('vue/dist/vue.min.js');
+    let Vue = require('vue/dist/vue.min.js');
     import Modal from "components/UI/modal/Modal.vue";
 
     import Clipboard from './../../../../../node_modules/v-clipboard';
@@ -77,6 +77,7 @@
                 }
 
             },
+
             copyToClipboard(){
 
                 this.clipboardText = 'Copied';
@@ -87,20 +88,20 @@
             generateRandomPassword(){
 
                 let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z'];
-                this.walletAddressPassword = wordsArray[Math.floor(Math.random()*wordsArray.length)];
+                this.walletAddressPassword = [];
 
-                for (let i=0;i<=11;i++){
+                for (let i = 0; i < 12; ++i){
 
-                    let randomWord = wordsArray[Math.floor(Math.random()*wordsArray.length)];
+                    let randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
                     let index = this.walletAddressPassword.lastIndexOf(randomWord);
 
-
                     if (index === -1){
-                        this.walletAddressPassword += (" "+randomWord);
-                    }else{
+                        this.walletAddressPassword += randomWord;
+                        if (i < 11)
+                            this.walletAddressPassword += " ";
+                    } else {
                         i--;
                     }
-
                 }
 
             },
@@ -109,18 +110,18 @@
 
                 let okPassword = true;
                 let wordsArray = this.walletAddressPassword.split(' ');
-                let wordsArraySize = wordsArray.length - 1;
-
+                let wordsArraySize = wordsArray.length;
+                alert('len='+ this.walletAddressPassword + ".");
                 if (wordsArraySize !== 12){
 
-                    this.errorMessage = "The password should contain 12 words, but you have only "+wordsArraySize+" words.";
-                    okPassword=false;
+                    this.errorMessage = "The password should contain 12 words, but you have " + wordsArraySize + " words.";
+                    okPassword = false;
 
                 }
 
-                if (okPassword===true){
+                if (okPassword === true){
 
-                    for (let i=0; i<=wordsArraySize; i++){
+                    for (let i = 0; i < wordsArraySize; i++){
 
                         let index = wordsArray.lastIndexOf(wordsArray[i]);
 

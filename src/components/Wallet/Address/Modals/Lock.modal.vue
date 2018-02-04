@@ -147,7 +147,7 @@
             async setPassword(wordsArray){
 
                 this.copyToClipboard();
-                await WebDollar.Blockchain.encryptAddress(address, wordsArray);
+                await WebDollar.Blockchain.Wallet.encryptAddress(this.address, wordsArray);
                 this.closeModal();
                 alert('Your password was saved in clipboard');
 

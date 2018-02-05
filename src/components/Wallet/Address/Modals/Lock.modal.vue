@@ -156,7 +156,6 @@
                     }
 
                     await this.setPassword(oldPassword, wordsArray);
-                    this.walletAddressPassword = "";
                 }
 
             },
@@ -165,10 +164,12 @@
 
                 this.copyToClipboard();
                 let response = await WebDollar.Blockchain.Wallet.encryptAddress(this.address, oldPassword, wordsArray);
-                this.closeModal();
 
-                if (response === true)
+                if (response === true) {
+                    this.walletAddressPassword = "";
+                    this.closeModal();
                     alert('Your password was saved in clipboard');
+                }
 
                 return response;
             }

@@ -87,7 +87,7 @@
 
             generateRandomPassword(){
 
-                let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z'];
+                let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
                 this.walletAddressPassword = [];
 
                 for (let i = 0; i < 12; ++i){
@@ -111,7 +111,7 @@
                 let okPassword = true;
                 let wordsArray = this.walletAddressPassword.split(' ');
                 let wordsArraySize = wordsArray.length;
-                alert('len='+ this.walletAddressPassword + ".");
+
                 if (wordsArraySize !== 12){
 
                     this.errorMessage = "The password should contain 12 words, but you have " + wordsArraySize + " words.";
@@ -128,7 +128,7 @@
                         if  (index !== i){
 
                             this.errorMessage = "The password should contain different words, but you are repeating '"+wordsArray[i]+"' word.";
-                            okPassword=false;
+                            okPassword = false;
 
                         }
 
@@ -139,19 +139,39 @@
                 if(okPassword === true){
 
                     this.errorMessage = '';
-                    await this.setPassword(wordsArray);
+                    let oldPassword = undefined;
 
+                    if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)) {
+
+                        let response = prompt("Please enter your last password (12 words separated by space)");
+                        oldPassword = response.split(' ');
+
+                        if (oldPassword.length !== 12) {
+                            alert('Your old password has ' + oldPassword.length + ' words. It must have 12!');
+                            return;
+                        }
+
+                        if ( (await this.setPassword(oldPassword, wordsArray)) === false)
+                            alert('Your old password is incorrect!!!');
+                    }
+
+                    await this.setPassword(oldPassword, wordsArray);
                 }
 
             },
 
-            async setPassword(wordsArray){
+            async setPassword(oldPassword, wordsArray){
 
                 this.copyToClipboard();
-                await WebDollar.Blockchain.Wallet.encryptAddress(this.address, wordsArray);
-                this.closeModal();
-                alert('Your password was saved in clipboard');
+                let response = await WebDollar.Blockchain.Wallet.encryptAddress(this.address, oldPassword, wordsArray);
 
+                if (response === true) {
+                    this.walletAddressPassword = "";
+                    this.closeModal();
+                    alert('Your password was saved in clipboard');
+                }
+
+                return response;
             }
 
         },

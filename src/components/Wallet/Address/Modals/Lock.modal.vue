@@ -87,7 +87,7 @@
 
             generateRandomPassword(){
 
-                let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z'];
+                let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
                 this.walletAddressPassword = [];
 
                 for (let i = 0; i < 12; ++i){
@@ -143,11 +143,11 @@
 
                     if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)) {
 
-                        let response = prompt("Please enter your last password(12 words separated by space");
+                        let response = prompt("Please enter your last password (12 words separated by space)");
                         oldPassword = response.split(' ');
 
                         if (oldPassword.length !== 12) {
-                            alert('Your old have ' + oldPassword.length + ' words! It should have 12.');
+                            alert('Your old password has ' + oldPassword.length + ' words. It must have 12!');
                             return;
                         }
 

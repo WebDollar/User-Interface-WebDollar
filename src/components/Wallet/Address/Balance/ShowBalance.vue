@@ -27,12 +27,17 @@
 
             this.currency = this.currency || '0x01';
 
-            if (typeof this.address === "object" && typeof this.address.hasOwnProperty("balances") ){ //it is an address object
-                this.balances = this.address.balances;
-                return;
+//            if (typeof this.address === "object" && typeof this.address.hasOwnProperty("balances") ){ //it is an address object
+//                this.balances = this.address.balances;
+//                return;
+//            }
+
+            let address = this.address;
+            if (typeof this.address === "object" && typeof this.address.hasOwnProperty("address") ) { //it is an address object
+                address = this.address.address;
             }
 
-            let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(this.address, (data)=>{
+            let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
                 this.balances = data.balances;
             });
 
@@ -46,17 +51,24 @@
         watch: {
             address: function (newVal, oldVal) { // watch it
 
-                if (typeof newVal === "object" && typeof newVal.hasOwnProperty("balances") ){ //it is an address object
-                    this.balances = newVal.balances;
-                    return;
-                }
+//                if (typeof newVal === "object" && typeof newVal.hasOwnProperty("balances") ){ //it is an address object
+//                    this.balances = newVal.balances;
+//                    return;
+//                }
 
                 WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.subscription);
 
-                let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(newVal, (data)=>{
+                let address = newVal;
+                if (typeof newVal === "object" && typeof newVal.hasOwnProperty("address") ) { //it is an address object
+                    address = newVal.address;
+                }
+
+                console.log("address!!!!!!", address);
+
+                let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
+                    console.log("balance changed")
                     this.balances = data.balances;
                 });
-
 
                 if (data !== null) {
                     this.subscription = data.subscription;

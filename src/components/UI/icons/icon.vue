@@ -6,16 +6,17 @@ Download svgs from https://icomoon.io/app/#/select/image
 
     <div @click="this.handleClick">
 
-        <svgChevronUp v-if="this.icon === 'chevron-up'"></svgChevronUp>
-        <svgChevronDown v-if="this.icon === 'chevron-down'"></svgChevronDown>
-        <svgKey v-if="this.icon === 'key'"></svgKey>
-        <svgLockClosed v-if="this.icon === 'lock-closed'"></svgLockClosed>
-        <svgLockOpen v-if="this.icon === 'lock-open'"></svgLockOpen>
-        <svgPlus v-if="this.icon === 'plus'"></svgPlus>
-        <svgPlusSquare v-if="this.icon === 'plus-square'"></svgPlusSquare>
-        <svgX v-if="this.icon === 'x'"></svgX>
-        <svgUpload v-if="this.icon === 'upload'"></svgUpload>
-        <svgDownload v-if="this.icon === 'download'"></svgDownload>
+        <svg-chevron-up v-if="this.icon === 'chevron-up'"></svg-chevron-up>
+        <svg-chevron-down v-if="this.icon === 'chevron-down'"></svg-chevron-down>
+        <svg-key v-if="this.icon === 'key'"></svg-key>
+        <svg-lock-closed v-if="this.icon === 'lock-closed'"></svg-lock-closed>
+        <svg-lock-open v-if="this.icon === 'lock-open'"></svg-lock-open>
+        <svg-plus v-if="this.icon === 'plus'"></svg-plus>
+        <svg-plus-square v-if="this.icon === 'plus-square'"></svg-plus-square>
+        <svg-x v-if="this.icon === 'x'"></svg-x>
+        <svg-upload v-if="this.icon === 'upload'"></svg-upload>
+        <svg-download v-if="this.icon === 'download'"></svg-download>
+        <svg-mining v-if="this.icon === 'mining'"></svg-mining>
 
     </div>
 
@@ -34,6 +35,7 @@ Download svgs from https://icomoon.io/app/#/select/image
     import svgX from "./res/svg-x.vue"
     import svgUpload from "./res/svg-upload.vue"
     import svgDownload from "./res/svg-download.vue"
+    import svgMining from "./res/svg-mining.vue"
 
     export default{
 
@@ -42,16 +44,17 @@ Download svgs from https://icomoon.io/app/#/select/image
         },
 
         components:{
-            "svgKey": svgKey,
-            "svgChevronDown": svgChevronDown,
-            "svgChevronUp": svgChevronUp,
-            "svgLockClosed": svgLockClosed,
-            "svgLockOpen": svgLockOpen,
-            "svgPlus": svgPlus,
-            "svgPlusSquare": svgPlusSquare,
-            "svgX": svgX,
-            "svgDownload": svgDownload,
-            "svgUpload": svgUpload,
+            "svg-key": svgKey,
+            "svg-chevron-down": svgChevronDown,
+            "svg-chevron-up": svgChevronUp,
+            "svg-lock-closed": svgLockClosed,
+            "svg-lock-open": svgLockOpen,
+            "svg-plus": svgPlus,
+            "svg-plus-square": svgPlusSquare,
+            "svg-x": svgX,
+            "svg-download": svgDownload,
+            "svg-upload": svgUpload,
+            "svg-mining": svgMining,
         },
 
         methods:{

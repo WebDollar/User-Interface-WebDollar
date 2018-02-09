@@ -255,7 +255,7 @@
         border-right: solid 1px #313131;
     }
 
-    .copyToClipboard{
+    .modalButton2{
         background-color: #353535;
         border-radius: 5px;
         padding: 7px 0 5px 0;
@@ -267,12 +267,12 @@
         transition: all 0.5s ease
     }
 
-    .copyToClipboard:hover{
+    .modalButton2:hover{
         background-color: #000;
         transition: all 0.5s ease
     }
 
-    .copyToClipboardSuccess{
+    .modalButton2Success{
         color: #149008;
         font-size: 14px;
     }

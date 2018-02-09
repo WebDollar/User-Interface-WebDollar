@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/WebDollar/User-Interface-WebDollar#readme",
   "dependencies": {
+    "clipboard": "^1.7.1",
     "v-clipboard": "*",
     "vue": "^2.5.13",
     "vue-slider-component": "*"

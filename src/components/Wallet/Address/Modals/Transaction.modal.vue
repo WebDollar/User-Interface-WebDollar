@@ -16,7 +16,7 @@
 
                         <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
 
-                        <div @click="copyToClipboard" :class=" this.clipboardText!='Copied' ? 'copyToClipboard' : 'copyToClipboardSuccess' ">
+                        <div @click="copyToClipboard" :class=" this.clipboardText!='Copied' ? 'modalButton2' : 'modalButton2Success' ">
                             {{this.clipboardText}}
                         </div>
 
@@ -29,6 +29,14 @@
                         </div>
 
                         <b class="ballance" style="color:gray"> <ShowBalance :address="this.address" currency="0x01"/>WEBD</b>
+
+                        <b v-if="isMiningAddress">
+                            <icon class="btn" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
+                            Mining on this Address
+                        </b>
+                        <div  v-if="!isMiningAddress" @click="handleSetAddress" class="modalButton2">
+                            Mine on this address
+                        </div>
 
                     </div>
 
@@ -62,6 +70,7 @@
                     <button type="submit" class="button">
                         SEND WEBD
                     </button>
+
                 </form>
 
                 <div class="transferList" :style="{display: this.isTransactionList ? 'block': 'none'}">
@@ -258,6 +267,7 @@
     import Modal from "components/UI/modal/Modal.vue"
     import Clipboard from './../../../../../node_modules/v-clipboard'
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
+    import icon from "components/UI/icons/icon.vue"
 
     Vue.use(Clipboard)
 
@@ -268,11 +278,13 @@
             address: {default: null},
             toAddress: {default: null},
             toAmount: {default: 0.0},
+            isMiningAddress: {default: false},
         },
 
         components: {
             "Modal": Modal,
             "ShowBalance":ShowBalance,
+            "icon":icon,
         },
 
         data: () => {
@@ -311,6 +323,7 @@
                 this.isBuy = false;
                 this.isTransactionList = true;
             },
+
             closeModal() {
                 this.$refs['refModal'].closeModal();
             },
@@ -323,13 +336,15 @@
             copyToClipboard(){
                 this.clipboardText = 'Copied';
                 this.$clipboard(this.address)
+            },
+
+            handleSetAddress(){
+                WebDollar.Blockchain.Mining.minerAddress = this.address;
             }
 
         },
 
         mounted() {
-
-            this.clipboardText = 'Copy to Clipboard';
 
             if (typeof window === 'undefined') return;
 

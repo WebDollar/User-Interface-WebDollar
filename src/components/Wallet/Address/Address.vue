@@ -3,7 +3,7 @@
 
         <div class="addressIdentityBox" v-on:click.stop="handleTransferFunds">
             <img class="walletAddressImage" :src="this.getAddressPic" >
-            <icon v-if="this.isMiningAddress" class="btn" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
+            <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
             <b><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
         </div>
@@ -118,6 +118,12 @@
 </script>
 
 <style>
+
+    .actuallMiningAddress{
+        position: fixed;
+        margin-left: -45px;
+        margin-top: -5px;
+    }
 
     #allWalets .walletAddress{
         padding: 0!important;

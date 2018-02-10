@@ -177,46 +177,57 @@
 
                 let address = '', nodeType = '', status = "node", nodeProtocol = '', nodeIndex=0, uuid='';
 
+                if (geoLocation === undefined)
+                    geoLocation = {};
+
                 if (socket === 'myself') {
                     status = "connected";
                     address = geoLocation.address;
                     uuid = '0';
                     nodeType = "myself";
-                } else
-                if (socket === 'fake') {
+                } else if (socket === 'fake') {
                     address = geoLocation.country;
                     uuid = geoLocation.city;
 
-                    if (Math.floor(Math.random()*2) === 0) status = "connected";
-                    else  status = "not connected";
+                    if (Math.floor(Math.random() * 2) === 0) status = "connected";
+                    else status = "not connected";
 
-                    if (Math.floor(Math.random()*2) === 0) nodeType = "browser";
+                    if (Math.floor(Math.random() * 2) === 0) nodeType = "browser";
                     else nodeType = "terminal"
 
-                } else
-                if (typeof socket === "object" && socket.node !== undefined && socket.node.protocol !== undefined && socket.node.protocol.helloValidated ) {
+                } else if (typeof socket === "object" && socket.node !== undefined && socket.node.protocol !== undefined && socket.node.protocol.helloValidated) {
                     address = socket.node.sckAddress.toString();
                     uuid = socket.node.sckAddress.uuid;
 
                     status = "connected";
 
-                    switch (socket.node.type){
-                        case 'client': nodeType = 'terminal'; break;
-                        case 'server' : nodeType = 'terminal'; break;
-                        case 'webpeer' : nodeType = 'browser'; break;
+                    switch (socket.node.type) {
+                        case 'client':
+                            nodeType = 'terminal';
+                            break;
+                        case 'server' :
+                            nodeType = 'terminal';
+                            break;
+                        case 'webpeer' :
+                            nodeType = 'browser';
+                            break;
                     }
 
                     nodeProtocol = socket.node.type;
                     nodeIndex = socket.node.index;
                 }
-                else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject ){ //its a waitlist
+                else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject) { //its a waitlist
 
                     address = socket.sckAddresses[0].toString();
                     uuid = socket.sckAddresses[0].uuid;
 
-                    switch (socket.type){
-                        case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER: nodeType = 'browser'; break;
-                        case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.NODE_PEER_TERMINAL_SERVER: nodeType = 'terminal'; break;
+                    switch (socket.type) {
+                        case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER:
+                            nodeType = 'browser';
+                            break;
+                        case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.NODE_PEER_TERMINAL_SERVER:
+                            nodeType = 'terminal';
+                            break;
                     }
 
                     status = "not connected";

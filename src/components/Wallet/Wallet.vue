@@ -29,7 +29,7 @@
                     </div>
                     <label class="myLabel">
 
-                        <input ref="importedAddress" type="file" v-on:change="this.importAddress" multiple size="50" />
+                        <input ref="importedAddress" type="file" v-on:change="this.handleImportAddress" multiple size="50" />
 
                         <div class="btn">
                             Import Address
@@ -114,14 +114,6 @@
 
               this.changeScreenBehavior();
 
-//              WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
-//                  console.log("wallet/address-changes", address)
-//                  this.addNewAddress(address);
-//              });
-
-//              WebDollar.Blockchain.Wallet.emitter.on("wallet/changes", ()=>{
-//                  this.loadAllAddresses();
-//              });
 
               WebDollar.Blockchain.emitter.on("blockchain/mining/address", (data)=>{
                   this.miningAddress = data.address;
@@ -140,15 +132,16 @@
                   this.walletResizeFix();
               });
 
-//              this.loadAllAddresses();
-
-            console.log("#####!@#@!#!@#!@#@!###" , this.addresses);
-
         },
 
         methods: {
 
             changeScreenBehavior(){
+
+                if (this.$refs['walletMenuButton'] === undefined) {
+                    console.log("not ready..");
+                    return;
+                }
 
                 if (window.screenWidth < 831){
 
@@ -238,7 +231,7 @@
                 WebDollar.Blockchain.Wallet.createNewAddress();
             },
 
-            async importAddress(){
+            async handleImportAddress(){
 
                 // dropzone tutorial https://www.html5rocks.com/en/tutorials/file/dndfiles/
 
@@ -301,67 +294,8 @@
 
             },
 
-//            loadAllAddresses(){
-//
-//                for (let index in this.addresses){
-//                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
-//                    this.addresses[ index ].subscription = null;
-//                    console.log("unsubscribe....");
-//                }
-//
-//
-//                this.addresses = [];
-//
-//                for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++) {
-//                    this.addAddressToWalletWatch(WebDollar.Blockchain.Wallet.addresses[i].address);
-//                }
-//
-//            },
 
-            addAddressToWalletWatch(address){
 
-                let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
-
-                    for (let i=0; i<this.addresses.length; i++)
-                        if (this.addresses[i].address === address ){
-
-                            this.addresses[i].balances = data.balances;
-                            this.addresses[i] = Object.assign( {}, this.addresses[i], { });
-                            this.$refs['showSumBalances'].refreshSum(this.addresses, this.currency);
-
-                            break;
-                        }
-
-                    // immutable array
-                    // this.addresses = Object.assign( {}, this.addresses, { });
-
-                    this.$forceUpdate();
-
-                });
-
-                if (data !== null) {
-
-                    let element =  {address: address, balances: data.balances, subscription: data.subscription};
-                    this.addresses.push (element);
-
-                }
-
-            },
-
-            deleteAddress(address){
-
-                if (address === null || address === undefined) return false;
-
-                for (let keyAddress in this.addresses)
-                    if (address.toString() === this.addresses[keyAddress].address.toString()){
-
-                        WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[keyAddress].subscription);
-                        this.addresses.splice(i,1);
-                        return true;
-                    }
-
-                return false;
-            }
 
         }
 

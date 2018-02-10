@@ -3,6 +3,3 @@
 \node_modules/
 package-lock\.json
 dist_bundle/WebDollar-User-Interface-bundle.js
-dist_bundle/WebDollar-Protocol-bundle\.js\.map
-
-dist_bundle/WebDollar-User-Interface-bundle\.js\.map

@@ -32,12 +32,12 @@
 
 <script>
 
-    var Vue = require('vue/dist/vue.min.js');
+    let Vue = require('vue/dist/vue.min.js');
     import Modal from "components/UI/modal/Modal.vue"
 
     import Clipboard from './../../../../../node_modules/v-clipboard'
 
-    Vue.use(Clipboard)
+    Vue.use(Clipboard);
 
     export default {
 
@@ -75,7 +75,7 @@
             },
 
             closeModal(e) {
-
+                this.inputValue = "";
                 if (this.$refs['refModal'] !== undefined)
                     this.$refs['refModal'].closeModal(e);
             },

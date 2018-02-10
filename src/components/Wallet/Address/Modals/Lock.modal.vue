@@ -81,7 +81,7 @@
             copyToClipboard(){
 
                 this.clipboardText = 'Copied';
-                this.$clipboard(this.walletAddressPassword);
+                this.$clipboard(this.walletAddressPassword.trim());
 
             },
 
@@ -109,8 +109,14 @@
             async createPassword(){
 
                 let okPassword = true;
-                let wordsArray = this.walletAddressPassword.split(' ');
-                let wordsArraySize = wordsArray.length;
+                let wordsArray = [];
+                let wordsArraySize = 0;
+
+                this.walletAddressPassword = this.walletAddressPassword.trim();
+                if (0 < this.walletAddressPassword.length) {
+                    wordsArray = this.walletAddressPassword.split(' ');
+                    wordsArraySize = wordsArray.length;
+                }
 
                 if (wordsArraySize !== 12){
 
@@ -168,7 +174,7 @@
                 if (response === true) {
                     this.walletAddressPassword = "";
                     this.closeModal();
-                    alert('Your password was saved in clipboard');
+                    alert('You have set a new password!');
                 }
 
                 return response;
@@ -178,7 +184,8 @@
 
         mounted() {
 
-            if (typeof window === 'undefined') return;
+            if (typeof window === 'undefined')
+                return;
 
         },
 

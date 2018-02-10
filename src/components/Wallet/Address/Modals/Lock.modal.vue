@@ -67,6 +67,7 @@
         methods: {
 
             closeModal() {
+                this.walletAddressPassword = "";
                 this.$refs['refPassModal'].closeModal();
             },
 
@@ -157,7 +158,6 @@
                 let response = await WebDollar.Blockchain.Wallet.encryptAddress(this.address, wordsArray);
 
                 if (response === true) {
-                    this.walletAddressPassword = "";
                     this.closeModal();
                     alert('You have set a new password!');
                 }

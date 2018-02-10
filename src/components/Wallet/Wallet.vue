@@ -46,6 +46,7 @@
 
                         <Address v-for="walletAddress in this.addresses"
 
+                                     :isMiningAddress="miningAddress === walletAddress.address"
                                      :key="walletAddress.address"
                                      :id="'address'+walletAddress.address"
                                      :address="walletAddress.address"
@@ -86,6 +87,7 @@
             return {
                 opened: false,
                 addresses: [],
+                miningAddress: '',
                 currency: "0x01",
 
                 walletButtonMarginOpened: 0,
@@ -121,6 +123,11 @@
               WebDollar.Blockchain.Wallet.emitter.on("wallet/changes", ()=>{
                   this.loadAllAddresses();
               });
+
+              WebDollar.Blockchain.emitter.on("blockchain/mining/address", (data)=>{
+                  this.miningAddress = data.address;
+              });
+              this.miningAddress = WebDollar.Blockchain.Mining.minerAddressBase;
 
               //onLoad
               BrowserHelpers.addEvent(window, "load", (event) => {

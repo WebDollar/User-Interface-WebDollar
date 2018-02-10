@@ -30,9 +30,8 @@
 
                         <b class="ballance" style="color:gray"> <ShowBalance :address="this.address" currency="0x01"/>WEBD</b>
 
-                        <b v-if="isMiningAddress">
-                            <icon class="btn" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
-                            Mining on this Address
+                        <b class="miningAddress" v-if="isMiningAddress">
+                            You are mining on this Address
                         </b>
                         <div  v-if="!isMiningAddress" @click="handleSetAddress" class="modalButton2">
                             Mine on this address
@@ -353,4 +352,10 @@
     }
 
 </script>
+
+<style>
+    .miningAddress{
+        display: block!important;
+    }
+</style>
 

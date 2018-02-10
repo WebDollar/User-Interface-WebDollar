@@ -66,10 +66,3 @@
     }
 
 </script>
-
-<style>
-    .show-sum-balances{
-        display: inline;
-        color: #1f1f1f;
-    }
-</style>

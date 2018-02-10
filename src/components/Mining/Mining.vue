@@ -24,7 +24,7 @@
                         </path>
                 </svg>
             </div>
-            <p class="WEBD"> <ShowBalance :address="this.minerAddress" currency="0x01"/> <b class="whiteText">WEBD MINED</b></p>
+            <p class="WEBD"> <ShowSumBalances :addresses="this.addresses" :currency="this.currency" ref="showSumBalances" /> <b class="whiteText">WEBD MINED</b></p>
         </div>
 
     </div>
@@ -32,7 +32,7 @@
 
 <script>
 
-    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue";
+    import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
     import slider from "./slider.vue";
 
     export default{
@@ -40,13 +40,14 @@
         name: 'Mining',
 
         components: {
-            "ShowBalance":ShowBalance,
+            "ShowSumBalances":ShowSumBalances,
             "slider":slider
         },
 
+        props: ['addresses', 'currency'],
+
         data: function () {
             return {
-
                 started: false,
                 hashesPerSecond: 0,
                 workers: 0,
@@ -55,10 +56,6 @@
         },
 
         computed:{
-        },
-
-        props:{
-
         },
 
         mounted() {
@@ -105,29 +102,6 @@
         },
 
         methods: {
-
-            async startStopMining() {
-
-                if (!WebDollar.Blockchain.Mining.started)
-                    WebDollar.Blockchain.Mining.startMining();
-                else
-                    WebDollar.Blockchain.Mining.stopMining();
-
-                return true;
-
-            },
-
-            destroyOneMiningWorker(number){
-
-                WebDollar.Blockchain.Mining.decreaseWorkers(number||1);
-
-            },
-
-            createOneMiningWorker(number){
-
-                WebDollar.Blockchain.Mining.increaseWorkers(number||1);
-
-            },
 
             changeWorkers(value){
 

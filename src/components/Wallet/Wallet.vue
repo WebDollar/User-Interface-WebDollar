@@ -11,7 +11,6 @@
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'"></icon>
                 Wallet
-                <ShowSumBalances :addresses="this.addresses" :currency="this.currency" ref="showSumBalances" />
             </span>
         </div>
 
@@ -83,12 +82,12 @@
             "ShowSumBalances":ShowSumBalances,
         },
 
+        props: ['addresses', 'currency'],
+
         data:  () => {
             return {
                 opened: false,
-                addresses: [],
                 miningAddress: '',
-                currency: "0x01",
 
                 walletButtonMarginOpened: 0,
                 walletButtonMarginClosed: 0,
@@ -115,14 +114,14 @@
 
               this.changeScreenBehavior();
 
-              WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
-                  console.log("wallet/address-changes", address)
-                  this.addNewAddress(address);
-              });
+//              WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
+//                  console.log("wallet/address-changes", address)
+//                  this.addNewAddress(address);
+//              });
 
-              WebDollar.Blockchain.Wallet.emitter.on("wallet/changes", ()=>{
-                  this.loadAllAddresses();
-              });
+//              WebDollar.Blockchain.Wallet.emitter.on("wallet/changes", ()=>{
+//                  this.loadAllAddresses();
+//              });
 
               WebDollar.Blockchain.emitter.on("blockchain/mining/address", (data)=>{
                   this.miningAddress = data.address;
@@ -141,7 +140,9 @@
                   this.walletResizeFix();
               });
 
-              this.loadAllAddresses();
+//              this.loadAllAddresses();
+
+            console.log("#####!@#@!#!@#!@#@!###" , this.addresses);
 
         },
 
@@ -300,34 +301,22 @@
 
             },
 
-            addNewAddress(address){
-
-                if (address === null || address === undefined) return false;
-
-                for (let i=0; i<this.addresses.length; i++)
-                    if (address.toString() === this.addresses[i].address.toString()){
-                        return false;
-                    }
-
-                this.addAddressToWalletWatch(address);
-            },
-
-            loadAllAddresses(){
-
-                for (let index in this.addresses){
-                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
-                    this.addresses[ index ].subscription = null;
-                    console.log("unsubscribe....");
-                }
-
-
-                this.addresses = [];
-
-                for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++) {
-                    this.addAddressToWalletWatch(WebDollar.Blockchain.Wallet.addresses[i].address);
-                }
-
-            },
+//            loadAllAddresses(){
+//
+//                for (let index in this.addresses){
+//                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
+//                    this.addresses[ index ].subscription = null;
+//                    console.log("unsubscribe....");
+//                }
+//
+//
+//                this.addresses = [];
+//
+//                for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++) {
+//                    this.addAddressToWalletWatch(WebDollar.Blockchain.Wallet.addresses[i].address);
+//                }
+//
+//            },
 
             addAddressToWalletWatch(address){
 

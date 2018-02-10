@@ -3,6 +3,7 @@
 
         <div class="addressIdentityBox" v-on:click.stop="handleTransferFunds">
             <img class="walletAddressImage" :src="this.getAddressPic" >
+            <icon v-if="this.isMiningAddress" class="btn" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
             <b><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
         </div>
@@ -21,7 +22,7 @@
             </div>
         </div>
 
-        <TransactionModal ref="refTransactionModal" :address="this.address" />
+        <TransactionModal ref="refTransactionModal" :address="this.address" :isMiningAddress="this.isMiningAddress" />
         <LockModal ref="refLockModal" :address="this.address" />
         <DeleteModal ref="refDeleteModal" :address="this.address" />
 
@@ -42,6 +43,7 @@
 
         props:{
             address:{default:''},
+            isMiningAddress: {default: false}
         },
 
         components:{

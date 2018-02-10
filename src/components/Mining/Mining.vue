@@ -24,7 +24,9 @@
                         </path>
                 </svg>
             </div>
-            <p class="WEBD"> <ShowSumBalances :addresses="this.addresses" :currency="this.currency" ref="showSumBalances" /> <b class="whiteText">WEBD MINED</b></p>
+            <p class="WEBD">
+                <ShowSumBalances :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" /> <b class="whiteText">WEBD</b>
+            </p>
         </div>
 
     </div>

@@ -1,11 +1,134 @@
 <template>
 
     <div id="webDollar">
-        <Mining ref="minig"></Mining>
-        <Wallet :addresses="this.addresses" :currency="this.currency" ref="wallet"></Wallet>
+        <Mining :addresses="this.addresses" :currency="this.currency" ref="refMining"></Mining>
+        <Wallet :addresses="this.addresses" :currency="this.currency" ref="refWallet"></Wallet>
     </div>
 
 </template>
+
+<script>
+
+    import Wallet from "./Wallet/Wallet.vue"
+    import Mining from "./Mining/Mining.vue"
+    import Address from "components/Wallet/Address/Address.vue"
+
+    export default {
+
+        components:{
+            "Wallet":Wallet,
+            "Mining":Mining,
+            "Address":Address,
+        },
+
+        data: () => {
+            return {
+                addresses: [],
+                currency: "0x01",
+            }
+        },
+
+        mounted(){
+
+
+            if (typeof window === "undefined") return ;
+
+              WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
+                  console.log("wallet/address-changes", address)
+                  this.addNewAddress(address);
+              });
+
+              WebDollar.Blockchain.Wallet.emitter.on("wallet/changes", ()=>{
+                  this.loadAllAddresses();
+              });
+
+            this.loadAllAddresses();
+
+        },
+
+        methods: {
+
+            loadAllAddresses(){
+
+                for (let index in this.addresses){
+                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
+                    this.addresses[ index ].subscription = null;
+                    console.log("unsubscribe....");
+                }
+
+
+                this.addresses = [];
+
+                for (let i=0; i<WebDollar.Blockchain.Wallet.addresses.length; i++) {
+                    this.addAddressToWalletWatch(WebDollar.Blockchain.Wallet.addresses[i].address);
+                }
+
+            },
+
+            addNewAddress(address){
+
+                if (address === null || address === undefined) return false;
+
+                for (let i=0; i<this.addresses.length; i++)
+                    if (address.toString() === this.addresses[i].address.toString()){
+                        return false;
+                    }
+
+                this.addAddressToWalletWatch(address);
+            },
+
+
+            addAddressToWalletWatch(address){
+
+                let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
+
+                    for (let i=0; i<this.addresses.length; i++)
+                        if (this.addresses[i].address === address ){
+
+                            this.addresses[i].balances = data.balances;
+                            this.addresses[i] = Object.assign( {}, this.addresses[i], { });
+
+                            this.$refs['refMining'].$refs['refShowSumBalances'].refreshSum(this.addresses, this.currency);
+
+                            break;
+                        }
+
+                    // immutable array
+                    // this.addresses = Object.assign( {}, this.addresses, { });
+
+                    this.$forceUpdate();
+
+                });
+
+                if (data !== null) {
+
+                    let element =  {address: address, balances: data.balances, subscription: data.subscription};
+                    this.addresses.push (element);
+
+                }
+
+            },
+
+            deleteAddress(address){
+
+                if (address === null || address === undefined) return false;
+
+                for (let keyAddress in this.addresses)
+                    if (address.toString() === this.addresses[keyAddress].address.toString()){
+
+                        WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[keyAddress].subscription);
+                        this.addresses.splice(i,1);
+                        return true;
+                    }
+
+                return false;
+            }
+
+        }
+
+    }
+</script>
+
 
 <style>
 
@@ -45,59 +168,3 @@
     }
 
 </style>
-
-<script>
-
-    import Wallet from "./Wallet/Wallet.vue"
-    import Mining from "./Mining/Mining.vue"
-    import Address from "components/Wallet/Address/Address.vue"
-
-    export default {
-
-        components:{
-            "Wallet":Wallet,
-            "Mining":Mining,
-            "Address":Address,
-        },
-
-        data: () => {
-            return {
-                addresses: [],
-                currency: "0x01",
-            }
-        },
-
-        mounted(){
-
-            this.loadAllAddresses();
-
-        },
-
-        methods: {
-
-            loadAllAddresses(){
-
-                for (let index in this.addresses){
-                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
-                    this.addresses[ index ].subscription = null;
-                    console.log("unsubscribe....");
-                }
-
-            }
-
-            addNewAddress(address){
-
-                if (address === null || address === undefined) return false;
-
-                for (let i=0; i<this.addresses.length; i++)
-                    if (address.toString() === this.addresses[i].address.toString()){
-                        return false;
-                    }
-
-                this.addAddressToWalletWatch(address);
-            },
-
-        }
-
-    }
-</script>

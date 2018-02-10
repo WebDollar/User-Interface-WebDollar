@@ -67,6 +67,7 @@
         methods: {
 
             closeModal() {
+                this.walletAddressPassword = "";
                 this.$refs['refPassModal'].closeModal();
             },
 
@@ -145,34 +146,18 @@
                 if(okPassword === true){
 
                     this.errorMessage = '';
-                    let oldPassword = undefined;
 
-                    if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)) {
-
-                        let response = prompt("Please enter your last password (12 words separated by space)");
-                        oldPassword = response.split(' ');
-
-                        if (oldPassword.length !== 12) {
-                            alert('Your old password has ' + oldPassword.length + ' words. It must have 12!');
-                            return;
-                        }
-
-                        if ( (await this.setPassword(oldPassword, wordsArray)) === false)
-                            alert('Your old password is incorrect!!!');
-                    }
-
-                    await this.setPassword(oldPassword, wordsArray);
+                    await this.setPassword(wordsArray);
                 }
 
             },
 
-            async setPassword(oldPassword, wordsArray){
+            async setPassword(wordsArray){
 
-                this.copyToClipboard();
-                let response = await WebDollar.Blockchain.Wallet.encryptAddress(this.address, oldPassword, wordsArray);
+                //this.copyToClipboard();
+                let response = await WebDollar.Blockchain.Wallet.encryptAddress(this.address, wordsArray);
 
                 if (response === true) {
-                    this.walletAddressPassword = "";
                     this.closeModal();
                     alert('You have set a new password!');
                 }

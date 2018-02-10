@@ -155,7 +155,7 @@
     .modal .ballance{
         color: #ffc12c!important;
         font-size: 24px;
-        margin-top: 20px;
+        margin-top: 15px;
     }
 
     .modal .transfer{
@@ -275,6 +275,7 @@
     .modalButton2Success{
         color: #149008;
         font-size: 14px;
+        margin-top: 20px;
     }
 
     .transferListContainer{
@@ -346,6 +347,10 @@
         color: #d4d4d4;
         margin-top: 15px;
         font-size: 14px;
+    }
+
+    .buttonSpace{
+        margin-top: 20px;
     }
 
     @media (max-width:831px){

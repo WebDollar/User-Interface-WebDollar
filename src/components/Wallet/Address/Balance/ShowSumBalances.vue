@@ -68,9 +68,11 @@
 </script>
 
 <style>
+
     .show-sum-balances{
         width: auto;
         display: inline-block;
         color:#fec02c;
     }
+
 </style>

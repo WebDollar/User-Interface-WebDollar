@@ -8,7 +8,7 @@
 
                 <div class="descriptionText">
 
-                    For Delete this Address Type <span class="coloredText">DELETE</span> below
+                    For Delete this Address Type <span class="coloredText">DELETE</span>
 
                 </div>
 
@@ -62,7 +62,7 @@
 
             async deleteAddress(){
 
-                if (this.inputValue.toUpperCase().trim() === 'DELETE'){
+                if (this.inputValue.toUpperCase().trim().toUpperCase() === 'DELETE'){
 
                     // WebDollar.Blockchain.wallet. - DELETE
                     let answer = await WebDollar.Blockchain.Wallet.deleteAddress(this.address);

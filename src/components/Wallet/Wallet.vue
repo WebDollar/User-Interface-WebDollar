@@ -160,13 +160,13 @@
                     this.walletMenuHeightOpen='100%';
                     this.walletMenuHeightClosed='358px';
 
-                    this.walletContentHeight= window.outerHeight-90;
+                    this.walletContentHeight= window.outerHeight-110;
 
                     this.walletButtonRadiusLeftOpen= 0;
-                    this.walletButtonRadiusLeftClose= 15;
+                    this.walletButtonRadiusLeftClose= 0;
 
                     this.walletButtonRadiusRightOpen= 0;
-                    this.walletButtonRadiusRightClose= 15;
+                    this.walletButtonRadiusRightClose= 0;
 
                 }else{
 
@@ -445,18 +445,18 @@
     @media only screen and (max-width : 831px) {
         #walletMenu{
             width: 100%;
-            margin-top: 40px!important;
+            margin-top: 50px!important;
         }
         #walletButton{
             width: 100%!important;
             border:0;
-            height: 40px;
+            height: 50px;
             border-top-left-radius: 15px;
             border-top-right-radius: 15px;
             margin-bottom: 90px;
         }
         #walletButton span{
-            line-height: 40px;
+            line-height: 50px;
             font-size: 22px;
         }
         .walletController .btn{
@@ -464,13 +464,14 @@
             margin-left: 10px;
         }
         .webdollarFont{
-            width: 24px!important;
+            width: 20px!important;
         }
         #allWalets .walletAddress{
             margin: 15px 0 0 10px!important;
         }
         #allWalets .walletAddress img{
-            height: 60px!important;
+            height: 50px!important;
+            margin-top: 5px;
         }
         .walletAddress b{
             font-size: 22px!important;

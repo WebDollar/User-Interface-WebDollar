@@ -95,4 +95,12 @@
         margin-top: 0;
         text-align: center;
     }
+
+    @media only screen and (max-width : 831px) {
+
+        .show-balance-span{
+            margin-left: 5px;
+        }
+
+    }
 </style>

@@ -5,7 +5,7 @@
             <img class="walletAddressImage" :src="this.getAddressPic" >
             <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
-            <b><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
+            <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
         </div>
 
         <div class="actionsBox hoverAddress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
@@ -120,9 +120,10 @@
 <style>
 
     .actuallMiningAddress{
-        position: fixed;
+        position: relative;
         margin-left: -45px;
         margin-top: -5px;
+        margin-right: 30px;
     }
 
     #allWalets .walletAddress{
@@ -196,6 +197,10 @@
         display: inline-block;
     }
 
+    .fontColor{
+        color: #f9dc95!important;
+    }
+
     @media only screen and (max-width : 831px) {
 
         .actionsBox{
@@ -203,8 +208,12 @@
         }
 
         .addressButton{
-            padding: 17px 12px;
+            padding: 17px 14px;
             margin: 0 5px;
+        }
+
+        .actuallMiningAddress{
+            margin-left: -55px;
         }
 
     }

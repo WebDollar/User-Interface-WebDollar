@@ -25,7 +25,19 @@
                 </svg>
             </div>
             <p class="WEBD">
-                <ShowSumBalances :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" /> <b class="whiteText">WEBD</b>
+                <svg :style="{display: this.loaded==false ? 'inline-block' : 'none'}" version="1.1" id="miningLoader" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                      <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                        <animateTransform attributeType="xml"
+                          attributeName="transform"
+                          type="rotate"
+                          from="0 25 25"
+                          to="360 25 25"
+                          dur="0.6s"
+                          repeatCount="indefinite"/>
+                        </path>
+                </svg>
+                <ShowSumBalances :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" /> <b class="whiteText">WEBD</b>
             </p>
         </div>
 
@@ -54,6 +66,8 @@
                 hashesPerSecond: 0,
                 workers: 0,
                 minerAddress:'',
+                status: '',
+                loaded:false
             }
         },
 
@@ -101,7 +115,25 @@
 
             });
 
+            WebDollar.Blockchain.emitter.on("blockchain/status", (data)=>{
+
+                this.status = data.message;
+
+            });
+
+            WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=>{
+
+                if (data.message === "Ready") {
+                    this.loaded = true;
+
+                    WebDollar.Blockchain.Mining.setWorkers(1);
+
+                }
+
+            });
+
         },
+
 
         methods: {
 
@@ -351,6 +383,10 @@
         display: inline-block;
         width: 330px;
         margin-left: 0;
+    }
+
+    .miningLoader{
+        margin-top: 5px;
     }
 
     @media only screen and (max-width : 831px) {

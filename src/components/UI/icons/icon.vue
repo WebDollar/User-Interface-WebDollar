@@ -6,6 +6,8 @@ Download svgs from https://icomoon.io/app/#/select/image
 
     <div @click="this.handleClick">
 
+        <svg-arrow-up v-if="this.icon === 'arrow-up'"></svg-arrow-up>
+        <svg-arrow-down v-if="this.icon === 'arrow-down'"></svg-arrow-down>
         <svg-chevron-up v-if="this.icon === 'chevron-up'"></svg-chevron-up>
         <svg-chevron-down v-if="this.icon === 'chevron-down'"></svg-chevron-down>
         <svg-key v-if="this.icon === 'key'"></svg-key>
@@ -25,6 +27,8 @@ Download svgs from https://icomoon.io/app/#/select/image
 
 <script>
 
+    import svgArrowDown from "./res/svg-arrow-down.vue"
+    import svgArrowUp from "./res/svg-arrow-up.vue"
     import svgChevronDown from "./res/svg-chevron-down.vue"
     import svgChevronUp from "./res/svg-chevron-up.vue"
     import svgKey from "./res/svg-key.vue"
@@ -44,6 +48,8 @@ Download svgs from https://icomoon.io/app/#/select/image
         },
 
         components:{
+            "svg-arrow-down": svgArrowDown,
+            "svg-arrow-up": svgArrowUp,
             "svg-key": svgKey,
             "svg-chevron-down": svgChevronDown,
             "svg-chevron-up": svgChevronUp,

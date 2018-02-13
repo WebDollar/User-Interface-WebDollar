@@ -13,6 +13,11 @@ class InitializeParams{
             id: "WebDollarMap",
         };
 
+        this.alertsStickyBar = {
+            activated: true,
+            id: "WebDollarAlertsStickyBar",
+        };
+
         this.mining = {
             activated: true,
             style: "dark",
@@ -29,19 +34,32 @@ class InitializeParams{
         /**
          * On Window Load
          */
-        BrowserHelpers.addEvent(window, "load", (event) => {
+        document.addEventListener("DOMContentLoaded",  (event) => {
+
             console.log("User-Interface-Loaded");
             this.load();
 
         });
 
-        require('./vue/Main-vue');
-        require('./vue/Network-Native-Map-main-vue');
-
     }
 
     load(){
         GlobalInitialization.initializeGlobalSettings();
+
+
+        let mainVue = require('./vue/Main-vue').default;
+        mainVue(this.mining, this.wallet);
+
+        let networkNativeMapMainVue =require('./vue/Network-Native-Map-main-vue').default;
+        if (this.maps.activated)
+            networkNativeMapMainVue(this.maps);
+
+        let alertsStickyBarMainVue = require('./vue/Alerts-Sticky-Bar-main-vue').default;
+        if (this.alertsStickyBar.activated)
+            alertsStickyBarMainVue(this.alertsStickyBar);
+
+
+
     }
 
 

@@ -2,6 +2,8 @@
 
     <div>
 
+        <div ref="refClipboardCopy"></div>
+
         <Modal title="Wallet Address Secure" ref="refPassModal">
 
             <div slot="content">
@@ -25,6 +27,9 @@
                         Set Password
                     </div>
 
+                    {{this.clipboardText}}
+
+
                 </div>
 
             </div>
@@ -37,12 +42,9 @@
 
 <script>
 
-    let Vue = require('vue/dist/vue.min.js');
     import Modal from "components/UI/modal/Modal.vue";
+    let Clipboard = require("./../../../../../node_modules/clipboard")
 
-    import Clipboard from './../../../../../node_modules/v-clipboard';
-
-    Vue.use(Clipboard);
 
     export default {
 
@@ -81,6 +83,7 @@
 
             copyToClipboard(){
 
+                console.log('clipboard', this.$clipboard);
                 this.clipboardText = 'Copied';
                 this.$clipboard(this.walletAddressPassword.trim());
 
@@ -89,7 +92,7 @@
             generateRandomPassword(){
 
                 let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
-                this.walletAddressPassword = [];
+                this.walletAddressPassword = '';
 
                 for (let i = 0; i < 12; ++i){
 
@@ -108,6 +111,9 @@
             },
 
             async createPassword(){
+
+                if (this.walletAddressPassword === null || this.walletAddressPassword === undefined)
+                    alert('Your password is invalid');
 
                 let okPassword = true;
                 let wordsArray = [];
@@ -143,12 +149,14 @@
 
                 }
 
+
                 if(okPassword === true){
 
                     this.errorMessage = '';
 
                     await this.setPassword(wordsArray);
                 }
+
 
             },
 
@@ -171,6 +179,18 @@
 
             if (typeof window === 'undefined')
                 return;
+
+            console.log(this.$refs['refClipboardCopy']);
+
+            this.walletAddressPassword = "MAMA MERE";
+            new Clipboard( this.$refs['refClipboardCopy'], {
+                text: ()  => {
+                    return this.walletAddressPassword;
+                }
+            });
+
+
+            this.$refs['refClipboardCopy'].click();
 
         },
 

@@ -107,14 +107,6 @@
                 this.minerAddress = minerAddress;
             });
 
-
-            WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=> {
-
-                if (data.message === "Ready")
-                    this.$refs['refMiningSlider'].disabled = false;
-
-            });
-
             WebDollar.Blockchain.emitter.on("blockchain/status", (data)=>{
 
                 this.status = data.message;
@@ -125,7 +117,7 @@
 
                 if (data.message === "Ready") {
                     this.loaded = true;
-
+                    this.$refs['refMiningSlider'].disabled = false;
                     WebDollar.Blockchain.Mining.setWorkers(1);
 
                 }

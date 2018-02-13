@@ -2,11 +2,14 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
+        <icon v-show="this.sendingMoney" class="miningStatus sendingImg jump" icon='arrow-up'></icon>
+        <icon v-show="this.recivingMoney" :style="{right: this.sendingMoney ? '20px' : '4px', marginBottom: this.sendingMoney ? '-2px' : '0'}" class="miningStatus recivingImg jump" icon='arrow-down'></icon>
+
         <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
-                    marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
-                    top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
-                    borderTopLeftRadius: this.opened ? this.walletButtonRadiusLeftOpen+'px' : this.walletButtonRadiusLeftClose+'px',
-                    borderTopRightRadius: this.opened ? this.walletButtonRadiusRightOpen+'px' : this.walletButtonRadiusRightClose+'px'}">
+            marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
+            top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
+            borderTopLeftRadius: this.opened ? this.walletButtonRadiusLeftOpen+'px' : this.walletButtonRadiusLeftClose+'px',
+            borderTopRightRadius: this.opened ? this.walletButtonRadiusRightOpen+'px' : this.walletButtonRadiusRightClose+'px'}">
 
             <span id="walletButtonText">
                 <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
@@ -15,10 +18,10 @@
         </div>
 
         <div id="walletMenu" ref="walletMenu" :style="{
-                    marginBottom: this.opened ? this.walletMarginOpened+'px': this.walletMarginClosed+'px',
-                    top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
-                    marginTop: this.opened ? this.walletMenuMarginTopOpen : this.walletMenuMarginTopClose,
-                    height: this.opened ? this.walletMenuHeightOpen : this.walletMenuHeightClosed}">
+            marginBottom: this.opened ? this.walletMarginOpened+'px': this.walletMarginClosed+'px',
+            top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
+            marginTop: this.opened ? this.walletMenuMarginTopOpen : this.walletMenuMarginTopClose,
+            height: this.opened ? this.walletMenuHeightOpen : this.walletMenuHeightClosed}">
 
             <div id="dashboardWallet">
 
@@ -27,6 +30,7 @@
                     <div class="btn" @click="this.handleAddNewAddress">
                         Add Address
                     </div>
+
                     <label class="myLabel">
 
                         <input ref="importedAddress" type="file" v-on:change="this.handleImportAddress" multiple size="50" />
@@ -39,23 +43,22 @@
 
                 </div>
 
-                <div class="walletSection walletsContainer" :style="{
-                    height: this.walletContentHeight}">
+                <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight}">
+
                     <div id="allWalets">
 
                         <Address v-for="walletAddress in this.addresses"
-
-                                     :isMiningAddress="miningAddress === walletAddress.address"
-                                     :key="walletAddress.address"
-                                     :id="'address'+walletAddress.address"
-                                     :address="walletAddress.address"
-                                     style="padding-right: 20px"
-
+                             :isMiningAddress="miningAddress === walletAddress.address"
+                             :key="walletAddress.address"
+                             :id="'address'+walletAddress.address"
+                             :address="walletAddress.address"
+                             style="padding-right: 20px"
                         >
 
                         </Address>
 
                     </div>
+
                 </div>
             </div>
         </div>
@@ -88,6 +91,8 @@
             return {
                 opened: false,
                 miningAddress: '',
+                sendingMoney:true,
+                recivingMoney:true,
 
                 walletButtonMarginOpened: 0,
                 walletButtonMarginClosed: 0,
@@ -305,6 +310,16 @@
 
 <style>
 
+    @keyframes jump {
+        0%   {transform: translate3d(0,0,0) scale3d(1,1,1);}
+        40%  {transform: translate3d(0,30%,0) scale3d(.7,1.5,1);}
+        100% {transform: translate3d(0,100%,0) scale3d(1.5,.7,1);}
+    }
+    .jump {
+        transform-origin: 50% 50%;
+        animation: jump .5s linear alternate infinite;
+    }
+
     #myWalletImport{
         display: none;
     }
@@ -436,6 +451,25 @@
         font-weight:100;
     }
 
+    .miningStatus{
+        width: 20px;
+        height: 20px;
+        position: fixed;
+        display: block;
+        right: 4px;
+        bottom: 57px;
+        z-index: 1000;
+        fill:#262626;
+    }
+
+    .sendingImg{
+        fill:#298bea;
+    }
+
+    .recivingImg{
+        fill:#219411;
+    }
+
     label.myLabel input[type="file"] {
         position: fixed;
         top: -1000px;
@@ -443,6 +477,7 @@
 
     /* Small Devices, Tablets */
     @media only screen and (max-width : 831px) {
+
         #walletMenu{
             width: 100%;
             margin-top: 50px!important;

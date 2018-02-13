@@ -1,8 +1,8 @@
 <template>
 
     <div id="webDollar">
-        <Mining :addresses="this.addresses" :currency="this.currency" ref="refMining"></Mining>
-        <Wallet :addresses="this.addresses" :currency="this.currency" ref="refWallet"></Wallet>
+        <mining :addresses="this.addresses" :currency="this.currency" ref="refMining"></mining>
+        <wallet :addresses="this.addresses" :currency="this.currency" ref="refWallet"></wallet>
     </div>
 
 </template>
@@ -16,9 +16,8 @@
     export default {
 
         components:{
-            "Wallet":Wallet,
-            "Mining":Mining,
-            "Address":Address,
+            Wallet,
+            Mining,
         },
 
         data: () => {

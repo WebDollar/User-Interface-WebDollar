@@ -99,11 +99,12 @@
                          if (WebDollar.Blockchain._onLoadedResolver !== "done") {
 
                              this.statusType = "error";
-                             this.statusMessage="Internet is no longer working. Check your internet or refresh";
+                             this.statusMessage="Synchronization failed. Check your Firewall, Router, Anti-virus or Internet";
+
 
                          } else {
                              this.statusType = "error";
-                             this.statusMessage="Synchronization failed. Check your Firewall, Router, Anti-virus or Internet";
+                             this.statusMessage="Internet is no longer working. Check your internet or refresh";
                          }
 
                          break;
@@ -138,10 +139,9 @@
 
     .alertsStickyBar{
 
-        display: inline-block;
+        position: fixed;
         width: 100%;
-        margin-bottom: 0;
-        min-height: 21px;
+        z-index: 1000;
         text-align: center;
 
     }

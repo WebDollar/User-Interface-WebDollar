@@ -1,7 +1,7 @@
 <template>
 
     <div id="webDollar">
-        <mining :addresses="this.addresses" :currency="this.currency" ref="refMining"></mining>
+        <mining :startAutomatically="startAutomatically" :addresses="this.addresses" :currency="this.currency" ref="refMining"></mining>
         <wallet :addresses="this.addresses" :currency="this.currency" ref="refWallet"></wallet>
     </div>
 
@@ -19,6 +19,10 @@
             Wallet,
             Mining,
         },
+
+        props:[
+            "startAutomatically",
+        ],
 
         data: () => {
             return {

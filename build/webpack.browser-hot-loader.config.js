@@ -25,7 +25,15 @@ const config = merge(base, {
     },
 
     plugins: [
-        new OpenBrowserPlugin({ url: 'http://localhost:8085' })
+
+        new OpenBrowserPlugin( { url: 'http://localhost:8085' } ),
+
+        new webpack.DefinePlugin({
+            "process.env": {
+                DEV_SERVER: 'true'
+            }
+        })
+
     ]
 
 });

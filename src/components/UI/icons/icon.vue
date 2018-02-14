@@ -4,7 +4,7 @@ Download svgs from https://icomoon.io/app/#/select/image
 
 <template>
 
-    <svg @click="this.handleClick" class="webdollarFont" xmlns="http://www.w3.org/2000/svg" :width="this.width" :height="this.width" :viewBox="'0 0 '+this.width+' '+this.width">
+    <svg @click="this.handleClick" class="webdollarFont" xmlns="http://www.w3.org/2000/svg" :width="this.width" :height="this.height" :viewBox="'0 0 '+this.width+' '+this.width">
 
         <path v-if="icon === 'chevron-down'" d="M22.54 10.821l-9.938 9.924c-0.335 0.335-0.871 0.335-1.205 0l-9.938-9.924c-0.335-0.335-0.335-0.884 0-1.219l2.223-2.21c0.335-0.335 0.871-0.335 1.205 0l7.112 7.112 7.112-7.112c0.335-0.335 0.871-0.335 1.205 0l2.223 2.21c0.335 0.335 0.335 0.884 0 1.219z" ></path>
         <path v-if="icon === 'chevron-up'" d="M22.54 17.826l-2.223 2.21c-0.335 0.335-0.871 0.335-1.205 0l-7.112-7.112-7.112 7.112c-0.335 0.335-0.871 0.335-1.205 0l-2.223-2.21c-0.335-0.335-0.335-0.884 0-1.219l9.938-9.924c0.335-0.335 0.871-0.335 1.205 0l9.938 9.924c0.335 0.335 0.335 0.884 0 1.219z"></path>
@@ -32,6 +32,7 @@ Download svgs from https://icomoon.io/app/#/select/image
             icon: {default: ''},
             style: {default: ''},
             width: {default: 24},
+            height: {default: 24},
         },
 
         methods:{

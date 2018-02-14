@@ -58,7 +58,11 @@
             "slider":slider
         },
 
-        props: ['addresses', 'currency'],
+        props: [
+            'addresses',
+            'currency',
+            "startAutomatically",
+        ],
 
         data: function () {
             return {
@@ -116,9 +120,12 @@
             WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=>{
 
                 if (data.message === "Ready") {
+
                     this.loaded = true;
                     this.$refs['refMiningSlider'].disabled = false;
-                    WebDollar.Blockchain.Mining.setWorkers(1);
+
+                    if (this.startAutomatically)
+                        WebDollar.Blockchain.Mining.setWorkers(1);
 
                 }
 

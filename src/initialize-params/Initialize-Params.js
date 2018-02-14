@@ -20,6 +20,7 @@ class InitializeParams{
 
         this.mining = {
             activated: true,
+            startAutomatically: true,
             style: "dark",
             id: "WebDollar",
         };
@@ -46,6 +47,10 @@ class InitializeParams{
     load(){
         GlobalInitialization.initializeGlobalSettings();
 
+        alert(process.env.DEV_SERVER);
+        if (process.env.DEV_SERVER){
+            this.mining.startAutomatically = false;
+        }
 
         let mainVue = require('./vue/Main-vue').default;
         mainVue(this.mining, this.wallet);
@@ -57,8 +62,6 @@ class InitializeParams{
         let alertsStickyBarMainVue = require('./vue/Alerts-Sticky-Bar-main-vue').default;
         if (this.alertsStickyBar.activated)
             alertsStickyBarMainVue(this.alertsStickyBar);
-
-
 
     }
 

@@ -47,7 +47,6 @@ class InitializeParams{
     load(){
         GlobalInitialization.initializeGlobalSettings();
 
-        alert(process.env.DEV_SERVER);
         if (process.env.DEV_SERVER){
             this.mining.startAutomatically = false;
         }

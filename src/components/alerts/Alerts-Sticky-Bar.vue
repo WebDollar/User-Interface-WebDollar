@@ -25,6 +25,7 @@
 
          data: () => {
              return {
+                 loadedFirstTime: false,
                  statusType: '',
                  statusMessage: '',
              }
@@ -80,29 +81,51 @@
 
              if (typeof window === "undefined") return;
 
-//             WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=>{
-//
-//                 if (data.message === "Ready") {
-//                     this.loaded = true;
-//
-//                     WebDollar.Blockchain.Mining.setWorkers(1);
-//
-//                     this.statusType = '';
-//                     this.statusMessage = '';
-//
-//                 } else
-//                 if (data.message === "Error Synchronizing"){
-//
-//                     this.loaded = false;
-//
-//                     this.statusType = "error";
-//                     this.statusMessage="Synchronization failed. Check your Firewall, Router, Anti-virus or Internet";
-//                 }
-//
-//             });
+             WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=>{
 
-             this.statusType = "error";
-             this.statusMessage = "EROARE";
+                 switch (data.message){
+                     case "Ready":
+                         this.loadedFirstTime = true;
+
+                         WebDollar.Blockchain.Mining.setWorkers(1);
+
+                         this.statusType = '';
+                         this.statusMessage = '';
+
+                         break;
+                     case "Error Synchronizing":
+
+
+                         if (WebDollar.Blockchain._onLoadedResolver !== "done") {
+
+                             this.statusType = "error";
+                             this.statusMessage="Internet is no longer working. Check your internet or refresh";
+
+                         } else {
+                             this.statusType = "error";
+                             this.statusMessage="Synchronization failed. Check your Firewall, Router, Anti-virus or Internet";
+                         }
+
+                         break;
+
+                     case "No Internet Access":
+                         this.statusType = "error";
+                         this.statusMessage="Internet is no longer working. Check your internet or refresh";
+                         break;
+                 }
+
+
+
+             });
+
+//             this.statusType = "error";
+//             this.statusMessage = "EROARE";
+
+
+         },
+
+         methods:{
+
 
 
          }

@@ -64,7 +64,7 @@
                 this.screenWidth = window.innerWidth;
 
                 if (window.innerWidth<550){
-                    this.sliderMobileWidth = window.innerWidth-150+'px';
+                    this.sliderMobileWidth = window.innerWidth-180+'px';
                 }else{
                     this.sliderMobileWidth = '100%';
                 }
@@ -73,7 +73,7 @@
 
             this.screenWidth = window.innerWidth;
             if (window.innerWidth<550){
-                this.sliderMobileWidth = window.innerWidth-150+'px';
+                this.sliderMobileWidth = window.innerWidth-180+'px';
             }else{
                 this.sliderMobileWidth = '100%';
             }

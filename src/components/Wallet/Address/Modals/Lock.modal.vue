@@ -43,8 +43,7 @@
 <script>
 
     import Modal from "components/UI/modal/Modal.vue";
-    let Clipboard = require("./../../../../../node_modules/clipboard")
-
+    let Clipboard = require("./../../../../../node_modules/clipboard");
 
     export default {
 

@@ -1,7 +1,7 @@
 <template>
 
     <div class="show-balance-span">
-        {{ (this.balances !== null && this.balances !== undefined && this.balances.hasOwnProperty(this.currency)) ? Math.round(this.balances[this.currency] * 1000)/1000 : 0 }}
+        {{ (this.balances !== null && this.balances !== undefined && this.balances.hasOwnProperty(this.currency)) ? this.formatMoneyNumber(Math.round(this.balances[this.currency] * 1000)/1000) : 0 }}
     </div>
 
 </template>
@@ -80,6 +80,16 @@
             currency: function (newVal, oldVal) { // watch it
 
             }
+        },
+
+        methods:{
+
+            formatMoneyNumber(n, decimals=2) {
+                return n.toFixed(decimals).replace(/./g, function(c, i, a) {
+                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+                });
+            }
+
         }
 
     }

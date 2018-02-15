@@ -1,8 +1,12 @@
 <template>
-    <div class="alertStickyBar" style="'color: '+this._textColor">
+
+    <div class="alertStickyBar" :style="{backgroundColor: this._backgroundColor }">
+
         <icon class="btn" :icon="this._icon" :width="5" :height="5" />
-        <b :style="{color: this._textColor}">{{ this.statusMessage }}</b>
+        <b :style="{color: this._textColor}">{{ this.alert.statusMessage }}</b>
+
     </div>
+
 </template>
 
 <script>
@@ -15,9 +19,14 @@
             icon,
         },
 
+        props:[
+            "alert",
+        ],
+
         computed:{
+
             _icon(){
-                switch (this.statusType){
+                switch (this.alert.statusType){
 
                     case "error":
                         return "x";
@@ -29,7 +38,7 @@
 
             _backgroundColor(){
 
-                switch (this.statusType){
+                switch (this.alert.statusType){
 
                     case "error":
                         return "red";
@@ -42,7 +51,7 @@
 
             _textColor(){
 
-                switch (this.statusType){
+                switch (this.alert.statusType){
 
                     case "error":
                         return "yellow";

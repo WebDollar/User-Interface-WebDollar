@@ -70,7 +70,6 @@
 
             if (typeof window === 'undefined') return;
 
-            console.log(WebDollar.Blockchain.Wallet);
             if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address).result){
                 this.addressLocked = true;
             }

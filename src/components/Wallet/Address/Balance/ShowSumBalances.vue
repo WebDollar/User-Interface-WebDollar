@@ -32,8 +32,6 @@
 
                 //it should use BigNumber as math...
 
-                console.log('changed to newxxxx', addresses);
-
                 if (addresses === undefined || addresses === null) return ;
 
                 for (let index in this.addresses){
@@ -51,7 +49,6 @@
         watch: {
             addresses: function (newVal, oldVal) { // watch it
 
-                console.log('changed to new', newVal);
                 this.refreshSum(newVal, this.currency);
 
             },

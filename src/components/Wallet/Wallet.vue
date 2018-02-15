@@ -2,8 +2,12 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="this.sendingMoney" class="miningStatus sendingImg jump" icon='arrow-up'></icon>
-        <icon v-show="this.recivingMoney" :style="{right: this.sendingMoney ? '20px' : '4px', marginBottom: this.sendingMoney ? '-2px' : '0'}" class="miningStatus recivingImg jump" icon='arrow-down'></icon>
+        <icon v-show="this.sendingMoney" class="miningStatus sendingImg jump" icon='upload' :style="{
+            display: this.opened ? 'none': 'block'}"></icon>
+        <icon v-show="this.recivingMoney" :style="{
+            right: this.sendingMoney ? '20px' : '4px',
+            marginBottom: this.sendingMoney ? '-2px' : '0',
+            display: this.opened ? 'none': 'block'}" class="miningStatus recivingImg jump" icon='download'></icon>
 
         <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
             marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
@@ -460,14 +464,15 @@
         bottom: 57px;
         z-index: 1000;
         fill:#262626;
+        transition: all 1.2s linear;
     }
 
     .sendingImg{
-        fill:#298bea;
+        fill:#298bea!important;
     }
 
     .recivingImg{
-        fill:#219411;
+        fill:#219411!important;
     }
 
     label.myLabel input[type="file"] {

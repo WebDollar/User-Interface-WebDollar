@@ -55,8 +55,6 @@
                      case "Ready":
                          this.loadedFirstTime = true;
 
-                         WebDollar.Blockchain.Mining.setWorkers(1);
-
                          this.deleteAlert(["error-firewall","error-internet"]);
 
                          break;

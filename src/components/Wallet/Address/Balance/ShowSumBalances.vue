@@ -1,7 +1,7 @@
 <template>
 
     <span class="show-sum-balances">
-        {{  Math.round(this.sum * 100000)/100000 }}
+        {{ this.sum }}
     </span>
 
 </template>
@@ -16,7 +16,7 @@
 
         data(){
             return {
-                sum: 0,
+                sum: 0
             }
         },
 
@@ -40,8 +40,20 @@
                         newSum += parseFloat( addresses[index].balances[currency]);
                 }
 
-                this.sum = newSum;
+                this.sum = Math.round(newSum * 100000)/100000;
 
+                if (this.sum!=0){
+
+                    this.sum = this.formatMoneyNumber(this.sum);
+
+                }
+
+            },
+
+            formatMoneyNumber(n, decimals=2) {
+                return n.toFixed(decimals).replace(/./g, function(c, i, a) {
+                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+                });
             }
 
         },

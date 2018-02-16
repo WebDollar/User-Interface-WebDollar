@@ -50,7 +50,7 @@
 
             },
 
-            formatMoneyNumber(n, decimals=2) {
+            formatMoneyNumber(n, decimals=0) {
                 return n.toFixed(decimals).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });

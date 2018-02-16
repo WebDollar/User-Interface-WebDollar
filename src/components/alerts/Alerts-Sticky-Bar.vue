@@ -61,15 +61,18 @@
                      case "Error Synchronizing":
 
                          if (WebDollar.Blockchain._onLoadedResolver !== "done") {
-                             this.addAlert("error-firewall", "error", "Check your Firewall, Router, Anti-virus or Internet");
                              this.delete("error-internet");
+                             this.addAlert("error-firewall", "error", "Check your Firewall, Router, Anti-virus or Internet");
                          }
-                         else
-                             this.addAlert("error-internet", "error","Internet is no longer working. Check your internet or refresh");
+                         else {
+                             this.delete("error-internet");
+                             this.addAlert("error-internet", "error", "Internet is no longer working. Check your internet or refresh");
+                         }
 
                          break;
 
                      case "No Internet Access":
+                         this.delete("error-internet");
                          this.addAlert("error-internet", "error","Internet is no longer working. Check your internet or refresh");
                          break;
                  }
@@ -82,23 +85,28 @@
 
                  switch (data.message) {
                      case "IndexedDB is not supported":
-                         this.addAlert("indexedDB-error", "error", "IndexedDB is not supported on your browser. Install a different browser");
+                         this.addAlert("indexedDB-error", "error", "<b>IndexedDB is not supported</b> on your browser. Install a different browser");
                          break;
 
                      case "IndexedDB - PouchDB doesn't work":
-                         this.addAlert("pouchDB-error", "error", "PouchDB doesn't work "+data.dbName+" . Clear your Website Data from browser");
+                         this.addAlert("pouchDB-error", "error", "<b>PouchDB doesn't work</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
                          break;
 
+                     case "IndexedDB - Wallet couldn't be imported":
+                         this.addAlert("wallet-error", "error", "<b>Wallet couldn't be imported</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
+                         break;
+
+
                      case "Incognito mode":
-                         this.addAlert("incognito-warning", "warning", "Incognito - your WALLET will not be saved");
+                         this.addAlert("incognito-warning", "warning", "Incognito - your <b>WALLET will not be saved</b>b");
                          break;
 
                      case "WebAssembly not supported":
-                         this.addAlert("web-assembly-warning", "warning", "WebAssembly is not supported. You use an old browser or one that doesn't support WebAssembly. Install Chrome/Firefox/Safari and mining increases with 70%");
+                         this.addAlert("web-assembly-warning", "warning", "<b>WebAssembly is not supported</b>. You use an old browser or one that doesn't support WebAssembly. Install Chrome/Firefox/Safari and mining increases with 70%");
                          break;
 
                      case "ASM.JS not supported":
-                         this.addAlert("web-assembly-warning", "error", "ASM.JS is not supported. Mining is not available on your machine. Please update your browser");
+                         this.addAlert("asm.js-warning", "error", "<b>ASM.JS is not supported</b>. Mining is not available on your machine. Please update your browser");
                          break;
                  }
 
@@ -109,7 +117,7 @@
          methods:{
 
 
-             addAlert(statusId, statusType, statusMessage, timeoutDelete){
+             addAlert(statusId, statusType, statusMessage, timeoutDelete, href){
 
                  this.alertUniqueIds += 1;
 
@@ -118,6 +126,7 @@
                      statusId: statusId,
                      statusType: statusType,
                      statusMessage: statusMessage,
+                     statusHref: href,
                  };
 
                  this.alerts.push(alert);

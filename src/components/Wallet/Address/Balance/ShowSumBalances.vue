@@ -42,7 +42,7 @@
 
                 this.sum = Math.round(newSum * 100000)/100000;
 
-                if (this.sum!=0){
+                if (this.sum!==0){
 
                     this.sum = this.formatMoneyNumber(this.sum);
 

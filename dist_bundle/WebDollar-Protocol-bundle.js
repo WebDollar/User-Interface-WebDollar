@@ -17086,7 +17086,7 @@ class InterfaceBlockchainFork {
             //propagating valid blocks
             if (forkedSuccessfully) {
                 console.log("FORK SOLVER SAVE");
-                await this.blockchain.save();
+                await this.blockchain.saveBlockchain();
                 this.blockchain.mining.resetMining();
                 console.log("FORK SOLVER SAVE FINISHED");
             }
@@ -25000,7 +25000,7 @@ class InterfaceBlockchainBlock {
 
     }
 
-    async save(){
+    async saveBlock(){
 
         let key = "block" + this.height;
 
@@ -25022,7 +25022,7 @@ class InterfaceBlockchainBlock {
         }
     }
 
-    async load(){
+    async loadBlock(){
 
         let key = "block" + this.height;
         console.log("block load", key);
@@ -25046,7 +25046,7 @@ class InterfaceBlockchainBlock {
         }
     }
     
-    async remove() {
+    async removeBlock() {
         
         let key = "block" + this.height;
         
@@ -27487,8 +27487,10 @@ class Blockchain{
         //Waiting Until a Single Window is present
         let validation;
         try {
+
             validation = new __WEBPACK_IMPORTED_MODULE_6_common_utils_validation_Validations_Utils__["a" /* default */](this.emitter);
             await validation.validate();
+
         } catch (exception){
 
         }
@@ -27544,7 +27546,7 @@ class Blockchain{
 
         this.emitter.emit('blockchain/status', {message: "Blockchain Loading"});
 
-        let chainLoaded = await this.Chain.load();
+        let chainLoaded = await this.Chain.loadBlockchain();
 
         this.emitter.emit('blockchain/status', {message: "Blockchain Loaded Successfully"});
         return chainLoaded;
@@ -34915,7 +34917,9 @@ class MiniBlockchain extends  inheritBlockchain{
     }
 
 
-    async save(){
+    async saveBlockchain(){
+
+        if (true) return true;
 
         try {
 
@@ -34923,7 +34927,7 @@ class MiniBlockchain extends  inheritBlockchain{
 
             if (! (await this.accountantTree.saveMiniAccountant( true ))) throw "Couldn't save the Account Tree"
 
-            if (! (await inheritBlockchain.prototype.save.call(this))) throw "couldn't sae the blockchain"
+            if (! (await inheritBlockchain.prototype.saveBlockchain.call(this))) throw "couldn't sae the blockchain"
 
             return true;
 
@@ -34937,7 +34941,9 @@ class MiniBlockchain extends  inheritBlockchain{
      * Load blocks and check the Accountant Tree
      * @returns boolean
      */
-    async load(){
+    async loadBlockchain(){
+
+        if (true) return true;
 
         try {
 
@@ -34945,7 +34951,7 @@ class MiniBlockchain extends  inheritBlockchain{
             let result = await finalAccountantTree.loadMiniAccountant(undefined, undefined, true);
             //let serializationAccountantTreeFinal = this.accountantTree.serializeMiniAccountant();
 
-            result = result && await inheritBlockchain.prototype.load.call( this  );
+            result = result && await inheritBlockchain.prototype.loadBlockchain.call( this  );
 
             if (result === false){
                 throw "Problem loading the blockchain";
@@ -35236,12 +35242,14 @@ class InterfaceBlockchain {
             return false;
         }
 
-        await block.save();
+        await block.saveBlock();
 
         return true;
     }
 
-    async save(onlyLastBlocks){
+    async saveBlockchain(onlyLastBlocks){
+
+        if (true) return true;
 
         //save the number of blocks
         let result = true;
@@ -35260,7 +35268,7 @@ class InterfaceBlockchain {
             for (let i = indexStart; i < this.blocks.length; ++i)
 
                 if (this.blocks[i] !== undefined && this.blocks[i] !== null) {
-                    let response = await this.blocks[i].save();
+                    let response = await this.blocks[i].saveBlock();
 
                     if (response !== true)
                         break;
@@ -35270,7 +35278,9 @@ class InterfaceBlockchain {
         return result;
     }
 
-    async load(onlyLastBlocks = undefined){
+    async loadBlockchain(onlyLastBlocks = undefined){
+
+        if (true) return true;
 
         //load the number of blocks
         let numBlocks = await this.db.get(this._blockchainFileName);
@@ -35310,7 +35320,7 @@ class InterfaceBlockchain {
 
                 try{
 
-                    if (await block.load() === false) throw "no block to load was found";
+                    if (await block.loadBlock() === false) throw "no block to load was found";
 
                     //it will include the block, but it will not ask to save, because it was already saved before
 
@@ -35338,11 +35348,11 @@ class InterfaceBlockchain {
         return true;
     }
 
-    async remove(index, removeFiles = true){
+    async removeBlockchain(index, removeFiles = true){
 
         if (removeFiles === true) {
             for (let i = index; i < this.blocks.length; ++i){
-                let response = await this.blocks[i].remove();
+                let response = await this.blocks[i].removeBlock();
 
                 if (response !== true)
                     return response;
@@ -46545,7 +46555,7 @@ class InterfaceBlockchainAddress{
         return offset;
     }
 
-    async save() {
+    async saveAddress() {
 
         let key = this.address.toString('hex');
         let value = await this.serializeAddress();
@@ -46558,7 +46568,7 @@ class InterfaceBlockchainAddress{
         }
     }
 
-    async load() {
+    async loadAddress() {
 
         let key = this.address.toString('hex');
 
@@ -46577,7 +46587,7 @@ class InterfaceBlockchainAddress{
         }
     }
 
-    async remove() {
+    async removeAddress() {
 
         let key = this.address.toString('hex');
 
@@ -82747,11 +82757,11 @@ class InterfaceTransactionsUniqueness extends __WEBPACK_IMPORTED_MODULE_0_common
 
     }
 
-    save(){
+    saveTransactionsUniqueness(){
 
     }
 
-    load(){
+    loadTrasactionsUniqueness(){
 
     }
 
@@ -84680,19 +84690,19 @@ class MiniBlockchainLight extends  __WEBPACK_IMPORTED_MODULE_1__Mini_Blockchain_
     }
 
 
-    async save(){
+    async saveBlockchain(){
+
+        if (true) return true;
 
         try {
 
             __WEBPACK_IMPORTED_MODULE_5_consts_global__["a" /* default */].MINIBLOCKCHAIN_LIGHT_SAVED = false;
 
-            console.log("saaaave", this.blocks.length - __WEBPACK_IMPORTED_MODULE_4_consts_const_global__["a" /* default */].POW_PARAMS.LIGHT_VALIDATE_LAST_BLOCKS -2);
-
             if (this.blocks.length === 0) throw "Nothing to Save";
 
             await this._saveLightSettings();
 
-            if (! (await this.inheritBlockchain.prototype.save.call(this, __WEBPACK_IMPORTED_MODULE_4_consts_const_global__["a" /* default */].POW_PARAMS.LIGHT_VALIDATE_LAST_BLOCKS ))) throw "couldn't save the blockchain";
+            if (! (await this.inheritBlockchain.prototype.saveBlockchain.call(this, __WEBPACK_IMPORTED_MODULE_4_consts_const_global__["a" /* default */].POW_PARAMS.LIGHT_VALIDATE_LAST_BLOCKS ))) throw "couldn't save the blockchain";
 
         } catch (exception){
             console.log(colors.red("Couldn't save MiniBlockchain"), exception);
@@ -84708,9 +84718,12 @@ class MiniBlockchainLight extends  __WEBPACK_IMPORTED_MODULE_1__Mini_Blockchain_
      * Load blocks and check the Accountant Tree
      * @returns boolean
      */
-    async load(){
+    async loadBlockchain(){
+
+        if (true) return true;
 
         try {
+            if (true) return true;
 
             //AccountantTree[:-POW_PARAMS.LIGHT_VALIDATE_LAST_BLOCKS]
             if (! (await this.accountantTree.loadMiniAccountant(undefined, undefined, true)))
@@ -84727,7 +84740,7 @@ class MiniBlockchainLight extends  __WEBPACK_IMPORTED_MODULE_1__Mini_Blockchain_
             //load the number of blocks
             if (! (await this._loadLightSettings(serializationAccountantTreeInitial))) throw "couldn't load the Light Settings";
 
-            if (! (await this.inheritBlockchain.prototype.load.call(this, __WEBPACK_IMPORTED_MODULE_4_consts_const_global__["a" /* default */].POW_PARAMS.LIGHT_VALIDATE_LAST_BLOCKS  ))) throw "Problem loading the blockchain";
+            if (! (await this.inheritBlockchain.prototype.loadBlockchain.call(this, __WEBPACK_IMPORTED_MODULE_4_consts_const_global__["a" /* default */].POW_PARAMS.LIGHT_VALIDATE_LAST_BLOCKS  ))) throw "Problem loading the blockchain";
 
             //check the accountant Tree if matches
             console.log("this.accountantTree final", this.accountantTree.root.hash.sha256);

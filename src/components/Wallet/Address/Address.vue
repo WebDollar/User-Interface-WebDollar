@@ -5,6 +5,9 @@
             <img class="walletAddressImage" :src="this.getAddressPic" >
             <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
+            <icon v-show="this.sendingMoney" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
+            <icon v-show="this.recivingMoney" class="walletMiningStatus walletRecivingImg" icon='download'></icon>
+
             <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
         </div>
 
@@ -62,7 +65,9 @@
 
         data: () => {
             return {
-                addressLocked: false
+                addressLocked: false,
+                sendingMoney: true,
+                recivingMoney: true,
             }
         },
 
@@ -198,6 +203,18 @@
 
     .fontColor{
         color: #f9dc95!important;
+    }
+
+    .walletMiningStatus{
+
+    }
+
+    .walletSendingImg{
+
+    }
+
+    .walletRecivingImg{
+
     }
 
     @media only screen and (max-width : 831px) {

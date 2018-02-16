@@ -98,10 +98,8 @@
             return {
                 opened: false,
                 miningAddress: '',
-                sendingMoney:true,
-                recivingMoney:true,
-                isMobile:false,
 
+                isMobile:false,
                 sendingMoney:false,
                 receivingMoney:false,
 

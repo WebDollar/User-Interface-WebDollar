@@ -61,15 +61,18 @@
                      case "Error Synchronizing":
 
                          if (WebDollar.Blockchain._onLoadedResolver !== "done") {
-                             this.addAlert("error-firewall", "error", "Check your Firewall, Router, Anti-virus or Internet");
                              this.delete("error-internet");
+                             this.addAlert("error-firewall", "error", "Check your Firewall, Router, Anti-virus or Internet");
                          }
-                         else
-                             this.addAlert("error-internet", "error","Internet is no longer working. Check your internet or refresh");
+                         else {
+                             this.delete("error-internet");
+                             this.addAlert("error-internet", "error", "Internet is no longer working. Check your internet or refresh");
+                         }
 
                          break;
 
                      case "No Internet Access":
+                         this.delete("error-internet");
                          this.addAlert("error-internet", "error","Internet is no longer working. Check your internet or refresh");
                          break;
                  }
@@ -103,7 +106,7 @@
                          break;
 
                      case "ASM.JS not supported":
-                         this.addAlert("web-assembly-warning", "error", "<b>ASM.JS is not supported</b>. Mining is not available on your machine. Please update your browser");
+                         this.addAlert("asm.js-warning", "error", "<b>ASM.JS is not supported</b>. Mining is not available on your machine. Please update your browser");
                          break;
                  }
 

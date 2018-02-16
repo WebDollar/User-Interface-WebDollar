@@ -16,8 +16,11 @@
             borderTopRightRadius: this.opened ? this.walletButtonRadiusRightOpen+'px' : this.walletButtonRadiusRightClose+'px'}">
 
             <span id="walletButtonText">
-                <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
-                Wallet
+                <div style="display: inline-block">
+                    <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
+                    Wallet
+                </div>
+                <show-sum-balances :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"/>
             </span>
         </div>
 
@@ -79,7 +82,7 @@
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
-    import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
+    import ShowSumBalances from "./../../components/Wallet/Address/Balance/ShowSumBalances.vue"
 
     export default{
 
@@ -95,6 +98,9 @@
             return {
                 opened: false,
                 miningAddress: '',
+                sendingMoney:true,
+                recivingMoney:true,
+                isMobile:false,
 
                 sendingMoney:false,
                 receivingMoney:false,
@@ -155,6 +161,8 @@
 
                 if (window.screenWidth < 831){
 
+                    this.isMobile = true;
+
                     this.walletButtonMarginOpened = 452;
                     this.walletButtonMarginClosed = 43;
 
@@ -179,6 +187,8 @@
                     this.walletButtonRadiusRightClose= 0;
 
                 }else{
+
+                    this.isMobile=false;
 
                     this.walletContentHeight= 315;
 
@@ -483,6 +493,11 @@
 
     /* Small Devices, Tablets */
     @media only screen and (max-width : 831px) {
+
+        .miningStatus{
+            display: none;
+            bottom: 67px;
+        }
 
         #walletMenu{
             width: 100%;

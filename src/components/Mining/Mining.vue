@@ -10,7 +10,7 @@
             </div>
 
             <div id="miningDetails">
-                <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">{{this.started ? this.hashesPerSecond + ' hashes/sec' : 'not started'}} </p>
+                <p class="" :style="{display: this.hashesPerSecond==0 && this.started==true ? 'none' : 'inline-block'}">{{this.started ? this.hashesPerSecond + ' has/sec' : 'not started'}} </p>
                 <svg :style="{display: this.hashesPerSecond==0 && this.started==true ? 'inline-block' : 'none'}" version="1.1" id="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                       <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
@@ -424,7 +424,10 @@
             margin-right: -4px;
         }
         #miningDetails{
-            display: none;
+            line-height: 41px;
+            color: #969696;
+            float: right;
+            margin-right: 15px;
         }
         .miningPowerText{
             display: none;
@@ -447,6 +450,7 @@
             width: auto;
             border:none;
             line-height: 42px;
+            display: none;
         }
         .miningPowerThreads{
             display:none;
@@ -478,6 +482,12 @@
             background-color: #f200;
         }
 
+        #walletButton span{
+            width: auto!important;
+            color: #000;
+            margin-left: 10px;
+        }
+
     }
 
         @media only screen and (max-width : 600px) {
@@ -493,6 +503,7 @@
         .miningBar{
             width: 50%;
         }
+
 
     }
 

@@ -1,9 +1,11 @@
 <template>
 
-    <div class="alertStickyBar" :style="{backgroundColor: this._backgroundColor }">
+    <div class="alertStickyBar" :style="{backgroundColor: this._backgroundColor, display: 'display-inline' }">
 
-        <icon class="btn" :icon="this._icon" :width="5" :height="5" />
-        <b :style="{color: this._textColor}">{{ this.alert.statusMessage }}</b>
+        <!--<icon class="btn" :icon="this._icon" :width="5" :height="5" />-->
+        <a :href="this.alert.statusHref||''">
+            <span  v-html="this.alert.statusMessage " :style="{color: this._textColor}"></span>
+        </a>
 
     </div>
 

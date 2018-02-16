@@ -4,10 +4,10 @@ import InitializeParams from "initialize-params/Initialize-Params"
 
 let exportObject = {
 
-    Helpers:{
-        BrowserHelpers: BrowserHelpers,
+    helpers:{
+        browserHelpers: BrowserHelpers,
     },
-    InitializeParams: InitializeParams,
+    initializeParams: InitializeParams,
 };
 
 

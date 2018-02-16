@@ -4,7 +4,7 @@
 
         <icon v-show="this.sendingMoney" class="miningStatus sendingImg jump" icon='upload' :style="{
             display: this.opened ? 'none': 'block'}"></icon>
-        <icon v-show="this.recivingMoney" :style="{
+        <icon v-show="this.receivingMoney" :style="{
             right: this.sendingMoney ? '20px' : '4px',
             marginBottom: this.sendingMoney ? '-2px' : '0',
             display: this.opened ? 'none': 'block'}" class="miningStatus recivingImg jump" icon='download'></icon>
@@ -95,8 +95,9 @@
             return {
                 opened: false,
                 miningAddress: '',
-                sendingMoney:true,
-                recivingMoney:true,
+
+                sendingMoney:false,
+                receivingMoney:false,
 
                 walletButtonMarginOpened: 0,
                 walletButtonMarginClosed: 0,

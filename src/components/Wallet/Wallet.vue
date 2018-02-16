@@ -123,7 +123,7 @@
             //onLoad
             BrowserHelpers.addEvent(window, "load", (event) => {
                 this.changeScreenBehavior();
-                this.walletResizeFix();git
+                this.walletResizeFix();
             });
 
           //onResize

@@ -92,6 +92,7 @@
                             this.addresses[i] = Object.assign( {}, this.addresses[i], { });
 
                             this.$refs['refMining'].$refs['refShowSumBalances'].refreshSum(this.addresses, this.currency);
+                            this.$refs['refWallet'].$refs['refShowSumBalances'].refreshSum(this.addresses, this.currency);
 
                             break;
                         }

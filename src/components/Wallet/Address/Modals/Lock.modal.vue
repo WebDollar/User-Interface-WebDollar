@@ -27,9 +27,6 @@
                         Set Password
                     </div>
 
-                    {{this.clipboardText}}
-
-
                 </div>
 
             </div>
@@ -59,7 +56,6 @@
 
         data: () => {
             return {
-                clipboardText: 'Copy to Clipboard',
                 walletAddressPassword: '',
                 errorMessage: ''
             }
@@ -82,8 +78,6 @@
 
             copyToClipboard(){
 
-                console.log('clipboard', this.$clipboard);
-                this.clipboardText = 'Copied';
                 this.$clipboard(this.walletAddressPassword.trim());
 
             },
@@ -148,7 +142,6 @@
 
                 }
 
-
                 if(okPassword === true){
 
                     this.errorMessage = '';
@@ -161,12 +154,12 @@
 
             async setPassword(wordsArray){
 
-                //this.copyToClipboard();
                 let response = await WebDollar.Blockchain.Wallet.encryptAddress(this.address, wordsArray);
 
                 if (response === true) {
                     this.closeModal();
-                    alert('You have set a new password!');
+                    this.copyToClipboard();
+                    alert('You have set a new password which is copyed now in your clipboard!');
                 }
 
                 return response;

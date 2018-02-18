@@ -10,7 +10,7 @@
                 <icon v-show="this.recivingMoney" class="walletMiningStatus walletRecivingImg" icon='download'></icon>
             </div>
 
-            <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
+            <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> <b class="ammountCurrency">WEBD</b></b>
         </div>
 
         <div class="actionsBox hoverAddress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
@@ -240,8 +240,18 @@
         }
 
         .actuallMiningAddress{
-            margin-left: -55px;
+            margin-left: -45px;
         }
+
+    }
+
+    @media only screen and (max-width: 600px){
+
+        .ammountCurrency{
+            display: none!important;
+        }
+
+
 
     }
 

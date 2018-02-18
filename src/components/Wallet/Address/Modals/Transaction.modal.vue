@@ -2,7 +2,7 @@
 
     <div v-if="this.address !== null && this.address !== undefined">
 
-        <Modal title="Wallet Address" ref="refModal">
+        <Modal title="Wallet Address" ref="refModal" class="transactionModal">
 
             <div slot="content">
 
@@ -24,7 +24,7 @@
 
                     <div class="section">
 
-                        <div style="font-size: 20px">
+                        <div class="ballanceText" style="font-size: 20px">
                             Balance
                         </div>
 
@@ -72,7 +72,7 @@
 
                 </form>
 
-                <div class="transferList" :style="{display: this.isTransactionList ? 'block': 'none'}">
+                <div class="transferList" ref="refTransferList" :style="{display: this.isTransactionList ? 'block': 'none'}">
 
                     <!--<div class="header">-->
 
@@ -331,10 +331,11 @@
                 if (this.$refs['refModal'].modalOpened === false){
                     this.$refs['refModal'].showModal();
                 }
+                this.clipboardText= 'Copy to Clipboard';
             },
             copyToClipboard(){
                 this.clipboardText = 'Copied';
-                this.$clipboard(this.address)
+                this.$clipboard(this.address);
             },
 
             handleSetAddress(){
@@ -357,6 +358,11 @@
     .miningAddress{
         display: block!important;
         font-size: 12px;
+        line-height: 30px;
+    }
+
+    .transactionModal .modifyPadding{
+        padding: 0!important;
     }
 </style>
 

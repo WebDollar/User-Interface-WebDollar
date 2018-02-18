@@ -345,6 +345,11 @@
         color: #1f1f1f;
     }
 
+    #walletButtonText svg{
+        margin-top: 10px;
+        vertical-align: top;
+    }
+
     .mainAddress{
         background-color: #fec02c14;
     }

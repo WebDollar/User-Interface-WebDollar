@@ -2090,8 +2090,6 @@
 
 <style>
 
-    <style>
-
         /* map styling */
 
 

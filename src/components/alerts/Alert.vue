@@ -4,7 +4,7 @@
 
         <!--<icon class="btn" :icon="this._icon" :width="5" :height="5" />-->
         <a :href="this.alert.statusHref||''">
-            <span  v-html="this.alert.statusMessage " :style="{color: this._textColor}"></span>
+            <span class="alertText" v-html="this.alert.statusMessage " :style="{color: this._textColor}"></span>
         </a>
 
     </div>
@@ -73,6 +73,13 @@
 
     .alertStickyBar{
         text-align: center;
+    }
+
+    .alertText{
+        line-height: 16px!important;
+        font-size: 16px!important;
+        padding: 5px 0!important;
+        display: block!important;
     }
 
 </style>

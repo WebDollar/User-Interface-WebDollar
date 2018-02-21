@@ -5,7 +5,12 @@
             <img class="walletAddressImage" :src="this.getAddressPic" >
             <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
-            <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> WEBD</b>
+            <div id="transactionAddressStatus">
+                <icon v-show="this.sendingMoney" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
+                <icon v-show="this.recivingMoney" class="walletMiningStatus walletRecivingImg" icon='download'></icon>
+            </div>
+
+            <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> <b class="ammountCurrency">WEBD</b></b>
         </div>
 
         <div class="actionsBox hoverAddress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
@@ -62,7 +67,9 @@
 
         data: () => {
             return {
-                addressLocked: false
+                addressLocked: false,
+                sendingMoney: true,
+                recivingMoney: true,
             }
         },
 
@@ -200,6 +207,27 @@
         color: #f9dc95!important;
     }
 
+    .walletMiningStatus{
+        margin-top: 17px;
+        vertical-align: top;
+    }
+
+    .walletSendingImg{
+        fill:#298bea!important;
+        margin-left: -12px;
+        margin-top: 16px;
+    }
+
+    .walletRecivingImg{
+        fill:#219411!important;
+        margin-left: -28px;
+    }
+
+    #transactionAddressStatus{
+        display: inline-block;
+        vertical-align: top;
+    }
+
     @media only screen and (max-width : 831px) {
 
         .actionsBox{
@@ -212,8 +240,18 @@
         }
 
         .actuallMiningAddress{
-            margin-left: -55px;
+            margin-left: -45px;
         }
+
+    }
+
+    @media only screen and (max-width: 600px){
+
+        .ammountCurrency{
+            display: none!important;
+        }
+
+
 
     }
 

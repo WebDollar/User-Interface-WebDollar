@@ -123,28 +123,28 @@
 
         mounted(){
 
-                //in browser
-              if (typeof window === "undefined") return false;
+            //in browser
+            if (typeof window === "undefined") return false;
 
-              this.changeScreenBehavior();
+            this.changeScreenBehavior();
 
 
-              WebDollar.Blockchain.emitter.on("blockchain/mining/address", (data)=>{
-                  this.miningAddress = data.address;
-              });
-              this.miningAddress = WebDollar.Blockchain.Mining.minerAddressBase;
+            WebDollar.Blockchain.emitter.on("blockchain/mining/address", (data)=>{
+                this.miningAddress = data.address;
+            });
+            this.miningAddress = WebDollar.Blockchain.Mining.minerAddress;
 
-              //onLoad
-              BrowserHelpers.addEvent(window, "load", (event) => {
-                  this.changeScreenBehavior();
-                  this.walletResizeFix();
-              });
+            //onLoad
+            BrowserHelpers.addEvent(window, "load", (event) => {
+                this.changeScreenBehavior();
+                this.walletResizeFix();
+            });
 
-              //onResize
-              BrowserHelpers.addEvent(window, "resize", (event) => {
-                  this.changeScreenBehavior();
-                  this.walletResizeFix();
-              });
+          //onResize
+            BrowserHelpers.addEvent(window, "resize", (event) => {
+                this.changeScreenBehavior();
+                this.walletResizeFix();
+            });
 
         },
 
@@ -343,6 +343,11 @@
 
     #walletButtonText{
         color: #1f1f1f;
+    }
+
+    #walletButtonText svg{
+        margin-top: 10px;
+        vertical-align: top;
     }
 
     .mainAddress{

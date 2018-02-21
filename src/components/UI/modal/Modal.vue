@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="content">
+            <div class="content modifyPadding">
                 <slot name="content"></slot>
             </div>
 
@@ -103,8 +103,12 @@
     .modal #walletID{
         word-wrap: break-word;
         display: block;
+        vertical-align: middle;
+        height:40px;
         line-height: 12px;
         margin: 10px 0;
+        top: 50%;
+        transform: translateY(10%);
         font-weight: 100;
     }
 
@@ -154,8 +158,9 @@
 
     .modal .ballance{
         color: #ffc12c!important;
-        font-size: 24px;
-        margin-top: 15px;
+        font-size: 20px;
+        line-height: 50px;
+        margin: 5px 0;
     }
 
     .modal .transfer{
@@ -173,6 +178,7 @@
     .modal .transfer .address{
         width: 100%;
         display: block;
+        box-sizing: border-box!important;
     }
 
     .modal .transfer .amount {
@@ -181,7 +187,7 @@
 
     .modal .transfer .title{
         background-color: #1f1f1f;
-        padding-top: 30px;
+        padding-top: 20px;
         text-transform: uppercase;
         letter-spacing: 4px;
         padding-bottom: 20px;
@@ -364,6 +370,10 @@
 
     @media (max-width:600px)  {
 
+        .modal .transfer .title{
+            padding: 10px;
+        }
+
         .modal{
             width: 100%;
             max-width: none;
@@ -381,18 +391,26 @@
         .modal .ballance{
             margin-top: 0;
         }
+        .addressActions{
+            grid-template-columns: 1fr;
+        }
         .addressActions .actionButton{
             line-height: 50px;
             font-size: 20px;
+            border-bottom: solid 1px #000;
+            padding: 0;
         }
         .modal .transfer input{
-            padding: 15px 0 15px 10px;
+            padding: 10px 0 10px 10px;
             font-size: 16px;
+            margin: 5px 0;
+            box-sizing: border-box!important;
         }
         .modal .transfer .button{
             line-height: 26px;
             font-size: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
+            margin-top: 30px;
         }
         .modal .title{
             padding: 20px 0;
@@ -408,6 +426,50 @@
         .modal{
             min-width: auto;
         }
+
+        .ballanceText{
+            display: inline-block;
+        }
+
+        .walletAddress b {
+            font-size: 20px!important;
+            line-height: 25px!important;
+            margin-left: 4px!important;
+        }
+
+        .walletAddress b {
+            font-size: 20px!important;
+            line-height: 25px!important;
+            margin-left: 4px!important;
+            vertical-align: top;
+            margin-top: 16px;
+        }
+
+    }
+
+    @media (max-width: 400px){
+
+        .modal .transfer input {
+            padding: 10px 0 10px 10px;
+        }
+
+        .addressActions .actionButton {
+            line-height: 40px;
+        }
+
+        .addressActions{
+            border: none;
+        }
+
+        .modal .title {
+            padding: 10px 0;
+        }
+
+        .modal .close {
+            top: -10px;
+            right: 10px!important;
+        }
+
     }
 
 </style>

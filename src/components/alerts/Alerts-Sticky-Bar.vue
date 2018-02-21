@@ -61,18 +61,21 @@
                      case "Error Synchronizing":
 
                          if (WebDollar.Blockchain._onLoadedResolver !== "done") {
-                             this.delete("error-internet");
+                             this.deleteAlert("error-internet");
+                             this.deleteAlert("error-firewall");
                              this.addAlert("error-firewall", "error", "Check your Firewall, Router, Anti-virus or Internet");
                          }
                          else {
-                             this.delete("error-internet");
+                             this.deleteAlert("error-internet");
+                             this.deleteAlert("error-firewall");
                              this.addAlert("error-internet", "error", "Internet is no longer working. Check your internet or refresh");
                          }
 
                          break;
 
                      case "No Internet Access":
-                         this.delete("error-internet");
+                         this.deleteAlert("error-internet");
+                         this.deleteAlert("error-firewall");
                          this.addAlert("error-internet", "error","Internet is no longer working. Check your internet or refresh");
                          break;
                  }
@@ -141,18 +144,18 @@
 
              },
 
-             deleteAlert(statusId){
+             deleteAlert(arrayStatusId){
 
-                 if (Array.isArray(!statusId)) statusId = [statusId];
+                 if (!Array.isArray(arrayStatusId)) arrayStatusId = [arrayStatusId];
 
-                 for (let i=0; i<statusId.length; i++){
+                 for (let i=0; i<arrayStatusId.length; i++)
 
                      for (let j=this.alerts.length-1; j>=0; j--)
-                         if (this.alerts[j].statusId === statusId[i] ){
-                             this.alerts.splice(i,1);
+                         if (this.alerts[j].statusId === arrayStatusId[i] ){
+                             this.alerts.splice(j,1);
                              break;
                          }
-                 }
+
 
              }
 

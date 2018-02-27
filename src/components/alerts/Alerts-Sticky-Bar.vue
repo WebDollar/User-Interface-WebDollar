@@ -49,7 +49,7 @@
 
              if (typeof window === "undefined") return;
 
-             WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=>{
+             WebDollar.StatusEvents.on("blockchain/status-webdollar", (data)=>{
 
                  switch (data.message){
                      case "Ready":
@@ -84,7 +84,18 @@
 
              });
 
-             WebDollar.Blockchain.emitter.on("validation/status", (data)=> {
+             WebDollar.StatusEvents.on("blockchain/logs", (data)=> {
+
+                 switch (data.message) {
+                     case "IndexedDB Error":
+                         this.deleteAlert("indexedDB-error-reason");
+                         this.addAlert("indexedDB-error-reason", "error", "IndexedDB returned an error <b>"+data.reason+"</b>");
+                         break;
+                 }
+
+             });
+
+             WebDollar.StatusEvents.on("validation/status", (data)=> {
 
                  switch (data.message) {
                      case "IndexedDB is not supported":
@@ -98,7 +109,6 @@
                      case "IndexedDB - Wallet couldn't be imported":
                          this.addAlert("wallet-error", "error", "<b>Wallet couldn't be imported</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
                          break;
-
 
                      case "Incognito mode":
                          this.addAlert("incognito-warning", "warning", "Incognito - your <b>WALLET will not be saved</b>b");

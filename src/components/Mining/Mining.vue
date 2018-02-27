@@ -82,23 +82,23 @@
 
             if (typeof window === 'undefined') return;
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/hash-rate", (hashesPerSecond)=>{
+            WebDollar.StatusEvents.on("mining/hash-rate", (hashesPerSecond)=>{
                 this.hashesPerSecond = hashesPerSecond;
             });
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/status-changed", (status)=>{
+            WebDollar.StatusEvents.on("mining/status-changed", (status)=>{
 
                 this.started = WebDollar.Blockchain.Mining.started;
 
             });
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/reset", ()=>{
+            WebDollar.StatusEvents.on("mining/reset", ()=>{
 
                 this.started = WebDollar.Blockchain.Mining.started;
 
             });
 
-            WebDollar.Blockchain.Mining.emitter.on("mining/workers-changed", (workers)=>{
+            WebDollar.StatusEvents.on("mining/workers-changed", (workers)=>{
 
                 this.workers = workers;
                 if (this.workers !== this.$refs['refMiningSlider'].data)
@@ -107,17 +107,17 @@
             });
 
             this.minerAddress = WebDollar.Blockchain.Mining.minerAddressBase;
-            WebDollar.Blockchain.Mining.emitter.on("mining/miner-address-changed", (minerAddress)=>{
+            WebDollar.StatusEvents.on("mining/miner-address-changed", (minerAddress)=>{
                 this.minerAddress = minerAddress;
             });
 
-            WebDollar.Blockchain.emitter.on("blockchain/status", (data)=>{
+            WebDollar.StatusEvents.on("blockchain/status", (data)=>{
 
                 this.status = data.message;
 
             });
 
-            WebDollar.Blockchain.emitter.on("blockchain/status-webdollar", (data)=>{
+            WebDollar.StatusEvents.on("blockchain/status-webdollar", (data)=>{
 
                 if (data.message === "Ready") {
 

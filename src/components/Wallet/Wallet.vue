@@ -129,7 +129,7 @@
             this.changeScreenBehavior();
 
 
-            WebDollar.Blockchain.emitter.on("blockchain/mining/address", (data)=>{
+            WebDollar.StatusEvents.on("blockchain/mining/address", (data)=>{
                 this.miningAddress = data.address;
             });
             this.miningAddress = WebDollar.Blockchain.Mining.minerAddress;

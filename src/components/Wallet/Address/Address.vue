@@ -7,7 +7,7 @@
 
             <div id="transactionAddressStatus">
                 <icon v-show="this.sendingMoney" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
-                <icon v-show="this.recivingMoney" class="walletMiningStatus walletRecivingImg" icon='download'></icon>
+                <icon v-show="this.receivingMoney" class="walletMiningStatus walletRecivingImg" icon='download'></icon>
             </div>
 
             <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> <b class="ammountCurrency">WEBD</b></b>
@@ -68,8 +68,8 @@
         data: () => {
             return {
                 addressLocked: false,
-                sendingMoney: true,
-                recivingMoney: true,
+                sendingMoney: false,
+                receivingMoney: false,
             }
         },
 

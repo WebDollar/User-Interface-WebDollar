@@ -117,9 +117,9 @@
 
             });
 
-            WebDollar.StatusEvents.on("blockchain/status-webdollar", (data)=>{
+            WebDollar.StatusEvents.on("blockchain/status", (data)=>{
 
-                if (data.message === "Ready") {
+                if (data.message === "Blockchain Ready to Mine") {
 
                     this.loaded = true;
                     this.$refs['refMiningSlider'].disabled = false;

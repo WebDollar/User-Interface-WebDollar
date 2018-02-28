@@ -49,15 +49,16 @@
 
              if (typeof window === "undefined") return;
 
-             WebDollar.StatusEvents.on("blockchain/status-webdollar", (data)=>{
+             WebDollar.StatusEvents.on("blockchain/status", (data)=>{
 
                  switch (data.message){
-                     case "Ready":
+
+                     case "Blockchain Ready to Mine":
+
                          this.loadedFirstTime = true;
-
                          this.deleteAlert(["error-firewall","error-internet"]);
-
                          break;
+
                      case "Error Synchronizing":
 
                          if (WebDollar.Blockchain._onLoadedResolver !== "done") {
@@ -74,6 +75,7 @@
                          break;
 
                      case "No Internet Access":
+
                          this.deleteAlert("error-internet");
                          this.deleteAlert("error-firewall");
                          this.addAlert("error-internet", "error","Internet is no longer working. Check your internet or refresh");
@@ -91,6 +93,17 @@
                          this.deleteAlert("indexedDB-error-reason");
                          this.addAlert("indexedDB-error-reason", "error", "IndexedDB returned an error <b>"+data.reason+"</b>");
                          break;
+
+                     case "Network Adjusted Time Error":
+                         this.deleteAlert("network-adjusted-time-error");
+                         this.addAlert("network-adjusted-time-error", "error", "Network Adjusted Time didn't work <b>"+data.reason+"</b>");
+                         break;
+
+                     case "Network Adjusted Time Success":
+                         this.deleteAlert("network-adjusted-time-error");
+                         break;
+
+
                  }
 
              });

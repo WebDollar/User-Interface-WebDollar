@@ -66,7 +66,6 @@
 
                     // WebDollar.Blockchain.wallet. - DELETE
                     let answer = await WebDollar.Blockchain.Wallet.deleteAddress(this.address);
-
                     console.log(answer);
                 }
 

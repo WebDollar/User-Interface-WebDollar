@@ -151,12 +151,12 @@
         margin-left: 0;
     }
 
-    .modal .twoColums{
+    .modal .twoColumns{
         border-bottom: solid 1px #313131;
         background-color: #151515;
     }
 
-    .modal .ballance{
+    .modal .balance{
         color: #ffc12c!important;
         font-size: 20px;
         line-height: 50px;
@@ -213,7 +213,7 @@
         transition: all 0.5s ease
     }
 
-    .twoColums{
+    .twoColumns{
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
@@ -251,13 +251,13 @@
         color: #000!important;
     }
 
-    .twoColums .section{
+    .twoColumns .section{
         overflow: hidden;
         padding: 20px;
         color: #D5D5D5;
     }
 
-    .twoColums .section:first-child{
+    .twoColumns .section:first-child{
         border-right: solid 1px #313131;
     }
 
@@ -381,14 +381,14 @@
             max-height: 100%;
             overflow-y: auto;
         }
-        .twoColums{
+        .twoColumns{
             display: inline-block;
         }
-        .twoColums .section:first-child {
+        .twoColumns .section:first-child {
             border-bottom: solid 1px #313131;
             border-right: none;
         }
-        .modal .ballance{
+        .modal .balance{
             margin-top: 0;
         }
         .addressActions{
@@ -419,7 +419,7 @@
             top:0;
             right: 30px!important;
         }
-        .modal .twoColums{
+        .modal .twoColumns{
             width: 100%;
             grid-template-columns: 1fr;
         }
@@ -427,7 +427,7 @@
             min-width: auto;
         }
 
-        .ballanceText{
+        .balanceText{
             display: inline-block;
         }
 

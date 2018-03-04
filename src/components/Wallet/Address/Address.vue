@@ -10,7 +10,7 @@
                 <icon v-show="this.receivingMoney" class="walletMiningStatus walletRecivingImg" icon='download'></icon>
             </div>
 
-            <b class="fontColor"><ShowBalance :address="this.address" currency="0x01"/> <b class="ammountCurrency">WEBD</b></b>
+            <b class="fontColor"><show-balance :address="this.address" currency="0x01"/> <b class="ammountCurrency">WEBD</b></b>
         </div>
 
         <div class="actionsBox hoverAddress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
@@ -27,9 +27,9 @@
             </div>
         </div>
 
-        <TransactionModal ref="refTransactionModal" :address="this.address" :isMiningAddress="this.isMiningAddress" />
-        <LockModal ref="refLockModal" :address="this.address" />
-        <DeleteModal ref="refDeleteModal" :address="this.address" />
+        <address-main-modal ref="refAddressMainModal" :address="this.address" :isMiningAddress="this.isMiningAddress" />
+        <lock-modal ref="refLockModal" :address="this.address" />
+        <delete-modal ref="refDeleteModal" :address="this.address" />
 
     </div>
 </template>
@@ -39,7 +39,7 @@
 
     import FileSaver from './../../../../node_modules/file-saver'
     import icon from "components/UI/icons/icon.vue"
-    import TransactionModal from "./Modals/Transaction.modal.vue"
+    import AddressMainModal from "./Modals/Main-Modal/Address-main.modal.vue"
     import LockModal from "./Modals/Lock.modal.vue"
     import DeleteModal from "./Modals/Delete.modal.vue"
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
@@ -52,17 +52,20 @@
         },
 
         components:{
-            "TransactionModal":TransactionModal,
-            "ShowBalance":ShowBalance,
+            "address-main-modal":AddressMainModal,
+            "lock-modal":LockModal,
+            "delete-modal":DeleteModal,
+
+            "show-balance":ShowBalance,
             "icon":icon,
-            "LockModal":LockModal,
-            "DeleteModal":DeleteModal,
         },
 
         computed: {
+
             getAddressPic(){
                 return WebDollar.Blockchain.Wallet.getAddressPic(this.address);
             }
+
         },
 
         data: () => {
@@ -87,7 +90,7 @@
 
             handleTransferFunds(e){
 
-                this.$refs['refTransactionModal'].showModal(e);
+                this.$refs['refAddressMainModal'].showModal(e);
 
             },
 

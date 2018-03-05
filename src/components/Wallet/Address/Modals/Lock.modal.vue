@@ -10,6 +10,8 @@
 
                 <div >
 
+                    <span class="info">If you will lose your password you won't be able to access your WEBD.</span>
+
                     <div class="inputAndGeneratorPass">
                         <div>
                             <input placeholder="Your 12 words Password" v-model="walletAddressPassword" class="inputDeleteModalPass"/>
@@ -255,6 +257,14 @@
         color: #de604d;
         padding-bottom: 20px;
         display: block;
+    }
+
+    .info{
+        color: #ffd36c;
+        padding-bottom: 20px;
+        text-transform: uppercase;
+        display: block;
+        font-size: 12px;
     }
 
 </style>

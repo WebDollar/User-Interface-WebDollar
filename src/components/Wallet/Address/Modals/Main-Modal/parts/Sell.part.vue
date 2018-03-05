@@ -1,9 +1,9 @@
 <template>
-    <form class="sell" >
+    <div class="sell" >
 
         <p class="title">Temporary unavailable</p>
 
-    </form>
+    </div>
 </template>
 
 <script>

@@ -112,14 +112,20 @@
 
                  switch (data.message) {
                      case "IndexedDB is not supported":
+                         if (this.checkIfExistsAlert("indexedDB-error")) break;
+
                          this.addAlert("indexedDB-error", "error", "<b>IndexedDB is not supported</b> on your browser. Install a different browser");
                          break;
 
                      case "IndexedDB - PouchDB doesn't work":
+                         if (this.checkIfExistsAlert("pouchDB-error")) break;
+
                          this.addAlert("pouchDB-error", "error", "<b>PouchDB doesn't work</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
                          break;
 
                      case "IndexedDB - Wallet couldn't be imported":
+                         if (this.checkIfExistsAlert("wallet-error")) break;
+
                          this.addAlert("wallet-error", "error", "<b>Wallet couldn't be imported</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
                          break;
 
@@ -128,10 +134,14 @@
                          break;
 
                      case "WebAssembly not supported":
+                         if (this.checkIfExistsAlert("web-assembly-warning")) break;
+
                          this.addAlert("web-assembly-warning", "warning", "<b>WebAssembly is not supported</b>. You use an old browser or one that doesn't support WebAssembly. Install Chrome/Firefox/Safari and mining increases with 70%");
                          break;
 
                      case "ASM.JS not supported":
+                         if (this.checkIfExistsAlert("asm.js-warning")) break;
+
                          this.addAlert("asm.js-warning", "error", "<b>ASM.JS is not supported</b>. Mining is not available on your machine. Please update your browser");
                          break;
                  }
@@ -180,6 +190,14 @@
                          }
 
 
+             },
+
+             checkIfExistsAlert(statusId){
+                 for (let j=this.alerts.length-1; j>=0; j--)
+                     if (this.alerts[j].statusId === statusId )
+                         return true;
+
+                 return false;
              }
 
          }

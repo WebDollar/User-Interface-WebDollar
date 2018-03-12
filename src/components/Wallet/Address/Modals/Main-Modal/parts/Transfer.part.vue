@@ -3,10 +3,15 @@
 
         <p class="title">Transfer WEBD</p>
 
-        <input @keyup="this.handleChangeToAddress" v-model="toAddress" class="address" placeholder="Recipient Address"/>
-        <span class="toAddressError" v-html="this.errorToAddressMessage" ></span>
+        <div>
+            <input @keyup="this.handleChangeToAddress" v-model="toAddress" class="address" placeholder="Recipient Address"/>
+            <span class="editError" v-html="this.errorToAddressMessage" ></span>
+        </div>
 
-        <input @keyup="this.handleChangeToAmount" v-model="toAmount" class="amount" placeholder="WEBD Amount"/>
+        <div>
+            <input @keyup="this.handleChangeToAmount" v-model="toAmount" class="amount" placeholder="WEBD Amount"/>
+            <span class="editError" v-html="this.errorToAmountMessage" ></span>
+        </div>
 
         <span class="transferFee">
             Fee <strong>{{ fee }}</strong> WEBD
@@ -39,6 +44,7 @@
 
                 errorMessage: '',
                 errorToAddressMessage: '',
+                errorToAmountMessage: '',
                 successMessage: '',
             }
         },
@@ -49,7 +55,7 @@
 
                 this.handleChangeToAddress();
 
-                if (this.errorToAddressMessage !== '') return false;
+                if (this.errorToAddressMessage !== '' || this.errorToAmountMessage !== '' ) return false;
 
                 let answer = WebDollar.Blockchain.Transactions.createTransactionSimple( this.address, this.toAddress, this.toAmount, this.fee );
 
@@ -66,7 +72,8 @@
             handleChangeToAddress(e){
 
                 try {
-                    if (WebDollar.Applications.AddressHelper.validateAddressChecksum(this.toAddress) === null) {
+
+                    if ( WebDollar.Applications.AddressHelper.validateAddressChecksum(this.toAddress) === null ) {
                         this.errorToAddressMessage = 'Invalid Address';
                         return false;
                     }
@@ -81,6 +88,28 @@
             },
 
             handleChangeToAmount(e){
+
+                this.errorToAmountMessage = '';
+
+                try {
+
+                    let balance = WebDollar.Blockchain.blockchain.accountantTree.getBalance(this.address, undefined);
+
+                    if (balance === null) throw "Balance is empty";
+
+                    if ( balance.isLessThan(this.toAmount)  )
+                        throw "Insufficient Funds";
+
+                } catch (exception){
+
+                    if (typeof exception === "string")
+                        this.errorToAmountMessage = exception.toString();
+                    else
+                        this.errorToAmountMessage = exception.message;
+
+                    this.fee = '';
+                    return ;
+                }
 
                 this.fee = WebDollar.Blockchain.Transactions.calculateFeeSimple ( this.toAmount );
 
@@ -97,7 +126,7 @@
         color: red;
     }
 
-    .toAddressError{
+    .editError{
         color:red;
     }
 

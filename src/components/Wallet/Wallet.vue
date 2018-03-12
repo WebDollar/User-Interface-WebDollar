@@ -7,7 +7,7 @@
         <icon v-show="this.receivingMoney" :style="{
             right: this.sendingMoney ? '20px' : '4px',
             marginBottom: this.sendingMoney ? '-2px' : '0',
-            display: this.opened ? 'none': 'block'}" class="miningStatus recivingImg jump" icon='download'></icon>
+            display: this.opened ? 'none': 'block'}" class="miningStatus receivingImg jump" icon='download'></icon>
 
         <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
             marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
@@ -485,7 +485,7 @@
         fill:#298bea!important;
     }
 
-    .recivingImg{
+    .receivingImg{
         fill:#219411!important;
     }
 

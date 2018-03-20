@@ -1,16 +1,25 @@
 <template>
 
-    <div class="show-balance-span">
-        {{ (this.balances !== null && this.balances !== undefined && this.balances.hasOwnProperty(this.currency)) ? this.formatMoneyNumber(Math.round(this.balances[this.currency] * 1000)/1000) : 0 }}
+    <div style="display: inline-block">
+
+        <loading-spinner class="fontColor" v-if="!this.loaded" />
+        <div class="show-balance-span" v-if="this.loaded" >
+            {{ this.computePrice }}
+        </div>
+
     </div>
 
 </template>
 
 <script>
 
+    import LoadingSpinner from "components/UI/elements/Loading-Spinner.vue"
+
     export default{
 
-        name: "ShowBalance",
+        components:{
+            LoadingSpinner,
+        },
 
         props: ['address', 'currency'],
 
@@ -18,7 +27,19 @@
           return {
               balances: {},
               subscription: null,
+              loaded: false,
             }
+        },
+
+        computed:{
+
+            computePrice(){
+
+                if (this.balances === null || this.balances === undefined || !this.balances.hasOwnProperty(this.currency)) return 0;
+
+                return this.formatMoneyNumber(Math.round(this.balances[this.currency] * 1000)/1000);
+            }
+
         },
 
         mounted(){
@@ -27,15 +48,17 @@
 
             this.currency = this.currency || '0x01';
 
-//            if (typeof this.address === "object" && typeof this.address.hasOwnProperty("balances") ){ //it is an address object
-//                this.balances = this.address.balances;
-//                return;
-//            }
-
             let address = this.address;
             if (typeof this.address === "object" && typeof this.address.hasOwnProperty("address") ) { //it is an address object
                 address = this.address.address;
             }
+
+            WebDollar.StatusEvents.emitter.on("blockchain/status", (data)=>{
+
+                if (data.message === "Blockchain Ready to Mine")
+                    this.loaded = true;
+
+            });
 
             let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
                 this.balances = data.balances;
@@ -50,11 +73,6 @@
 
         watch: {
             address: function (newVal, oldVal) { // watch it
-
-//                if (typeof newVal === "object" && typeof newVal.hasOwnProperty("balances") ){ //it is an address object
-//                    this.balances = newVal.balances;
-//                    return;
-//                }
 
                 WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.subscription);
 

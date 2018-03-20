@@ -23,7 +23,7 @@
                 value: 0,
                 disabled:true,
                 screenWidth: window.innerWidth,
-                logicalProcessors: 8,
+                logicalProcessors: 4,
                 sliderMobileWidth: 200,
             }
         },
@@ -78,7 +78,9 @@
                 this.sliderMobileWidth = '100%';
             }
 
-            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 8 : 2 * window.navigator.hardwareConcurrency;
+            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency;
+
+            this.$refs["slider"].refresh();
 
         }
     }

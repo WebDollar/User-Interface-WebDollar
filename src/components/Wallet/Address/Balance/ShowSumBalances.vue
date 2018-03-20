@@ -1,26 +1,46 @@
 <template>
 
-    <span class="show-sum-balances">
-        {{ this.sum }}
-    </span>
+    <div style="display: inline-block">
+
+        <loading-spinner class="loading-wallet-spinner" v-if="!this.loaded" />
+
+        <span v-if="this.loaded" class="show-sum-balances">
+            {{ this.sum }}
+        </span>
+
+    </div>
 
 </template>
 
 <script>
 
+    import LoadingSpinner from "components/UI/elements/Loading-Spinner.vue"
+
     export default{
 
-        name: "ShowSumBalances",
+        components:{
+            LoadingSpinner,
+        },
 
         props: ['addresses', 'currency'],
 
         data(){
             return {
-                sum: 0
+                sum: 0,
+                loaded: false,
             }
         },
 
         mounted(){
+
+            if (typeof window === "undefined") return;
+
+            WebDollar.StatusEvents.emitter.on("blockchain/status", (data)=>{
+
+                if (data.message === "Blockchain Ready to Mine")
+                    this.loaded = true;
+
+            });
 
         },
 
@@ -82,6 +102,13 @@
         width: auto;
         display: inline-block;
         color:#fec02c;
+    }
+
+    .loading-wallet-spinner{
+        fill: black !important;;
+        margin-left: 10px;
+        margin-top: 0 !important;
+        vertical-align: middle !important;;
     }
 
 </style>

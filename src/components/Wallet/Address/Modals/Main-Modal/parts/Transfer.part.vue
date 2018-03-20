@@ -51,13 +51,13 @@
 
         methods:{
 
-            handleCreateTransaction(){
+            async handleCreateTransaction(){
 
                 this.handleChangeToAddress();
 
                 if (this.errorToAddressMessage !== '' || this.errorToAmountMessage !== '' ) return false;
 
-                let answer = WebDollar.Blockchain.Transactions.createTransactionSimple( this.address, this.toAddress, this.toAmount, this.fee );
+                let answer = await WebDollar.Blockchain.Transactions.createTransactionSimple( this.address, this.toAddress, this.toAmount, this.fee );
 
                 if (!answer.result){
                     this.errorMessage = answer.message + " <br/> "+ answer.reason;

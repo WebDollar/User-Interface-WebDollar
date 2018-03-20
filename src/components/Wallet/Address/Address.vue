@@ -1,4 +1,5 @@
 <template>
+
     <div class="walletAddress hoverAddress">
 
         <div class="addressIdentityBox" v-on:click.stop="handleTransferFunds">
@@ -208,6 +209,7 @@
 
     .fontColor{
         color: #f9dc95!important;
+        fill: #f9dc95;
     }
 
     .walletMiningStatus{

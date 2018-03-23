@@ -61,7 +61,7 @@
 
                      case "Error Synchronizing":
 
-                         if (WebDollar.Blockchain._onLoadedResolver !== "done") {
+                         if (WebDollar.Blockchain.loaded !== true) {
                              this.deleteAlert("error-internet");
                              this.deleteAlert("error-firewall");
                              this.addAlert("error-firewall", "error", "Check your Firewall, Router, Anti-virus or Internet");

@@ -28,9 +28,10 @@
                             Balance
                         </div>
 
-                        <b class="balance" style="color:gray">
-                            <show-balance :address="this.address" currency="0x01"/> WEBD
+                        <b class="fontColor">
+                            <show-balance :address="this.address" currency="0x01"/>
                         </b>
+                        <b class="amountCurrency">WEBD</b>
 
                         <span class="miningAddress" v-if="isMiningAddress">
                             You are mining on this Address

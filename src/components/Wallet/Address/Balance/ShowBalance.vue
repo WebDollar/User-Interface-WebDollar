@@ -27,7 +27,7 @@
           return {
               balances: {},
               subscription: null,
-              loaded: false,
+              loaded: WebDollar.Blockchain.loaded||false,
             }
         },
 

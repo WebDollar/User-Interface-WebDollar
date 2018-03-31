@@ -16,7 +16,7 @@
 
                 </div>
 
-                <span class="editError" v-html="this.errorToAmountMessage" :class="this.errorToAmountMessage ? '' : 'hide'"></span>
+                <span class="editError" v-html="this.errorToAddressMessage" :class="this.errorToAddressMessage ? '' : 'hide'"></span>
 
             </div>
 
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <span class="editError" v-html="this.errorToAddressMessage" :class="this.errorToAddressMessage ? '' : 'hide'"></span>
+            <span class="editError" v-html="this.errorToAmountMessage" :class="this.errorToAmountMessage ? '' : 'hide'"></span>
 
             <div>
                 <span class="transferError" v-html="this.errorMessage" :class="this.errorMessage ? '' : 'hide'"/>
@@ -174,11 +174,6 @@
         color: red;
     }
 
-    .editError{
-        color:red;
-        padding-bottom: 10px;
-        display: block;
-    }
 
     .transferSuccess{
         color: #ffc12c;

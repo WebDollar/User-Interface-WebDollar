@@ -32,9 +32,9 @@
                         </b>
                         <b class="amountCurrency">WEBD</b>
 
-                        <span class="miningAddress" v-if="isMiningAddress">
+                        <div class="miningAddress" v-if="isMiningAddress">
                             You are mining on this Address
-                        </span>
+                        </div>
                         <div  v-if="!isMiningAddress" @click="handleSetAddress" class="modalButton2">
                             Mine on this address
                         </div>

@@ -1,33 +1,43 @@
 <template>
-    <div class="transfer">
+    <div class="transferList">
 
         <p class="title">Transfer WEBD</p>
 
-        <div>
+        <div class="transfer">
             <div >
-                <img class="walletAddressImage transferWalletAddressImage" :src="this.getAddressPic" >
-                <input class="transferWalletAddressEdit address " @keyup="this.handleChangeToAddress" v-model="toAddress" placeholder="Recipient Address"/>
+                <div class="imageAndInput">
+
+                    <div>
+                        <img class="walletAddressImage transferWalletAddressImage" :src="this.getAddressPic" :class="this.errorToAddressMessage==='Invalid Address' ? 'hide' : ''" >
+                    </div>
+                    <div>
+                        <input class="address " @keyup="this.handleChangeToAddress" v-model="toAddress" placeholder="Recipient Address"/>
+                    </div>
+
+                </div>
+
+                <span class="editError" v-html="this.errorToAmountMessage" ></span>
+
             </div>
+
+            <div>
+                <div class="moneyBox">
+                    <input @keyup="this.handleChangeToAmount" v-model="toAmount" type="number" class="amount" placeholder="WEBD Amount"/>
+                    <input @keyup="this.handleChangeToFee" v-model="fee" class="amount" type="number" placeholder="Fee"/>
+                </div>
+            </div>
+
             <span class="editError" v-html="this.errorToAddressMessage" ></span>
+
+            <div>
+                <span class="transferError" v-html="this.errorMessage"/>
+                <span class="transferSuccess" v-html="this.successMessage"/>
+            </div>
+
+            <button class="button" @click="this.handleCreateTransaction" >
+                SEND WEBD
+            </button>
         </div>
-
-        <div>
-            <input @keyup="this.handleChangeToAmount" v-model="toAmount" class="amount" placeholder="WEBD Amount"/>
-            <span class="editError" v-html="this.errorToAmountMessage" ></span>
-        </div>
-
-        <span class="transferFee">
-            Fee <strong>{{ fee }}</strong> WEBD
-        </span>
-
-        <div>
-            <span class="transferError" v-html="this.errorMessage"/>
-            <span class="transferSuccess" v-html="this.successMessage"/>
-        </div>
-
-        <button class="button" @click="this.handleCreateTransaction" >
-            SEND WEBD
-        </button>
 
     </div>
 </template>
@@ -54,9 +64,11 @@
 
 
         computed:{
+
             getAddressPic(){
                 return WebDollar.Blockchain.Wallet.getAddressPic(this.toAddress);
             }
+
         },
 
         methods:{
@@ -101,13 +113,17 @@
 
                 this.errorToAmountMessage = '';
 
+                this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount );
+
                 try {
 
                     let balance = WebDollar.Blockchain.blockchain.accountantTree.getBalance(this.address, undefined);
 
                     if (balance === null) throw "Balance is empty";
 
-                    if ( balance.isLessThan(this.toAmount)  )
+                    let total = Number(this.toAmount)+Number(this.fee);
+
+                    if ( balance.isLessThan(total) )
                         throw "Insufficient Funds";
 
                 } catch (exception){
@@ -121,7 +137,13 @@
                     return ;
                 }
 
-                this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount );
+            },
+
+            handleChangeToFee(e){
+
+                this.errorToAmountMessage = '';
+
+//                console.log(e);
 
             }
 
@@ -132,12 +154,24 @@
 </script>
 
 <style>
+
+    .modal .title {
+        background-color: #262626;
+        padding: 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        line-height: 22px;
+        color: #ffc12c;
+    }
+
     .transferError{
         color: red;
     }
 
     .editError{
         color:red;
+        padding-bottom: 10px;
+        display: block;
     }
 
     .transferSuccess{
@@ -150,14 +184,32 @@
     }
 
     .transferWalletAddressImage{
-        position: absolute;
-        left: 10px;
-        height: 30px;
+        position: relative;
+        height: 34.5px!important;
+        margin: 0 auto;
+        border-radius: 0!important;
     }
 
-    .transferWalletAddressEdit{
-        margin-left: 40px !important;
-        width: 90% !important;;
+    .imageAndInput{
+        display: grid;
+        grid-template-columns: 35px 1fr;
+        background-color: #333;
+    }
+
+    .moneyBox{
+        display: grid;
+        grid-template-columns: 1fr 100px;
+        grid-column-gap: 10px;
+    }
+
+    .hide{
+        display: none!important;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 
 </style>

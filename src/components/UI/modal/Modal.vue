@@ -182,10 +182,18 @@
         box-sizing: border-box!important;
     }
 
-    .modal .transfer .amount {
-        width: 100%;
-        display: block;
+    .transactionElement .amount {
+        width: auto!important;
         box-sizing: border-box!important;
+        display: inline-block;
+        color: #ffc12c!important;
+    }
+
+    .transactionElement .currency {
+        width: auto!important;
+        box-sizing: border-box!important;
+        display: inline-block;
+        color: #ffc12c!important;
     }
 
     .modal .transfer .title{

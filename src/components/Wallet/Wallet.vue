@@ -529,7 +529,6 @@
             margin: 15px 0 0 10px!important;
         }
         #allWalets .walletAddress img{
-            height: 50px!important;
             margin-top: 5px;
         }
         .walletAddress b{

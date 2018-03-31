@@ -47,14 +47,11 @@
                     <div @click="this.showTransfer" :class="[ this.partActivated === 'transfer' ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Transfer
                     </div>
-                    <div @click="this.showBuy" :class="[ this.partActivated === 'buy' ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Buy
-                    </div>
-                    <div @click="this.showSell" :class="[ this.partActivated === 'sell' ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Sell
-                    </div>
                     <div @click="this.showTransactions" :class="[ this.partActivated === 'transactions' ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Transactions
+                    </div>
+                    <div @click="this.showBuy" :class="[ this.partActivated === 'buy/sell' ? 'actionButton activeActionButton' : 'actionButton' ]">
+                        Buy/Sell
                     </div>
                 </div>
 
@@ -113,7 +110,7 @@
             return {
                 partActivated : 'none',
 
-                clipboardText: 'Copy to Clipboard',
+                clipboardText: 'Copy Address',
             }
         },
 
@@ -130,10 +127,7 @@
             },
 
             showBuy() {
-                this.partActivated = "buy";
-            },
-            showSell() {
-                this.partActivated = "sell";
+                this.partActivated = "buy/sell";
             },
             showTransactions(){
                 this.partActivated = "transactions";
@@ -147,7 +141,7 @@
                 if (this.$refs['refModal'].modalOpened === false){
                     this.$refs['refModal'].showModal();
                 }
-                this.clipboardText= 'Copy to Clipboard';
+                this.clipboardText= 'Copy Address';
             },
             copyToClipboard(){
                 this.clipboardText = 'Copied';
@@ -181,6 +175,10 @@
 
     .addressMainModal .modifyPadding{
         padding: 0!important;
+    }
+
+    .balanceText{
+        margin-top: 15px;
     }
 
 </style>

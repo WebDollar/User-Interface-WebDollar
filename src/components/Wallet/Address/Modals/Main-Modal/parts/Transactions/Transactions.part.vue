@@ -2,7 +2,7 @@
 
     <div class="transferList" ref="refTransferList" >
 
-        <p class="title">Transactions WEBD</p>
+        <p class="title">Recent Transfer History</p>
 
         <div class="headerTable">
 

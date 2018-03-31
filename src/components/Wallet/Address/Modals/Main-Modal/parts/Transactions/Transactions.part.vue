@@ -43,6 +43,7 @@
         data: ()=>{
             return {
                 transactions : {},
+                subscription: null,
             }
         },
 
@@ -50,28 +51,21 @@
 
             if (typeof window === "undefined") return false;
 
-            let transactions = WebDollar.Blockchain.Transactions.listTransactions(this.address);
+            //subscribe to transactions changes
+            let data = WebDollar.Blockchain.Transactions.subscribeTransactionsChanges(address, (data)=>{
+                this._addTransaction (data.transaction);
+            });
 
-            console.log("this.transactions", transactions);
-
-            this._addTransactions(transactions)
+            if (data !== null && data.result) {
+                this.subscription = data.subscription;
+                this._addTransactions(data.transactions);
+            }
 
         },
 
         methods:{
 
             _addTransaction(transaction){
-
-                for (let key in this.transactions){
-
-                    if (key === transaction.key){
-
-                        this.transactions[key] = Object.assign( {}, transaction, { } );
-                        return true;
-
-                    }
-
-                }
 
                 // in case it is a new transaction
                 Vue.set(this.transactions, transaction.txId, transaction);

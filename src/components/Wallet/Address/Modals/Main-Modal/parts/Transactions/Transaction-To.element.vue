@@ -3,10 +3,10 @@
     <ul class="destinations">
         <li class="destinationElement">
 
-            <span class="destinationAddress" title="Address Destination">{{this.unencodedAddress }}</span>
+            <img class="walletAddressImage" :src="this.getAddressPic" >
 
             <div class="money" title="Amount">
-                <span class="amount">{{this.amount}}</span><span class="currency">WEBD</span>
+                <span class="amount">{{this.toAddress.amount}}</span><span class="currency">WEBD</span>
             </div>
 
         </li>
@@ -20,7 +20,13 @@
 
         props:{
             toAddress: {default: null}
-        }
+        },
+
+        computed:{
+            getAddressPic(){
+                return WebDollar.Blockchain.Wallet.getAddressPic(this.toAddress.address);
+            }
+        },
 
     }
 

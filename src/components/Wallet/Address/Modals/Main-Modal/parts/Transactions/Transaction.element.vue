@@ -2,8 +2,6 @@
 
     <li v-if="transaction !== null" class="transferListElement">
 
-        {{transaction}}
-
         <ul class="sources">
 
             <transaction-from v-for="(fromAddress, index) in transaction.from.addresses"

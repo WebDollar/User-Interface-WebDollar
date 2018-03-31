@@ -105,7 +105,7 @@
 
                 });
 
-                if (data !== null) {
+                if (data !== null && data.result) {
 
                     let element =  {address: address, balances: data.balances, subscription: data.subscription};
                     this.addresses.push (element);

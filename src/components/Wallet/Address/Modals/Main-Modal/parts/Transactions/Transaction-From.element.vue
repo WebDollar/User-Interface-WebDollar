@@ -1,7 +1,7 @@
 <template>
 
     <ul class="destinations">
-        <li class="destinationElement">
+        <li class="destinationElement transactionElement">
 
             <img class="walletAddressImage" :src="this.getAddressPic" >
 
@@ -19,7 +19,7 @@
     export default{
 
         props:{
-            fromAddress: {default: null}
+            fromAddress: {default: null},
         },
 
         computed:{

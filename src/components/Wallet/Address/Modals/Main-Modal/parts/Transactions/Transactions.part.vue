@@ -2,15 +2,15 @@
 
     <div class="transferList" ref="refTransferList" >
 
-        <p class="title">Recent Transfer History</p>
 
         <div class="headerTable">
 
-            <span class="headerElement">From</span>
+            <span class="headerElement fromItem">From</span>
             <span class="headerElement">To</span>
-
+            <span class="headerElement">Status</span>
 
         </div>
+
 
         <ul class="transferListContainer">
 
@@ -105,12 +105,18 @@
         color: #fff;
         list-style: none;
         display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-column-gap: 15px;
+        grid-template-columns: 1fr 1fr 60px;
         white-space: nowrap ;
         text-align: left;
         background-color: #151515;
         padding: 5px 10px;
+        border-bottom: solid 1px#262626;
+        border-top: solid 1px#262626;
+    }
+
+    .transferListElement:hover{
+        background-color: #1f1f1f!important;
+        transition: all 0.5s ease;
     }
 
     .destinations{
@@ -146,6 +152,7 @@
 
     .transferListContainer .money{
         color:#ffc12c;
+        line-height: 26px;
     }
 
     .transferListContainer .source{
@@ -154,15 +161,30 @@
 
     .transferList .headerTable{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 60px;
+        background-color: #262626;
+        padding: 10px 0;
+        margin-top: 16px;
     }
 
     .headerElement{
         display: inline-block;
-        text-align: center;
         color: #d4d4d4;
-        margin-top: 15px;
         font-size: 14px;
+        text-align: left;
+    }
+
+    .transactionElement{
+        display: grid;
+        grid-template-columns: 30px 1fr;
+    }
+
+    .transactionElement img{
+        height: 26px!important;
+    }
+
+    .fromItem{
+        padding-left: 10px;
     }
 
 </style>

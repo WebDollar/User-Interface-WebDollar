@@ -225,7 +225,6 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         border-bottom: solid 1px #313131;
-        border-top: solid 3px #000;
     }
 
     .addressActions .actionButton{

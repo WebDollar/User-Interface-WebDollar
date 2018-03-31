@@ -1,6 +1,6 @@
 <template>
 
-    <li v-if="transaction !== null" class="transferListElement">
+    <li v-if="transaction !== null" class="transferListElement" :class="!this.confirmed ? 'statusPending' : 'statusConfirmed'">
 
         <ul class="sources">
 
@@ -21,6 +21,12 @@
             </transaction-to>
 
         </ul>
+
+        <div class="status">
+
+            {{this.confirmed ? 'Confirmed' : 'Pending'}}
+
+        </div>
 
     </li>
 
@@ -45,3 +51,25 @@
     }
 
 </script>
+
+<style>
+
+    .sources{
+        margin: 0;
+        padding: 0!important;
+    }
+
+    .statusPending{
+        background-color: #423922;
+    }
+
+    .statusConfirmed{
+        background-color: #1f2f18;
+    }
+
+    .status{
+        line-height: 26px;
+        text-align: center;
+    }
+
+</style>

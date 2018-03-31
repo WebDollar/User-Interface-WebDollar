@@ -7,8 +7,8 @@
             <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
             <div id="transactionAddressStatus">
-                <icon v-show="this.sendingMoney" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
-                <icon v-show="this.receivingMoney" class="walletMiningStatus walletReceivingImg" icon='download'></icon>
+                <icon v-show="Object.keys(this.sendingMoney).length !== 0" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
+                <icon v-show="Object.keys(this.receivingMoney).length !== 0" class="walletMiningStatus walletReceivingImg" icon='download'></icon>
             </div>
 
             <b class="fontColor">
@@ -41,6 +41,7 @@
 
 <script>
 
+    import Vue from "vue";
     import FileSaver from './../../../../node_modules/file-saver'
     import icon from "components/UI/icons/icon.vue"
     import AddressMainModal from "./Modals/Main-Modal/Address-main.modal.vue"
@@ -75,8 +76,13 @@
         data: () => {
             return {
                 addressLocked: false,
-                sendingMoney: false,
-                receivingMoney: false,
+
+                sendingMoney: {},
+                receivingMoney: {},
+
+                subscriptionTransactions: null,
+
+                transactions: {},
             }
         },
 
@@ -87,6 +93,23 @@
             if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address).result){
                 this.addressLocked = true;
             }
+
+
+            //subscribe to transactions changes
+            let data = WebDollar.Blockchain.Transactions.subscribeTransactionsChanges(this.address, (data)=>{
+
+                if (data.transaction !== undefined)
+                    this._addTransaction (data.transaction);
+                else
+                    Vue.delete(this.transactions, data.txId);
+
+            });
+
+            if (data !== null && data.result) {
+                this.subscription = data.subscription;
+                this._addTransactions(data.transactions);
+            }
+
 
         },
 
@@ -125,6 +148,65 @@
 
             },
 
+
+
+            _addTransaction(transaction){
+                // in case it is a new transaction
+                Vue.set(this.transactions, transaction.txId, transaction);
+
+                this._processTransactions();
+            },
+
+            _addTransactions(transactions){
+
+                for (let key in transactions)
+                    this._addTransaction(transactions[key]);
+
+            },
+
+            _processTransactions(){
+
+                this.receivingMoney = {};
+                this.sendingMoney = {};
+
+                for (let key in this.transactions){
+
+                    let transaction = this.transactions[key] ;
+
+                    if (transaction.confirmed) {
+
+                        Vue.delete(this.receivingMoney, key);
+                        Vue.delete(this.sendingMoney, key);
+
+                    } else {
+
+                        // check if it is receiving or sending
+
+                        let found = false;
+                        transaction.from.addresses.forEach((address)=>{
+
+                            if (!found && address.address === this.address)
+                                found = true;
+                        });
+
+                        if (found) {
+                            Vue.set(this.sendingMoney, key, transaction);
+                            continue;
+                        }
+
+                        transaction.to.addresses.forEach((address)=>{
+
+                            if (!found && address.address === this.address)
+                                found = true;
+
+                        });
+
+                        if (found)
+                            Vue.set(this.receivingMoney, key, transaction );
+                    }
+                }
+
+            }
         }
 
     }
@@ -223,12 +305,15 @@
     .walletSendingImg{
         fill:#298bea!important;
         margin-left: -12px;
-        margin-top: 16px;
+        margin-top: 31px;
+        position: absolute;
     }
 
     .walletReceivingImg{
         fill:#219411!important;
-        margin-left: -28px;
+        margin-left: -42px;
+        margin-top: 31px;
+        position: absolute;
     }
 
     #transactionAddressStatus{

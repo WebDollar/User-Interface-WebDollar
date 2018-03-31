@@ -16,7 +16,7 @@
 
                 </div>
 
-                <span class="editError" v-html="this.errorToAmountMessage" ></span>
+                <span class="editError" v-html="this.errorToAmountMessage" :class="this.errorToAmountMessage ? '' : 'hide'"></span>
 
             </div>
 
@@ -27,14 +27,14 @@
                 </div>
             </div>
 
-            <span class="editError" v-html="this.errorToAddressMessage" ></span>
+            <span class="editError" v-html="this.errorToAddressMessage" :class="this.errorToAddressMessage ? '' : 'hide'"></span>
 
             <div>
-                <span class="transferError" v-html="this.errorMessage"/>
-                <span class="transferSuccess" v-html="this.successMessage"/>
+                <span class="transferError" v-html="this.errorMessage" :class="this.errorMessage ? '' : 'hide'"/>
+                <span class="transferSuccess" v-html="this.successMessage" :class="this.successMessage ? '' : 'hide'"/>
             </div>
 
-            <button class="button" @click="this.handleCreateTransaction" >
+            <button class="button" @click="this.handleCreateTransaction" :class="this.successMessage ? 'hide' : ''" >
                 SEND WEBD
             </button>
         </div>
@@ -175,7 +175,9 @@
     }
 
     .transferSuccess{
-        color: yellow;
+        color: #ffc12c;
+        padding: 20px;
+        display: block;
     }
 
     .transferFee{

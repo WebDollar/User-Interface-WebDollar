@@ -164,12 +164,16 @@
         padding: 0 10px;
     }
 
+
     .modal .transfer input{
         border: none;
         background-color: #333333;
         padding: 10px 0 10px 10px;
-        margin: 10px 0;
         color: #fff
+    }
+
+    .modal .transfer .imageAndInput{
+        margin: 10px 0;
     }
 
     .modal .transfer .address{
@@ -180,6 +184,8 @@
 
     .modal .transfer .amount {
         width: 100%;
+        display: block;
+        box-sizing: border-box!important;
     }
 
     .modal .transfer .title{
@@ -217,7 +223,7 @@
 
     .addressActions{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         border-bottom: solid 1px #313131;
         border-top: solid 3px #000;
     }
@@ -359,6 +365,7 @@
 
         .balanceText{
             display: inline-block;
+            margin-top: 15px;
         }
 
         .walletAddress b {

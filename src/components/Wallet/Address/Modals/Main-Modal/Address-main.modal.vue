@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" />
+                <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" @onTransferSuccess="this.handleTransferSuccess"/>
 
                 <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
@@ -152,7 +152,9 @@
                 WebDollar.Blockchain.Mining.minerAddress = this.address;
             },
 
-
+            handleTransferSuccess(){
+                this.showTransactions();
+            }
 
         },
 

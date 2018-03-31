@@ -126,7 +126,7 @@
                      case "IndexedDB - Wallet couldn't be imported":
                          if (this.checkIfExistsAlert("wallet-error")) break;
 
-                         this.addAlert("wallet-error", "error", "<b>Wallet couldn't be imported</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
+                         this.addAlert("wallet-error", "error", "<b>Wallet couldn't be imported</b> "+data.dbName+" Try refresh or Erase your Wallet. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
                          break;
 
                      case "Incognito mode":

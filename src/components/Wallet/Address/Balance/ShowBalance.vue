@@ -64,7 +64,7 @@
                 this.balances = data.balances;
             });
 
-            if (data !== null) {
+            if (data !== null && data.result) {
                 this.subscription = data.subscription;
                 this.balances = data.balances;
             }
@@ -88,7 +88,7 @@
                     this.balances = data.balances;
                 });
 
-                if (data !== null) {
+                if (data !== null && data.result) {
                     this.subscription = data.subscription;
                     this.balances = data.balances;
                 }

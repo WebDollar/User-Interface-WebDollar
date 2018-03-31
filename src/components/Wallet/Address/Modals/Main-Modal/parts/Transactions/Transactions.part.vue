@@ -2,15 +2,13 @@
 
     <div class="transferList" ref="refTransferList" >
 
-        <p class="title">Transfer WEBD</p>
+        <p class="title">Transactions WEBD</p>
 
         <div class="headerTable">
 
-            <span class="headerElement">Source</span>
-            <span class="headerElement">Amount</span>
+            <span class="headerElement">From</span>
+            <span class="headerElement">To</span>
 
-            <span class="headerElement">Destination</span>
-            <div class="headerElement">Amount</div>
 
         </div>
 
@@ -157,7 +155,7 @@
 
     .transferList .headerTable{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
     .headerElement{

@@ -2,7 +2,7 @@
 
     <div class="transferList" ref="refTransferList" >
 
-        <span class="miningAddress" style="color: gray">Transactions in the Last 20 blocks</span>
+        <span class="miningAddress" style="color: white!important">Transactions in the Last 20 blocks</span>
 
         <div class="headerTable">
 
@@ -166,13 +166,13 @@
         display: grid;
         grid-template-columns: 1fr 1fr 60px;
         background-color: #262626;
-        padding: 10px 0;
-        margin-top: 16px;
+        color: #fff!important;
+        padding: 0 0 0 10px;
     }
 
     .headerElement{
         display: inline-block;
-        color: #d4d4d4;
+        color: #d4d4d4!important;
         font-size: 14px;
         text-align: left;
     }
@@ -184,10 +184,6 @@
 
     .transactionElement img{
         height: 26px!important;
-    }
-
-    .fromItem{
-        padding-left: 10px;
     }
 
 </style>

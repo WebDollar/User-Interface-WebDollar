@@ -4,7 +4,10 @@
         <p class="title">Transfer WEBD</p>
 
         <div>
-            <input @keyup="this.handleChangeToAddress" v-model="toAddress" class="address" placeholder="Recipient Address"/>
+            <div >
+                <img class="walletAddressImage transferWalletAddressImage" :src="this.getAddressPic" >
+                <input class="transferWalletAddressEdit address " @keyup="this.handleChangeToAddress" v-model="toAddress" placeholder="Recipient Address"/>
+            </div>
             <span class="editError" v-html="this.errorToAddressMessage" ></span>
         </div>
 
@@ -49,6 +52,13 @@
             }
         },
 
+
+        computed:{
+            getAddressPic(){
+                return WebDollar.Blockchain.Wallet.getAddressPic(this.toAddress);
+            }
+        },
+
         methods:{
 
             async handleCreateTransaction(){
@@ -57,7 +67,7 @@
 
                 if (this.errorToAddressMessage !== '' || this.errorToAmountMessage !== '' ) return false;
 
-                let answer = await WebDollar.Blockchain.Transactions.createTransactionSimple( this.address, this.toAddress, this.toAmount, this.fee );
+                let answer = await WebDollar.Blockchain.Transactions.wizard.createTransactionSimple( this.address, this.toAddress, this.toAmount, this.fee );
 
                 if (!answer.result){
                     this.errorMessage = answer.message + " <br/> "+ answer.reason;
@@ -73,7 +83,7 @@
 
                 try {
 
-                    if ( WebDollar.Applications.AddressHelper.validateAddressChecksum(this.toAddress) === null ) {
+                    if ( WebDollar.Applications.AddressHelper.getUnencodedAddressFromWIF(this.toAddress) === null ) {
                         this.errorToAddressMessage = 'Invalid Address';
                         return false;
                     }
@@ -111,7 +121,7 @@
                     return ;
                 }
 
-                this.fee = WebDollar.Blockchain.Transactions.calculateFeeSimple ( this.toAmount );
+                this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount );
 
             }
 
@@ -138,4 +148,16 @@
         color: white;
         text-align: left;
     }
+
+    .transferWalletAddressImage{
+        position: absolute;
+        left: 10px;
+        height: 30px;
+    }
+
+    .transferWalletAddressEdit{
+        margin-left: 40px !important;
+        width: 90% !important;;
+    }
+
 </style>

@@ -174,8 +174,6 @@
             if (typeof window === 'undefined')
                 return;
 
-            console.log(this.$refs['refClipboardCopy']);
-
             this.walletAddressPassword = "MAMA MERE";
             new Clipboard( this.$refs['refClipboardCopy'], {
                 text: ()  => {

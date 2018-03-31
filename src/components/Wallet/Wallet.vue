@@ -382,7 +382,7 @@
     }
 
     #walletButtonText{
-        color: #1f1f1f;
+        color: #1f1f1f!important;
     }
 
     #walletButtonText svg{
@@ -504,9 +504,8 @@
         width: 100%!important;
         display: block;
         margin: 0;
-        line-height: normal!important;
         letter-spacing: 0!important;
-        color: #232323!important;
+        color: #808080!important;
     }
 
     #walletButton .buttonIcon{

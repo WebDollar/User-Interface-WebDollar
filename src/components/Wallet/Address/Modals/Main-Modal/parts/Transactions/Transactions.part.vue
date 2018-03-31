@@ -170,6 +170,10 @@
         padding: 0 0 0 10px;
     }
 
+    .headerTable span{
+        width: 100%!important;
+    }
+
     .headerElement{
         display: inline-block;
         color: #d4d4d4!important;

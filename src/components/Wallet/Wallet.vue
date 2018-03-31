@@ -460,6 +460,15 @@
         -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
     }
 
+    .dashboardWallet span{
+        width: 100%!important;
+        display: block;
+        margin: 0;
+        line-height: normal!important;
+        letter-spacing: 0!important;
+        color: #232323!important;
+    }
+
     #walletButton .buttonIcon{
         fill: #000;
         transition: all .3s linear;

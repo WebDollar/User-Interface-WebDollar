@@ -51,19 +51,13 @@
 
     export default{
 
+        //@onPendingTransactionsChanges
         props:{
             address:{default:''},
             isMiningAddress: {default: false}
         },
 
-        components:{
-            "address-main-modal":AddressMainModal,
-            "lock-modal":LockModal,
-            "delete-modal":DeleteModal,
-
-            "show-balance":ShowBalance,
-            "icon":icon,
-        },
+        components:{ AddressMainModal, LockModal, DeleteModal, ShowBalance, icon },
 
         computed: {
 
@@ -205,6 +199,8 @@
                             Vue.set(this.receivingMoney, key, transaction );
                     }
                 }
+
+                this.$emit("onPendingTransactionsChanges", this.receivingMoney, this.sendingMoney );
 
             }
         }

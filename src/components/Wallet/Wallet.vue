@@ -282,7 +282,7 @@
                                         //console.log(reader.result);
                                         let data = JSON.parse(reader.result);
 
-                                        let answer = await WebDollar.Blockchain.Wallet.importAddressFromPrivateKey(data);
+                                        let answer = await WebDollar.Blockchain.Wallet.importAddressFromJSON(data);
 
                                         if (answer.result === true){
                                             console.log("Address Imported", answer.address);

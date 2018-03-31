@@ -17161,35 +17161,61 @@ class InterfaceBlockchainFork {
 
     }
 
-    postFork(forkedSuccessfully){
+    postForkTransactions(forkedSuccessfully){
 
         //move the transactions to pending
-        if (!forkedSuccessfully)
-            for (let i = this._blocksCopy.length - 1; i >= 0; i--) {
+        if (forkedSuccessfully) {
 
-                let block = this._blocksCopy[i];
+            // remove transactions and place them in the queue
+            this._blocksCopy.forEach((block) => {
+                block.data.transactions.transactions.forEach((transaction) => {
 
-                // remove transactions
-                block.data.transactions.transactions.forEach((transaction)=>{
+                    transaction.confirmed = false;
 
                     try {
-
-                        let blockValidation = { blockValidationType: {
-                            "take-transactions-list-in-consideration": {
-                                validation: true
-                            }
-                        }};
-
-                        if ( transaction.validateTransactionEveryTime(block.height, blockValidation ) )
-                            this.blockchain.transactions.pendingQueue.includePendingTransaction(transaction, "all");
+                        this.blockchain.transactions.pendingQueue.includePendingTransaction(transaction, "all");
                     }
-                    catch (exception){
+                    catch (exception) {
                         console.warn("Transaction Was Rejected to be Added to the Pending Queue ", transaction);
                     }
 
                 });
+            });
 
-            }
+            this.forkBlocks.forEach((block)=> {
+                block.data.transactions.transactions.forEach((transaction) => {
+                    transaction.confirmed = true;
+                });
+            });
+
+        } else {
+
+            this._blocksCopy.forEach( (block) => {
+                block.data.transactions.transactions.forEach((transaction) => {
+                    transaction.confirmed = true;
+                });
+            });
+
+            this.forkBlocks.forEach((block)=>{
+                block.data.transactions.transactions.forEach((transaction)=>{
+                    transaction.confirmed = false;
+
+                    try {
+                        this.blockchain.transactions.pendingQueue.includePendingTransaction(transaction, "all");
+                    }
+                    catch (exception) {
+                        console.warn("Transaction Was Rejected to be Added to the Pending Queue ", transaction);
+                    }
+
+                });
+            })
+        }
+
+        this.blockchain.transactions.pendingQueue.removeOldTransactions();
+
+    }
+
+    postFork(forkedSuccessfully){
 
     }
 
@@ -24652,7 +24678,7 @@ class InterfaceBlockchainBlockData {
         if (!hashData.equals(this.hashData))
             throw {message: "block.data hashData is not right"};
 
-        if (!this.transactions.validateTransactions(blockHeight, blockValidation))
+        if (!this.transactions.validateTransactions(blockHeight, blockValidation.blockValidationType ))
             throw {message: "transactions failed to validate"};
 
         return true;
@@ -24788,7 +24814,7 @@ class InterfaceBlockchainTransaction{
         this.from = null;
         this.to = null;
 
-        this.confirmed = false;
+        this._confirmed = false;
 
         if (timeLock === undefined)
             this.timeLock = blockchain.blocks.length-1;
@@ -24881,7 +24907,7 @@ class InterfaceBlockchainTransaction{
      * @param silent
      * @returns {*}
      */
-    validateTransactionOnce( blockHeight, blockValidation = {} ){
+    validateTransactionOnce( blockHeight, blockValidationType = {} ){
 
         if (blockHeight === undefined) blockHeight = this.blockchain.blocks.length-1;
 
@@ -24913,23 +24939,23 @@ class InterfaceBlockchainTransaction{
         if (inputSum.isLessThan(outputSum))
             throw {message: "Transaction Validation Input is smaller than Output", input: inputSum, output: outputSum};
 
-        if (!this.validateTransactionEveryTime(blockHeight, blockValidation))
+        if (!this.validateTransactionEveryTime(blockHeight, blockValidationType))
             return false;
 
         return true;
     }
 
-    validateTransactionEveryTime( blockHeight , blockValidation = {}){
+    validateTransactionEveryTime( blockHeight , blockValidationType = {}){
 
         if (blockHeight === undefined) blockHeight = this.blockchain.blocks.length-1;
 
         if (this.timeLock !== 0 && blockHeight < this.timeLock) throw {message: "blockHeight < timeLock", timeLock: this.timeLock};
 
-        if (blockValidation.blockValidationType === undefined || !blockValidation.blockValidationType['skip-validation-transactions-from-values']){
+        if (blockValidationType === undefined || !blockValidationType['skip-validation-transactions-from-values']){
 
-            this._validateNonce(blockValidation);
+            this._validateNonce(blockValidationType);
 
-            return this.from.validateFromEnoughMoney(blockValidation);
+            return this.from.validateFromEnoughMoney(blockValidationType);
         }
 
         return true;
@@ -24941,12 +24967,12 @@ class InterfaceBlockchainTransaction{
         this.validateTransactionOnce(undefined,  {blockValidationType: {'skip-validation-transactions-from-values': true}} );
 
         try {
-            let blockValidation = { blockValidationType: {
+            let blockValidationType = {
                 "take-transactions-list-in-consideration": {
                     validation: true
                 }
-            }};
-            this.validateTransactionEveryTime(undefined, blockValidation );
+            };
+            this.validateTransactionEveryTime(undefined, blockValidationType );
 
         } catch (exception){
             console.warn ("Transaction had not enough money, so I am skipping it", exception);
@@ -25051,6 +25077,19 @@ class InterfaceBlockchainTransaction{
 
     _validateNonce(blockValidation){
         return true;
+    }
+
+    get confirmed(){
+        return this._confirmed;
+    }
+
+    set confirmed(newValue){
+
+        if (this._confirmed !== newValue)
+            this._confirmed = newValue;
+
+        this.blockchain.transactions.emitTransactionChangeEvent(this, true);
+
     }
 
 }
@@ -48001,7 +48040,7 @@ class MiniBlockchain extends  inheritBlockchain{
             //validate transactions & tree
             revert.transactions.start = 0;
 
-            if (!block.data.transactions.validateTransactions(block.height, block.blockValidationType))
+            if (!block.data.transactions.validateTransactions(block.height, block.blockValidation.blockValidationType))
                 throw {message: "Validate Transactions is wrong"};
 
 
@@ -77711,7 +77750,7 @@ class InterfaceBlockchainBlockDataTransactions {
 
     }
 
-    validateTransactions(blockHeight, blockValidation){
+    validateTransactions(blockHeight, blockValidationType){
 
         let hashTransactions = this.calculateHashTransactions();
         if (!this.hashTransactions.equals(hashTransactions))
@@ -77719,15 +77758,14 @@ class InterfaceBlockchainBlockDataTransactions {
 
         for (let i=0; i<this.transactions.length; i++) {
 
-            if (blockValidation === undefined ) blockValidation = {};
-            if (blockValidation.blockValidationType === undefined) blockValidation.blockValidationType = {};
+            if (blockValidationType === undefined) blockValidationType = {};
 
-            blockValidation.blockValidationType['take-transactions-list-in-consideration'] = {
+            blockValidationType['take-transactions-list-in-consideration'] = {
                 validation: true,
                 transactions: this.transactions.slice(0, i-1),
             };
 
-            if (!this.transactions[i].validateTransactionOnce(blockHeight, blockValidation))
+            if (!this.transactions[i].validateTransactionOnce(blockHeight, blockValidationType))
                 throw {message: "validation failed at transaction", transaction: this.transactions[i]};
         }
 
@@ -79636,22 +79674,18 @@ class InterfaceTransactionsPendingQueue {
         if (this.findPendingTransaction(transaction) !== -1)
             return false;
 
-        let blockValidation = { blockValidationType: {
+        let blockValidationType = {
             "take-transactions-list-in-consideration": {
                 validation: true
             }
-        }};
+        };
 
-        if (!transaction.validateTransactionOnce(this.blockchain.blocks.length-1, blockValidation ))
+        if (!transaction.validateTransactionOnce(this.blockchain.blocks.length-1, blockValidationType ))
             return false;
 
         this._insertPendingTransaction(transaction);
 
-
         this.propagateTransaction(transaction, exceptSockets);
-
-
-        this._removeOldTransactions();
 
         return true;
 
@@ -79706,7 +79740,7 @@ class InterfaceTransactionsPendingQueue {
         return -1;
     }
 
-    removePendingTransaction (transaction){
+    _removePendingTransaction (transaction){
 
         let index;
 
@@ -79724,23 +79758,27 @@ class InterfaceTransactionsPendingQueue {
         this.transactions.emitTransactionChangeEvent(transaction, true);
     }
 
-    _removeOldTransactions (){
+    removeOldTransactions (){
+
+        let blockValidationType = {
+            "take-transactions-list-in-consideration": {
+                validation: true
+            }
+        };
 
         for (let i=this.list.length-1; i >= 0; i--) {
 
             try{
 
-                let blockValidation = { blockValidationType: {
-                    "take-transactions-list-in-consideration": {
-                        validation: true
-                    }
-                }};
-
-                if (!this.list[i].validateTransactionEveryTime(undefined, blockValidation ))
-                    this.list.splice(i, 1);
+                if ( this.blockchain.blocks.length > this.list[i].pendingDateBlockHeight + __WEBPACK_IMPORTED_MODULE_1_consts_const_global__["a" /* default */].SETTINGS.MEM_POOL.TRANSACTIONS_MAX_LIFE_TIME_IN_POOL_AFTER_EXPIRATION &&
+                     !this.list[i].validateTransactionEveryTime(undefined, blockValidationType ) &&
+                     ( this.list[i].timeLock === 0 || this.list[i].timeLock < this.blockchain.blocks.length )
+                ) {
+                    this._removePendingTransaction(i);
+                }
 
             } catch (exception){
-                console.warn("Old Transaction removed because of exception ", exception)
+                console.warn("Old Transaction removed because of exception ", exception);
                 this.list.splice(i, 1);
             }
 
@@ -79996,14 +80034,13 @@ class InterfaceBlockchainTransactionsWizard{
         }
 
         try{
-            let blockValidation = { blockValidationType: {
+            let blockValidationType = {
                 "take-transactions-list-in-consideration": {
                     validation: true
                 }
-            }
             };
 
-            if (!transaction.validateTransactionOnce( this.blockchain.blocks.length-1, blockValidation ))
+            if (!transaction.validateTransactionOnce( this.blockchain.blocks.length-1, blockValidationType ))
                 throw {message: "Transaction is invalid"};
 
         } catch (exception){
@@ -80107,17 +80144,17 @@ class InterfaceBlockchainTransactionsEvents{
         }
 
 
-        let blockValidation = { blockValidationType: {
+        let blockValidationType= {
             "take-transactions-list-in-consideration": {
                 validation: true
             }
-        }};
+        };
 
         //adding the valid Pending Transactions
         this.blockchain.transactions.pendingQueue.list.forEach((transaction)=>{
 
             try {
-                if (transaction.validateTransactionEveryTime(undefined, blockValidation)) {
+                if (transaction.validateTransactionEveryTime(undefined, blockValidationType)) {
 
                     if (this._searchAddressInTransaction(unencodedAddress, transaction)) {
 
@@ -80209,16 +80246,16 @@ class InterfaceBlockchainTransactionsEvents{
         transaction.from.addresses.forEach((address)=>{
             if (this._checkTransactionIsSubscribed(address.unencodedAddress)) {
 
-                let addressWIF = __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(__WEBPACK_IMPORTED_MODULE_0_common_blockchain_interface_blockchain_addresses_Interface_Blockchain_Address_Helper__["a" /* default */].generateAddressWIF(address));
-                this.emitter.emit("transactions/changes/" + __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(address), { txId: transaction.txId.toString("hex"), address: addressWIF, transaction: deleted ? undefined : transaction.toJSON()});
+                let addressWIF = __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(__WEBPACK_IMPORTED_MODULE_0_common_blockchain_interface_blockchain_addresses_Interface_Blockchain_Address_Helper__["a" /* default */].generateAddressWIF(address.unencodedAddress));
+                this.emitter.emit("transactions/changes/" + __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(address.unencodedAddress), { txId: transaction.txId.toString("hex"), address: addressWIF, transaction: deleted ? undefined : transaction.toJSON()});
             }
         });
 
         transaction.to.addresses.forEach((address)=>{
             if (this._checkTransactionIsSubscribed(address.unencodedAddress)) {
 
-                let addressWIF = __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(__WEBPACK_IMPORTED_MODULE_0_common_blockchain_interface_blockchain_addresses_Interface_Blockchain_Address_Helper__["a" /* default */].generateAddressWIF(address));
-                this.emitter.emit("transactions/changes/" + __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(address), { txId: transaction.txId.toString("hex"), address: addressWIF, transaction: deleted ? undefined : transaction.toJSON()});
+                let addressWIF = __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(__WEBPACK_IMPORTED_MODULE_0_common_blockchain_interface_blockchain_addresses_Interface_Blockchain_Address_Helper__["a" /* default */].generateAddressWIF(address.unencodedAddress));
+                this.emitter.emit("transactions/changes/" + __WEBPACK_IMPORTED_MODULE_1_common_utils_BufferExtended__["a" /* default */].toBase(address.unencodedAddress), { txId: transaction.txId.toString("hex"), address: addressWIF, transaction: deleted ? undefined : transaction.toJSON()});
             }
         });
 
@@ -82173,21 +82210,20 @@ class MiniBlockchainTransaction extends  __WEBPACK_IMPORTED_MODULE_0_common_bloc
         return __WEBPACK_IMPORTED_MODULE_0_common_blockchain_interface_blockchain_transactions_transaction_Interface_Blockchain_Transaction__["a" /* default */].prototype.processTransaction.call(this, multiplicationFactor);
     }
 
-    _validateNonce(blockValidation){
+    _validateNonce(blockValidationType){
 
         //Validate nonce
         let nonce = this.blockchain.accountantTree.getAccountNonce( this.from.addresses[0].unencodedAddress );
 
         if (nonce < this.nonce)
-            if (blockValidation.blockValidationType !== undefined && blockValidation.blockValidationType['take-transactions-list-in-consideration'] !== undefined &&
-                blockValidation.blockValidationType['take-transactions-list-in-consideration'].validation ){
+            if (blockValidationType !== undefined && blockValidationType['take-transactions-list-in-consideration'] !== undefined && blockValidationType['take-transactions-list-in-consideration'].validation ){
 
                 let foundNonce = {};
                 for (let i=nonce; i<this.nonce; i++)
                     foundNonce[i] = false;
 
                 //fetching the transactions list
-                let transactionsList = blockValidation.blockValidationType['take-transactions-list-in-consideration'].transactions;
+                let transactionsList = blockValidationType['take-transactions-list-in-consideration'].transactions;
 
                 if (transactionsList === undefined)
                     transactionsList = this.blockchain.transactions.pendingQueue.list;
@@ -82281,14 +82317,13 @@ const BigNumber = __webpack_require__(26);
 class MiniBlockchainTransactionFrom extends __WEBPACK_IMPORTED_MODULE_0_common_blockchain_interface_blockchain_transactions_transaction_Interface_Blockchain_Transaction_From__["a" /* default */]{
 
 
-    validateFromEnoughMoney(blockValidation){
+    validateFromEnoughMoney(blockValidationType){
 
         let amounts = {};
-        if (blockValidation.blockValidationType !== undefined && blockValidation.blockValidationType['take-transactions-list-in-consideration'] !== undefined &&
-            blockValidation.blockValidationType['take-transactions-list-in-consideration'].validation ){
+        if (blockValidationType !== undefined && blockValidationType['take-transactions-list-in-consideration'] !== undefined &&  blockValidationType['take-transactions-list-in-consideration'].validation ){
 
             //fetching the transactions list
-            let transactionsList = blockValidation.blockValidationType['take-transactions-list-in-consideration'].transactions;
+            let transactionsList = blockValidationType['take-transactions-list-in-consideration'].transactions;
 
             if (transactionsList === undefined)
                 transactionsList = this.transaction.blockchain.transactions.pendingQueue.list;
@@ -82331,8 +82366,7 @@ class MiniBlockchainTransactionFrom extends __WEBPACK_IMPORTED_MODULE_0_common_b
 
             //simulation the transactions
 
-            if (blockValidation.blockValidationType !== undefined && blockValidation.blockValidationType['take-transactions-list-in-consideration'] !== undefined &&
-                blockValidation.blockValidationType['take-transactions-list-in-consideration'].validation ){
+            if (blockValidationType !== undefined && blockValidationType['take-transactions-list-in-consideration'] !== undefined && blockValidationType['take-transactions-list-in-consideration'].validation ){
 
                 let addr = fromObject.unencodedAddress.toString("hex");
 
@@ -83288,14 +83322,14 @@ class InterfaceBlockchainMining extends  __WEBPACK_IMPORTED_MODULE_4__Interface_
 
             try {
 
-                let blockValidation = { blockValidationType: {
+                let blockValidationType = {
                     "take-transactions-list-in-consideration": {
                         validation: true,
                         transactions: transactions,
                     }
-                }};
+                };
 
-                if (transaction.validateTransactionEveryTime(this.blockchain.blocks.length,  blockValidation )) {
+                if (transaction.validateTransactionEveryTime(this.blockchain.blocks.length,  blockValidationType )) {
 
                     size -= transaction.serializeTransaction().length;
 
@@ -83312,7 +83346,7 @@ class InterfaceBlockchainMining extends  __WEBPACK_IMPORTED_MODULE_4__Interface_
             }
 
             if (bRemoveTransaction)
-                this.blockchain.transactions.pendingQueue.removePendingTransaction(transaction);
+                ; //to nothing
 
             i++;
         }

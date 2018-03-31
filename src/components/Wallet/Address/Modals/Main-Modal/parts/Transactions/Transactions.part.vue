@@ -52,7 +52,7 @@
             if (typeof window === "undefined") return false;
 
             //subscribe to transactions changes
-            let data = WebDollar.Blockchain.Transactions.subscribeTransactionsChanges(address, (data)=>{
+            let data = WebDollar.Blockchain.Transactions.subscribeTransactionsChanges(this.address, (data)=>{
 
                 if (data.transaction !== undefined){
                     this._addTransaction (data.transaction);

@@ -9,6 +9,7 @@
 
 <script>
 
+    import Vue from "vue";
     import Wallet from "./Wallet/Wallet.vue"
     import Mining from "./Mining/Mining.vue"
     import Address from "components/Wallet/Address/Address.vue"
@@ -37,7 +38,7 @@
             if (typeof window === "undefined") return ;
 
               WebDollar.Blockchain.Wallet.emitter.on("wallet/address-changes", (address)=>{
-                  console.log("wallet/address-changes", address)
+                  console.log("wallet/address-changes", address);
                   this.addNewAddress(address);
               });
 

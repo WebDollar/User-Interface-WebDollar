@@ -47,19 +47,16 @@
 
             closeModal(e){
 
-                if(e!=undefined) e.stopPropagation();
+                if( e !== undefined) e.stopPropagation();
 
                 this.modalOpened = false;
-                console.log("closeModal2");
 
             },
 
             showModal(e){
 
-                if (e !== undefined)
-                    e.stopPropagation();
+                if (e !== undefined) e.stopPropagation();
 
-                console.log("showModal");
                 this.modalOpened = true;
             },
 
@@ -284,76 +281,9 @@
         margin-top: 20px;
     }
 
-    .transferListContainer{
-        list-style: none;
-        padding: 0;
-        max-height: 200px;
-        overflow: scroll;
-    }
 
-    .transferListElement{
-        font-size: 12px;
-        color: #fff;
-        list-style: none;
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-column-gap: 15px;
-        white-space: nowrap ;
-        text-align: left;
-        background-color: #151515;
-        padding: 5px 10px;
-    }
 
-    .destinations{
-        list-style: none;
-        padding: 0;
-    }
 
-    .money, .destinationAddress{
-        display: inline-block;
-    }
-
-    .destinationAddress{
-        width: 70%;
-        overflow: hidden;
-    }
-
-    .money{
-        width: 20%;
-        padding-left: 10px;
-        display: inline-block;
-        float: right;
-        text-align: right;
-    }
-
-    .currency{
-        margin-left: 5px;
-    }
-
-    .pairListElement{
-        background-color: #333333;
-    }
-
-    .transferListContainer .money{
-        color:#ffc12c;
-    }
-
-    .transferListContainer .source{
-        color: #c5c5c5;
-    }
-
-    .transferList .header{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    .headerElement{
-        display: inline-block;
-        text-align: center;
-        color: #d4d4d4;
-        margin-top: 15px;
-        font-size: 14px;
-    }
 
     .buttonSpace{
         margin-top: 20px;

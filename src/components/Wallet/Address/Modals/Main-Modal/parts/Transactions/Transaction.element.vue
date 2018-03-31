@@ -1,35 +1,45 @@
 <template>
 
-    <li class="transferListElement">
+    <li v-if="transaction !== null" class="transferListElement">
 
-        <span class="source" title="Address Source"> {{this.transaction.from.addresses[0].unencodedAddress.toString("hex")}}</span>
+        {{transaction}}
+
+        <ul class="sources">
+
+            <transaction-from v-for="(fromAddress, index) in transaction.from.addresses"
+                              :key="'transactionSource'+index"
+                              :fromAddress="fromAddress"
+            >
+            </transaction-from>
+
+        </ul>
 
         <ul class="destinations">
 
-            <transaction-destination v-for="(toAddress, index) in this.transaction.to.addresses"
-                   :key="'transactionDestination'+index"
-                   :toAddress="toAddress"
+            <transaction-to v-for="(toAddress, index) in transaction.to.addresses"
+                            :key="'transactionDestination'+index"
+                            :toAddress="toAddress"
             >
-            </transaction-destination>
+            </transaction-to>
 
         </ul>
 
     </li>
 
-
 </template>
 
 <script>
 
-    import TransactionDestination from "./Transaction-Destination.element.vue"
+    import TransactionFrom from "./Transaction-From.element.vue"
+    import TransactionTo from "./Transaction-To.element.vue"
 
     export default{
 
-        components:{ TransactionDestination },
+        components:{ TransactionFrom, TransactionTo },
 
         props:{
-            transaction : {default: null },
-            confirmed : {default: null },
+            transaction : {default: ()=>{return null} },
+            confirmed : {default: false },
         }
 
 

@@ -10,10 +10,6 @@
 
                     <div class="section">
 
-                        <div style="font-size: 20px">
-                            Address
-                        </div>
-
                         <div >
                             <img class="walletAddressImage" :src="this.getAddressPic" >
                             <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>

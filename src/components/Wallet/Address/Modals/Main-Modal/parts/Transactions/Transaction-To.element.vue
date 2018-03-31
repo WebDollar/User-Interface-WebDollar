@@ -3,9 +3,9 @@
     <ul class="destinations">
         <li class="destinationElement">
 
-            <span class="destinationAddress" title="Address Destination">{{this.unencodedAddress.toString("hex") }}</span>
+            <span class="destinationAddress" title="Address Destination">{{this.unencodedAddress }}</span>
 
-            <div class="money" title="Amount & Currency">
+            <div class="money" title="Amount">
                 <span class="amount">{{this.amount}}</span><span class="currency">WEBD</span>
             </div>
 

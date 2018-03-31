@@ -100,7 +100,7 @@
 
             async handleExport(e){
 
-                let answer = await WebDollar.Blockchain.Wallet.exportPrivateKeyFromAddress(this.address);
+                let answer = await WebDollar.Blockchain.Wallet.exportAddressToJSON(this.address);
 
                 if (answer.result){
 

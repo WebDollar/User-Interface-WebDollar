@@ -14,7 +14,10 @@
                             Address
                         </div>
 
-                        <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
+                        <div >
+                            <img class="walletAddressImage" :src="this.getAddressPic" >
+                            <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
+                        </div>
 
                         <div @click="copyToClipboard" :class=" this.clipboardText!='Copied' ? 'modalButton2' : 'modalButton2Success' ">
                             {{this.clipboardText}}
@@ -61,7 +64,7 @@
 
                 <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" />
 
-                <transactions :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
+                <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
                 <buy :style="{display: this.partActivated === 'buy' ? 'block': 'none'}" />
 
@@ -85,7 +88,7 @@
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
     import icon from "components/UI/icons/icon.vue"
 
-    import Transactions from "./parts/Transactions.part.vue"
+    import Transactions from "./parts/Transactions/Transactions.part.vue"
     import Transfer from "./parts/Transfer.part.vue"
     import Buy from "./parts/Buy.part.vue"
     import Sell from "./parts/Sell.part.vue"
@@ -115,6 +118,12 @@
                 partActivated : 'none',
 
                 clipboardText: 'Copy to Clipboard',
+            }
+        },
+
+        computed:{
+            getAddressPic(){
+                return WebDollar.Blockchain.Wallet.getAddressPic(this.address);
             }
         },
 

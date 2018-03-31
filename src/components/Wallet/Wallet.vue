@@ -500,12 +500,18 @@
         -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
     }
 
-    .dashboardWallet span{
+    .editError{
+        color: #ff0000 !important;
+        padding-bottom: 10px;
+        display: block;
+    }
+
+    dashboardWallet span{
         width: 100%!important;
         display: block;
         margin: 0;
         letter-spacing: 0!important;
-        color: #808080!important;
+        color: #808080;
     }
 
     #walletButton .buttonIcon{

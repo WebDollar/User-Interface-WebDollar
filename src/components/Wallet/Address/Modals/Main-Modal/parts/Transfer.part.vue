@@ -45,6 +45,7 @@
 <script>
     export default {
 
+        //@onTransferSuccess
         props:{
             address: {default: null},
         },
@@ -81,12 +82,20 @@
 
                 let answer = await WebDollar.Blockchain.Transactions.wizard.createTransactionSimple( this.address, this.toAddress, this.toAmount, this.fee );
 
-                if (!answer.result){
+                if (answer.result){
+
+                    this.errorMessage = '';
+                    console.info("Transaction has been created", answer.message);
+
+                    this.toAddress = '';
+                    this.toAmount = '';
+                    this.fee = '';
+
+                    this.$emit('onTransferSuccess', answer.message);
+
+                } else {
                     this.errorMessage = answer.message + " <br/> "+ answer.reason;
                     this.successMessage = '';
-                } else {
-                    this.errorMessage = '';
-                    this.successMessage = answer.message;
                 }
 
             },
@@ -134,7 +143,6 @@
                         this.errorToAmountMessage = exception.message;
 
                     this.fee = '';
-                    return ;
                 }
 
             },
@@ -142,8 +150,6 @@
             handleChangeToFee(e){
 
                 this.errorToAmountMessage = '';
-
-//                console.log(e);
 
             }
 

@@ -1,6 +1,6 @@
 <template>
 
-    <li v-if="transaction !== null" class="transferListElement" :class="!this.confirmed ? 'statusPending' : 'statusConfirmed'">
+    <li v-if="transaction !== null" class="transferListElement" :class="!this.transaction.confirmed ? 'statusPending' : 'statusConfirmed'">
 
         <ul class="sources">
 
@@ -24,7 +24,7 @@
 
         <div class="status">
 
-            {{this.confirmed ? 'Confirmed' : 'Pending'}}
+            {{this.transaction.confirmed ? 'Confirmed' : 'Pending'}}
 
         </div>
 
@@ -43,7 +43,6 @@
 
         props:{
             transaction : {default: ()=>{return null} },
-            confirmed : {default: false },
         }
 
 

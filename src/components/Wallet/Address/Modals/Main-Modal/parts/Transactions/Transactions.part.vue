@@ -53,7 +53,12 @@
 
             //subscribe to transactions changes
             let data = WebDollar.Blockchain.Transactions.subscribeTransactionsChanges(address, (data)=>{
-                this._addTransaction (data.transaction);
+
+                if (data.transaction !== undefined){
+                    this._addTransaction (data.transaction);
+                } else
+                    Vue.delete(this.transactions, data.txId );
+
             });
 
             if (data !== null && data.result) {

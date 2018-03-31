@@ -2,6 +2,7 @@
 
     <div class="transferList" ref="refTransferList" >
 
+        <span class="miningAddress" style="color: gray">Transactions in the Last 20 blocks</span>
 
         <div class="headerTable">
 
@@ -58,6 +59,8 @@
                     this._addTransaction (data.transaction);
                 } else
                     Vue.delete(this.transactions, data.txId );
+
+                this.$forceUpdate();
 
             });
 

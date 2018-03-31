@@ -2,12 +2,14 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="this.sendingMoney" class="miningStatus sendingImg jump" icon='upload' :style="{
-            display: this.opened ? 'none': 'block'}"></icon>
-        <icon v-show="this.receivingMoney" :style="{
-            right: this.sendingMoney ? '20px' : '4px',
-            marginBottom: this.sendingMoney ? '-2px' : '0',
-            display: this.opened ? 'none': 'block'}" class="miningStatus receivingImg jump" icon='download'></icon>
+        <icon v-show="isSendingMoney" class="miningStatus sendingImg jump" icon='upload' :style="{
+            display: this.opened ? 'none': 'block'}">
+        </icon>
+        <icon v-show="isReceivingMoney" :style="{
+            right: isSendingMoney ? '20px' : '4px',
+            marginBottom: isSendingMoney ? '-2px' : '0',
+            display: this.opened ? 'none': 'block'}" class="miningStatus receivingImg jump" icon='download'>
+        </icon>
 
         <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
             marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
@@ -20,7 +22,7 @@
                     <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
                     Wallet
                 </div>
-                <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"/>
+                <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
             </span>
         </div>
 
@@ -54,12 +56,14 @@
 
                     <div id="allWalets">
 
-                        <Address v-for="walletAddress in this.addresses"
+                        <Address v-for="(walletAddress, index) in this.addresses"
                              :isMiningAddress="miningAddress === walletAddress.address"
                              :key="walletAddress.address"
                              :id="'address'+walletAddress.address"
+                             :ref="'address'+index"
                              :address="walletAddress.address"
                              style="padding-right: 20px"
+                             @onPendingTransactionsChanges="handlePendingTransactionsChanges"
                         >
 
                         </Address>
@@ -100,8 +104,9 @@
                 miningAddress: '',
 
                 isMobile:false,
-                sendingMoney:false,
-                receivingMoney:false,
+
+                sendingMoney:{},
+                receivingMoney:{},
 
                 walletButtonMarginOpened: 0,
                 walletButtonMarginClosed: 0,
@@ -145,6 +150,18 @@
                 this.changeScreenBehavior();
                 this.walletResizeFix();
             });
+
+        },
+
+        computed:{
+
+            isSendingMoney(){
+                return Object.keys(this.sendingMoney).length !== 0;
+            },
+
+            isReceivingMoney(){
+                return Object.keys(this.receivingMoney).length !== 0;
+            }
 
         },
 
@@ -313,6 +330,29 @@
             },
 
 
+            handlePendingTransactionsChanges(){
+
+                this.receivingMoney = {};
+                this.sendingMoney = {};
+
+                let i=-1;
+                while (1===1){
+
+                    i++;
+                    let element = this.$refs['address'+i];
+                    if (element === undefined) break;
+
+                    element = element[0];
+
+                    for (let key in element.receivingMoney)
+                        Vue.set(this.receivingMoney, key, element.receivingMoney[key]);
+
+                    for (let key in element.sendingMoney)
+                        Vue.set(this.sendingMoney, key, element.sendingMoney[key]);
+
+                }
+
+            },
 
 
         }

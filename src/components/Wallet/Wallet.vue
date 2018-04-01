@@ -2,8 +2,8 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='upload' :style="">
-        </icon>
+        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='upload' :style=""></icon>
+
         <icon v-show="!this.opened && isReceivingMoney" :style="{
             right: isSendingMoney ? '20px' : '4px',
             marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump" icon='download'>

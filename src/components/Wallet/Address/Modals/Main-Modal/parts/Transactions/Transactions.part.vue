@@ -57,7 +57,8 @@
 
                 if (data.transaction !== undefined){
                     this._addTransaction (data.transaction);
-                } else
+                }
+                else
                     Vue.delete(this.transactions, data.txId );
 
                 this.$forceUpdate();

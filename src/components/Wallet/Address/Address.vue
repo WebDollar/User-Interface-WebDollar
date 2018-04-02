@@ -122,7 +122,7 @@
                 if (answer.result){
 
                     let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
-                    let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
+                    let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.exportAddressToJSON(this.address).toString("hex") + ".webd";
                     FileSaver.saveAs(addressFile, fileName);
 
                 } else {

@@ -2049,8 +2049,7 @@ consts.HASH_ARGON2_PARAMS = {
 consts.DATABASE_NAMES = {
 
     DEFAULT_DATABASE: "defaultDB",
-    WALLET_DATABASE: "defaultDB", //IT SHOULD BE REPALCED BY IN TEST NET 4 "walletDB",
-    //TODO REPLACE with "walletDB"
+    WALLET_DATABASE: "walletDB",
     BLOCKCHAIN_DATABASE: "blockchainDB3",
     BLOCKCHAIN_DATABASE_FILE_NAME : 'blockchain4.bin',
     POOL_DATABASE: "poolDB",
@@ -2077,8 +2076,8 @@ consts.SETTINGS = {
     UUID: uuid.v4(),
 
     NODE: {
-        VERSION: "0.262",
-        VERSION_COMPATIBILITY: "0.262",
+        VERSION: "0.264",
+        VERSION_COMPATIBILITY: "0.264",
         PROTOCOL: "WebDollar",
 
 
@@ -16845,9 +16844,9 @@ class BlockchainMiningReward{
 
         if (height >= 0) {
 
-            let cicleNumber = Math.trunc(height / 8409600);
-            let reward = new BigNumber(2500).dividedBy(1 << cicleNumber);
-            let smallestReward = new BigNumber(0.0001);
+            let cicleNumber = Math.trunc(height / 6307200);
+            let reward = new BigNumber(3000).dividedBy(1 << cicleNumber);
+            let smallestReward = new BigNumber(0.00001);
 
             if (reward.isLessThan(smallestReward))
                 reward = smallestReward;
@@ -17045,7 +17044,10 @@ class InterfaceBlockchainFork {
         }
         console.log("save Fork after validateFork");
 
-        // to do
+        /**
+            TODO: At the moment the revert function is based on an Accountant Tree clone. This solution will get slower and lower over the time,
+            TODO: Instead, it should unsimulate all the operations like miner reward, transactions
+         **/
 
         let success = await this.blockchain.semaphoreProcessing.processSempahoreCallback( async () => {
 
@@ -25876,9 +25878,6 @@ class MiniBlockchainFork extends inheritFork{
             // remove reward
 
             let answer = this.blockchain.accountantTree.updateAccount(block.data.minerAddress, block.reward.negated() );
-            //force to delete first time miner
-            if (answer === null && this.blockchain.accountantTree.getAccountNonce(block.data.minerAddress) === 0)
-                this.blockchain.accountantTree.delete(block.data.minerAddress);
 
             // remove transactions
             for (let j=block.data.transactions.transactions.length-1; j>=0; j--){
@@ -27556,8 +27555,7 @@ class CLI{
             return;
         }
 
-        //let answer = await this.question('Command: ');
-        let answer = '9';
+        let answer = await this.question('Command: ');
 
         switch(answer.trim()) {
             case '1':
@@ -27595,7 +27593,7 @@ class CLI{
                 break;
         }
 
-        //await this._runMenu();
+        await this._runMenu();
     };
 
     async _start() {
@@ -48116,13 +48114,8 @@ class MiniBlockchain extends  inheritBlockchain{
                 block.blockValidation.blockValidationType['skip-validation-transactions-from-values'] = undefined;
 
                 //revert reward
-                if (revert.reward) {
-                    let answer = this.accountantTree.updateAccount(block.data.minerAddress, block.reward.negated(), undefined);
-
-                    //force to delete first time miner
-                    if (answer === null && this.accountantTree.getAccountNonce(block.data.minerAddress) === 0)
-                        this.accountantTree.delete(block.data.minerAddress);
-                }
+                if (revert.reward)
+                    this.accountantTree.updateAccount(block.data.minerAddress, block.reward.negated(), undefined);
 
 
                 if (revert.revertNow)
@@ -49929,10 +49922,19 @@ class MiniBlockchainAccountantTree extends __WEBPACK_IMPORTED_MODULE_5__Mini_Blo
         });
 
         //purging empty addresses
-        //TODO Window Transactions for Purging
-        if (this.root.deleteEmptyAddresses && resultUpdate === null) {
-            this.delete(address);
-            return null;
+        if (resultUpdate === null) {
+
+            //TODO Window Transactions for Purging
+            if (this.root.deleteEmptyAddresses) { //purging automatically
+                this.delete(address);
+                return null;
+            }
+
+            if (node.nonce === 0){ //nonce = 0, let's delete the account because nobody used it.
+                this.delete(address);
+                return null;
+            }
+
         }
 
         node._changedNode();
@@ -80166,7 +80168,7 @@ class InterfaceBlockchainTransactionsEvents{
 
         this.blockchain = blockchain;
         this.emitter = new EventEmitter();
-
+        this.emitter.setMaxListeners(200);
     }
 
     findTransaction(txId){
@@ -81725,7 +81727,8 @@ class MiniBlockchainAccountantTreeEvents extends __WEBPACK_IMPORTED_MODULE_2_com
 
         super(db);
 
-        this.emitter = new EventEmitter()
+        this.emitter = new EventEmitter();
+        this.emitter.setMaxListeners(200);
     }
 
 
@@ -90622,7 +90625,7 @@ class FallBackObject {
   "nodes": [
     {
       "addr": ["webdollar.ddns.net"],
-       "port": 8080,
+       "port": 80,
     },
     {
         "addr": ["192.168.2.0"],

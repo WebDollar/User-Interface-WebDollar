@@ -34,7 +34,7 @@
 
                 <div class="walletController">
 
-                    <div class="btn" @click="this.handleAddNewAddress">
+                    <div class="btn buttonTextStyle" @click="this.handleAddNewAddress">
                         Add Address
                     </div>
 
@@ -42,7 +42,7 @@
 
                         <input ref="importedAddress" type="file" v-on:change="this.handleImportAddress" multiple size="50" />
 
-                        <div class="btn">
+                        <div class="btn buttonTextStyle">
                             Import Address
                         </div>
 
@@ -531,6 +531,10 @@
         z-index: 1000;
         fill:#262626;
         transition: all 1.2s linear;
+    }
+
+    .buttonTextStyle{
+        font-size: 14px!important;
     }
 
     .sendingImg{

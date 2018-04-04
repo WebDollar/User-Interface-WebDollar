@@ -22,8 +22,8 @@
 
             <div>
                 <div class="moneyBox">
-                    <input @keyup="this.handleChangeToAmount" v-model="toAmount" type="number" class="amount" placeholder="WEBD Amount"/>
-                    <input @keyup="this.handleChangeToFee" v-model="fee" class="amount" type="number" placeholder="Fee"/>
+                    <input @keyup="this.handleChangeToAmount" v-model.number="toAmount" type="number" class="amount" placeholder="WEBD Amount"/>
+                    <input @keyup="this.handleChangeToFee" v-model.number="fee" class="amount" type="number" placeholder="Fee"/>
                 </div>
             </div>
 
@@ -130,10 +130,12 @@
 
                     if (balance === null) throw "Balance is empty";
 
-                    let total = Number(this.toAmount)+Number(this.fee);
+                    let total = this.toAmount + this.fee;
 
-                    if ( balance.isLessThan(total) )
+                    if ( balance < total ) {
+                        console.error("Insufficient funds", {balance:balance, toAmount: this.toAmount, fee:this.fee})
                         throw "Insufficient Funds";
+                    }
 
                 } catch (exception){
 

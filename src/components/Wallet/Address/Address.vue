@@ -6,15 +6,15 @@
             <img class="walletAddressImage" :src="this.getAddressPic" >
             <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
-            <div id="transactionAddressStatus">
-                <icon v-show="Object.keys(this.sendingMoney).length !== 0" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
-                <icon v-show="Object.keys(this.receivingMoney).length !== 0" class="walletMiningStatus walletReceivingImg" icon='download'></icon>
-            </div>
-
             <b class="fontColor">
                 <show-balance :address="this.address" currency="0x01"/>
             </b>
             <b class="amountCurrency">WEBD</b>
+
+            <div id="transactionAddressStatus">
+                <icon v-show="Object.keys(this.sendingMoney).length !== 0" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
+                <icon v-show="Object.keys(this.receivingMoney).length !== 0" class="walletMiningStatus walletReceivingImg" icon='download'></icon>
+            </div>
         </div>
 
         <div class="actionsBox hoverAddress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
@@ -122,7 +122,8 @@
                 if (answer.result){
 
                     let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
-                    FileSaver.saveAs(addressFile, this.address + ".webd");
+                    let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
+                    FileSaver.saveAs(addressFile, fileName);
 
                 } else {
                     alert(answer.message)
@@ -259,6 +260,15 @@
         vertical-align: top;
     }
 
+    .walletAddress:hover .walletReceivingImg, .walletAddress:hover .walletSendingImg{
+        display: none;
+    }
+
+    #transactionAddressStatus{
+        display: inline-block;
+        vertical-align: top;
+    }
+
     .addressButton{
         display:inline-block;
         padding: 7px 12px;
@@ -300,19 +310,16 @@
 
     .walletSendingImg{
         fill:#298bea!important;
-        margin-left: -12px;
-        margin-top: 31px;
-        position: absolute;
+        margin-left: 8px;
+        margin-top: 7px;
+        position: relative;
     }
 
     .walletReceivingImg{
         fill:#219411!important;
-        margin-left: -42px;
-        margin-top: 31px;
-        position: absolute;
-    }
-
-    #transactionAddressStatus{
+        margin-left: 2px;
+        margin-top: 9px;
+        position: relative;
         display: inline-block;
         vertical-align: top;
     }

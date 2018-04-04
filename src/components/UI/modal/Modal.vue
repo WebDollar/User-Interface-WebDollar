@@ -70,6 +70,16 @@
 
 <style>
 
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+
     .modal input:focus, .modal textarea:focus{
         outline: none;
     }
@@ -169,7 +179,9 @@
         border: none;
         background-color: #333333;
         padding: 10px 0 10px 10px;
-        color: #fff
+        color: #fff;
+        width: 100%;
+        box-sizing: border-box!important;
     }
 
     .modal .transfer .imageAndInput{

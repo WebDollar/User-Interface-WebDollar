@@ -88,7 +88,6 @@
                 this.addressLocked = true;
             }
 
-
             //subscribe to transactions changes
             let data = WebDollar.Blockchain.Transactions.subscribeTransactionsChanges(this.address, (data)=>{
 
@@ -103,7 +102,6 @@
                 this.subscription = data.subscription;
                 this._addTransactions(data.transactions);
             }
-
 
         },
 

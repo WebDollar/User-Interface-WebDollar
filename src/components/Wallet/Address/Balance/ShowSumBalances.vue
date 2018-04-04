@@ -60,11 +60,12 @@
                         newSum += parseFloat( addresses[index].balances[currency]);
                 }
 
-                this.sum = Math.round(newSum * 100000)/100000;
+                this.sum = newSum / WebDollar.Applications.CoinsHelper.WEBD;
 
                 if (this.sum!==0){
 
-                    this.sum = this.formatMoneyNumber(this.sum);
+                    //this.sum = this.formatMoneyNumber(this.sum);
+                    this.sum = this.sum;
 
                 }
 

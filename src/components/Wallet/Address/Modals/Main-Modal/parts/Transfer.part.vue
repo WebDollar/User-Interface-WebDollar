@@ -78,9 +78,19 @@
 
                 this.handleChangeToAddress();
 
+                if (this.fee === 0) {
+                    this.errorMessage = 'Fee should not be 0';
+                    return false;
+                }
+
+                if (this.fee * WebDollar.Applications.CoinsHelper.WEBD < WebDollar.Applications.CONSTS.MINING_POOL.MINING_FEE_THRESHOLD){
+                    this.errorMessage = "Fee is too small, and miners won't process your transaction";
+                    return false;
+                }
+
                 if (this.errorToAddressMessage !== '' || this.errorToAmountMessage !== '' ) return false;
 
-                let answer = await WebDollar.Blockchain.Transactions.wizard.createTransactionSimple( this.address, this.toAddress, this.toAmount, this.fee );
+                let answer = await WebDollar.Blockchain.Transactions.wizard.createTransactionSimple( this.address, this.toAddress, this.toAmount * WebDollar.Applications.CoinsHelper.WEBD, this.fee * WebDollar.Applications.CoinsHelper.WEBD );
 
                 if (answer.result){
 
@@ -122,7 +132,7 @@
 
                 this.errorToAmountMessage = '';
 
-                this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount );
+                this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount * WebDollar.Applications.CoinsHelper.WEBD ) / WebDollar.Applications.CoinsHelper.WEBD;
 
                 try {
 
@@ -130,7 +140,7 @@
 
                     if (balance === null) throw "Balance is empty";
 
-                    let total = this.toAmount + this.fee;
+                    let total = (this.toAmount + this.fee ) * WebDollar.Applications.CoinsHelper.WEBD;
 
                     if ( balance < total ) {
                         console.error("Insufficient funds", {balance:balance, toAmount: this.toAmount, fee:this.fee})

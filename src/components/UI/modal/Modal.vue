@@ -70,6 +70,18 @@
 
 <style>
 
+    ::-webkit-scrollbar{
+        width:7px;height:7px
+    }
+    ::-webkit-scrollbar-track{
+        background:rgba(100,100,100,0.1)
+    }
+    ::-webkit-scrollbar-thumb{
+        background:rgba(100,100,100,0.5);
+        border:solid 1px rgba(100,100,100,0.5);
+        border-radius:4px
+    }
+
     input[type=number]::-webkit-outer-spin-button,
     input[type=number]::-webkit-inner-spin-button {
         -webkit-appearance: none;

@@ -9,7 +9,7 @@
             <b class="fontColor">
                 <show-balance :address="this.address" currency="0x01"/>
             </b>
-            <b class="amountCurrency">WEBD</b>
+            <b class="amountCurrency currencyName">WEBD</b>
 
             <div id="transactionAddressStatus">
                 <icon v-show="Object.keys(this.sendingMoney).length !== 0" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
@@ -323,6 +323,10 @@
         position: relative;
     }
 
+    .currencyName{
+        margin-left: 2px!important;
+    }
+
     .walletReceivingImg{
         fill:#219411!important;
         margin-left: 2px;
@@ -374,6 +378,14 @@
 
         .webdollarFont {
             width: 16px!important;
+        }
+
+        .walletSendingImg{
+            display: none;
+        }
+
+        .walletReceivingImg{
+            display: none;
         }
 
     }

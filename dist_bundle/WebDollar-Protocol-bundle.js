@@ -83420,6 +83420,10 @@ class MiniBlockchainLight extends  __WEBPACK_IMPORTED_MODULE_3__Mini_Blockchain_
 
         }
 
+        let serialization = this.accountantTree.serializeMiniAccountant();
+        this.lightAccountantTreeSerializations[block.height+1] = serialization;
+
+
         if (! (await this._recalculateLightPrevs( block.height, block, undefined, saveBlock)))
             throw {message: "_recalculateLightPrevs failed"};
 
@@ -89853,131 +89857,132 @@ class NodeSignalingServerProtocol {
 
 
         // Step1, send the request to generate the INITIATOR SIGNAL
-        let initiatorAnswer =  client1.node.sendRequestWaitOnce("signals/client/initiator/generate-initiator-signal", {
+        client1.node.sendRequestWaitOnce("signals/client/initiator/generate-initiator-signal", {
 
-                        id: connection.id,
+            id: connection.id,
 
-                        remoteAddress: client2.node.sckAddress.getAddress(false),
-                        remoteUUID: client2.node.sckAddress.uuid,
+            remoteAddress: client2.node.sckAddress.getAddress(false),
+            remoteUUID: client2.node.sckAddress.uuid,
 
-                    }, connection.id );
+        }, connection.id ).then ( (initiatorAnswer) =>{
 
-        if ( initiatorAnswer === null || initiatorAnswer.initiatorSignal === undefined )
-            connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionError;
-        else
-        if ( initiatorAnswer.accepted === false && initiatorAnswer.message  === "Already connected")
-            connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionAlreadyConnected;
-        else
-        if ( initiatorAnswer.accepted === false && initiatorAnswer.message === "Full Room")
-            connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionFullRoom;
-        else
+            if ( initiatorAnswer === null || initiatorAnswer.initiatorSignal === undefined )
+                connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionError;
+            else
+            if ( initiatorAnswer.accepted === false && initiatorAnswer.message  === "Already connected")
+                connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionAlreadyConnected;
+            else
+            if ( initiatorAnswer.accepted === false && initiatorAnswer.message === "Full Room")
+                connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionFullRoom;
+            else
 
-        if ( initiatorAnswer.accepted === true) {
+            if ( initiatorAnswer.accepted === true) {
 
-            connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.answerSignalGenerating;
+                connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.answerSignalGenerating;
 
-            // Step 2, send the Initiator Signal to the 2nd Peer to get ANSWER SIGNAL
+                // Step 2, send the Initiator Signal to the 2nd Peer to get ANSWER SIGNAL
 
-            client2.node.sendRequestWaitOnce("signals/client/answer/receive-initiator-signal", {
-                id: connection.id,
-                initiatorSignal: initiatorAnswer.initiatorSignal,
+                client2.node.sendRequestWaitOnce("signals/client/answer/receive-initiator-signal", {
+                    id: connection.id,
+                    initiatorSignal: initiatorAnswer.initiatorSignal,
 
-                remoteAddress: client1.node.sckAddress.getAddress(false),
-                remoteUUID: client1.node.sckAddress.uuid,
-            }, connection.id).then((answer)=>{
+                    remoteAddress: client1.node.sckAddress.getAddress(false),
+                    remoteUUID: client1.node.sckAddress.uuid,
+                }, connection.id).then((answer)=>{
 
-                if ( answer === null || answer === undefined || answer.answerSignal === undefined )
-                    connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionError;
-                else
-                if ( answer.accepted === false && answer.message === "Already connected")
-                    connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionAlreadyConnected;
-                else
-                if ( answer.accepted === false && answer.message === "Full Room")
-                    connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionFullRoom;
-                else
-                if ( answer.accepted === true) {
+                    if ( answer === null || answer === undefined || answer.answerSignal === undefined )
+                        connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionError;
+                    else
+                    if ( answer.accepted === false && answer.message === "Already connected")
+                        connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionAlreadyConnected;
+                    else
+                    if ( answer.accepted === false && answer.message === "Full Room")
+                        connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionFullRoom;
+                    else
+                    if ( answer.accepted === true) {
 
-                    if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')  console.log("Step 2_0 - Answer Signal received  ", connection.id, answer );
+                        if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')  console.log("Step 2_0 - Answer Signal received  ", connection.id, answer );
 
-                    connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionEstablishing;
+                        connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionEstablishing;
 
-                    if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')  console.log("Step 2 - Answer Signal received  ", connection.id, answer );
+                        if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')  console.log("Step 2 - Answer Signal received  ", connection.id, answer );
 
-                    // Step 3, send the Answer Signal to the 1st Peer (initiator) to establish connection
-                    client1.node.sendRequestWaitOnce("signals/client/initiator/join-answer-signal",{
-                        id: connection.id,
-                        initiatorSignal: initiatorAnswer.initiatorSignal,
-                        answerSignal: answer.answerSignal,
+                        // Step 3, send the Answer Signal to the 1st Peer (initiator) to establish connection
+                        client1.node.sendRequestWaitOnce("signals/client/initiator/join-answer-signal",{
+                            id: connection.id,
+                            initiatorSignal: initiatorAnswer.initiatorSignal,
+                            answerSignal: answer.answerSignal,
 
-                        remoteAddress: client2.node.sckAddress.getAddress(false),
-                        remoteUUID: client2.node.sckAddress.uuid,
-                    }, connection.id).then( (result)=>{
+                            remoteAddress: client2.node.sckAddress.getAddress(false),
+                            remoteUUID: client2.node.sckAddress.uuid,
+                        }, connection.id).then( (result)=>{
+
+                            if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')
+                                console.log("Step 4 - join-answer-signal  ", connection.id, result );
+
+                            if ( result === null || result === undefined )
+                                connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionError;
+                            else
+                            if ( answer.established === false && answer.message === "Already connected")
+                                connection.status =  __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionAlreadyConnected;
+                            else {
+
+                                if (result.established  === true) {
+
+                                    //connected
+                                    connection.refreshLastTimeConnected();
+
+                                } else {
+                                    //not connected
+                                    connection.refreshLastTimeErrorChecked();
+                                }
+                            }
+
+                        });
+                    }
+
+                    client2.node.on("signals/server/new-answer-ice-candidate/" + connection.id, (iceCandidate) => {
 
                         if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')
-                            console.log("Step 4 - join-answer-signal  ", connection.id, result );
+                            console.log("Answer iceCandidate  ", connection.id, iceCandidate );
 
-                        if ( result === null || result === undefined )
-                            connection.status = __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionError;
-                        else
-                        if ( answer.established === false && answer.message === "Already connected")
-                            connection.status =  __WEBPACK_IMPORTED_MODULE_2__signaling_server_room_signaling_server_room_connection_object__["a" /* default */].ConnectionStatus.peerConnectionAlreadyConnected;
-                        else {
+                        client1.node.sendRequest("signals/client/initiator/receive-ice-candidate",{
+                            id: connection.id,
 
-                            if (result.established  === true) {
+                            initiatorSignal: initiatorAnswer.initiatorSignal,
+                            iceCandidate: iceCandidate,
 
-                                //connected
-                                connection.refreshLastTimeConnected();
-
-                            } else {
-                                //not connected
-                                connection.refreshLastTimeErrorChecked();
-                            }
-                        }
+                            remoteAddress: client2.node.sckAddress.getAddress(false),
+                            remoteUUID: client2.node.sckAddress.uuid,
+                        });
 
                     });
-                }
 
-                client2.node.on("signals/server/new-answer-ice-candidate/" + connection.id, (iceCandidate) => {
+
+
+                });
+
+                client1.node.on("signals/server/new-initiator-ice-candidate/" + connection.id, (iceCandidate) => {
 
                     if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')
-                        console.log("Answer iceCandidate  ", connection.id, iceCandidate );
+                        console.log("Initiator iceCandidate  ", connection.id, iceCandidate );
 
-                    client1.node.sendRequest("signals/client/initiator/receive-ice-candidate",{
+                    client2.node.sendRequest("signals/client/answer/receive-ice-candidate",{
                         id: connection.id,
 
                         initiatorSignal: initiatorAnswer.initiatorSignal,
                         iceCandidate: iceCandidate,
 
-                        remoteAddress: client2.node.sckAddress.getAddress(false),
-                        remoteUUID: client2.node.sckAddress.uuid,
+                        remoteAddress: client1.node.sckAddress.getAddress(false),
+                        remoteUUID: client1.node.sckAddress.uuid,
                     });
 
                 });
 
 
+            }
 
-            });
-
-            client1.node.on("signals/server/new-initiator-ice-candidate/" + connection.id, (iceCandidate) => {
-
-                if (Object({"BROWSER":true}).DEBUG_SIGNALING_SERVER === 'true')
-                    console.log("Initiator iceCandidate  ", connection.id, iceCandidate );
-
-                client2.node.sendRequest("signals/client/answer/receive-ice-candidate",{
-                    id: connection.id,
-
-                    initiatorSignal: initiatorAnswer.initiatorSignal,
-                    iceCandidate: iceCandidate,
-
-                    remoteAddress: client1.node.sckAddress.getAddress(false),
-                    remoteUUID: client1.node.sckAddress.uuid,
-                });
-
-            });
-
-
-        }
-
+        });
 
     }
 
@@ -91106,8 +91111,6 @@ class SignalingClientListService{
 
     constructor(){
         this.list = [];
-
-        this._startSignalingClientService();
 
     }
 

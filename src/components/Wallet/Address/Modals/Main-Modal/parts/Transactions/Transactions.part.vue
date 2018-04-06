@@ -164,6 +164,10 @@
         color: #c5c5c5;
     }
 
+    .transferList .title{
+        margin: 10px 0;
+    }
+
     .transferList .headerTable{
         display: grid;
         grid-template-columns: 1fr 1fr 60px;

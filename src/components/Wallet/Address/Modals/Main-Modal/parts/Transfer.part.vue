@@ -93,7 +93,9 @@
 
                 if (this.errorToAddressMessage !== '' || this.errorToAmountMessage !== '' ) return false;
 
-                let answer = await WebDollar.Blockchain.Transactions.wizard.createTransactionSimple( this.address, this.toAddress, this.toAmount * WebDollar.Applications.CoinsHelper.WEBD, this.fee * WebDollar.Applications.CoinsHelper.WEBD );
+                let amountToSend = parseInt(this.toAmount * WebDollar.Applications.CoinsHelper.WEBD);
+                let feeToSend = parseInt(this.fee * WebDollar.Applications.CoinsHelper.WEBD);
+                let answer = await WebDollar.Blockchain.Transactions.wizard.createTransactionSimple( this.address, this.toAddress, amountToSend, feeToSend );
 
                 if (answer.result){
 

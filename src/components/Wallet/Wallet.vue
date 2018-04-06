@@ -581,6 +581,9 @@
         #allWalets .walletAddress img{
             margin-top: 5px;
         }
+        #allWalets .walletAddress .imageAndInput img{
+            margin-top: 0!important;
+        }
         .walletAddress b{
             font-size: 22px!important;
             line-height: 60px!important;

@@ -133,7 +133,15 @@
 
         .show-balance-span{
             margin-left: 5px;
+            line-height: 48px;
         }
 
+    }
+
+    @media only screen and (max-width : 600px) {
+
+        .walletAddress b{
+            margin-top: 0!important;
+        }
     }
 </style>

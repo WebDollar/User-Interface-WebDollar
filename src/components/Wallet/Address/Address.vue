@@ -361,6 +361,14 @@
             margin-top: 14px;
         }
 
+        .addressIdentityBox .fontColor svg{
+            width: 30px;
+        }
+
+        .currencyName {
+            margin-left: 10px!important;
+            margin-top: -6px;
+        }
 
     }
 
@@ -380,6 +388,14 @@
 
         #allWalets .walletAddress{
             grid-template-columns: 1fr 170px;
+        }
+
+        .addressIdentityBox .fontColor svg{
+            padding: 0;
+        }
+
+        .walletAddress b{
+            margin-top: 3px;
         }
 
     }

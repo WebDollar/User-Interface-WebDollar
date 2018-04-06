@@ -42,7 +42,7 @@
 <script>
 
     import Modal from "components/UI/modal/Modal.vue";
-    let Clipboard = require("./../../../../../node_modules/clipboard");
+    import FileSaver from './../../../../../node_modules/file-saver';
 
     export default {
 
@@ -66,8 +66,10 @@
         methods: {
 
             closeModal() {
+
                 this.walletAddressPassword = "";
                 this.$refs['refPassModal'].closeModal();
+
             },
 
             showModal(e) {
@@ -84,14 +86,33 @@
 
             },
 
+            getRandomArbitraryNumber(min, max) {
+
+                return Math.floor(Math.random()*(max-min+1)+min);
+
+            },
+
+            generateRandomWord() {
+
+                var text = "";
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                let numberLength = this.getRandomArbitraryNumber(5,8);
+
+                for (var i = 0; i < numberLength; i++)
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                return text;
+
+            },
+
             generateRandomPassword(){
 
-                let wordsArray = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
                 this.walletAddressPassword = '';
 
                 for (let i = 0; i < 12; ++i){
 
-                    let randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+                    let randomWord = this.generateRandomWord();
                     let index = this.walletAddressPassword.lastIndexOf(randomWord);
 
                     if (index === -1){
@@ -159,13 +180,30 @@
                 let response = await WebDollar.Blockchain.Wallet.encryptAddress(this.address, wordsArray);
 
                 if (response === true) {
-                    this.closeModal();
-                    this.copyToClipboard();
-                    alert('You have set a new password which is copyed now in your clipboard!');
+
+                    if (confirm("Successful encrypted! If you didn't backup manually your password we can save your password on your device. Do you want to backup it in a file?")) {
+
+                        this.handleExportPassword();
+                        this.closeModal();
+
+                    } else {
+
+                        this.closeModal();
+
+                    }
+
                 }
 
                 return response;
-            }
+            },
+
+            handleExportPassword(){
+
+                let addressFile = new Blob([this.walletAddressPassword], {type: "application/text;charset=utf-8"});
+                let fileName = "walletPassword.txt";
+                FileSaver.saveAs(addressFile, fileName);
+
+            },
 
         },
 
@@ -174,15 +212,7 @@
             if (typeof window === 'undefined')
                 return;
 
-            this.walletAddressPassword = "MAMA MERE";
-            new Clipboard( this.$refs['refClipboardCopy'], {
-                text: ()  => {
-                    return this.walletAddressPassword;
-                }
-            });
-
-
-            this.$refs['refClipboardCopy'].click();
+            this.walletAddressPassword = "";
 
         },
 
@@ -191,6 +221,7 @@
 </script>
 
 <style>
+
     .descriptionTextPass{
         color: #bdbdbd;
         padding: 30px 10px;

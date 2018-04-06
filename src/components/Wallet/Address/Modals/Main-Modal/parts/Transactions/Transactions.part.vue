@@ -2,7 +2,7 @@
 
     <div class="transferList" ref="refTransferList" >
 
-        <span class="miningAddress" style="color: white!important">Transactions in the Last 20 blocks</span>
+        <span class="miningAddress" style="color: white!important">Transactions from last 20 blocks</span>
 
         <div class="headerTable">
 
@@ -189,6 +189,14 @@
 
     .transactionElement img{
         height: 26px!important;
+    }
+
+    .transferList .miningAddress{
+        color: #737373 !important;
+        padding: 7px 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 10px;
     }
 
 </style>

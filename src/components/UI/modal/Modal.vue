@@ -5,7 +5,7 @@
         <div class="modal" ref="refModal">
 
             <div class="close" @click="this.closeModal">
-                x
+                <icon class="btn" alt="Close Modal" text="Close Modal" icon="x" />
             </div>
 
             <div class="header">
@@ -25,6 +25,8 @@
 
 
 <script>
+
+    import icon from "components/UI/icons/icon.vue"
 
     export default{
 
@@ -125,6 +127,10 @@
         vertical-align: middle;
         height:40px;
         line-height: 12px;
+        -webkit-user-select: all!important;  /* Chrome all / Safari all */
+        -moz-user-select: all!important;     /* Firefox all */
+        -ms-user-select: all!important;      /* IE 10+ */
+        user-select: all!important;
         margin: 10px 0;
         top: 50%;
         transform: translateY(10%);
@@ -150,6 +156,8 @@
         display: block;
         color: #ffc12c;
         cursor: pointer;
+        width: 20px;
+        height: 20px;
     }
 
     .modal .title{
@@ -255,7 +263,7 @@
 
     .addressActions{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         border-bottom: solid 1px #313131;
     }
 
@@ -264,6 +272,7 @@
         background-color: #333;
         color: #ffc12c;
         padding: 5px;
+        cursor: pointer;
         padding-top: 8px;
         border-left: solid 1px #6d6d6d;
         border-collapse: collapse;
@@ -301,6 +310,7 @@
         padding: 7px 0 5px 0;
         border: solid 1px #777;
         font-size: 12px;
+        cursor: pointer;
         padding: 7px 0 5px 0;
         width: 150px;
         margin: 0 auto;

@@ -38,7 +38,7 @@
                 if (this.balances === null || this.balances === undefined || !this.balances.hasOwnProperty(this.currency)) return 0;
 
                 //return this.formatMoneyNumber( this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD );
-                return this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD;
+                return (this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD).toFixed(2);
             }
 
         },
@@ -133,7 +133,15 @@
 
         .show-balance-span{
             margin-left: 5px;
+            line-height: 48px;
         }
 
+    }
+
+    @media only screen and (max-width : 600px) {
+
+        .walletAddress b{
+            margin-top: 0!important;
+        }
     }
 </style>

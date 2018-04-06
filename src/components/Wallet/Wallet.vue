@@ -593,6 +593,10 @@
             border-top: solid 5px #313131;
         }
 
+        #walletButtonText svg{
+            width: 22px;
+        }
+
     }
 
 </style>

@@ -79,9 +79,9 @@
         background:rgba(100,100,100,0.1)
     }
     ::-webkit-scrollbar-thumb{
-        background:rgba(100,100,100,0.5);
-        border:solid 1px rgba(100,100,100,0.5);
-        border-radius:4px
+        background: rgba(41, 41, 41, 0.5);
+        border: solid 1px rgba(31, 31, 31, 0.5);
+        border-radius: 4px;
     }
 
     input[type=number]::-webkit-outer-spin-button,

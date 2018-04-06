@@ -239,6 +239,7 @@
         display: inline-block;
         vertical-align: top;
         border-radius: 100%;
+        left: -1px;
     }
 
     #allWalets .walletAddress:hover{

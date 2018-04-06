@@ -22,8 +22,8 @@
 
             <div>
                 <div class="moneyBox">
-                    <input @keyup="this.handleChangeToAmount" v-model.number="toAmount" type="number" class="amount" placeholder="WEBD Amount"/>
-                    <input @keyup="this.handleChangeToFee" v-model.number="fee" class="amount" type="number" placeholder="Fee"/>
+                    <input v-model="toAmount" @keyup="this.handleChangeToAmount" type="number" class="amount" placeholder="WEBD Amount"/>
+                    <input v-model="fee" @keyup="this.handleChangeToFee" class="amount" type="number" placeholder="Fee"/>
                 </div>
             </div>
 
@@ -75,6 +75,9 @@
         methods:{
 
             async handleCreateTransaction(){
+
+                this.toAmount = Number(this.toAmount);
+                this.fee = Number(this.fee);
 
                 this.handleChangeToAddress();
 

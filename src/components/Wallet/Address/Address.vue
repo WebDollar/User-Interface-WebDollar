@@ -352,6 +352,9 @@
             margin-left: -45px;
         }
 
+        .walletReceivingImg{
+            margin-top: 11px;
+        }
 
         #allWalets .walletAddress{
             grid-template-columns: 1fr 200px;

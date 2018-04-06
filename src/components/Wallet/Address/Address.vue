@@ -303,6 +303,7 @@
 
     .hoverAddress:hover .actionsBox{
         display: inline-block;
+        margin-right: 20px;
     }
 
     .fontColor{

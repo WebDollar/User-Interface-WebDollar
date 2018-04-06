@@ -239,6 +239,7 @@
         display: inline-block;
         vertical-align: top;
         border-radius: 100%;
+        left: -1px;
     }
 
     #allWalets .walletAddress:hover{
@@ -290,6 +291,12 @@
 
     .addressIdentityBox{
         display: inline-block;
+    }
+
+    .addressIdentityBox .fontColor svg{
+        width: 20px;
+        height: 20px;
+        padding: 10px 0;
     }
 
     .hoverAddress:hover .actionsBox{

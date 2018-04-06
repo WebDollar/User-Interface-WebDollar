@@ -12,16 +12,16 @@
 
                         <div >
                             <img class="walletAddressImage" :src="this.getAddressPic" >
-                            <b style="color:gray" id="walletID" >{{this.address.toString()}}</b>
+                            <b style="color:gray" id="walletID">{{this.address.toString()}}</b>
                         </div>
 
-                        <div @click="copyToClipboard" :class=" this.clipboardText!='Copied' ? 'modalButton2' : 'modalButton2Success' ">
+                        <div @click="copyToClipboard" class="copyButton" :class=" this.clipboardText!='Copied' ? 'modalButton2' : 'modalButton2Success' ">
                             {{this.clipboardText}}
                         </div>
 
                     </div>
 
-                    <div class="section">
+                    <div class="section balanceContent">
 
                         <div class="balanceText" style="font-size: 20px">
                             Balance
@@ -30,7 +30,6 @@
                         <b class="fontColor">
                             <show-balance :address="this.address" currency="0x01"/>
                         </b>
-                        <b class="amountCurrency">WEBD</b>
 
                         <div class="miningAddress" v-if="isMiningAddress">
                             You are mining on this Address
@@ -49,9 +48,6 @@
                     </div>
                     <div @click="this.showTransactions" :class="[ this.partActivated === 'transactions' ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Transactions
-                    </div>
-                    <div @click="this.showBuy" :class="[ this.partActivated === 'buy/sell' ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Buy/Sell
                     </div>
                 </div>
 
@@ -181,6 +177,19 @@
 
     .balanceText{
         margin-top: 15px;
+    }
+
+    .balanceContent, .copyButton, .actionButton, .header, .transferList{
+        -webkit-user-select: none;  /* Chrome all / Safari all */
+        -moz-user-select: none;     /* Firefox all */
+        -ms-user-select: none;      /* IE 10+ */
+        user-select: none;
+    }
+
+    .balanceContent svg{
+        width: 20px;
+        height: 20px;
+        padding: 10px 0;
     }
 
 </style>

@@ -2,7 +2,7 @@
 
     <div class="transferList" ref="refTransferList" >
 
-        <span class="miningAddress" style="color: white!important">Transactions in the Last 20 blocks</span>
+        <span class="miningAddress" style="color: white!important">Transactions from last 20 blocks</span>
 
         <div class="headerTable">
 
@@ -102,6 +102,7 @@
         padding: 0;
         max-height: 200px;
         overflow: scroll;
+        overflow-x:hidden;
     }
 
     .transferListElement{
@@ -168,7 +169,7 @@
         grid-template-columns: 1fr 1fr 60px;
         background-color: #262626;
         color: #fff!important;
-        padding: 0 0 0 10px;
+        padding: 5px 0 5px 10px;
     }
 
     .headerTable span{
@@ -189,6 +190,14 @@
 
     .transactionElement img{
         height: 26px!important;
+    }
+
+    .transferList .miningAddress{
+        color: #737373 !important;
+        padding: 7px 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 10px;
     }
 
 </style>

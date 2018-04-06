@@ -102,6 +102,7 @@
         padding: 0;
         max-height: 200px;
         overflow: scroll;
+        overflow-x:hidden;
     }
 
     .transferListElement{
@@ -168,7 +169,7 @@
         grid-template-columns: 1fr 1fr 60px;
         background-color: #262626;
         color: #fff!important;
-        padding: 0 0 0 10px;
+        padding: 5px 0 5px 10px;
     }
 
     .headerTable span{

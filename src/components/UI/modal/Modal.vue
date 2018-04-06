@@ -243,9 +243,10 @@
         color: #1f1f1f;
         margin-bottom: 15px;
         width: 100%;
-        font-size: 14px;
+        font-weight: bolder;
+        font-size: 16px;
         border: none;
-        padding: 15px 0 15px 0;
+        padding: 10px 0 10px 0;
         border-radius: 5px;
         transition: all 0.5s ease;
     }

@@ -9,7 +9,7 @@
             <b class="fontColor">
                 <show-balance :address="this.address" currency="0x01"/>
             </b>
-            <b class="amountCurrency">WEBD</b>
+            <b class="amountCurrency currencyName">WEBD</b>
 
             <div id="transactionAddressStatus">
                 <icon v-show="Object.keys(this.sendingMoney).length !== 0" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
@@ -223,7 +223,7 @@
         border-bottom-left-radius: 50px;
         margin: 15px 10px;
         display: grid;
-        grid-template-columns: 1fr 155px;
+        grid-template-columns: 1fr 126px;
         transition: all .3s linear;
     }
 
@@ -318,14 +318,20 @@
     .walletSendingImg{
         fill:#298bea!important;
         margin-left: 8px;
-        margin-top: 7px;
+        margin-top: 6px;
+        width: 10px;
         position: relative;
+    }
+
+    .currencyName{
+        margin-left: 2px!important;
     }
 
     .walletReceivingImg{
         fill:#219411!important;
         margin-left: 2px;
-        margin-top: 9px;
+        margin-top: 8px;
+        width: 10px;
         position: relative;
         display: inline-block;
         vertical-align: top;
@@ -346,6 +352,24 @@
             margin-left: -45px;
         }
 
+
+        #allWalets .walletAddress{
+            grid-template-columns: 1fr 200px;
+        }
+
+        .walletSendingImg{
+            margin-top: 14px;
+        }
+
+        .addressIdentityBox .fontColor svg{
+            width: 30px;
+        }
+
+        .currencyName {
+            margin-left: 10px!important;
+            margin-top: -6px;
+        }
+
     }
 
     @media only screen and (max-width: 600px){
@@ -354,7 +378,25 @@
             display: none!important;
         }
 
+        .walletReceivingImg{
+            display: none;
+        }
 
+        .addressButton{
+            padding: 17px 10px;
+        }
+
+        #allWalets .walletAddress{
+            grid-template-columns: 1fr 170px;
+        }
+
+        .addressIdentityBox .fontColor svg{
+            padding: 0;
+        }
+
+        .walletAddress b{
+            margin-top: 3px;
+        }
 
     }
 
@@ -367,6 +409,12 @@
         .webdollarFont {
             width: 16px!important;
         }
+
+        .walletSendingImg{
+            display: none;
+        }
+
+
 
     }
 

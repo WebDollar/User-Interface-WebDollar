@@ -354,7 +354,11 @@
 
 
         #allWalets .walletAddress{
-            grid-template-columns: 1fr 155px;
+            grid-template-columns: 1fr 200px;
+        }
+
+        .walletSendingImg{
+            margin-top: 14px;
         }
 
 
@@ -366,7 +370,17 @@
             display: none!important;
         }
 
+        .walletReceivingImg{
+            display: none;
+        }
 
+        .addressButton{
+            padding: 17px 10px;
+        }
+
+        #allWalets .walletAddress{
+            grid-template-columns: 1fr 170px;
+        }
 
     }
 
@@ -384,9 +398,7 @@
             display: none;
         }
 
-        .walletReceivingImg{
-            display: none;
-        }
+
 
     }
 

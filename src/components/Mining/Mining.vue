@@ -155,8 +155,8 @@
 
     #miningLoader{
         vertical-align: top;
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
     }
 
     #dashboardMining{

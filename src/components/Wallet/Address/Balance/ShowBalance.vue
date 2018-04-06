@@ -116,6 +116,10 @@
 </script>
 
 <style>
+    .balanceContent  .show-balance-span{
+        font-size:20px;
+    }
+
     .show-balance-span{
         display: inline-block;
         margin-right: 4px;

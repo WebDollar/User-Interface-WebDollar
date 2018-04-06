@@ -223,7 +223,7 @@
         border-bottom-left-radius: 50px;
         margin: 15px 10px;
         display: grid;
-        grid-template-columns: 1fr 155px;
+        grid-template-columns: 1fr 126px;
         transition: all .3s linear;
     }
 
@@ -318,14 +318,16 @@
     .walletSendingImg{
         fill:#298bea!important;
         margin-left: 8px;
-        margin-top: 7px;
+        margin-top: 6px;
+        width: 10px;
         position: relative;
     }
 
     .walletReceivingImg{
         fill:#219411!important;
         margin-left: 2px;
-        margin-top: 9px;
+        margin-top: 8px;
+        width: 10px;
         position: relative;
         display: inline-block;
         vertical-align: top;
@@ -345,6 +347,12 @@
         .actuallMiningAddress{
             margin-left: -45px;
         }
+
+
+        #allWalets .walletAddress{
+            grid-template-columns: 1fr 155px;
+        }
+
 
     }
 

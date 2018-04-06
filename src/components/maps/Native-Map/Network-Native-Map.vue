@@ -64,11 +64,7 @@
 
 
                 WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (nodesListObject) => {
-
-                    let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
-
-                    this._addMarker(geoLocation, nodesListObject.socket);
-
+                    this._showNodesListNode(nodesListObject);
                 } );
 
                 WebDollar.Node.NodesList.emitter.on("nodes-list/disconnected", async (nodesListObject) => {
@@ -81,23 +77,39 @@
 
                 //Waitlist p2p
                 WebDollar.Node.NodesWaitlist.emitter.on("waitlist/new-node", async (nodesWaitlistObject)=>{
-
-                    let geoLocation = await nodesWaitlistObject.sckAddresses[0].getGeoLocation();
-
-                    this._addMarker(geoLocation, nodesWaitlistObject);
-
+                    this._showWaiLlistNode(nodesWaitlistObject);
                 });
 
                 WebDollar.Node.NodesWaitlist.emitter.on("waitlist/delete-node", async (nodesWaitlistObject)=>{
 
                     //deleting the marker
                     let markerIndex = this._findMarkerIndexBySocket(nodesWaitlistObject);
-
                     if (markerIndex !== -1) this._removeMarker(this._markers[markerIndex])
+
+                });
+
+                WebDollar.Node.NodesList.nodes.forEach(async (nodesListObject)=>{
+                    this._showNodesListNode(nodesListObject);
+                });
+
+                WebDollar.Node.NodesWaitlist.waitlist.forEach(async (nodesWaitlistObject)=>{
+                    this._showWaiLlistNode(nodesWaitlistObject);
                 });
 
                 await this._showMyself();
 
+            },
+
+            async _showNodesListNode(nodesListObject){
+                let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
+
+                this._addMarker(geoLocation, nodesListObject.socket);
+            },
+
+            async _showWaiLlistNode(nodesWaitlistObject){
+                let geoLocation = await nodesWaitlistObject.sckAddresses[0].getGeoLocation();
+
+                this._addMarker(geoLocation, nodesWaitlistObject);
             },
 
             async _showMyself(){
@@ -111,6 +123,7 @@
                 let marker = {
                     socket: socket,
                     desc: this._getInfoWindowContent(geoLocation, socket),
+                    linked: false,
                 };
 
 
@@ -137,8 +150,10 @@
 
                     //add links to current nodes
                     for (let i = 0; i< this._markers.length; i++)
-                        if (this._markers[i] !== marker && this._markers[i].status === "connected")
+                        if (this._markers[i] !== marker && this._markers[i].desc.status === "connected" && !this._markers[i].linked) {
+                            this._markers[i].linked = true;
                             this._circleMap.addLink(cell, this._markers[i].cell);
+                        }
 
                     this._circleMap.putCellOnTop(cell);
 
@@ -164,8 +179,9 @@
 
                     //add links to the myselfMarker
                     if (marker.desc.status === "connected")
-                        if (this._markerMyself !== null && this._markerMyself !== undefined && this._markerMyself !== marker)
+                        if (this._markerMyself !== null && this._markerMyself !== undefined && this._markerMyself !== marker && !this._markers.linked) {
                             this._circleMap.addLink(cell, this._markerMyself.cell);
+                        }
 
                     this._circleMap.putCellOnTop(cell);
 

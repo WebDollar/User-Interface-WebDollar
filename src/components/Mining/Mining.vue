@@ -127,6 +127,8 @@
                     if (this.startAutomatically)
                         WebDollar.Blockchain.Mining.setWorkers(1);
 
+                    console.error('#################################################### s-a synchronizat');
+
                 }
 
             });

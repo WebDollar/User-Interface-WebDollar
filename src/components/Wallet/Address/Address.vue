@@ -19,7 +19,7 @@
 
         <div class="actionsBox hoverAddress" :style="{marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px'}">
             <div class="addressButton" v-on:click.stop="handleExport">
-                <icon class="btn" alt="Secure Wallet" text="Download Address" icon="download" />
+                <icon class="btn" alt="Secure Wallet" text="Download Address" icon="download"/>
             </div>
 
             <div class="addressButton" v-on:click.stop="handleLock">
@@ -223,7 +223,7 @@
         border-bottom-left-radius: 50px;
         margin: 15px 10px;
         display: grid;
-        grid-template-columns: 1fr 150px;
+        grid-template-columns: 1fr 155px;
         transition: all .3s linear;
     }
 
@@ -287,7 +287,7 @@
     .actionsBox{
         float: right;
         text-align:right;
-        margin-right: 10px;
+        margin-right: 20px;
         display: block!important;
     }
 
@@ -303,7 +303,6 @@
 
     .hoverAddress:hover .actionsBox{
         display: inline-block;
-        margin-right: 20px;
     }
 
     .fontColor{

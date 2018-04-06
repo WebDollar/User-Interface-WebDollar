@@ -293,6 +293,12 @@
         display: inline-block;
     }
 
+    .addressIdentityBox .fontColor svg{
+        width: 20px;
+        height: 20px;
+        padding: 10px 0;
+    }
+
     .hoverAddress:hover .actionsBox{
         display: inline-block;
     }

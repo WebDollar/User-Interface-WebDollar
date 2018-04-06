@@ -170,7 +170,7 @@
         padding-bottom: 3px;
         right: 0;
         z-index: 95;
-        border-top: solid 1px #444444;
+        border-top: solid 1px #3a3939;
     }
 
     .miningPowerThreads{
@@ -317,7 +317,7 @@
         background-color: #d23c25;
         vertical-align: top;
         padding-top: 6px;
-        border-right: solid 1px #444;
+        border-right: solid 1px #3a3939;
         width: 40px;
         padding-left: 0;
         padding-right:0;
@@ -372,7 +372,7 @@
         float: right;
         min-width: 300px;
         text-align: center;
-        border-left: solid 1px #444444;
+        border-left: solid 1px #333;
         line-height: 42px;
     }
 

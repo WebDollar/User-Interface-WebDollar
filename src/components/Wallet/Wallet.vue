@@ -386,7 +386,7 @@
     #walletButtonText svg{
         margin-top: 10px;
         vertical-align: top;
-        width: 24px;
+        width: 14px;
     }
 
     .mainAddress{
@@ -432,7 +432,7 @@
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;
-        background-color: #313131;
+        background-color: #3e3e3e;
     }
 
     .walletController .btn{
@@ -482,7 +482,7 @@
         margin-bottom:-100px;
         z-index: 90;
         border-top: solid 1px #3d3d3d;
-        border-left: solid 1px #444;
+        border-left: solid 1px #393939;
         transition: all .3s linear;
     }
 

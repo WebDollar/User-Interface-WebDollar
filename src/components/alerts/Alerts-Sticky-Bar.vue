@@ -1,7 +1,7 @@
 <template>
     <div v-show="this._showStatus">
 
-        <div class='alertsStickyBar' :style="'background: '+this._backgroundColor " >
+        <div id="WebDollarAlertsStickyBarDiv" class='alertsStickyBar' :style="'background: '+this._backgroundColor " >
 
             <alert v-for="alert in this.alerts"
                    :key="'alert'+alert.statusUniqueId"

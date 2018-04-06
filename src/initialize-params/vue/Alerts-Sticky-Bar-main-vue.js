@@ -5,6 +5,10 @@ import AlertsStickyBar from 'components/alerts/Alerts-Sticky-Bar.vue';
 //for safari workaround
 export default (params)=> {
 
+    if (document.getElementById("WebDollarAlertsStickyBarDiv") !== null && document.getElementById("WebDollarAlertsStickyBarDiv")){
+        return false;
+    }
+
     if (document.getElementById('WebDollarAlertsStickyBar') === null)
         document.getElementsByTagName("body")[0].insertAdjacentHTML("afterbegin", `<div id="WebDollarAlertsStickyBar" > </div>`);
 

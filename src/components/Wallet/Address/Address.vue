@@ -218,11 +218,12 @@
 
     #allWalets .walletAddress{
         padding: 0!important;
-        padding-right: 0;
         width: 100%;
         border-top-left-radius: 50px;
         border-bottom-left-radius: 50px;
         margin: 15px 10px;
+        display: grid;
+        grid-template-columns: 1fr 150px;
         transition: all .3s linear;
     }
 
@@ -285,8 +286,9 @@
 
     .actionsBox{
         float: right;
-        display: none;
-        margin-right: 25px;
+        text-align:right;
+        margin-right: 10px;
+        display: block!important;
     }
 
     .addressIdentityBox{

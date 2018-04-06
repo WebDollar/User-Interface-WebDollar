@@ -386,6 +386,7 @@
     #walletButtonText svg{
         margin-top: 10px;
         vertical-align: top;
+        width: 24px;
     }
 
     .mainAddress{
@@ -494,6 +495,7 @@
         color: #ff0000 !important;
         padding-bottom: 10px;
         display: block;
+        font-size: 14px;
     }
 
     dashboardWallet span{

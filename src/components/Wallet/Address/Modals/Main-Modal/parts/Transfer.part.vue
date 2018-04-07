@@ -136,21 +136,18 @@
             decimalPlaces(num) {
                 var match = (''+num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
                 if (!match) { return 0; }
-                return Math.max(
+                var decimalsNumber= Math.max(
                     0,
-                    // Number of digits right of decimal point.
                     (match[1] ? match[1].length : 0)
-                    // Adjust for scientific notation.
                     - (match[2] ? +match[2] : 0));
+
+                if (decimalsNumber>4) return parseFloat(num).toFixed(4);
+                    else return num;
             },
 
             handleChangeToAmount(e){
 
-                var digits = decimalPlaces(this.toAmount);
-
-                if (digits>4){
-                    this.toAmount = this.toAmount.toFixed(4);
-                }
+                this.toAmount = this.decimalPlaces(this.toAmount);
 
                 this.errorToAmountMessage = '';
 
@@ -188,6 +185,8 @@
             },
 
             handleChangeToFee(e){
+
+                this.fee = this.decimalPlaces(this.fee);
 
                 this.errorToAmountMessage = '';
 

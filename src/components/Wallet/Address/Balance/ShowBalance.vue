@@ -38,7 +38,7 @@
                 if (this.balances === null || this.balances === undefined || !this.balances.hasOwnProperty(this.currency)) return 0;
 
                 //return this.formatMoneyNumber( this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD );
-                return (this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD).toFixed(2);
+                return (( this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD)+ 0.004).toFixed(2);
             }
 
         },

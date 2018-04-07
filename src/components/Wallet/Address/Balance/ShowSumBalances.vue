@@ -5,7 +5,7 @@
         <loading-spinner class="loading-wallet-spinner" v-if="!this.loaded" />
 
         <span v-if="this.loaded" class="show-sum-balances">
-            {{ this.sum }}
+            {{ parseInt(this.sum) }}
         </span>
 
     </div>

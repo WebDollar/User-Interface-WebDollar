@@ -137,7 +137,7 @@
 
                 this.errorToAmountMessage = '';
 
-                this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount * WebDollar.Applications.CoinsHelper.WEBD ) / WebDollar.Applications.CoinsHelper.WEBD;
+                this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount * WebDollar.Applications.CoinsHelper.WEBD) / WebDollar.Applications.CoinsHelper.WEBD;
 
                 try {
 
@@ -160,6 +160,12 @@
                         this.errorToAmountMessage = exception.message;
 
                     this.fee = '';
+                }
+
+                if (this.fee===0 || this.fee===undefined || this.errorToAmountMessage!==''){
+
+                    this.fee = 10;
+
                 }
 
             },

@@ -4,7 +4,7 @@
 
         <div class="addressIdentityBox" v-on:click.stop="handleTransferFunds">
             <img class="walletAddressImage" :src="this.getAddressPic" >
-            <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
+            <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress isImining" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
             <b class="fontColor">
                 <show-balance :address="this.address" currency="0x01"/>
@@ -215,6 +215,15 @@
 
 <style>
 
+    .isImining {
+        -webkit-animation:spin 1s linear infinite;
+        -moz-animation:spin 1s linear infinite;
+        animation:spin 1s linear infinite;
+    }
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(60deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(60deg); } }
+    @keyframes spin { 100% { -webkit-transform: rotate(60deg); transform:rotate(60deg); } }
+
     .actuallMiningAddress{
         position: relative;
         margin-left: -45px;
@@ -246,7 +255,7 @@
         display: inline-block;
         vertical-align: top;
         border-radius: 100%;
-        left: -1px;
+        left: -px;
     }
 
     #allWalets .walletAddress:hover{
@@ -407,6 +416,9 @@
             margin-top: 3px;
         }
 
+        #allWalets .walletAddress .imageAndInput img {
+            height: 38px !important;
+        }
     }
 
     @media only screen and (max-width : 400px) {

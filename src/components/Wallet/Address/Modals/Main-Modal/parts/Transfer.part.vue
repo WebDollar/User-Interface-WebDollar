@@ -227,14 +227,14 @@
 
     .transferWalletAddressImage{
         position: relative;
-        height: 34.5px!important;
+        height: 28.5px!important;
         margin: 0 auto;
         border-radius: 0!important;
     }
 
     .imageAndInput{
         display: grid;
-        grid-template-columns: 35px 1fr;
+        grid-template-columns: 28px 1fr;
         background-color: #333;
     }
 
@@ -256,6 +256,20 @@
     input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
+    }
+
+    @media only screen and (max-width: 600px){
+
+        .imageAndInput{
+            display: grid;
+            grid-template-columns: 38px 1fr;
+            background-color: #333;
+        }
+
+        .modal .transfer .address {
+            padding: 6px 0 4px 10px;
+        }
+
     }
 
 </style>

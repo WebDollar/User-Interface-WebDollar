@@ -116,6 +116,15 @@
 </script>
 
 <style>
+
+    .balanceContent .fontColor{
+        display: block;
+    }
+
+    .balanceContent .miningAddress{
+        margin-top: 5px;
+    }
+
     .balanceContent  .show-balance-span{
         font-size:20px;
     }
@@ -127,6 +136,10 @@
         vertical-align: top;
         margin-top: 0;
         text-align: center;
+    }
+
+    .balanceContent .show-balance-span{
+        margin-top: 10px;
     }
 
     @media only screen and (max-width : 831px) {

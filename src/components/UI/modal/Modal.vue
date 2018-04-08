@@ -167,6 +167,7 @@
         letter-spacing: 4px;
         line-height: 22px;
         color: #ffc12c;
+        display: none;
     }
 
     .modal .footer .button{
@@ -198,9 +199,10 @@
     .modal .transfer input{
         border: none;
         background-color: #333333;
-        padding: 10px 0 10px 10px;
+        padding: 7px 0 7px 10px;
         color: #fff;
         width: 100%;
+        border-radius: 5px;
         box-sizing: border-box!important;
     }
 
@@ -275,7 +277,7 @@
         padding: 5px;
         cursor: pointer;
         padding-top: 8px;
-        border-left: solid 1px #6d6d6d;
+        border-left: solid 1px #424242;
         border-collapse: collapse;
         transition: all 0.5s ease
     }
@@ -315,6 +317,7 @@
         padding: 7px 0 5px 0;
         width: 150px;
         margin: 0 auto;
+        margin-top: 6px;
         transition: all 0.5s ease
     }
 
@@ -325,8 +328,8 @@
 
     .modalButton2Success{
         color: #149008;
-        font-size: 14px;
-        margin-top: 20px;
+        font-size: 12px;
+        margin-top: 16px;
     }
 
 
@@ -348,6 +351,10 @@
 
     @media (max-width:600px)  {
 
+        .modal .title{
+            display: block;
+        }
+
         .modal .transfer .title{
             padding: 10px;
         }
@@ -359,18 +366,13 @@
             max-height: 100%;
             overflow-y: auto;
         }
-        .twoColumns{
-            display: inline-block;
-        }
+
         .twoColumns .section:first-child {
             border-bottom: solid 1px #313131;
             border-right: none;
         }
         .modal .balance{
             margin-top: 0;
-        }
-        .addressActions{
-            grid-template-columns: 1fr;
         }
         .addressActions .actionButton{
             line-height: 50px;
@@ -407,7 +409,7 @@
 
         .balanceText{
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 21px;
         }
 
         .walletAddress b {
@@ -422,6 +424,35 @@
             margin-left: 4px!important;
             vertical-align: top;
             margin-top: 16px;
+        }
+
+        #walletID{
+            height: auto;
+            line-height: 32px!important;
+        }
+
+        #allWalets .walletAddress img{
+            margin-top: 0;
+        }
+
+        .modalButton2{
+            padding: 10px 0!important;
+        }
+
+        .modifyPadding .twoColumns .section{
+            padding: 10px 5px 20px 0;
+        }
+
+        .modal .transfer .button{
+            margin-top: 10px!important;
+        }
+
+        #allWalets .walletAddress .imageAndInput img {
+            height: 48px !important;
+        }
+
+        .modal .transfer .address {
+            padding: 10px 0 10px 20px;
         }
 
     }

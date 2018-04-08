@@ -5,7 +5,7 @@
         <loading-spinner class="loading-wallet-spinner" v-if="!this.loaded" />
 
         <span v-if="this.loaded" class="show-sum-balances">
-            {{ parseInt(this.sum) }}
+            {{ this.formatMoneyNumber(this.sum,2) }}
         </span>
 
     </div>
@@ -72,7 +72,7 @@
             },
 
             formatMoneyNumber(n, decimals=0) {
-                return n.toFixed(decimals).replace(/./g, function(c, i, a) {
+                return parseInt(n+0.004).toFixed(decimals).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });
             }

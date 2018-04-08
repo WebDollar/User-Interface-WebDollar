@@ -4,7 +4,7 @@
 
         <loading-spinner class="fontColor" v-if="!this.loaded" />
         <div class="show-balance-span" v-if="this.loaded" >
-            {{ this.computePrice }}
+            {{ this.formatMoneyNumber(this.computePrice,2)}}
         </div>
 
     </div>
@@ -104,7 +104,7 @@
         methods:{
 
             formatMoneyNumber(n, decimals=0) {
-                return n.toFixed(decimals).replace(/./g, function(c, i, a) {
+                return parseInt(n+0.004).toFixed(decimals).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });
             }

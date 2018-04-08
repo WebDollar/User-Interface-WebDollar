@@ -159,7 +159,7 @@
 
                     if (balance === null) throw "Balance is empty";
 
-                    let total = (this.toAmount + this.fee ) * WebDollar.Applications.CoinsHelper.WEBD;
+                    let total = (parseFloat(this.toAmount) + this.fee ) * WebDollar.Applications.CoinsHelper.WEBD;
 
                     if ( balance < total ) {
                         console.error("Insufficient funds", {balance:balance, toAmount: this.toAmount, fee:this.fee})

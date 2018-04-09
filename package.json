@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "open_browser": "node src/open-browser",
-    "build_frontend": "webpack --config build/webpack.browser-frontend.config.js",
+    "build_browser": "webpack --config build/webpack.browser-frontend.config.js",
     "build_user_interface": "webpack --config build/webpack.browser.config.js",
     "build": "npm run build_frontend && npm run build_user_interface",
     "test": "npm run build_frontend && npm run open_browser",

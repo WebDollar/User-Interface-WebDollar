@@ -97,12 +97,27 @@
                      case "Network Adjusted Time Error":
                          this.deleteAlert("network-adjusted-time-error");
                          this.addAlert("network-adjusted-time-error", "error", "Network Adjusted Time didn't work <b>"+data.reason+"</b>");
+
+                         setTimeout(()=>{
+                             location.reload();
+                         }, 120*1000);
+
                          break;
 
                      case "Network Adjusted Time Success":
                          this.deleteAlert("network-adjusted-time-error");
                          break;
 
+                     case "You mined way too many blocks":
+
+                         this.addAlert("too-many-blocks-mined", "warning", "You mined way too many blocks. You are not sync. Refresh in 15 sec");
+                         WebDollar.Blockchain.Mining.stopMining();
+
+                         setTimeout(()=>{
+                             location.reload();
+                         }, 15*1000);
+
+                         break;
 
                  }
 

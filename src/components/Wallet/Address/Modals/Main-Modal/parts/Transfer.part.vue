@@ -86,7 +86,7 @@
                     return false;
                 }
 
-                if (this.fee * WebDollar.Applications.CoinsHelper.WEBD < WebDollar.Applications.CONSTS.MINING_POOL.MINING_FEE_THRESHOLD){
+                if (this.fee * WebDollar.Applications.CoinsHelper.WEBD < WebDollar.Applications.CONSTS.MINING_POOL.MINING.FEE_THRESHOLD){
                     this.errorMessage = "Fee is too small, and miners won't process your transaction";
                     return false;
                 }

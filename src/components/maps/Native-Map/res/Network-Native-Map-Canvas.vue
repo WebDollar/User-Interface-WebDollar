@@ -2115,26 +2115,33 @@
 
     .peer-own {
         display: block !important;
-        fill: white !important;
+        fill: #ff0000 !important;
         -webkit-animation: connected 1800ms ease 5;
         animation: connected 1800ms ease 8;
     }
 
     .peer-connected-terminal {
         display: block !important;
-        fill: #fec02c !important;
+        fill: #fff !important;
         -webkit-animation: connected 1800ms ease 10;
         animation: connected 1800ms ease 3;
     }
 
     .peer-connected-browser {
         display: block !important;
-        fill: #ff0000 !important;
+        fill: #fec02c !important;
         -webkit-animation: connected 1800ms ease 10;
         animation: connected 1800ms ease 3;
     }
 
-    .peer-own,
+    .peer-network-member {
+        display: block !important;
+        fill: #5f4300 !important;
+        -webkit-animation: connected 1800ms ease 10;
+        animation: connected 1800ms ease 3;
+    }
+
+        .peer-own,
     .peer-connected-terminal,
     .peer-connected-browser {
         will-change: opacity;

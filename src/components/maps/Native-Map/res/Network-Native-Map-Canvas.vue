@@ -2115,14 +2115,14 @@
 
     .peer-own {
         display: block !important;
-        fill: #ff0000 !important;
+        fill: #fff !important;
         -webkit-animation: connected 1800ms ease 5;
         animation: connected 1800ms ease 8;
     }
 
     .peer-connected-terminal {
         display: block !important;
-        fill: #fff !important;
+        fill: #f20 !important;
         -webkit-animation: connected 1800ms ease 10;
         animation: connected 1800ms ease 3;
     }
@@ -2136,7 +2136,7 @@
 
     .peer-network-member {
         display: block !important;
-        fill: #5f4300 !important;
+        fill: #755e27 !important;
         -webkit-animation: connected 1800ms ease 10;
         animation: connected 1800ms ease 3;
     }

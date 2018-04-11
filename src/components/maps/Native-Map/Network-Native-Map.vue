@@ -162,10 +162,6 @@
 
             highlightConnectedPeer(marker){
 
-                if (marker.desc.nodeType === "browser")
-                    console.log("browser");
-                    //marker.desc.pos.lat = 33;
-
                 let cell = this._circleMap.getCellByLocation(marker.desc.pos.lat, marker.desc.pos.lng);
                 if (cell) {
 
@@ -174,9 +170,10 @@
                     let cellClass;
 
                     if (marker.desc.nodeType === "myself") cellClass = "peer-own"; else
-                    if (marker.desc.nodeType === "browser") cellClass = "peer-connected-browser";
-                    if (marker.desc.nodeType === "terminal") cellClass = "peer-connected-terminal";
-                    if (marker.desc.nodeType === "network") cellClass = "peer-network-member";
+                    if (marker.desc.nodeType === "browser") cellClass = "peer-connected-browser"; else
+                    if (marker.desc.nodeType === "terminal") cellClass = "peer-connected-terminal"; else
+                    if (marker.desc.nodeType === "terminal-waitlist") cellClass = "peer-network-member"; else
+                    if (marker.desc.nodeType === "browser-waitlist") cellClass = "peer-network-member";
 
 
 

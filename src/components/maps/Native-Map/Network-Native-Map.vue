@@ -176,6 +176,7 @@
                     if (marker.desc.nodeType === "myself") cellClass = "peer-own"; else
                     if (marker.desc.nodeType === "browser") cellClass = "peer-connected-browser";
                     if (marker.desc.nodeType === "terminal") cellClass = "peer-connected-terminal";
+                    if (marker.desc.nodeType === "network") cellClass = "peer-network-member";
 
 
 

@@ -77,7 +77,7 @@
 
                 //Waitlist p2p
                 WebDollar.Node.NodesWaitlist.emitter.on("waitlist/new-node", async (nodesWaitlistObject)=>{
-                    this._showWaiLlistNode(nodesWaitlistObject);
+                    this._showWaitListNode(nodesWaitlistObject);
                 });
 
                 WebDollar.Node.NodesWaitlist.emitter.on("waitlist/delete-node", async (nodesWaitlistObject)=>{
@@ -93,7 +93,7 @@
                 });
 
                 WebDollar.Node.NodesWaitlist.waitlist.forEach(async (nodesWaitlistObject)=>{
-                    this._showWaiLlistNode(nodesWaitlistObject);
+                    this._showWaitListNode(nodesWaitlistObject);
                 });
 
                 await this._showMyself();
@@ -101,13 +101,13 @@
             },
 
             async _showNodesListNode(nodesListObject){
-                let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
+                let geoLocation = await nodesListObject.socket.node.sckAddress.geoLocation;
 
                 this._addMarker(geoLocation, nodesListObject.socket);
             },
 
-            async _showWaiLlistNode(nodesWaitlistObject){
-                let geoLocation = await nodesWaitlistObject.sckAddresses[0].getGeoLocation();
+            async _showWaitListNode(nodesWaitlistObject){
+                let geoLocation = await nodesWaitlistObject.sckAddresses[0].geoLocation;
 
                 this._addMarker(geoLocation, nodesWaitlistObject);
             },
@@ -162,6 +162,10 @@
 
             highlightConnectedPeer(marker){
 
+                if (marker.desc.nodeType === "browser")
+                    console.log("browser");
+                    //marker.desc.pos.lat = 33;
+
                 let cell = this._circleMap.getCellByLocation(marker.desc.pos.lat, marker.desc.pos.lng);
                 if (cell) {
 
@@ -173,13 +177,16 @@
                     if (marker.desc.nodeType === "browser") cellClass = "peer-connected-browser";
                     if (marker.desc.nodeType === "terminal") cellClass = "peer-connected-terminal";
 
+
+
                     this._circleMap.highlightCell(cell, cellClass , marker.desc, marker.desc.uuid);
 
                     this._circles.inc(cell);
 
                     //add links to the myselfMarker
                     if (marker.desc.status === "connected")
-                        if (this._markerMyself !== null && this._markerMyself !== undefined && this._markerMyself !== marker && !this._markers.linked) {
+                        if (this._markerMyself !== null && this._markerMyself !== undefined && this._markerMyself !== marker && !marker.linked) {
+                            marker.linked = true;
                             this._circleMap.addLink(cell, this._markerMyself.cell);
                         }
 
@@ -218,13 +225,11 @@
                     status = "connected";
 
                     switch (socket.node.type) {
-                        case 'client':
+                        case WebDollar.Applications.NodesType.NODE_TERMINAL:
                             nodeType = 'terminal';
                             break;
-                        case 'server' :
-                            nodeType = 'terminal';
-                            break;
-                        case 'webpeer' :
+
+                        case WebDollar.Applications.NodesType.NODE_WEB_PEER:
                             nodeType = 'browser';
                             break;
                     }
@@ -238,11 +243,12 @@
                     uuid = socket.sckAddresses[0].uuid;
 
                     switch (socket.type) {
-                        case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.WEB_RTC_PEER:
-                            nodeType = 'browser';
+                        case WebDollar.Applications.NodesType.NODE_TERMINAL:
+                            nodeType = 'terminal-waitlist';
                             break;
-                        case WebDollar.Node.NodesWaitlist.NODES_WAITLIST_OBJECT_TYPE.NODE_PEER_TERMINAL_SERVER:
-                            nodeType = 'terminal';
+
+                        case WebDollar.Applications.NodesType.NODE_WEB_PEER:
+                            nodeType = 'browser-waitlist';
                             break;
                     }
 

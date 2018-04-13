@@ -72,7 +72,7 @@ class NetworkGoogleMaps {
 
         WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (nodesListObject) => {
 
-            let geoLocation = await nodesListObject.socket.node.sckAddress.getGeoLocation();
+            let geoLocation = await nodesListObject.socket.node.sckAddress.geoLocation;
 
             //console.log("geoLocation",geoLocation);
 

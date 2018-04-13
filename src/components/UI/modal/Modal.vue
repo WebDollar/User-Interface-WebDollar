@@ -152,7 +152,6 @@
         position: fixed;
         top: -10px;
         right: 10px!important;
-        font-size: 40px;
         color: #ffc12c;
         cursor: pointer;
         width: 20px;
@@ -406,7 +405,7 @@
         .modal .close{
             top:0;
             right: 30px!important;
-            display: block;
+            display: block!important;
         }
         .modal .twoColumns{
             width: 100%;

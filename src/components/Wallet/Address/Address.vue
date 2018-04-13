@@ -12,8 +12,8 @@
             <b class="amountCurrency currencyName">WEBD</b>
 
             <div id="transactionAddressStatus">
-                <icon v-show="Object.keys(this.sendingMoney).length !== 0" class="walletMiningStatus walletSendingImg" icon='upload'></icon>
-                <icon v-show="Object.keys(this.receivingMoney).length !== 0" class="walletMiningStatus walletReceivingImg" icon='download'></icon>
+                <icon v-show="Object.keys(this.sendingMoney).length !== 0" class="walletMiningStatus walletSendingImg" icon='chevron-double-up'></icon>
+                <icon v-show="Object.keys(this.receivingMoney).length !== 0" class="walletMiningStatus walletReceivingImg" icon='chevron-double-down'></icon>
             </div>
         </div>
 
@@ -332,20 +332,22 @@
 
     .walletSendingImg{
         fill:#298bea!important;
-        margin-left: 8px;
-        margin-top: 6px;
+        margin-left: 3px;
+        margin-top: 7px;
         width: 10px;
         position: relative;
     }
 
     .currencyName{
         margin-left: 2px!important;
+        margin-right: 4px!important;
+        display: none!important;
     }
 
     .walletReceivingImg{
         fill:#219411!important;
-        margin-left: 2px;
-        margin-top: 8px;
+        margin-left: 0;
+        margin-top: 7px;
         width: 10px;
         position: relative;
         display: inline-block;
@@ -359,7 +361,8 @@
         }
 
         .addressButton{
-            padding: 17px 14px;
+            height: 22px;
+            padding: 9px;
             margin: 0 5px;
         }
 
@@ -375,8 +378,8 @@
             grid-template-columns: 1fr 200px;
         }
 
-        .walletSendingImg{
-            margin-top: 14px;
+        .walletSendingImg, .walletReceivingImg{
+            margin-top: 11px;
         }
 
         .addressIdentityBox .fontColor svg{
@@ -392,6 +395,10 @@
 
     @media only screen and (max-width: 600px){
 
+        .walletSendingImg, .walletReceivingImg{
+            margin-top: 7px;
+        }
+
         .amountCurrency{
             display: none!important;
         }
@@ -401,7 +408,7 @@
         }
 
         .addressButton{
-            padding: 17px 10px;
+            padding: 9px 10px;
         }
 
         #allWalets .walletAddress{
@@ -427,15 +434,17 @@
             margin: 0;
         }
 
-        .webdollarFont {
-            width: 16px!important;
+        .actionsBox .webdollarFont {
+            width: 14px!important;
         }
 
         .walletSendingImg{
             display: none;
         }
 
-
+        #allWalets .walletAddress{
+            grid-template-columns: 1fr 130px;
+        }
 
     }
 

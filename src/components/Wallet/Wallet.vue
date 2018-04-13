@@ -2,11 +2,11 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='upload' :style=""></icon>
+        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up' :style=""></icon>
 
         <icon v-show="!this.opened && isReceivingMoney" :style="{
             right: isSendingMoney ? '20px' : '4px',
-            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump" icon='download'>
+            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump"icon='chevron-double-down'>
         </icon>
 
         <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
@@ -366,7 +366,8 @@
         40%  {transform: translate3d(0,30%,0) scale3d(.7,1.5,1);}
         100% {transform: translate3d(0,100%,0) scale3d(1.5,.7,1);}
     }
-    .jump {
+    .jump.sendingImg, .jump.receivingImg {
+        fill: #000!important;
         transform-origin: 50% 50%;
         animation: jump .5s linear alternate infinite;
     }
@@ -382,7 +383,7 @@
     #walletButtonText{
         color: #1f1f1f!important;
     }
-
+m
     #walletButtonText svg{
         margin-top: 10px;
         vertical-align: top;

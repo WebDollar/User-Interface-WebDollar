@@ -5,7 +5,7 @@
         <div class="modal" ref="refModal">
 
             <div class="close" @click="this.closeModal">
-                <icon class="btn" alt="Close Modal" text="Close Modal" icon="x" />
+                x
             </div>
 
             <div class="header">
@@ -153,11 +153,12 @@
         top: -10px;
         right: 10px!important;
         font-size: 40px;
-        display: block;
         color: #ffc12c;
         cursor: pointer;
         width: 20px;
-        height: 20px;
+        height: 20px;    font-size: 22px;
+        display: none!important;
+        margin-top: 7px;
     }
 
     .modal .title{
@@ -347,6 +348,13 @@
             line-height: 14px!important;
         }
 
+        .close{
+            font-size: 22px;
+            margin-top: 7px;
+            right: 30px!important;
+            display: none!important;
+        }
+
     }
 
     @media (max-width:600px)  {
@@ -398,6 +406,7 @@
         .modal .close{
             top:0;
             right: 30px!important;
+            display: block;
         }
         .modal .twoColumns{
             width: 100%;
@@ -448,7 +457,7 @@
         }
 
         #allWalets .walletAddress .imageAndInput img {
-            height: 48px !important;
+            height: 38px !important;
         }
 
         .modal .transfer .address {
@@ -476,7 +485,7 @@
         }
 
         .modal .close {
-            top: -10px;
+            top: -1px;
             right: 10px!important;
         }
 

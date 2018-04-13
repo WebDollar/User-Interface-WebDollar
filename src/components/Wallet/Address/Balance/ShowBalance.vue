@@ -156,5 +156,18 @@
         .walletAddress b{
             margin-top: 0!important;
         }
+
+        .addressIdentityBox .show-balance-span{
+            line-height: 40px;
+            font-size: 14px;
+        }
+
+        .addressIdentityBox .show-balance-span svg{
+
+            margin-top: 15px;
+            display: block;
+
+        }
+
     }
 </style>

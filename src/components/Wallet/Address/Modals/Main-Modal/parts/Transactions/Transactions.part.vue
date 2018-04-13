@@ -238,11 +238,16 @@
         letter-spacing: 2px;
         font-size: 10px;
         width: 90%;
+        margin: 0 auto;
     }
 
     .noTransactions .transferList .miningAddress{
         letter-spacing: 1px!important;
         width: 90%!important;
+    }
+
+    .noTransactions .miningAddress{
+        line-height: 18px;
     }
 
 </style>

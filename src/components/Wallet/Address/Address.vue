@@ -4,7 +4,7 @@
 
         <div class="addressIdentityBox" v-on:click.stop="handleTransferFunds">
             <img class="walletAddressImage" :src="this.getAddressPic" >
-            <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress isImining" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
+            <icon v-if="this.isMiningAddress && this.isMining>0" class="btn actuallMiningAddress isImining" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
             <b class="fontColor">
                 <show-balance :address="this.address" currency="0x01"/>
@@ -70,6 +70,7 @@
         data: () => {
             return {
                 addressLocked: false,
+                isMining: WebDollar.Blockchain.Mining.workers.workers,
 
                 sendingMoney: {},
                 receivingMoney: {},

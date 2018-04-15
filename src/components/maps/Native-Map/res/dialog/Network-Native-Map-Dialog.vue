@@ -65,9 +65,9 @@
     .map-dialog-description {
         color: #ffc107;
         height: auto;
-        max-height: 450px;
+        max-height: 350px;
+        overflow: hidden;
         width: 300px;
-        margin: 0;
         background-color: rgba(38, 41, 43, 0.66);
         border-radius: 3px;
         display: block;

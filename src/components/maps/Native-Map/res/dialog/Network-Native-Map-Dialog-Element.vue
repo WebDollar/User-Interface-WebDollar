@@ -2,10 +2,10 @@
 
     <div>
         <div style="display: inline-block; padding-right: 10px">
-            <img v-if="nodeType === 'myself' " class="network-dialog-icon icon-myself" src="https://forum.noxiousnet.com/plugins/nodebb-plugin-emoji-one/static/images/1f60e.png">
-            <img v-if="nodeType === 'browser' " class="network-dialog-icon icon-browser" src="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/48/Browser-icon.png">
-            <img v-if="nodeType === 'terminal' " class="network-dialog-icon icon-terminal" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/48/terminal-icon.png">
-            <img class="icon-connected" :src="this.connected === 'connected' ? 'http://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Connected-icon.png' : 'http://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Disconnected-icon.png' ">
+            <!--<img v-if="nodeType === 'myself' " class="network-dialog-icon icon-myself" src="https://forum.noxiousnet.com/plugins/nodebb-plugin-emoji-one/static/images/1f60e.png">-->
+            <!--<img v-if="nodeType === 'browser' " class="network-dialog-icon icon-browser" src="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/48/Browser-icon.png">-->
+            <!--<img v-if="nodeType === 'terminal' " class="network-dialog-icon icon-terminal" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/48/terminal-icon.png">-->
+            <!--<img class="icon-connected" :src="this.connected === 'connected' ? 'http://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Connected-icon.png' : 'http://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Disconnected-icon.png' ">-->
         </div>
         <div ref="refText" class="map-dialog-description-text" style="display: inline-block;">
             <br>{{country}}, {{city}}<br>

@@ -109,7 +109,7 @@
                     this.$emit('onTransferSuccess', answer.message);
 
                 } else {
-                    this.errorMessage = answer.message + " <br/> "+ answer.reason;
+                    this.errorMessage = answer.message;
                     this.successMessage = '';
                 }
 

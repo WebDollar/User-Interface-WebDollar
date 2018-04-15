@@ -140,6 +140,30 @@
         overflow-x:hidden;
     }
 
+    .transferListContainer::-webkit-scrollbar{
+        width:7px;height:7px
+    }
+    .transferListContainer::-webkit-scrollbar-track{
+        background:rgba(100,100,100,0.1)!important;
+    }
+    .transferListContainer::-webkit-scrollbar-thumb{
+        background: rgba(41, 41, 41, 0.5)!important;
+        border: solid 1px rgba(31, 31, 31, 0.5)!important;
+        border-radius: 4px;
+    }
+
+    .transferList::-webkit-scrollbar{
+        width:7px;height:7px
+    }
+    .transferList::-webkit-scrollbar-track{
+        background:rgba(100,100,100,0.1)!important;
+    }
+    .transferList::-webkit-scrollbar-thumb{
+        background: rgba(41, 41, 41, 0.5)!important;
+        border: solid 1px rgba(31, 31, 31, 0.5)!important;
+        border-radius: 4px;
+    }
+
     .transferListElement{
         font-size: 12px;
         color: #fff;

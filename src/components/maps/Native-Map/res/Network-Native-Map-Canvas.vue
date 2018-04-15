@@ -2093,9 +2093,9 @@
     @keyframes connected {
         0% { opacity: 0 }
         10% { opacity: 1  }
-        20% { opacity: 0 }
+        20% { opacity: 0.4 }
         30% { opacity: 1 }
-        40% { opacity:0 }
+        40% { opacity: 0.6 }
         100% { opacity: 1 }
     }
 
@@ -2125,29 +2125,29 @@
     .peer-own {
         display: block !important;
         fill: #fff !important;
-        -webkit-animation: yourConnection 4s ease infinite;
-        animation: yourConnection 4s ease infinite;
+        /*-webkit-animation: yourConnection 4s ease infinite;*/
+        /*animation: yourConnection 4s ease infinite;*/
     }
 
     .peer-connected-terminal {
         display: block !important;
-        fill: #f20 !important;
-        -webkit-animation: connected 1800ms ease;
-        animation: connected 1800ms ease;
+        fill: #fec02c !important;
+        -webkit-animation: connected 2s ease;
+        animation: connected 2s ease;
     }
 
     .peer-connected-browser {
         display: block !important;
-        fill: #fec02c !important;
-        -webkit-animation: connected 1800ms ease;
-        animation: connected 1800ms ease;
+        fill: #fffb8b !important;
+        -webkit-animation: connected 2s ease;
+        animation: connected 2s ease;
     }
 
     .peer-network-member {
         display: block !important;
         fill: #755e27 !important;
-        -webkit-animation: connected 1800ms ease;
-        animation: connected 1800ms ease;
+        -webkit-animation: connected 2s ease;
+        animation: connected 2s ease;
     }
 
         .peer-own,

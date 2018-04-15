@@ -2090,7 +2090,22 @@
 
 <style>
 
-        /* map styling */
+    @keyframes connected {
+        0% { opacity: 0 }
+        10% { opacity: 1  }
+        20% { opacity: 0 }
+        30% { opacity: 1 }
+        40% { opacity:0 }
+        100% { opacity: 1 }
+    }
+
+    @keyframes yourConnection {
+        0% { opacity: 0.4 }
+        50% { opacity: 1 }
+        100% { opacity: 0.4 }
+    }
+
+    /* map styling */
 
 
     svg .WebDollarNativeMap{
@@ -2099,12 +2114,6 @@
         opacity: 1;
         transition: 1s opacity;
 
-        /* we have the map as background image such that we can display:none the hexagons
-        in the svg which greatly improves performance on firefox */
-
-        /*
-            SVG file!!!!!!!!!!!!
-         */
         background-image: url('');
     }
 
@@ -2116,29 +2125,29 @@
     .peer-own {
         display: block !important;
         fill: #fff !important;
-        -webkit-animation: connected 1800ms ease 5;
-        animation: connected 1800ms ease 8;
+        -webkit-animation: yourConnection 4s ease infinite;
+        animation: yourConnection 4s ease infinite;
     }
 
     .peer-connected-terminal {
         display: block !important;
         fill: #f20 !important;
-        -webkit-animation: connected 1800ms ease 10;
-        animation: connected 1800ms ease 3;
+        -webkit-animation: connected 1800ms ease;
+        animation: connected 1800ms ease;
     }
 
     .peer-connected-browser {
         display: block !important;
         fill: #fec02c !important;
-        -webkit-animation: connected 1800ms ease 10;
-        animation: connected 1800ms ease 3;
+        -webkit-animation: connected 1800ms ease;
+        animation: connected 1800ms ease;
     }
 
     .peer-network-member {
         display: block !important;
         fill: #755e27 !important;
-        -webkit-animation: connected 1800ms ease 10;
-        animation: connected 1800ms ease 3;
+        -webkit-animation: connected 1800ms ease;
+        animation: connected 1800ms ease;
     }
 
         .peer-own,

@@ -12,6 +12,7 @@
     import vueSlider from 'vue-slider-component';
 
     export default {
+
         name: 'slider',
 
         components: {
@@ -78,7 +79,7 @@
                 this.sliderMobileWidth = '100%';
             }
 
-            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency;
+            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 2;
 
             this.$refs["slider"].refresh();
 

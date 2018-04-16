@@ -261,7 +261,17 @@
             },
 
             handleAddNewAddress(){
-                WebDollar.Blockchain.Wallet.createNewAddress();
+
+                if (WebDollar.Blockchain.Wallet.addresses.length <= 2) {
+
+                    WebDollar.Blockchain.Wallet.createNewAddress();
+
+                } else {
+
+                    alert("Way to many addresses");
+
+                }
+
             },
 
             async handleImportAddress(){

@@ -79,7 +79,7 @@
                 this.sliderMobileWidth = '100%';
             }
 
-            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 2;
+            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
 
             this.$refs["slider"].refresh();
 

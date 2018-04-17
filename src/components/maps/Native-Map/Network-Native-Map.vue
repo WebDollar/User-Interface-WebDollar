@@ -92,7 +92,11 @@
                     this._showNodesListNode(nodesListObject);
                 });
 
-                WebDollar.Node.NodesWaitlist.waitlist.forEach(async (nodesWaitlistObject)=>{
+                WebDollar.Node.NodesWaitlist.waitListLightNodes.forEach(async (nodesWaitlistObject)=>{
+                    this._showWaitListNode(nodesWaitlistObject);
+                });
+
+                WebDollar.Node.NodesWaitlist.waitListLightNodes.forEach(async (nodesWaitlistObject)=>{
                     this._showWaitListNode(nodesWaitlistObject);
                 });
 

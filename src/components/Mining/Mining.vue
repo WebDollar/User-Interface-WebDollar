@@ -150,7 +150,7 @@
                         console.log("A new default mining power was set:", value);
                         localStorage.setItem("miner-settings-worker-count", value);
                     }
-                    timer = setTimeout(run, 5000);
+                    timer = setTimeout(run, 120000);
 
                     return stopTimer;
 

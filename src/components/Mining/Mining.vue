@@ -120,7 +120,7 @@
 
             WebDollar.StatusEvents.on("blockchain/status", (data)=>{
 
-                //if (data.message === "Blockchain Ready to Mine") {
+                if (data.message === "Blockchain Ready to Mine") {
 
                     this.loaded = true;
                     this.$refs['refMiningSlider'].disabled = false;
@@ -132,7 +132,7 @@
 
                     console.error('#################################################### s-a synchronizat');
 
-                //}
+                }
 
             });
 

@@ -71,7 +71,8 @@
                 workers: localStorage.getItem("miner-settings-worker-count") || 0,
                 minerAddress:'',
                 status: '',
-                loaded:false
+                loaded:false,
+                stopTimerHandler: null
             }
         },
 
@@ -119,7 +120,7 @@
 
             WebDollar.StatusEvents.on("blockchain/status", (data)=>{
 
-                if (data.message === "Blockchain Ready to Mine") {
+                //if (data.message === "Blockchain Ready to Mine") {
 
                     this.loaded = true;
                     this.$refs['refMiningSlider'].disabled = false;
@@ -131,20 +132,39 @@
 
                     console.error('#################################################### s-a synchronizat');
 
-                }
+                //}
 
             });
 
-        },
-
-
+        }
+        ,
         methods: {
-
+        
             changeWorkers(value){
-
                 WebDollar.Blockchain.Mining.setWorkers(value);
-                localStorage.setItem("miner-settings-worker-count", value);
+                
+                function setWorkersTimer(value) {
+                    let timer;
+                    
+                    function run() {
+                        console.log("A new default mining power was set:", value);
+                        localStorage.setItem("miner-settings-worker-count", value);
+                    }
+                    timer = setTimeout(run, 5000);
 
+                    return stopTimer;
+
+                    function stopTimer() {
+                        if (timer) {
+                            clearTimeout(timer);
+                            timer = 0;
+                        }
+                    }
+                }
+                
+                if (this.stopTimerHandler)
+                    this.stopTimerHandler();
+                this.stopTimerHandler = setWorkersTimer(value);
             }
 
         }

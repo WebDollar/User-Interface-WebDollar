@@ -21,10 +21,10 @@
 
         data() {
             return {
-                value: 0,
+                value: localStorage.getItem("miner-settings-worker-count") || 0,
                 disabled:true,
                 screenWidth: window.innerWidth,
-                logicalProcessors: 4,
+                logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderMobileWidth: 200,
             }
         },
@@ -42,7 +42,7 @@
 
                 }
 
-                this.$emit('sliderChanged', value)
+                this.$emit('sliderChanged', value);
             },
             addEvent(object, type, callback) {
                 if (object === null || typeof(object) === 'undefined') return;

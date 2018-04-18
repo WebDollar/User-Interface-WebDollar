@@ -124,8 +124,10 @@
                     this.loaded = true;
                     this.$refs['refMiningSlider'].disabled = false;
 
-                    if (this.startAutomatically)
-                        WebDollar.Blockchain.Mining.setWorkers(1);
+                    if (this.startAutomatically){
+                        let number_of_workers = localStorage.getItem("miner-settings-worker-count");
+                        WebDollar.Blockchain.Mining.setWorkers(number_of_workers || 1);
+                    }
 
                     console.error('#################################################### s-a synchronizat');
 
@@ -141,6 +143,7 @@
             changeWorkers(value){
 
                 WebDollar.Blockchain.Mining.setWorkers(value);
+                localStorage.setItem("miner-settings-worker-count", value);
 
             }
 

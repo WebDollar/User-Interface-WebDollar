@@ -21,7 +21,7 @@ const config = merge(base, {
 
 
     devServer: {
-        port: 8085
+        port: 2224
     },
 
     plugins: [
@@ -38,4 +38,4 @@ const config = merge(base, {
 
 });
 
-module.exports = config
+module.exports = config;

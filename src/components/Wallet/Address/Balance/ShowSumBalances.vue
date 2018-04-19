@@ -60,7 +60,7 @@
                         newSum += parseFloat( addresses[index].balances[currency]);
                 }
 
-                this.sum = newSum / WebDollar.Applications.CoinsHelper.WEBD;
+                this.sum = newSum;
 
                 if (this.sum!==0){
 
@@ -72,9 +72,40 @@
             },
 
             formatMoneyNumber(n, decimals=0) {
-                return parseInt(n+0.004).toFixed(decimals).replace(/./g, function(c, i, a) {
+
+               var number = parseInt(n/WebDollar.Applications.CoinsHelper.WEBD);
+               var decimalNumber = getNumberRest(n);
+
+               return formatIntNumber(number)+'.'+getFirstDigits(decimalNumber,decimals);
+
+            },
+
+            formatIntNumber(number){
+
+                return n.toString().replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });
+
+            },
+
+            getNumberRest(number){
+
+                return number % WebDollar.Applications.CoinsHelper.WEBD;
+
+            },
+
+            getFirstDigits(number,decimals){
+
+                var decimalsVerifier = Math.pow(10,decimals);
+
+                while (decimalsVerifier < number){
+
+                    number = number/10;
+
+                }
+
+                return parseInt(number);
+
             }
 
         },

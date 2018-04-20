@@ -106,15 +106,15 @@
             formatMoneyNumber(n, decimals=0) {
 
                 var number = parseInt(n/WebDollar.Applications.CoinsHelper.WEBD);
-                var decimalNumber = getNumberRest(n);
+                var decimalNumber = this.getNumberRest(n);
 
-                return formatIntNumber(number)+'.'+getFirstDigits(decimalNumber,decimals);
+                return this.formatIntNumber(number)+'.'+this.getFirstDigits(decimalNumber,decimals);
 
             },
 
             formatIntNumber(number){
 
-                return n.toString().replace(/./g, function(c, i, a) {
+                return number.toString().replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });
 
@@ -129,17 +129,29 @@
             getFirstDigits(number,decimals){
 
                 var decimalsVerifier = Math.pow(10,decimals);
+                var newNumber = '';
 
-                while (decimalsVerifier < number){
+                if(number<10){
 
-                    number = number/10;
+                    newNumber='000'+number.toString();
+
+                }else if(number<100){
+
+                    newNumber='00'+number.toString();
+
+                }else if(number<1000){
+
+                    newNumber='0'+number.toString();
+
+                }else if(number<10000){
+
+                    newNumber=''+number.toString();
 
                 }
 
-                return parseInt(number);
+                return newNumber.substring(0,decimals);
 
             }
-
 
         }
 

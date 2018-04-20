@@ -48,7 +48,9 @@ class CircleMap {
     highlightCell(cell, className, data, index) {
 
         if (cell.getAttribute('class') !== 'peer-own')
-            cell.setAttribute('class', className);
+            if(cell.getAttribute('class') !== 'peer-connected-terminal')
+                if(cell.getAttribute('class') !== 'peer-connected-browser')
+                    cell.setAttribute('class', className);
 
         // deleted
 

@@ -145,7 +145,11 @@
                 
                 function setWorkersTimer(value) {
                     let timer;
-                    
+
+                    let last_number_of_workers = localStorage.getItem("miner-settings-worker-count") || 0;
+                    if (last_number_of_workers === 0)
+                        localStorage.setItem("miner-settings-worker-count", 1);
+
                     function run() {
                         console.log("A new default mining power was set:", value);
                         localStorage.setItem("miner-settings-worker-count", value);

@@ -106,11 +106,7 @@
                 this.workers = workers;
                 if (this.workers !== this.$refs['refMiningSlider'].data) {
 
-                    let prevWorkersCopy = this._prevWorkers;
-
                     this.$refs['refMiningSlider'].$refs['slider'].setValue(this.workers);
-
-                    this._prevWorkers = prevWorkersCopy
                 }
 
             });
@@ -148,6 +144,12 @@
 
                 }
 
+                if (data.message === "Start Synchronizing"){
+
+                    this._prevWorkers = WebDollar.Blockchain.Mining.workers;
+
+                }
+
             });
 
         }
@@ -157,8 +159,7 @@
             changeWorkers(value){
 
                 WebDollar.Blockchain.Mining.setWorkers(value);
-                this._prevWorkers = value;
-                
+
                 let setWorkersTimer = (value) => {
 
                     let timer;

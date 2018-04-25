@@ -227,11 +227,11 @@
                     status = "connected";
 
                     switch (socket.node.type) {
-                        case WebDollar.Applications.NodesType.NODE_TERMINAL:
+                        case WebDollar.Applications.NODES_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal';
                             break;
 
-                        case WebDollar.Applications.NodesType.NODE_WEB_PEER:
+                        case WebDollar.Applications.NODES_TYPE.NODE_WEB_PEER:
                             nodeType = 'browser';
                             break;
                     }
@@ -245,11 +245,11 @@
                     uuid = socket.sckAddresses[0].uuid;
 
                     switch (socket.type) {
-                        case WebDollar.Applications.NodesType.NODE_TERMINAL:
+                        case WebDollar.Applications.NODES_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal-waitlist';
                             break;
 
-                        case WebDollar.Applications.NodesType.NODE_WEB_PEER:
+                        case WebDollar.Applications.NODES_TYPE.NODE_WEB_PEER:
                             nodeType = 'browser-waitlist';
                             break;
                     }

@@ -72,7 +72,9 @@
                 minerAddress:'',
                 status: '',
                 loaded:false,
-                stopTimerHandler: null
+                stopTimerHandler: null,
+
+                _prevWorkers: null,
             }
         },
 
@@ -126,7 +128,13 @@
                     this.$refs['refMiningSlider'].disabled = false;
 
                     if (this.startAutomatically){
-                        let number_of_workers = localStorage.getItem("miner-settings-worker-count");
+                        let number_of_workers;
+
+                        if (this._prevWorkers !== null)
+                            number_of_workers = this._prevWorkers;
+                        else
+                            number_of_workers = localStorage.getItem("miner-settings-worker-count");
+
                         WebDollar.Blockchain.Mining.setWorkers(number_of_workers || 1);
                     }
 
@@ -141,9 +149,11 @@
         methods: {
         
             changeWorkers(value){
+
                 WebDollar.Blockchain.Mining.setWorkers(value);
                 
-                function setWorkersTimer(value) {
+                let setWorkersTimer = (value) => {
+
                     let timer;
 
                     let last_number_of_workers = localStorage.getItem("miner-settings-worker-count") || 0;
@@ -154,7 +164,14 @@
                         console.log("A new default mining power was set:", value);
                         localStorage.setItem("miner-settings-worker-count", value);
                     }
-                    timer = setTimeout(run, 120000);
+
+                    let time = 40*1000; //default 40 sec
+
+                    if (WebDollar.Applications.VersionCheckerHelper.detectMobileAndTablet()){
+                        time = 120*1000;
+                    }
+
+                    timer = setTimeout(run, time);
 
                     return stopTimer;
 
@@ -164,11 +181,14 @@
                             timer = 0;
                         }
                     }
-                }
+                };
                 
                 if (this.stopTimerHandler)
                     this.stopTimerHandler();
+
                 this.stopTimerHandler = setWorkersTimer(value);
+
+                this._prevWorkers = value;
             }
 
         }

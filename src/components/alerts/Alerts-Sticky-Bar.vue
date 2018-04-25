@@ -109,7 +109,7 @@
                          this.addAlert("too-many-blocks-mined", "warning", "You mined way too many blocks. You are not sync. Refresh in 15 sec");
                          WebDollar.Blockchain.Mining.stopMining();
 
-
+                         break;
                  }
 
              });

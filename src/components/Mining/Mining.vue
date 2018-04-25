@@ -104,8 +104,14 @@
             WebDollar.StatusEvents.on("mining/workers-changed", (workers)=>{
 
                 this.workers = workers;
-                if (this.workers !== this.$refs['refMiningSlider'].data)
+                if (this.workers !== this.$refs['refMiningSlider'].data) {
+
+                    let prevWorkersCopy = this._prevWorkers;
+
                     this.$refs['refMiningSlider'].$refs['slider'].setValue(this.workers);
+
+                    this._prevWorkers = prevWorkersCopy
+                }
 
             });
 
@@ -130,7 +136,7 @@
                     if (this.startAutomatically){
                         let number_of_workers;
 
-                        if (this._prevWorkers !== null)
+                        if (this._prevWorkers !== null && this._prevWorkers !== undefined)
                             number_of_workers = this._prevWorkers;
                         else
                             number_of_workers = localStorage.getItem("miner-settings-worker-count");
@@ -151,6 +157,7 @@
             changeWorkers(value){
 
                 WebDollar.Blockchain.Mining.setWorkers(value);
+                this._prevWorkers = value;
                 
                 let setWorkersTimer = (value) => {
 
@@ -187,8 +194,6 @@
                     this.stopTimerHandler();
 
                 this.stopTimerHandler = setWorkersTimer(value);
-
-                this._prevWorkers = value;
             }
 
         }

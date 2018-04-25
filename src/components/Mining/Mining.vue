@@ -165,7 +165,7 @@
                         localStorage.setItem("miner-settings-worker-count", value);
                     }
 
-                    let time = 40*1000; //default 40 sec
+                    let time = 20*1000; //default 20 sec
 
                     if (WebDollar.Applications.VersionCheckerHelper.detectMobileAndTablet()){
                         time = 120*1000;

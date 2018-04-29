@@ -30,6 +30,7 @@
         },
 
         methods: {
+
             change(value) {
 
                 console.log("value", value);
@@ -44,6 +45,7 @@
 
                 this.$emit('sliderChanged', value);
             },
+
             addEvent(object, type, callback) {
                 if (object === null || typeof(object) === 'undefined') return;
                 if (object.addEventListener) {
@@ -54,6 +56,26 @@
                     object["on" + type] = callback;
                 }
             },
+
+            checkKey(e) {
+
+                e = e || window.event;
+
+                if (e.keyCode == '38') {
+                    // up arrow
+                }
+                else if (e.keyCode == '40') {
+                    // down arrow
+                }
+                else if (e.keyCode == '37') {
+                    // left arrow
+                }
+                else if (e.keyCode == '39') {
+                    // right arrow
+                }
+
+            }
+
         },
 
         mounted() {
@@ -82,6 +104,8 @@
             this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
 
             this.$refs["slider"].refresh();
+
+            this.checkKey(e);
 
         }
     }

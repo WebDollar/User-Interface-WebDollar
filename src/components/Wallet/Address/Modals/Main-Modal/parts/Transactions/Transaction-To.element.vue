@@ -3,7 +3,7 @@
     <ul class="destinations">
         <li class="destinationElement transactionElement">
 
-            <img class="walletAddressImage" :src="this.getAddressPic" >
+            <img :title="this.toAddress.address" @click="copyToClipboard" class="walletAddressImage" :src="this.getAddressPic" >
 
             <div class="money" title="Amount">
                 <span class="amount">{{getAmount}}</span><span class="currency">WEBD</span>
@@ -15,6 +15,12 @@
 </template>
 
 <script>
+
+    var Vue = require('vue/dist/vue.min.js');
+
+    import Clipboard from '../../../../../../../../node_modules/v-clipboard/dist/index.min';
+
+    Vue.use(Clipboard);
 
     export default{
 
@@ -33,6 +39,22 @@
 
         },
 
+        methods:{
+
+            copyToClipboard(){
+                this.$clipboard(this.toAddress.address);
+            },
+
+        }
+
     }
 
 </script>
+
+<style>
+
+    .destinations img{
+        cursor: pointer;
+    }
+
+</style>

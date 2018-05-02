@@ -23,7 +23,7 @@
             </div>
 
             <div class="addressButton" v-on:click.stop="handleLock">
-                <icon class="btn" alt="Secure Wallet" text="Lock Address" :icon="this.addressLocked ? 'lock-open' : 'lock-closed'" />
+                <icon class="btn" alt="Secure Wallet" text="Lock Address" :icon="this.addressLocked ? 'lock-closed' : 'lock-open'" />
             </div>
 
             <div class="addressButton" v-on:click.stop="handleDelete">
@@ -63,6 +63,10 @@
 
             getAddressPic(){
                 return WebDollar.Blockchain.Wallet.getAddressPic(this.address);
+            },
+
+            isEncrypted(){
+
             }
 
         },
@@ -85,7 +89,7 @@
 
             if (typeof window === 'undefined') return;
 
-            if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address).result){
+            if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)){
                 this.addressLocked = true;
             }
 
@@ -256,7 +260,6 @@
         display: inline-block;
         vertical-align: top;
         border-radius: 100%;
-        left: -px;
     }
 
     #allWalets .walletAddress:hover{

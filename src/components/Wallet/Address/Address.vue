@@ -124,18 +124,36 @@
 
             },
 
+            checkIfWalletIsLock(){
+                if (WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)){
+                    this.addressLocked = true;
+                }
+            },
+
             async handleExport(e){
 
-                let answer = await WebDollar.Blockchain.Wallet.exportAddressToJSON(this.address);
+                var exportWallet = false;
 
-                if (answer.result){
+                if (this.addressLocked === false){
+                    if (confirm("Your wallet is not encrypted and it can be used by anybody who has access to the file. We recommend you to encrypt your wallet first. Still you want to download?"))
+                        exportWallet = true;
+                }
+                else exportWallet = true;
 
-                    let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
-                    let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
-                    FileSaver.saveAs(addressFile, fileName);
+                if (exportWallet===true){
 
-                } else {
-                    alert(answer.message)
+                    let answer = await WebDollar.Blockchain.Wallet.exportAddressToJSON(this.address);
+
+                    if (answer.result){
+
+                        let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
+                        let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
+                        FileSaver.saveAs(addressFile, fileName);
+
+                    } else {
+                        alert(answer.message)
+                    }
+
                 }
 
             },
@@ -143,6 +161,25 @@
             handleLock(e){
 
                 this.$refs['refLockModal'].showModal(e);
+                this.verifyIfBecomeLocked(0);
+
+            },
+
+            verifyIfBecomeLocked(calledTime){
+
+                this.checkIfWalletIsLock();
+
+                setInterval(function(){
+
+                    if(this.addressLocked===false){
+
+                        if (calledTime < 100){
+                            this.verifyIfBecomeLocked(calledTime+1)
+                        }
+
+                    }
+
+                }, 2000);
 
             },
 
@@ -151,8 +188,6 @@
                 this.$refs['refDeleteModal'].showModal(e);
 
             },
-
-
 
             _addTransaction(transaction){
                 // in case it is a new transaction

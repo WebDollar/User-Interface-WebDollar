@@ -10,7 +10,7 @@
 
                 <div >
 
-                    <span class="info">If you will lose your password you won't be able to access your WEBD.</span>
+                    <span class="info">Misplacement of your password will result in loss of access to your WEBD.</span>
 
                     <div class="inputAndGeneratorPass">
                         <div>

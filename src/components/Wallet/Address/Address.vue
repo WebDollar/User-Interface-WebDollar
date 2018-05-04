@@ -135,7 +135,7 @@
                 var exportWallet = false;
 
                 if (this.addressLocked === false){
-                    if (confirm("Warning: Your wallet address is not encrypted and can be used by anyone who has access to the file. We recommend to encrypt your wallet before. Do you still want to download your wallet address?"))
+                    if (confirm("Warning! Your wallet address is not encrypted and could be accessed by anyone who has a copy of the file. We recommend encrypting your wallet address prior to downloading it. Do you still wish to proceed?"))
                         exportWallet = true;
                 }
                 else exportWallet = true;

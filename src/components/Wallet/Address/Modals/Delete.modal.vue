@@ -8,7 +8,7 @@
 
                 <div class="descriptionText">
 
-                    For Delete this Address Type <span class="coloredText">DELETE</span>
+                    To delete this address please type <span class="coloredText">DELETE</span>
 
                 </div>
 

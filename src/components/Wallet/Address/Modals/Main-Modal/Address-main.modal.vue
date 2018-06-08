@@ -179,7 +179,7 @@
         margin-top: 15px;
     }
 
-    .balanceContent, .copyButton, .actionButton, .header, .transferList{
+    .balanceContent, .copyButton, .actionButton, .headerModal, .transferList{
         -webkit-user-select: none;  /* Chrome all / Safari all */
         -moz-user-select: none;     /* Firefox all */
         -ms-user-select: none;      /* IE 10+ */

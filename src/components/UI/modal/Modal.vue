@@ -8,7 +8,7 @@
                 x
             </div>
 
-            <div class="header">
+            <div class="headerModal">
                 <div class="title">
                     {{this.title}}
                 </div>
@@ -98,9 +98,10 @@
         outline: none;
     }
 
-    .content{
+    .modal .content{
         padding: 20px;
         padding-top: 30px;
+        margin: 0!important;
     }
 
     .modal{

@@ -6,7 +6,7 @@
             <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
 
             <div type="button" class="miningBar">
-                <slider ref="refMiningSlider" @sliderChanged="this.changeWorkers"/>
+                <slider ref="refMiningSlider" @sliderChanged="this.changeWorkers" />
             </div>
 
             <div id="miningDetails">
@@ -105,7 +105,6 @@
 
                 this.workers = workers;
                 if (this.workers !== this.$refs['refMiningSlider'].data) {
-
                     this.$refs['refMiningSlider'].$refs['slider'].setValue(this.workers);
                 }
 
@@ -137,7 +136,11 @@
                         else
                             number_of_workers = localStorage.getItem("miner-settings-worker-count");
 
+
+                        this.$refs['refMiningSlider'].disableHalving = true;
                         WebDollar.Blockchain.Mining.setWorkers(number_of_workers || 1);
+                        this.$refs['refMiningSlider'].disableHalving = false;
+
                     }
 
                     console.error('#################################################### s-a synchronizat');
@@ -146,7 +149,10 @@
 
                 if (data.message === "Start Synchronizing"){
 
-                    this._prevWorkers = WebDollar.Blockchain.Mining.workers;
+                    if (this._prevWorkers === null || this._prevWorkers === undefined)
+                        this._prevWorkers = localStorage.getItem("miner-settings-worker-count");
+                    else
+                        this._prevWorkers = WebDollar.Blockchain.Mining.workers.workers;
 
                 }
 

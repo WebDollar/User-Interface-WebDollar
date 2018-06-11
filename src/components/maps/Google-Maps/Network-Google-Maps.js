@@ -18,19 +18,19 @@ class NetworkGoogleMaps {
         this.icons = {
 
             general: {
-                icon: 'http://maps.google.com/mapfiles/ms/micons/red.png',
+                icon: 'https://maps.google.com/mapfiles/ms/micons/red.png',
             },
             myself: {
-                icon: 'http://pic2.iranshao.com/emoji/qq/4.gif',
+                icon: 'https://pic2.iranshao.com/emoji/qq/4.gif',
             },
             fullNodeServer: {
-                icon: 'http://icons.iconarchive.com/icons/blackvariant/button-ui-system-apps/16/Terminal-icon.png',
+                icon: 'https://icons.iconarchive.com/icons/blackvariant/button-ui-system-apps/16/Terminal-icon.png',
             },
             webPeer: {
-                icon: 'http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/16/Browser-icon.png',
+                icon: 'https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/16/Browser-icon.png',
             },
             clientSocket: {
-                icon: 'http://icons.iconarchive.com/icons/simplefly/simple-green/16/plug-electricity-icon.png',
+                icon: 'https://icons.iconarchive.com/icons/simplefly/simple-green/16/plug-electricity-icon.png',
             }
         };
 

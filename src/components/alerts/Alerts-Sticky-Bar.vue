@@ -129,6 +129,12 @@
                          this.addAlert("pouchDB-error", "error", "<b>PouchDB doesn't work</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
                          break;
 
+                     case "Wallet is not loaded successfully":
+
+                         this.addAlert("pouchDB-error", "error", "<b>Wallet was not loaded</b> There might big a problem with your browser <b style='text-decoration: underline; color:blue'>Refresh</b> or contact us!", undefined, "/");
+
+                         break;
+
                      case "IndexedDB - Wallet couldn't be imported":
                          if (this.checkIfExistsAlert("wallet-error")) break;
 

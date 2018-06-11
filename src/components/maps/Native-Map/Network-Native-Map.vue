@@ -16,7 +16,7 @@
 
     import NetworkNativeMapCanvas from "./res/Network-Native-Map-Canvas.vue"
     import NetworkNativeMapDialog from "./res/dialog/Network-Native-Map-Dialog.vue"
-
+    const uuid = require('uuid');
 
     export default{
 
@@ -222,7 +222,7 @@
 
                 } else if (typeof socket === "object" && socket.node !== undefined && socket.node.protocol !== undefined && socket.node.protocol.helloValidated) {
                     address = socket.node.sckAddress.toString();
-                    uuid = socket.node.sckAddress.uuid;
+                    uuid = socket.node.sckAddress.uuid || uuid.v4();
 
                     status = "connected";
 
@@ -244,7 +244,7 @@
                     address = socket.sckAddresses[0].toString();
                     uuid = socket.sckAddresses[0].uuid;
 
-                    switch (socket.type) {
+                    switch (socket.type || socket.nodeType) {
                         case WebDollar.Applications.NODES_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal-waitlist';
                             break;

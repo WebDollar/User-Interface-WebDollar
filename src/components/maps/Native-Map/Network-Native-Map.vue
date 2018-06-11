@@ -226,17 +226,17 @@
 
                     status = "connected";
 
-                    switch (socket.node.type) {
-                        case WebDollar.Applications.NODES_TYPE.NODE_TERMINAL:
+                    switch (socket.nodeType) {
+                        case WebDollar.Applications.NODE_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal';
                             break;
 
-                        case WebDollar.Applications.NODES_TYPE.NODE_WEB_PEER:
+                        case WebDollar.Applications.NODE_TYPE.NODE_WEB_PEER:
                             nodeType = 'browser';
                             break;
                     }
 
-                    nodeProtocol = socket.node.type;
+                    nodeProtocol = socket.nodeType;
                     nodeIndex = socket.node.index;
                 }
                 else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject) { //its a waitlist
@@ -244,12 +244,12 @@
                     address = socket.sckAddresses[0].toString();
                     uuid = socket.sckAddresses[0].uuid;
 
-                    switch (socket.type || socket.nodeType) {
-                        case WebDollar.Applications.NODES_TYPE.NODE_TERMINAL:
+                    switch ( socket.nodeType ) {
+                        case WebDollar.Applications.NODE_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal-waitlist';
                             break;
 
-                        case WebDollar.Applications.NODES_TYPE.NODE_WEB_PEER:
+                        case WebDollar.Applications.NODE_TYPE.NODE_WEB_PEER:
                             nodeType = 'browser-waitlist';
                             break;
                     }

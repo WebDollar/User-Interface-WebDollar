@@ -52,9 +52,9 @@
 
                 <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight}">
 
-                    <div id="allWalets">
+                    <div id="allWallets">
 
-                        <Address v-for="(walletAddress, index) in this.addresses"
+                        <address v-for="(walletAddress, index) in this.addresses"
                              :isMiningAddress="miningAddress === walletAddress.address"
                              :key="walletAddress.address"
                              :id="'address'+walletAddress.address"
@@ -64,7 +64,7 @@
                              @onPendingTransactionsChanges="handlePendingTransactionsChanges"
                         >
 
-                        </Address>
+                        </address>
 
                     </div>
 
@@ -84,14 +84,14 @@
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
-    import ShowSumBalances from "./../../components/Wallet/Address/Balance/ShowSumBalances.vue"
+    import ShowSumBalances from "./Address/Balance/Show-Sum-Balances.vue"
 
     export default{
 
         components:{
-            "icon":icon,
-            "Address":Address,
-            "ShowSumBalances":ShowSumBalances,
+            icon,
+            Address,
+            ShowSumBalances,
         },
 
         props: ['addresses', 'currency'],
@@ -587,13 +587,13 @@
         .webdollarFont{
             width: 20px!important;
         }
-        #allWalets .walletAddress{
+        #allWallets .walletAddress{
             margin: 15px 0 0 10px!important;
         }
-        #allWalets .walletAddress img{
+        #allWallets .walletAddress img{
             margin-top: 5px;
         }
-        #allWalets .walletAddress .imageAndInput img{
+        #allWallets .walletAddress .imageAndInput img{
             margin-top: 0!important;
         }
         .walletAddress b{

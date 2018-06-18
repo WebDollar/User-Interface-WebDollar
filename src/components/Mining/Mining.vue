@@ -65,10 +65,10 @@
 
 <script>
 
-    import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
+    import ShowSumBalances from "components/Wallet/Address/Balance/Show-Sum-Balances.vue"
     import slider from "./slider.vue";
-    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
-    import ShowPotentialBalance from "components/Wallet/Address/Balance/ShowPotentialBalance.vue"
+    import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
+    import ShowPotentialBalance from "components/Wallet/Address/Balance/Show-Potential-Balance.vue"
 
     export default{
 
@@ -376,7 +376,7 @@
         margin: 0;
     }
 
-    #allWalets{
+    #allWallets{
         /*border-top: solid 1px #7b7b7b;*/
         display: block;
         /*padding-top: 10px;*/

@@ -2,7 +2,7 @@
 
     <div v-if="this.address !== null && this.address !== undefined">
 
-        <Modal title="Wallet Address" ref="refModal" class="addressMainModal">
+        <modal title="Wallet Address" ref="refModal" class="addressMainModal">
 
             <div slot="content">
 
@@ -72,7 +72,7 @@
             </div>
 
 
-        </Modal>
+        </modal>
 
     </div>
 
@@ -84,8 +84,8 @@
 
     import Modal from "components/UI/modal/Modal.vue"
     import Clipboard from '../../../../../../node_modules/v-clipboard/dist/index.min'
-    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
-    import ShowPotentialBalance from "components/Wallet/Address/Balance/ShowPotentialBalance.vue"
+    import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
+    import ShowPotentialBalance from "components/Wallet/Address/Balance/Show-Potential-Balance.vue"
     import icon from "components/UI/icons/icon.vue"
 
     import Transactions from "./parts/Transactions/Transactions.part.vue"
@@ -104,13 +104,13 @@
 
         components: {
             ShowBalance,
-            "Modal": Modal,
-            "show-balance":ShowBalance,
-            "transactions": Transactions,
-            "transfer": Transfer,
-            "buy": Buy,
-            "sell": Sell,
-            "icon":icon,
+            Modal,
+            ShowBalance,
+            Transactions,
+            Transfer,
+            Buy,
+            Sell,
+            icon,
             ShowPotentialBalance
         },
 

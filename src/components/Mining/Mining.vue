@@ -38,6 +38,25 @@
                         </path>
                 </svg>
                 <ShowSumBalances :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" /> <b class="whiteText">WEBD</b>
+                <div class="hoverBalanceInfo" >
+                    <div class="balanceText">
+
+                        <div class="balanceTitle helpCursor" style="letter-spacing: 0.5px;" title="Balance that can be spent">
+                            Current Balance:
+                        </div>
+                        <div class="balanceAmount helpCursor" title="Balance that can be spent">
+                            <show-balance :address="this.address" currency="0x01"/>
+                        </div>
+
+                        <div class="balanceTitle helpCursor" title="The balance that you will have at the next block mined by your pool">
+                            Potential Balance:
+                        </div>
+                        <div class="balanceAmount helpCursor" title="The balance that you will have at the next block mined by your pool">
+                            <show-potential-balance :address="this.address" currency="0x01"/>
+                        </div>
+
+                    </div>
+                </div>
             </p>
         </div>
 
@@ -48,6 +67,8 @@
 
     import ShowSumBalances from "components/Wallet/Address/Balance/ShowSumBalances.vue"
     import slider from "./slider.vue";
+    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
+    import ShowPotentialBalance from "components/Wallet/Address/Balance/ShowPotentialBalance.vue"
 
     export default{
 
@@ -55,7 +76,9 @@
 
         components: {
             "ShowSumBalances":ShowSumBalances,
-            "slider":slider
+            "slider":slider,
+            ShowBalance,
+            ShowPotentialBalance,
         },
 
         props: [
@@ -211,6 +234,26 @@
 </script>
 
 <style>
+
+    .hoverBalanceInfo{
+        position: fixed;
+        float: right;
+        background-color: #262626;
+        color: #fff;
+        border-top: solid 1px #3a3939;
+        border-left: solid 1px #3a3939;
+        height: 85px;
+        width: 300px;
+        bottom: 30px;
+        right: -300px;
+        z-index: 1;
+        transition: all 0.5s ease;
+    }
+
+    .WEBD:hover + .hoverBalanceInfo, .hoverBalanceInfo:hover{
+        right: 0px;
+        transition: all 0.5s ease
+    }
 
     #miningLoader{
         vertical-align: top;
@@ -450,6 +493,10 @@
     }
 
     @media only screen and (max-width : 831px) {
+
+        .hoverBalanceInfo{
+            display: none;
+        }
 
         .miningBar{
             padding: 4px 0px;

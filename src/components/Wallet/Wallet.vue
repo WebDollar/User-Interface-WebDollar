@@ -99,6 +99,7 @@
         data:  () => {
             return {
                 opened: false,
+                balanceHover: false,
                 miningAddress: '',
 
                 isMobile:false,
@@ -120,7 +121,7 @@
                 walletButtonRadiusLeftOpen: 0,
                 walletButtonRadiusLeftClose: 0,
                 walletButtonRadiusRightOpen: 0,
-                walletButtonRadiusRightClose: 0
+                walletButtonRadiusRightClose: 0,
             }
         },
 
@@ -393,7 +394,7 @@
     #walletButtonText{
         color: #1f1f1f!important;
     }
-m
+
     #walletButtonText svg{
         margin-top: 10px;
         vertical-align: top;
@@ -435,6 +436,27 @@ m
         overflow-y: auto;
         overflow-x: hidden;
         width: 100%;
+    }
+
+    .hoverBalanceInfo .balanceTitle{
+        text-align: left;
+    }
+
+    .hoverBalanceInfo .balanceText{
+        grid-template-columns: 124px 1fr;
+        grid-row-gap: 15px;
+    }
+
+    .hoverBalanceInfo{
+        padding: 15px 10px;
+        box-sizing: border-box!important;
+    }
+
+    .hoverBalanceInfo svg{
+        margin: 0;
+        width: 16px;
+        height: 16px;
+        padding: 0;
     }
 
     .walletController{

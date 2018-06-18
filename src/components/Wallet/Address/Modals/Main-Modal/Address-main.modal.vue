@@ -225,7 +225,7 @@
         padding: 0;
     }
 
-    @media (max-width: 920px){
+    @media (max-width: 1000px){
 
         .balanceText{
             grid-template-columns: 1fr;

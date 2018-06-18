@@ -172,4 +172,8 @@
         font-family: 'avenir',sans-serif;
     }
 
+    .helpCursor{
+        cursor:help;
+    }
+
 </style>

@@ -85,7 +85,7 @@
     import Modal from "components/UI/modal/Modal.vue"
     import Clipboard from '../../../../../../node_modules/v-clipboard/dist/index.min'
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
-    import ShowPotentialBalance from "components/Wallet/Address/Balance/Show-Potential-Balance.vue"
+    import ShowPotentialBalance from "components/Wallet/Address/Balance/Balances/Show-Sum-Balances.vue"
     import icon from "components/UI/icons/icon.vue"
 
     import Transactions from "./parts/Transactions/Transactions.part.vue"

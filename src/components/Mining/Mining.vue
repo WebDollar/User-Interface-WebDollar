@@ -37,7 +37,9 @@
                           repeatCount="indefinite"/>
                         </path>
                 </svg>
-                <ShowSumBalances :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" /> <b class="whiteText">WEBD</b>
+
+                <show-sum-balances :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" /> <b class="whiteText">WEBD</b>
+
                 <div class="hoverBalanceInfo" >
                     <div class="balanceText">
 
@@ -45,14 +47,14 @@
                             Current Balance:
                         </div>
                         <div class="balanceAmount helpCursor" title="Balance available to be spent">
-                            <show-balance :address="this.address" currency="0x01"/>
+                            <show-sum-balances :addresses="this.addresses" :currency="this.currency" ref="refShowSumAvailableBalances" />
                         </div>
 
                         <div class="balanceTitle helpCursor" title="The balance you will have at the next block mined by your pool">
                             Potential Balance:
                         </div>
                         <div class="balanceAmount helpCursor" title="The balance you will have at the next block mined by your pool">
-                            <show-potential-balance :address="this.address" currency="0x01"/>
+                            <show-sum-balances :showPoolReward="true" :addresses="this.addresses" :currency="this.currency" ref="refShowSumPotentialBalances"/>
                         </div>
 
                     </div>
@@ -65,20 +67,18 @@
 
 <script>
 
-    import ShowSumBalances from "components/Wallet/Address/Balance/Show-Sum-Balances.vue"
+    import ShowSumBalances from "components/Wallet/Address/Balance/Balances/Show-Sum-Balances.vue"
     import slider from "./slider.vue";
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
-    import ShowPotentialBalance from "components/Wallet/Address/Balance/Show-Potential-Balance.vue"
 
     export default{
 
         name: 'Mining',
 
         components: {
-            "ShowSumBalances":ShowSumBalances,
-            "slider":slider,
+            ShowSumBalances,
+            slider,
             ShowBalance,
-            ShowPotentialBalance,
         },
 
         props: [

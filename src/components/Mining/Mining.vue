@@ -41,17 +41,17 @@
                 <div class="hoverBalanceInfo" >
                     <div class="balanceText">
 
-                        <div class="balanceTitle helpCursor" style="letter-spacing: 0.5px;" title="Balance that can be spent">
+                        <div class="balanceTitle helpCursor" style="letter-spacing: 0.5px;" title="Balance available to be spent">
                             Current Balance:
                         </div>
-                        <div class="balanceAmount helpCursor" title="Balance that can be spent">
+                        <div class="balanceAmount helpCursor" title="Balance available to be spent">
                             <show-balance :address="this.address" currency="0x01"/>
                         </div>
 
-                        <div class="balanceTitle helpCursor" title="The balance that you will have at the next block mined by your pool">
+                        <div class="balanceTitle helpCursor" title="The balance you will have at the next block mined by your pool">
                             Potential Balance:
                         </div>
-                        <div class="balanceAmount helpCursor" title="The balance that you will have at the next block mined by your pool">
+                        <div class="balanceAmount helpCursor" title="The balance you will have at the next block mined by your pool">
                             <show-potential-balance :address="this.address" currency="0x01"/>
                         </div>
 
@@ -238,13 +238,13 @@
     .hoverBalanceInfo{
         position: fixed;
         float: right;
-        background-color: #262626;
+        background-color: #383838;
         color: #fff;
         border-top: solid 1px #3a3939;
         border-left: solid 1px #3a3939;
-        height: 85px;
+        height: 80px;
         width: 300px;
-        bottom: 30px;
+        bottom: 37px;
         right: -300px;
         z-index: 1;
         transition: all 0.5s ease;

@@ -25,17 +25,17 @@
 
                         <div class="balanceText">
 
-                            <div class="balanceTitle" style="letter-spacing: 0.5px;" title="Balance that can be spent">
+                            <div class="balanceTitle" style="letter-spacing: 0.5px;" title="Balance available to be spent">
                                 Current Balance:
                             </div>
-                            <div class="balanceAmount" title="Balance that can be spent">
+                            <div class="balanceAmount" title="Balance available to be spent">
                                 <show-balance :address="this.address" currency="0x01"/>
                             </div>
 
-                            <div class="balanceTitle" title="The balance that you will have at the next block mined by your pool">
+                            <div class="balanceTitle" title="The balance you will have at the next block mined by your pool">
                                 Potential Balance:
                             </div>
-                            <div class="balanceAmount" title="The balance that you will have at the next block mined by your pool">
+                            <div class="balanceAmount" title="The balance you will have at the next block mined by your pool">
                                 <show-potential-balance :address="this.address" currency="0x01"/>
                             </div>
 

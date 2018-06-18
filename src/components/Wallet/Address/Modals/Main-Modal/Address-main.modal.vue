@@ -2,7 +2,7 @@
 
     <div v-if="this.address !== null && this.address !== undefined">
 
-        <Modal title="Wallet Address" ref="refModal" class="addressMainModal">
+        <modal title="Wallet Address" ref="refModal" class="addressMainModal">
 
             <div slot="content">
 
@@ -72,7 +72,7 @@
             </div>
 
 
-        </Modal>
+        </modal>
 
     </div>
 
@@ -104,13 +104,13 @@
 
         components: {
             ShowBalance,
-            "Modal": Modal,
-            "show-balance":ShowBalance,
-            "transactions": Transactions,
-            "transfer": Transfer,
-            "buy": Buy,
-            "sell": Sell,
-            "icon":icon,
+            Modal,
+            ShowBalance,
+            Transactions,
+            Transfer,
+            Buy,
+            Sell,
+            icon,
             ShowPotentialBalance
         },
 

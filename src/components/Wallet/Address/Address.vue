@@ -275,7 +275,7 @@
         margin-right: 30px;
     }
 
-    #allWalets .walletAddress{
+    #allWallets .walletAddress{
         padding: 0!important;
         width: 100%;
         border-top-left-radius: 50px;
@@ -286,22 +286,22 @@
         transition: all .3s linear;
     }
 
-    #allWalets .walletAddress .addressIdentityBox{
+    #allWallets .walletAddress .addressIdentityBox{
         cursor: pointer;
     }
 
-    #allWalets .walletAddress:last-child{
+    #allWallets .walletAddress:last-child{
         margin-bottom: 1px;
     }
 
-    #allWalets .walletAddress img{
+    #allWallets .walletAddress img{
         height: 40px;
         display: inline-block;
         vertical-align: top;
         border-radius: 100%;
     }
 
-    #allWalets .walletAddress:hover{
+    #allWallets .walletAddress:hover{
         margin: 15px 20px;
         background-color: #313131;
         transition: all .3s linear;
@@ -422,7 +422,7 @@
             margin-top: 11px;
         }
 
-        #allWalets .walletAddress{
+        #allWallets .walletAddress{
             grid-template-columns: 1fr 200px;
         }
 
@@ -459,7 +459,7 @@
             padding: 9px 10px;
         }
 
-        #allWalets .walletAddress{
+        #allWallets .walletAddress{
             grid-template-columns: 1fr 170px;
         }
 
@@ -471,7 +471,7 @@
             margin-top: 3px;
         }
 
-        #allWalets .walletAddress .imageAndInput img {
+        #allWallets .walletAddress .imageAndInput img {
             height: 38px !important;
         }
     }
@@ -490,7 +490,7 @@
             display: none;
         }
 
-        #allWalets .walletAddress{
+        #allWallets .walletAddress{
             grid-template-columns: 1fr 130px;
         }
 

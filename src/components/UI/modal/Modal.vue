@@ -460,7 +460,7 @@
             line-height: 32px!important;
         }
 
-        #allWalets .walletAddress img{
+        #allWallets .walletAddress img{
             margin-top: 0;
         }
 
@@ -476,7 +476,7 @@
             margin-top: 10px!important;
         }
 
-        #allWalets .walletAddress .imageAndInput img {
+        #allWallets .walletAddress .imageAndInput img {
             height: 38px !important;
         }
 

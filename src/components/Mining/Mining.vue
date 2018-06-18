@@ -358,7 +358,7 @@
         margin: 0;
     }
 
-    #allWalets{
+    #allWallets{
         /*border-top: solid 1px #7b7b7b;*/
         display: block;
         /*padding-top: 10px;*/

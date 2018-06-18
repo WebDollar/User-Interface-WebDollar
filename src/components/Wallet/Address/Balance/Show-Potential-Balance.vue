@@ -3,6 +3,7 @@
     <div style="display: inline-block">
 
         <loading-spinner class="fontColor" v-if="!this.loaded" />
+
         <div class="show-balance-span" v-if="this.loaded" >
             {{ this.formatMoneyNumber( (this.computePrice+this.poolReward) ,2)}}
         </div>

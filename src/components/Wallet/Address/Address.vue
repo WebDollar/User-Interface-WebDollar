@@ -47,7 +47,7 @@
     import AddressMainModal from "./Modals/Main-Modal/Address-main.modal.vue"
     import LockModal from "./Modals/Lock.modal.vue"
     import DeleteModal from "./Modals/Delete.modal.vue"
-    import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
+    import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
 
     export default{
 

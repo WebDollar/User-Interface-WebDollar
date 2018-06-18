@@ -84,7 +84,7 @@
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
-    import ShowSumBalances from "./../../components/Wallet/Address/Balance/ShowSumBalances.vue"
+    import ShowSumBalances from "./Address/Balance/Show-Sum-Balances.vue"
 
     export default{
 

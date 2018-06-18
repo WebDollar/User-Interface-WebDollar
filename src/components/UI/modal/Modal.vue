@@ -333,12 +333,32 @@
         margin-top: 16px;
     }
 
-
-
-
-
     .buttonSpace{
         margin-top: 20px;
+    }
+
+    @media (max-width: 920px){
+
+        .balanceText{
+            grid-template-columns: 1fr;
+        }
+
+        .balanceTitle{
+            text-align: center;
+        }
+
+        .balanceAmount{
+            text-align: center;
+        }
+
+        .balanceContent .miningAddress{
+            margin-top: 10px;
+        }
+
+        .balanceContent{
+            padding: 15px 10px 15px 10px;
+        }
+
     }
 
     @media (max-width:831px){

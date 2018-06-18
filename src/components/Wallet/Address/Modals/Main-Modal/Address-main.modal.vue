@@ -23,13 +23,23 @@
 
                     <div class="section balanceContent">
 
-                        <div class="balanceText" style="font-size: 20px">
-                            Balance
-                        </div>
+                        <div class="balanceText">
 
-                        <b class="fontColor">
-                            <show-balance :address="this.address" currency="0x01"/>
-                        </b>
+                            <div class="balanceTitle" style="letter-spacing: 0.5px;" title="Balance that can be spent">
+                                Current Balance:
+                            </div>
+                            <div class="balanceAmount" title="Balance that can be spent">
+                                <show-balance :address="this.address" currency="0x01"/>
+                            </div>
+
+                            <div class="balanceTitle" title="The balance that you will have at the next block mined by your pool">
+                                Potential Balance:
+                            </div>
+                            <div class="balanceAmount" title="The balance that you will have at the next block mined by your pool">
+                                <show-potential-balance :address="this.address" currency="0x01"/>
+                            </div>
+
+                        </div>
 
                         <div class="miningAddress" v-if="isMiningAddress">
                             You are mining on this Address
@@ -75,6 +85,7 @@
     import Modal from "components/UI/modal/Modal.vue"
     import Clipboard from '../../../../../../node_modules/v-clipboard/dist/index.min'
     import ShowBalance from "components/Wallet/Address/Balance/ShowBalance.vue"
+    import ShowPotentialBalance from "components/Wallet/Address/Balance/ShowPotentialBalance.vue"
     import icon from "components/UI/icons/icon.vue"
 
     import Transactions from "./parts/Transactions/Transactions.part.vue"
@@ -100,6 +111,7 @@
             "buy": Buy,
             "sell": Sell,
             "icon":icon,
+            ShowPotentialBalance
         },
 
         data: () => {
@@ -176,7 +188,14 @@
     }
 
     .balanceText{
-        margin-top: 15px;
+        display: grid;
+        grid-template-columns: 1fr 100px;
+        grid-row-gap: 10px;
+    }
+
+    .balanceAmount{
+        font-size: 14px;
+        text-align: left;
     }
 
     .balanceContent, .copyButton, .actionButton, .headerModal, .transferList{
@@ -186,10 +205,32 @@
         user-select: none;
     }
 
+    .balanceContent{
+        padding: 45px 10px 20px 10px!important
+    }
+
     .balanceContent svg{
         width: 20px;
         height: 20px;
-        padding: 10px 0;
+        padding: 0!important;
+    }
+
+    .balanceTitle{
+        text-align: right;
+        font-size: 14px;
+        padding-right: 10px;
+    }
+
+    .balanceAmount .balanceContent{
+        padding: 0;
+    }
+
+    @media (max-width: 920px){
+
+        .balanceText{
+            grid-template-columns: 1fr;
+        }
+
     }
 
 </style>

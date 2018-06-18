@@ -76,6 +76,9 @@
                var number = parseInt(n/WebDollar.Applications.CoinsHelper.WEBD);
                var decimalNumber = this.getNumberRest(n);
 
+               if(number<100) decimals=4;
+               if(number>99999) decimals=0;
+
                return this.formatIntNumber(number)+'.'+this.getFirstDigits(decimalNumber,decimals);
 
             },

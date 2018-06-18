@@ -1,10 +1,10 @@
 <template>
 
-    <div style="display: inline-block" class="balanceShowContent">
+    <div style="display: inline-block">
 
-        <loading-spinner class="fontColor spinnerBalance" v-if="!this.loaded" />
+        <loading-spinner class="fontColor" v-if="!this.loaded" />
         <div class="show-balance-span" v-if="this.loaded" >
-            {{ this.formatMoneyNumber(this.computePrice,2)}}
+            {{ this.formatMoneyNumber( (this.computePrice+this.poolReward) ,2)}}
         </div>
 
     </div>
@@ -26,6 +26,7 @@
         data(){
           return {
               balances: {},
+              poolReward: 0,
               subscription: null,
               loaded: WebDollar.Blockchain.loaded||false,
             }
@@ -188,10 +189,6 @@
     .balanceContent .show-balance-span{
         margin-top: 0;
         font-size: 14px;
-    }
-
-    .balanceShowContent{
-        box-sizing: border-box;
     }
 
     @media only screen and (max-width : 831px) {

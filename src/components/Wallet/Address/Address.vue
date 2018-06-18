@@ -113,9 +113,13 @@
         methods:{
 
             formatMoneyNumber(n, decimals=0) {
-                return parseInt(n).toFixed(decimals).replace(/./g, function(c, i, a) {
-                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-                });
+                var number = parseInt(n/WebDollar.Applications.CoinsHelper.WEBD);
+                var decimalNumber = this.getNumberRest(n);
+
+                if(number<100) decimals=4;
+                if(number>99999) decimals=0;
+
+                return this.formatIntNumber(number)+'.'+this.getFirstDigits(decimalNumber,decimals);
             },
 
             handleTransferFunds(e){
@@ -314,6 +318,11 @@
         vertical-align: top;
     }
 
+    .addressIdentityBox .balanceShowContent svg{
+        line-height: normal;
+        padding: 10px 0 0 0!important;
+    }
+
     .walletAddress:hover .walletReceivingImg, .walletAddress:hover .walletSendingImg{
         display: none;
     }
@@ -350,8 +359,8 @@
     }
 
     .addressIdentityBox .fontColor svg{
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         padding: 10px 0;
     }
 

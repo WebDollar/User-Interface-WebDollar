@@ -43,14 +43,14 @@
                 <div class="hoverBalanceInfo" >
                     <div class="balanceText">
 
-                        <div class="balanceTitle helpCursor" style="letter-spacing: 0.5px;" title="Balance available to be spent">
-                            Current Balance:
+                        <div class="balanceTitle helpCursor" title="Balance available to be spent">
+                            Available Balance:
                         </div>
                         <div class="balanceAmount helpCursor" title="Balance available to be spent">
                             <show-sum-balances :addresses="this.addresses" :currency="this.currency" ref="refShowSumAvailableBalances" />
                         </div>
 
-                        <div class="balanceTitle helpCursor" title="The balance you will have at the next block mined by your pool">
+                        <div class="balanceTitle helpCursor" style="letter-spacing: 0.1px" title="The balance you will have at the next block mined by your pool">
                             Potential Balance:
                         </div>
                         <div class="balanceAmount helpCursor" title="The balance you will have at the next block mined by your pool">
@@ -245,7 +245,9 @@
         height: 80px;
         width: 300px;
         bottom: 37px;
-        right: -300px;
+        padding: 15px 10px;
+        box-sizing: border-box!important;
+        right: -330px;
         z-index: 1;
         transition: all 0.5s ease;
     }
@@ -253,6 +255,22 @@
     .WEBD:hover + .hoverBalanceInfo, .hoverBalanceInfo:hover{
         right: 0px;
         transition: all 0.5s ease
+    }
+
+    .hoverBalanceInfo .balanceTitle{
+        text-align: left;
+    }
+
+    .hoverBalanceInfo .balanceText{
+        grid-template-columns: 126px 1fr;
+        grid-row-gap: 15px;
+    }
+
+    .hoverBalanceInfo svg{
+        margin: 0;
+        width: 16px;
+        height: 16px;
+        padding: 0;
     }
 
     #miningLoader{

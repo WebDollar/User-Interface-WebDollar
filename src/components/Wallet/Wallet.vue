@@ -438,27 +438,6 @@
         width: 100%;
     }
 
-    .hoverBalanceInfo .balanceTitle{
-        text-align: left;
-    }
-
-    .hoverBalanceInfo .balanceText{
-        grid-template-columns: 124px 1fr;
-        grid-row-gap: 15px;
-    }
-
-    .hoverBalanceInfo{
-        padding: 15px 10px;
-        box-sizing: border-box!important;
-    }
-
-    .hoverBalanceInfo svg{
-        margin: 0;
-        width: 16px;
-        height: 16px;
-        padding: 0;
-    }
-
     .walletController{
         display: grid;
         grid-template-columns: 1fr 1fr;

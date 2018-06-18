@@ -26,6 +26,7 @@
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderMobileWidth: 200,
+                disableHalving: false,
             }
         },
 
@@ -34,13 +35,18 @@
 
                 console.log("value", value);
 
-                if (value > (this.value||1) *3){
+                //TODO use halver
 
-                    value = (this.value||1) *3;
-                    this.$refs['slider'].setValue(value);
-                    return;
-
-                }
+//                if (this.disableHalving)
+//                    this.$refs['slider'].setValue(value);
+//                else
+//                    if (value > (this.value||1) *3){
+//
+//                        value = (this.value||1) *3;
+//                        this.$refs['slider'].setValue(value);
+//                        return;
+//
+//                    }
 
                 this.$emit('sliderChanged', value);
             },
@@ -82,6 +88,7 @@
             this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
 
             this.$refs["slider"].refresh();
+
 
         }
     }

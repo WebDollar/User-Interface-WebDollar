@@ -16,7 +16,7 @@
 
     import NetworkNativeMapCanvas from "./res/Network-Native-Map-Canvas.vue"
     import NetworkNativeMapDialog from "./res/dialog/Network-Native-Map-Dialog.vue"
-
+    const uuid = require('uuid');
 
     export default{
 
@@ -222,21 +222,21 @@
 
                 } else if (typeof socket === "object" && socket.node !== undefined && socket.node.protocol !== undefined && socket.node.protocol.helloValidated) {
                     address = socket.node.sckAddress.toString();
-                    uuid = socket.node.sckAddress.uuid;
+                    uuid = socket.node.sckAddress.uuid || uuid.v4();
 
                     status = "connected";
 
-                    switch (socket.node.type) {
-                        case WebDollar.Applications.NODES_TYPE.NODE_TERMINAL:
+                    switch (socket.nodeType) {
+                        case WebDollar.Applications.NODE_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal';
                             break;
 
-                        case WebDollar.Applications.NODES_TYPE.NODE_WEB_PEER:
+                        case WebDollar.Applications.NODE_TYPE.NODE_WEB_PEER:
                             nodeType = 'browser';
                             break;
                     }
 
-                    nodeProtocol = socket.node.type;
+                    nodeProtocol = socket.nodeType;
                     nodeIndex = socket.node.index;
                 }
                 else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject) { //its a waitlist
@@ -244,12 +244,12 @@
                     address = socket.sckAddresses[0].toString();
                     uuid = socket.sckAddresses[0].uuid;
 
-                    switch (socket.type) {
-                        case WebDollar.Applications.NODES_TYPE.NODE_TERMINAL:
+                    switch ( socket.nodeType ) {
+                        case WebDollar.Applications.NODE_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal-waitlist';
                             break;
 
-                        case WebDollar.Applications.NODES_TYPE.NODE_WEB_PEER:
+                        case WebDollar.Applications.NODE_TYPE.NODE_WEB_PEER:
                             nodeType = 'browser-waitlist';
                             break;
                     }

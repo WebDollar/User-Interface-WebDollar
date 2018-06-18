@@ -7,7 +7,7 @@
             <icon v-if="nodeType === 'terminal' " icon="terminal" style="padding-right: 10px"> </icon>
             <icon v-if="nodeType === 'terminal-waitlist' " icon="terminal" style="padding-right: 10px"> </icon>
             <icon v-if="nodeType === 'browser-waitlist' " icon="network" style="padding-right: 10px"> </icon>
-            <img class="icon-connected" :src="this.connected === 'connected' ? 'http://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Connected-icon.png' : 'http://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Disconnected-icon.png' ">
+            <img class="icon-connected" :src="this.connected === 'connected' ? 'https://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Connected-icon.png' : 'https://icons.iconarchive.com/icons/icons8/windows-8/16/Network-Disconnected-icon.png' ">
         </div>
         <div ref="refText" class="map-dialog-description-text" style="display: inline-block;">
             <br>{{country}}, {{city}}<br>

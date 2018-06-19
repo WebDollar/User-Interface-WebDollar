@@ -48,6 +48,7 @@
     import LockModal from "./Modals/Lock.modal.vue"
     import DeleteModal from "./Modals/Delete.modal.vue"
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
+    import BrowserHelpers from "helpers/Browser.helpers"
 
     export default{
 
@@ -112,15 +113,7 @@
 
         methods:{
 
-            formatMoneyNumber(n, decimals=0) {
-                var number = parseInt(n/WebDollar.Applications.CoinsHelper.WEBD);
-                var decimalNumber = this.getNumberRest(n);
-
-                if(number<100) decimals=4;
-                if(number>99999) decimals=0;
-
-                return this.formatIntNumber(number)+'.'+this.getFirstDigits(decimalNumber,decimals);
-            },
+            formatMoneyNumber: BrowserHelpers.formatMoneyNumber,
 
             handleTransferFunds(e){
 

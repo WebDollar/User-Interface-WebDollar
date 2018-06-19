@@ -54,7 +54,7 @@
 
                     <div id="allWallets">
 
-                        <address v-for="(walletAddress, index) in this.addresses"
+                        <Address v-for="(walletAddress, index) in this.addresses"
                              :isMiningAddress="miningAddress === walletAddress.address"
                              :key="walletAddress.address"
                              :id="'address'+walletAddress.address"
@@ -64,7 +64,7 @@
                              @onPendingTransactionsChanges="handlePendingTransactionsChanges"
                         >
 
-                        </address>
+                        </Address>
 
                     </div>
 
@@ -84,13 +84,13 @@
     import icon from "components/UI/icons/icon.vue"
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
-    import ShowSumBalances from "./Address/Balance/Show-Sum-Balances.vue"
+    import ShowSumBalances from "./Address/Balance/Balances/Show-Sum-Balances.vue"
 
     export default{
 
         components:{
             icon,
-            Address,
+            "Address": Address,
             ShowSumBalances,
         },
 

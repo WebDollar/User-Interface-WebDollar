@@ -14,6 +14,7 @@
 <script>
 
     import LoadingSpinner from "components/UI/elements/Loading-Spinner.vue"
+    import BrowserHelpers from "helpers/Browser.helpers"
 
     export default{
 
@@ -103,58 +104,7 @@
 
         methods:{
 
-            formatMoneyNumber(n, decimals=0) {
-
-                var number = parseInt(n/WebDollar.Applications.CoinsHelper.WEBD);
-                var decimalNumber = this.getNumberRest(n);
-
-                if(number<100) decimals=4;
-                if(number>99999) decimals=0;
-
-                return this.formatIntNumber(number)+'.'+this.getFirstDigits(decimalNumber,decimals);
-
-            },
-
-            formatIntNumber(number){
-
-                return number.toString().replace(/./g, function(c, i, a) {
-                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-                });
-
-            },
-
-            getNumberRest(number){
-
-                return number % WebDollar.Applications.CoinsHelper.WEBD;
-
-            },
-
-            getFirstDigits(number,decimals){
-
-                var decimalsVerifier = Math.pow(10,decimals);
-                var newNumber = '';
-
-                if(number<10){
-
-                    newNumber='000'+number.toString();
-
-                }else if(number<100){
-
-                    newNumber='00'+number.toString();
-
-                }else if(number<1000){
-
-                    newNumber='0'+number.toString();
-
-                }else if(number<10000){
-
-                    newNumber=''+number.toString();
-
-                }
-
-                return newNumber.substring(0,decimals);
-
-            }
+            formatMoneyNumber: BrowserHelpers.formatMoneyNumber,
 
         }
 

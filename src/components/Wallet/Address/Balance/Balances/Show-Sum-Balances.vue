@@ -5,7 +5,7 @@
         <loading-spinner class="fontColor" v-if="!this.loaded" />
 
         <div class="show-balance-span" v-if="this.loaded" >
-            {{ this.formatMoneyNumber( (this.sum + (this.showPoolReward === true ?  this.computePoolReward : 0)) ,2)}}
+            {{ this.formatMoneyNumber( (this.sum + (this.showPoolReward === true ? this.computePoolReward : 0 )) ,2)}}
         </div>
 
     </div>
@@ -23,7 +23,7 @@
             LoadingSpinner,
         },
 
-        props: ['address', 'currency', 'showPoolReward'],
+        props: ['addresses', 'currency', 'showPoolReward'],
 
         data(){
           return {
@@ -51,16 +51,16 @@
             //pool reward
 
             if (WebDollar.Blockchain.MinerPoolManagement !== undefined) {
-                this.minerPoolPotentialReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.potentialReward / 10000;
-                this.minerPoolConfirmedReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReward / 10000;
+                this.minerPoolPotentialReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.potentialReward;
+                this.minerPoolConfirmedReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReward;
             }
 
             WebDollar.StatusEvents.on("miner-pool/potential-reward", (data)=>{
-                this.minerPoolPotentialReward = data.potentialReward/10000;
+                this.minerPoolPotentialReward = data.potentialReward;
             });
 
             WebDollar.StatusEvents.on("miner-pool/confirmed-reward", (data)=>{
-                this.minerPoolConfirmedReward = data.confirmedReward/10000;
+                this.minerPoolConfirmedReward = data.confirmedReward;
             });
 
         },
@@ -75,7 +75,7 @@
 
                 if (addresses === undefined || addresses === null) return ;
 
-                for (let index in this.addresses){
+                for (let index in addresses){
 
                     if (addresses[index].balances !== undefined && addresses[index].balances !== null && addresses[index].balances[currency] !== undefined)
                         newSum += parseFloat( addresses[index].balances[currency]);
@@ -107,7 +107,14 @@
 
                 this.refreshSum(this.addresses, newVal);
 
+            },
+
+            showPoolReward: function (newVal, oldVal) { // watch it
+
+                this.refreshSum(this.addresses, this.currency);
+
             }
+
         },
 
         computed:{

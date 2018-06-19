@@ -26,7 +26,7 @@
                         <div class="balanceText">
 
                             <div class="balanceTitle" title="Balance available to be spent">
-                                Avaiable Balance:
+                                Available Balance:
                             </div>
                             <div class="balanceAmount" title="Balance available to be spent">
                                 <show-balance :address="this.address" currency="0x01"/>
@@ -36,7 +36,7 @@
                                 Potential Balance:
                             </div>
                             <div class="balanceAmount" title="The balance you will have at the next block mined by your pool">
-                                <show-potential-balance :address="this.address" currency="0x01"/>
+                                <show-balance :showPoolReward="isMiningAddress" :address="this.address" currency="0x01"/>
                             </div>
 
                         </div>

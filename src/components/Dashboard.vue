@@ -95,6 +95,7 @@
                             this.$refs['refMining'].$refs['refShowSumBalances'].refreshSum(this.addresses, this.currency);
                             this.$refs['refMining'].$refs['refShowSumAvailableBalances'].refreshSum(this.addresses, this.currency);
                             this.$refs['refMining'].$refs['refShowSumPotentialBalances'].refreshSum(this.addresses, this.currency);
+
                             this.$refs['refWallet'].$refs['refShowSumBalances'].refreshSum(this.addresses, this.currency);
 
                             break;

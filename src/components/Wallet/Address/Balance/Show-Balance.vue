@@ -4,7 +4,7 @@
 
         <loading-spinner class="fontColor spinnerBalance" v-if="!this.loaded" />
         <div class="show-balance-span" v-if="this.loaded" >
-            {{ this.formatMoneyNumber(this.computePrice,2)}}
+            {{ this.formatMoneyNumber(this.computePrice +  (this.showPoolReward === true ? this.computePoolReward : 0 ) ,2)}}
         </div>
 
     </div>
@@ -22,13 +22,18 @@
             LoadingSpinner,
         },
 
-        props: ['address', 'currency'],
+        props: ['address', 'currency', 'showPoolReward'],
 
         data(){
           return {
+
               balances: {},
               subscription: null,
               loaded: WebDollar.Blockchain.loaded||false,
+
+              minerPoolPotentialReward: 0,
+              minerPoolConfirmedReward: 0,
+
             }
         },
 
@@ -40,6 +45,12 @@
 
                 //return this.formatMoneyNumber( this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD );
                 return (this.balances[this.currency]);
+            },
+
+            computePoolReward(){
+
+                return this.minerPoolPotentialReward + this.minerPoolConfirmedReward;
+
             }
 
         },
@@ -71,9 +82,27 @@
                 this.balances = data.balances;
             }
 
+
+
+            //pool reward
+
+            if (WebDollar.Blockchain.MinerPoolManagement !== undefined) {
+                this.minerPoolPotentialReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.potentialReward;
+                this.minerPoolConfirmedReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReward;
+            }
+
+            WebDollar.StatusEvents.on("miner-pool/potential-reward", (data)=>{
+                this.minerPoolPotentialReward = data.potentialReward;
+            });
+
+            WebDollar.StatusEvents.on("miner-pool/confirmed-reward", (data)=>{
+                this.minerPoolConfirmedReward = data.confirmedReward;
+            });
+
         },
 
         watch: {
+
             address: function (newVal, oldVal) { // watch it
 
                 WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.subscription);
@@ -99,7 +128,13 @@
 
             currency: function (newVal, oldVal) { // watch it
 
+            },
+
+            showPoolReward: function (newVal, oldVal) { // watch it
+
             }
+
+
         },
 
         methods:{

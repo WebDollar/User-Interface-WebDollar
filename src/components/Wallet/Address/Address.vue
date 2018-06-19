@@ -7,7 +7,7 @@
             <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress isImining" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
             <b class="fontColor">
-                <show-balance :address="this.address" currency="0x01"/>
+                <show-balance :showPoolReward="isMiningAddress" :address="this.address" currency="0x01"/>
             </b>
             <b class="amountCurrency currencyName">WEBD</b>
 

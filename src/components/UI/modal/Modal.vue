@@ -351,6 +351,10 @@
             text-align: center;
         }
 
+        .WEBD .balanceAmount{
+            text-align: left;
+        }
+
         .balanceContent .miningAddress{
             margin-top: 10px;
         }

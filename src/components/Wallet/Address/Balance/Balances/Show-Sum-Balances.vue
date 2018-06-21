@@ -32,7 +32,7 @@
               subscription: null,
               loaded: WebDollar.Blockchain.loaded||false,
 
-              minerPoolPotentialReward: 0,
+              minerPoolTotalReward: 0,
               minerPoolConfirmedReward: 0,
             }
         },
@@ -51,12 +51,12 @@
             //pool reward
 
             if (WebDollar.Blockchain.MinerPoolManagement !== undefined) {
-                this.minerPoolPotentialReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.potentialReward;
+                this.minerPoolTotalReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.totalReward;
                 this.minerPoolConfirmedReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReward;
             }
 
-            WebDollar.StatusEvents.on("miner-pool/potential-reward", (data)=>{
-                this.minerPoolPotentialReward = data.potentialReward;
+            WebDollar.StatusEvents.on("miner-pool/total-reward", (data)=>{
+                this.minerPoolTotalReward = data.totalReward;
             });
 
             WebDollar.StatusEvents.on("miner-pool/confirmed-reward", (data)=>{
@@ -120,7 +120,7 @@
 
             computePoolReward(){
 
-                return this.minerPoolPotentialReward + this.minerPoolConfirmedReward;
+                return this.minerPoolTotalReward + this.minerPoolConfirmedReward;
 
             }
 

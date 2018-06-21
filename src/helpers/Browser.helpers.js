@@ -21,6 +21,7 @@ class BrowserHelpers{
         if(number<100) decimals=4;
         if(number>99999) decimals=0;
 
+        if(decimals===0) return BrowserHelpers._formatIntNumber(number);
         return BrowserHelpers._formatIntNumber(number)+'.'+BrowserHelpers._getFirstDigits(decimalNumber,decimals);
     }
 

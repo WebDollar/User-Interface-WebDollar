@@ -5,7 +5,6 @@
         <loading-spinner class="fontColor spinnerBalance" v-if="!this.loaded" />
         <div class="show-balance-span" v-if="this.loaded" >
             {{ this.formatMoneyNumber( (this.computePrice +  (this.showPoolReward === true ? this.computePoolReward : 0 )) ,2)}}
-            {{ this.formatMoneyNumber((this.computePrice +  (this.showPoolReward === true ? this.computePoolReward : 0 )) ,2)}}
         </div>
 
     </div>

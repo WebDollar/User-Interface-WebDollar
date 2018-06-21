@@ -93,7 +93,7 @@
     import Buy from "./parts/Buy.part.vue"
     import Sell from "./parts/Sell.part.vue"
 
-    Vue.use(Clipboard)
+    Vue.use(Clipboard);
 
     export default {
 
@@ -105,7 +105,6 @@
         components: {
             ShowBalance,
             Modal,
-            ShowBalance,
             Transactions,
             Transfer,
             Buy,

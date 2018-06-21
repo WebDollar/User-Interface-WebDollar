@@ -4,7 +4,7 @@
 
         <loading-spinner class="fontColor spinnerBalance" v-if="!this.loaded" />
         <div class="show-balance-span" v-if="this.loaded" >
-            {{ this.formatMoneyNumber(this.computePrice +  (this.showPoolReward === true ? this.computePoolReward : 0 ) ,2)}}
+            {{ this.formatMoneyNumber( (this.computePrice +  (this.showPoolReward === true ? this.computePoolReward : 0 )) ,2)}}
         </div>
 
     </div>
@@ -43,7 +43,6 @@
 
                 if (this.balances === null || this.balances === undefined || !this.balances.hasOwnProperty(this.currency)) return 0;
 
-                //return this.formatMoneyNumber( this.balances[this.currency] / WebDollar.Applications.CoinsHelper.WEBD );
                 return (this.balances[this.currency]);
             },
 
@@ -87,16 +86,16 @@
             //pool reward
 
             if (WebDollar.Blockchain.MinerPoolManagement !== undefined) {
-                this.minerPoolPotentialReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.potentialReward;
-                this.minerPoolConfirmedReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReward;
+                this.minerPoolPotentialReward = parseInt( WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.potentialReward);
+                this.minerPoolConfirmedReward = parseInt( WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReward);
             }
 
             WebDollar.StatusEvents.on("miner-pool/potential-reward", (data)=>{
-                this.minerPoolPotentialReward = data.potentialReward;
+                this.minerPoolPotentialReward = parseInt(  data.potentialReward );
             });
 
             WebDollar.StatusEvents.on("miner-pool/confirmed-reward", (data)=>{
-                this.minerPoolConfirmedReward = data.confirmedReward;
+                this.minerPoolConfirmedReward = parseInt( data.confirmedReward );
             });
 
         },
@@ -115,7 +114,7 @@
                 console.log("address!!!!!!", address);
 
                 let data = WebDollar.Blockchain.Balances.subscribeBalancesChanges(address, (data)=>{
-                    console.log("balance changed")
+                    console.log("balance changed");
                     this.balances = data.balances;
                 });
 

@@ -85,7 +85,6 @@
 
                 if (this.sum!==0){
 
-                    //this.sum = this.formatMoneyNumber(this.sum);
                     this.sum = this.sum;
 
                 }

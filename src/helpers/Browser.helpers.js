@@ -13,6 +13,8 @@ class BrowserHelpers{
 
     static formatMoneyNumber(n, decimals=0) {
 
+        n = parseInt(n);
+
         let number = parseInt(n/WebDollar.Applications.CoinsHelper.WEBD);
         let decimalNumber = BrowserHelpers._getNumberRest(n);
 

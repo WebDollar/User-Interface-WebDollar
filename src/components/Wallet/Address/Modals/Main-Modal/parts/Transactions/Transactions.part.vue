@@ -23,7 +23,7 @@
 
             <ul class="transferListContainer">
 
-                <transaction v-for="(key, index) in transactions"
+                <transaction v-for="(key, index) in orderedTransactions"
                              :transaction = "key"
                              :key="'transaction'+index"
                 >
@@ -55,6 +55,7 @@
             return {
                 transactions : {},
                 subscription: null,
+                transactionsLength: 0,
             }
         },
 
@@ -82,20 +83,40 @@
 
         },
 
+        computed: {
+
+            orderedTransactions: function () {
+
+                let sortable = [];
+                for (let i in this.transactions) {
+                    sortable.push( this.transactions[i] );
+                }
+
+                return sortable.sort(function(a, b) {
+                    return a._index - b._index;
+                });
+
+            }
+        },
+
         methods:{
 
             _addTransaction(transaction){
 
                 // in case it is a new transaction
+                if (this.transactions[transaction.txId] === undefined) {
+                    transaction._index =  -( ++this.transactionsLength );
+                }
+
                 Vue.set(this.transactions, transaction.txId, transaction);
+
 
             },
 
             _addTransactions(transactions){
 
-                for (let key in transactions){
+                for (let key in transactions)
                     this._addTransaction(transactions[key]);
-                }
 
             },
 

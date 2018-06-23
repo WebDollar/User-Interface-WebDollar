@@ -17,7 +17,7 @@
 
             <span id="walletButtonText">
                 <div style="display: inline-block">
-                    <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
+                    <icon class="buttonIcon statusWalletIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
                     Wallet
                 </div>
                 <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
@@ -480,6 +480,10 @@
 
     #walletButton span:hover{
         transition: all .3s linear;
+    }
+
+    .statusWalletIcon{
+        margin-top: 10px!important;
     }
 
     #walletMenu{

@@ -425,6 +425,7 @@
 
         .addressIdentityBox .fontColor svg{
             width: 30px;
+            height: 26px;
         }
 
         .currencyName {

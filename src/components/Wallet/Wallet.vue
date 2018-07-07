@@ -17,7 +17,7 @@
 
             <span id="walletButtonText">
                 <div style="display: inline-block">
-                    <icon class="buttonIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
+                    <icon class="buttonIcon statusWalletIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
                     Wallet
                 </div>
                 <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
@@ -396,9 +396,10 @@
     }
 
     #walletButtonText svg{
-        margin-top: 10px;
         vertical-align: top;
         width: 14px;
+        margin-left: 10px;
+        margin-top: 5px;
     }
 
     .mainAddress{
@@ -419,8 +420,6 @@
         background-color: #fec02c;
         color: #1f1f1f;
         margin-bottom: 20px;
-        border: solid 1px #444444;
-        border-right: solid 1px #fec02c;
         transition: all .3s linear;
     }
 
@@ -481,6 +480,10 @@
 
     #walletButton span:hover{
         transition: all .3s linear;
+    }
+
+    .statusWalletIcon{
+        margin-top: 10px!important;
     }
 
     #walletMenu{

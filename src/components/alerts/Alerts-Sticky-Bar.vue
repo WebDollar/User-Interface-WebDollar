@@ -1,18 +1,3 @@
-<template>
-    <div v-show="this._showStatus">
-
-        <div id="WebDollarAlertsStickyBarDiv" class='alertsStickyBar' :style="'background: '+this._backgroundColor " >
-
-            <alert v-for="alert in this.alerts"
-                   :key="'alert'+alert.statusUniqueId"
-                   :alert="alert"
-            >
-            </alert>
-
-        </div>
-    </div>
-</template>
-
 <script>
 
     import icon from "components/UI/icons/icon.vue"
@@ -46,7 +31,6 @@
 
          mounted(){
 
-
              if (typeof window === "undefined") return;
 
              WebDollar.StatusEvents.on("blockchain/status", (data)=>{
@@ -62,27 +46,25 @@
                      case "Error Synchronizing":
 
                          if (WebDollar.Blockchain.loaded !== true) {
-                             this.deleteAlert("error-internet");
-                             this.deleteAlert("error-firewall");
-                             this.addAlert("error-firewall", "error", "Check your Firewall, Router, Anti-virus or Internet");
+//                             this.deleteAlert("error-internet");
+//                             this.deleteAlert("error-firewall");
+                             this.addAlert("error-firewall", "error", "Firewall Error", "Check your Firewall, Router, Anti-virus or Internet",43200);
                          }
                          else {
-                             this.deleteAlert("error-internet");
-                             this.deleteAlert("error-firewall");
-                             this.addAlert("error-internet", "error", "Internet is no longer working. Check your internet or refresh");
+//                             this.deleteAlert("error-internet");
+//                             this.deleteAlert("error-firewall");
+                             this.addAlert("error-internet", "error", "Connection Error" ,"Internet is no longer working. Check your internet or refresh",43200);
                          }
 
                          break;
 
                      case "No Internet Access":
 
-                         this.deleteAlert("error-internet");
-                         this.deleteAlert("error-firewall");
-                         this.addAlert("error-internet", "error","Internet is no longer working. Check your internet or refresh");
+//                         this.deleteAlert("error-internet");
+//                         this.deleteAlert("error-firewall");
+                         this.addAlert("error-internet", "error", "Internet Error", "Internet is no longer working. Check your internet or refresh",43200);
                          break;
                  }
-
-
 
              });
 
@@ -90,23 +72,23 @@
 
                  switch (data.message) {
                      case "IndexedDB Error":
-                         this.deleteAlert("indexedDB-error-reason");
-                         this.addAlert("indexedDB-error-reason", "error", "IndexedDB returned an error <b>"+data.reason+"</b>");
+//                         this.deleteAlert("indexedDB-error-reason");
+                         this.addAlert("indexedDB-error-reason", "error", "IndexDB Error", "IndexedDB returned an error <b>"+data.reason+"</b>", 43200);
                          break;
 
                      case "Network Adjusted Time Error":
-                         this.deleteAlert("network-adjusted-time-error");
-                         this.addAlert("network-adjusted-time-error", "error", "Network Adjusted Time didn't work <b>"+data.reason+"</b>");
+//                         this.deleteAlert("network-adjusted-time-error");
+                         this.addAlert("network-adjusted-time-error", "error", "Network Time Error", "Network Adjusted Time didn't work <b>"+data.reason+"</b>", 43200);
 
                          break;
 
                      case "Network Adjusted Time Success":
-                         this.deleteAlert("network-adjusted-time-error");
+//                         this.deleteAlert("network-adjusted-time-error");
                          break;
 
                      case "You mined way too many blocks":
 
-                         this.addAlert("too-many-blocks-mined", "warning", "You mined way too many blocks. You are not sync. Refresh in 15 sec");
+                         this.addAlert("too-many-blocks-mined", "warn", "Fork Warning", "You mined way too many blocks. You are not sync. Refresh in 15 sec", 900);
                          WebDollar.Blockchain.Mining.stopMining();
 
                          break;
@@ -120,41 +102,41 @@
                      case "IndexedDB is not supported":
                          if (this.checkIfExistsAlert("indexedDB-error")) break;
 
-                         this.addAlert("indexedDB-error", "error", "<b>IndexedDB is not supported</b> on your browser. Install a different browser");
+                         this.addAlert("indexedDB-error", "error",  "IndexDB Error", "<b>IndexedDB is not supported</b> on your browser. Install a different browser", 43200);
                          break;
 
                      case "IndexedDB - PouchDB doesn't work":
                          if (this.checkIfExistsAlert("pouchDB-error")) break;
 
-                         this.addAlert("pouchDB-error", "error", "<b>PouchDB doesn't work</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
+                         this.addAlert("pouchDB-error", "error", "PouchDB Error", "<b>PouchDB doesn't work</b> "+data.dbName+" . Clear your Website Data from browser. <b style='text-decoration: underline; color:blue'>Click Here</b>", 43200, "/clearIndexedDB");
                          break;
 
                      case "Wallet is not loaded successfully":
 
-                         this.addAlert("pouchDB-error", "error", "<b>Wallet was not loaded</b> There might big a problem with your browser <b style='text-decoration: underline; color:blue'>Refresh</b> or contact us!", undefined, "/");
+                         this.addAlert("pouchDB-error", "error", "PouchDB Error", "<b>Wallet was not loaded</b> There might big a problem with your browser <b style='text-decoration: underline; color:blue'>Refresh</b> or contact us!", 43200, "/");
 
                          break;
 
                      case "IndexedDB - Wallet couldn't be imported":
                          if (this.checkIfExistsAlert("wallet-error")) break;
 
-                         this.addAlert("wallet-error", "error", "<b>Wallet couldn't be imported</b> "+data.dbName+" Try refresh or Erase your Wallet. <b style='text-decoration: underline; color:blue'>Click Here</b>", undefined, "/clearIndexedDB");
+                         this.addAlert("wallet-error", "error", "Wallet Error", "<b>Wallet couldn't be imported</b> "+data.dbName+" Try refresh or Erase your Wallet. <b style='text-decoration: underline; color:blue'>Click Here</b>", 43200, "/clearIndexedDB");
                          break;
 
                      case "Incognito mode":
-                         this.addAlert("incognito-warning", "warning", "Incognito - your <b>WALLET will not be saved</b>b");
+                         this.addAlert("incognito-warning", "warn", "Incognito Warning", "Incognito - your <b>WALLET will not be saved</b>", 43200);
                          break;
 
                      case "WebAssembly not supported":
                          if (this.checkIfExistsAlert("web-assembly-warning")) break;
 
-                         this.addAlert("web-assembly-warning", "warning", "<b>WebAssembly is not supported</b>. You use an old browser or one that doesn't support WebAssembly. Install Chrome/Firefox/Safari and mining increases with 70%");
+                         this.addAlert("web-assembly-warning", "warn", "Performance Warning", "<b>WebAssembly is not supported</b>. You use an old browser or one that doesn't support WebAssembly. Install Chrome/Firefox/Safari and mining increases with 70%", 43200);
                          break;
 
                      case "ASM.JS not supported":
                          if (this.checkIfExistsAlert("asm.js-warning")) break;
 
-                         this.addAlert("asm.js-warning", "error", "<b>ASM.JS is not supported</b>. Mining is not available on your machine. Please update your browser");
+                         this.addAlert("asm.js-warning", "error", "AsmJS Error", "<b>ASM.JS is not supported</b>. Mining is not available on your machine. Please update your browser", 43200);
                          break;
                  }
 
@@ -165,27 +147,38 @@
          methods:{
 
 
-             addAlert(statusId, statusType, statusMessage, timeoutDelete, href){
 
-                 this.alertUniqueIds += 1;
+             addAlert(statusId, statusType, title, statusMessage, timeoutDelete, href){
 
-                 let alert = {
-                     statusUniqueId: this.alertUniqueIds,
-                     statusId: statusId,
-                     statusType: statusType,
-                     statusMessage: statusMessage,
-                     statusHref: href,
-                 };
+//                 this.alertUniqueIds += 1;
+//
+//                 let alert = {
+//                     statusUniqueId: this.alertUniqueIds,
+//                     statusId: statusId,
+//                     statusType: statusType,
+//                     statusMessage: statusMessage,
+//                     statusHref: href,
+//                 };
+//
+//                 this.alerts.push(alert);
+//
+//                 if (typeof timeoutDelete === "number")
+//                    setTimeout(()=>{
+//
+//                        for (let i=0; i<this.alerts.length; i++)
+//                            if (this.alerts[i] === alert)
+//                                this.alerts[i].splice(i,1);
+//                    }, timeoutDelete)
 
-                 this.alerts.push(alert);
 
-                 if (typeof timeoutDelete === "number")
-                    setTimeout(()=>{
-
-                        for (let i=0; i<this.alerts.length; i++)
-                            if (this.alerts[i] === alert)
-                                this.alerts[i].splice(i,1);
-                    }, timeoutDelete)
+                 this.$notify({
+                     group: 'important',
+                     title: title,
+                     text: statusMessage,
+                     type: statusType,
+                     duration: timeoutDelete,
+                     speed: 2000,
+                 })
 
              },
 
@@ -217,16 +210,3 @@
      }
 
 </script>
-
-<style>
-
-    .alertsStickyBar{
-
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
-        text-align: center;
-
-    }
-
-</style>

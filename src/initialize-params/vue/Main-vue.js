@@ -1,6 +1,9 @@
 var Vue = require('vue/dist/vue.min.js');
 
 import Dashboard from 'components/Dashboard.vue';
+import Notifications from 'vue-notification';
+
+Vue.use(Notifications);
 
 //for safari workaround
 export default (params)=> {

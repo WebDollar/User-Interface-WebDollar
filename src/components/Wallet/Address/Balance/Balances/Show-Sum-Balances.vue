@@ -34,6 +34,9 @@
 
               minerPoolTotalReward: 0,
               minerPoolConfirmedReward: 0,
+
+              minerPoolReferralTotalReward: 0,
+              minerPoolReferralConfirmedReward: 0,
             }
         },
 
@@ -53,15 +56,16 @@
             if (WebDollar.Blockchain.MinerPoolManagement !== undefined) {
                 this.minerPoolTotalReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.totalReward;
                 this.minerPoolConfirmedReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReward;
+
+                this.minerPoolReferralTotalReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.totalReferralReward;
+                this.minerPoolReferralConfirmedReward = WebDollar.Blockchain.MinerPoolManagement.minerPoolReward.confirmedReferralReward;
             }
 
-            WebDollar.StatusEvents.on("miner-pool/total-reward", (data)=>{
-                this.minerPoolTotalReward = data.totalReward;
-            });
+            WebDollar.StatusEvents.on("miner-pool/total-reward", data => this.minerPoolTotalReward = data.totalReward );
+            WebDollar.StatusEvents.on("miner-pool/confirmed-reward", data =>  this.minerPoolConfirmedReward = data.confirmedReward );
 
-            WebDollar.StatusEvents.on("miner-pool/confirmed-reward", (data)=>{
-                this.minerPoolConfirmedReward = data.confirmedReward;
-            });
+            WebDollar.StatusEvents.on("miner-pool/referral-total-reward", data=>  this.minerPoolReferralTotalReward = data.referralTotalReward );
+            WebDollar.StatusEvents.on("miner-pool/referral-confirmed-reward", data=>  this.minerPoolReferralConfirmedReward = data.referralConfirmedReward );
 
         },
 
@@ -120,7 +124,7 @@
 
             computePoolReward(){
 
-                return this.minerPoolTotalReward + this.minerPoolConfirmedReward;
+                return this.minerPoolTotalReward + this.minerPoolConfirmedReward + this.minerPoolReferralTotalReward + this.minerPoolReferralTotalReward;
 
             }
 

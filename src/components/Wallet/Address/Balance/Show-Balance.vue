@@ -51,7 +51,7 @@
 
             computePoolReward(){
 
-                return this.minerPoolTotalReward + this.minerPoolConfirmedReward + this.minerPoolReferralTotalReward + this.minerPoolReferralTotalReward;
+                return this.minerPoolTotalReward + this.minerPoolConfirmedReward + this.minerPoolReferralTotalReward + this.minerPoolReferralConfirmedReward;
 
             }
 

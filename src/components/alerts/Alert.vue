@@ -43,10 +43,10 @@
                 switch (this.alert.statusType){
 
                     case "error":
-                        return "red";
+                        return "#840b0b";
 
                     case "warning":
-                        return "yellow";
+                        return "#fec02c";
                 }
 
             },
@@ -56,10 +56,10 @@
                 switch (this.alert.statusType){
 
                     case "error":
-                        return "yellow";
+                        return "#ffce56";
 
                     case "warning":
-                        return "navy";
+                        return "#000";
                 }
             }
         }

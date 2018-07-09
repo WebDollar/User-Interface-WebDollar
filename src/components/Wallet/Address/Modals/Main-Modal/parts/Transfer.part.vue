@@ -3,7 +3,7 @@
 
         <p class="title">Transfer WEBD</p>
 
-        <div class="transfer">
+        <div class="transfer" @keyup.enter="handleCreateTransaction">
             <div >
                 <div class="imageAndInput">
 
@@ -27,12 +27,12 @@
                 </div>
             </div>
 
-            <span class="editError" v-html="this.errorToAmountMessage" :class="this.errorToAmountMessage ? '' : 'hide'"></span>
+            <span class="editError editError2" v-html="this.errorToAmountMessage" :class="this.errorToAmountMessage ? '' : 'hide'"></span>
 
-            <div>
-                <span class="transferError" v-html="this.errorMessage" :class="this.errorMessage ? '' : 'hide'"/>
-                <span class="transferSuccess" v-html="this.successMessage" :class="this.successMessage ? '' : 'hide'"/>
-            </div>
+            <!--<div>-->
+                <!--<span class="transferError" v-html="this.errorMessage" :class="this.errorMessage ? '' : 'hide'"/>-->
+                <!--<span class="transferSuccess" v-html="this.successMessage" :class="this.successMessage ? '' : 'hide'"/>-->
+            <!--</div>-->
 
             <button class="button" @click="this.handleCreateTransaction" :class="this.successMessage ? 'hide' : ''" >
                 SEND WEBD
@@ -43,6 +43,10 @@
 </template>
 
 <script>
+
+    import Notification from "helpers/Notification.helpers"
+    import BrowserHelpers from "helpers/Browser.helpers"
+
     export default {
 
         //@onTransferSuccess
@@ -63,11 +67,20 @@
             }
         },
 
+        mounted(){
+
+            if (typeof window === 'undefined') return;
+
+            Notification.setVueInstance(this);
+
+        },
 
         computed:{
 
             getAddressPic(){
+
                 return WebDollar.Blockchain.Wallet.getAddressPic(this.toAddress);
+
             }
 
         },
@@ -82,12 +95,12 @@
                 this.handleChangeToAddress();
 
                 if (this.fee === 0) {
-                    this.errorMessage = 'Fee should not be 0';
+                    this.errorToAmountMessage = 'Fee should not be 0';
                     return false;
                 }
 
                 if (this.fee * WebDollar.Applications.CoinsHelper.WEBD < WebDollar.Applications.CONSTS.MINING_POOL.MINING.FEE_THRESHOLD){
-                    this.errorMessage = "Fee is too small, and miners won't process your transaction";
+                    this.errorToAmountMessage = 'Fee is too small, and miners won\'t process your transaction';
                     return false;
                 }
 
@@ -99,8 +112,7 @@
 
                 if (answer.result){
 
-                    this.errorMessage = '';
-                    console.info("Transaction has been created", answer.message);
+                    Notification.addAlert("error-firewall", "warn", "Transaction Created", "Transaction to "+ this.toAddress + " with " +  BrowserHelpers.formatMoneyNumber(amountToSend)+"WEBD has been created.",5000);
 
                     this.toAddress = '';
                     this.toAmount = '';

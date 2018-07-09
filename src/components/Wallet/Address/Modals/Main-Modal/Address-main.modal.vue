@@ -93,6 +93,8 @@
     import Buy from "./parts/Buy.part.vue"
     import Sell from "./parts/Sell.part.vue"
 
+    import Notification from "helpers/Notification.helpers"
+
     Vue.use(Clipboard);
 
     export default {
@@ -157,6 +159,7 @@
 
             handleSetAddress(){
                 WebDollar.Blockchain.Mining.minerAddress = this.address;
+                Notification.addAlert(undefined, "success", "Mining Address Changed", "You're mining now on " + this.address ,5000);
             },
 
             handleTransferSuccess(){
@@ -169,6 +172,8 @@
 
             if (typeof window === 'undefined') return;
 
+            Notification.setVueInstance(this);
+
         },
 
     }
@@ -180,6 +185,7 @@
         display: block!important;
         font-size: 12px;
         line-height: 30px;
+        padding-top: 7px;
     }
 
     .addressMainModal .modifyPadding{
@@ -190,6 +196,7 @@
         display: grid;
         grid-template-columns: 1fr 100px;
         grid-row-gap: 10px;
+        padding-bottom: 24px;
     }
 
     .balanceAmount{

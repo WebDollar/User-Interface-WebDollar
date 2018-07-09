@@ -85,6 +85,7 @@
     import Address from "./Address/Address.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
     import ShowSumBalances from "./Address/Balance/Balances/Show-Sum-Balances.vue"
+    import Notification from "helpers/Notification.helpers"
 
     export default{
 
@@ -131,7 +132,7 @@
             if (typeof window === "undefined") return false;
 
             this.changeScreenBehavior();
-
+            Notification.setVueInstance(this);
 
             WebDollar.StatusEvents.on("blockchain/mining/address", (data)=>{
                 this.miningAddress = data.address;
@@ -266,10 +267,11 @@
                 if (WebDollar.Blockchain.Wallet.addresses.length <= 2) {
 
                     WebDollar.Blockchain.Wallet.createNewAddress();
+                    Notification.addAlert(undefined, "success", "Wallet Success", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
 
                 } else {
 
-                    alert("Way to many addresses");
+                    Notification.addAlert(undefined, "warn", "Wallet Warning", "You can't add new address if you already have 3 addresses", 5000);
 
                 }
 
@@ -281,14 +283,14 @@
 
                 // Check for the various File API support.
                 if ((window.File && window.FileReader && window.FileList && window.Blob) === false){
-                    alert('The File APIs are not fully supported in this browser.');
+                    Notification.addAlert(undefined, "error", "Import Error", "The File import is not fully supported in this browser", 5000);
                 }
 
                 let fileInput = this.$refs['importedAddress'];
 
                 if ('files' in fileInput) {
                     if (fileInput.files.length === 0) {
-                        alert ( "Select one or more files." );
+                        Notification.addAlert(undefined, "error", "Import Error", "No file selected", 5000);
                     } else {
 
                         for (let i = 0; i < fileInput.files.length; i++) {
@@ -311,21 +313,20 @@
                                         let answer = await WebDollar.Blockchain.Wallet.importAddressFromJSON(data);
 
                                         if (answer.result === true){
-                                            console.log("Address Imported", answer.address);
+                                            Notification.addAlert(undefined, "success", "Import Success", answer.address + " has been imported!", 5000);
                                         } else {
-                                            alert(answer.message);
+                                            Notification.addAlert(undefined, "error", "Import Error", answer.message, 5000);
                                         }
-
 
                                     };
 
                                 } catch (exception){
-                                    alert("Your Uploaded file is not JSON");
+                                    Notification.addAlert(undefined, "error", "Import Error","Your Uploaded file is not a valid JSON format", 5000);
                                 }
 
                                 reader.readAsText(file);
                             } else {
-                                alert ( "File not supported!" )
+                                Notification.addAlert(undefined, "error","Import Error", "File not supported!", 5000);
                             }
 
                         }
@@ -508,9 +509,14 @@
 
     .editError{
         color: #ff0000 !important;
-        padding-bottom: 10px;
+        padding: 1px 0 10px 11px;
         display: block;
         font-size: 14px;
+        text-align: left;
+    }
+
+    .editError2{
+        padding: 10px 0 10px 11px;
     }
 
     dashboardWallet span{

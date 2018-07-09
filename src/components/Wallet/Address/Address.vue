@@ -49,6 +49,7 @@
     import DeleteModal from "./Modals/Delete.modal.vue"
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
     import BrowserHelpers from "helpers/Browser.helpers"
+    import Notification from "helpers/Notification.helpers"
 
     export default{
 
@@ -90,6 +91,8 @@
 
             if (typeof window === 'undefined') return;
 
+            Notification.setVueInstance(this);
+
             if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)){
                 this.addressLocked = true;
             }
@@ -129,28 +132,21 @@
 
             async handleExport(e){
 
-                var exportWallet = false;
-
                 if (this.addressLocked === false){
-                    if (confirm("Warning! Your wallet address is not encrypted and could be accessed by anyone who has a copy of the file. We recommend encrypting your wallet address prior to downloading it. Do you still wish to proceed?"))
-                        exportWallet = true;
+                    Notification.addAlert(undefined, "info", "Export Warning", "The exported address is not encrypted and could be accessed by anyone who has a copy of the file. We recommend to dellete the pervious downloaded file and to export your wallet encrypted.", 20000);
                 }
-                else exportWallet = true;
 
-                if (exportWallet===true){
+                let answer = await WebDollar.Blockchain.Wallet.exportAddressToJSON(this.address);
 
-                    let answer = await WebDollar.Blockchain.Wallet.exportAddressToJSON(this.address);
+                if (answer.result){
 
-                    if (answer.result){
+                    let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
+                    let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
+                    FileSaver.saveAs(addressFile, fileName);
+                    Notification.addAlert(undefined, "success", "Export Success", "Your address has been exported.", 5000);
 
-                        let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
-                        let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
-                        FileSaver.saveAs(addressFile, fileName);
-
-                    } else {
-                        alert(answer.message)
-                    }
-
+                } else {
+                    Notification.addAlert(undefined, "error", "Export Error", answer.message, 5000);
                 }
 
             },

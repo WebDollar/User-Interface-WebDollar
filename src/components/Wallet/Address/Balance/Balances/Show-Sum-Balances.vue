@@ -141,10 +141,6 @@
         display: block;
     }
 
-    .balanceContent .miningAddress{
-        margin-top: 30px;
-    }
-
     .balanceContent  .show-balance-span{
         font-size:20px;
     }

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="transferList" ref="refTransferList" >
+    <div class="transferList" ref="refTransferList">
 
         <div v-show="objectIsEmpty(transactions)" class="noTransactions">
 
@@ -23,8 +23,8 @@
 
             <ul class="transferListContainer">
 
-                <transaction v-for="(key, index) in orderedTransactions"
-                             :transaction = "key"
+                <transaction v-for="(tx, index) in orderedTransactions"
+                             :transaction = "tx"
                              :key="'transaction'+index"
                 >
 
@@ -107,8 +107,13 @@
                     transaction._index =  -( ++this.transactionsLength );
                 }
 
+                let oldTransaction = this.transactions[transaction.txId];
+
                 Vue.set(this.transactions, transaction.txId, transaction);
 
+                if (transaction.confirmed && (oldTransaction !== undefined && oldTransaction.confirmed === false)){
+                    Notification.addAlert("error-firewall", "success", "Transaction Confirmed", "Transaction to "+ this.toAddress + " with " +  BrowserHelpers.formatMoneyNumber(amountToSend)+"WEBD has been confirmed.",5000);
+                }
 
             },
 

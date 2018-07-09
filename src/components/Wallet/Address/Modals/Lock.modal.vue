@@ -43,6 +43,7 @@
 
     import Modal from "components/UI/modal/Modal.vue";
     import FileSaver from './../../../../../node_modules/file-saver';
+    import Notification from "helpers/Notification.helpers"
 
     export default {
 
@@ -59,7 +60,6 @@
         data: () => {
             return {
                 walletAddressPassword: '',
-                errorMessage: ''
             }
         },
 
@@ -129,7 +129,7 @@
             async createPassword(){
 
                 if (this.walletAddressPassword === null || this.walletAddressPassword === undefined)
-                    alert('Your password is invalid');
+                    Notification.addAlert(undefined, "error", "Password Error", "Your password is invalid!", 5000);
 
                 let okPassword = true;
                 let wordsArray = [];
@@ -143,7 +143,7 @@
 
                 if (wordsArraySize !== 12){
 
-                    this.errorMessage = "The password should contain 12 words, but you have " + wordsArraySize + " words.";
+                    Notification.addAlert(undefined, "error", "Password Error", "The password should contain 12 words, but you have " + wordsArraySize + " words.", 5000);
                     okPassword = false;
 
                 }
@@ -156,7 +156,7 @@
 
                         if  (index !== i){
 
-                            this.errorMessage = "The password should contain different words, but you are repeating '"+wordsArray[i]+"' word.";
+                            Notification.addAlert(undefined, "error", "Password Error", "The password should contain different words, but you are repeating "+wordsArray[i]+" word.", 5000);
                             okPassword = false;
 
                         }
@@ -166,8 +166,6 @@
                 }
 
                 if(okPassword === true){
-
-                    this.errorMessage = '';
 
                     await this.setPassword(wordsArray);
                 }
@@ -181,26 +179,22 @@
 
                 if (response === true) {
 
-                    if (confirm("Successful encrypted! If you didn't backup manually your password we can save your password on your device. Do you want to backup it in a file?")) {
+                    Notification.addAlert(undefined, "success", "Successful Ecrypted", this.address + " has been encrypted.", 5000);
+                    Notification.addAlert(undefined, "info", "Password Backup", "We have downloaded for you a backup file of the password", 6000);
 
-                        this.handleExportPassword();
-                        this.closeModal();
-
-                    } else {
-
-                        this.closeModal();
-
-                    }
+                    this.handleExportPassword(this.address);
+                    this.closeModal();
 
                 }
 
                 return response;
             },
 
-            handleExportPassword(){
+            handleExportPassword(address){
 
                 let addressFile = new Blob([this.walletAddressPassword], {type: "application/text;charset=utf-8"});
-                let fileName = "walletPassword.txt";
+
+                let fileName = "Password-"+address.replace('+','').replace('=','')+".txt";
                 FileSaver.saveAs(addressFile, fileName);
 
             },
@@ -213,6 +207,7 @@
                 return;
 
             this.walletAddressPassword = "";
+            Notification.setVueInstance(this);
 
         },
 

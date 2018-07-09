@@ -318,7 +318,7 @@
         padding: 7px 0 5px 0;
         width: 150px;
         margin: 0 auto;
-        margin-top: 6px;
+        margin-top: 10px;
         transition: all 0.5s ease
     }
 
@@ -336,6 +336,10 @@
     .buttonSpace{
         margin-top: 20px;
     }
+
+    /*.balanceContent .miningAddress{*/
+        /*padding-top: 10px;*/
+    /*}*/
 
     @media (max-width: 1000px){
 
@@ -360,7 +364,7 @@
         }
 
         .balanceContent{
-            padding: 15px 10px 15px 10px;
+            padding: 51px 10px 15px 10px;
         }
 
     }

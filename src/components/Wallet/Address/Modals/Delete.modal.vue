@@ -4,7 +4,7 @@
 
         <Modal title="Delete Address" ref="refModal">
 
-            <div slot="content">
+            <div slot="content" @keyup.enter="deleteAddress">
 
                 <div class="descriptionText">
 
@@ -36,6 +36,7 @@
     import Modal from "components/UI/modal/Modal.vue"
 
     import Clipboard from './../../../../../node_modules/v-clipboard'
+    import Notification from "helpers/Notification.helpers"
 
     Vue.use(Clipboard);
 
@@ -66,7 +67,9 @@
 
                     // WebDollar.Blockchain.wallet. - DELETE
                     let answer = await WebDollar.Blockchain.Wallet.deleteAddress(this.address);
-                    console.log(answer);
+
+                    if(answer.result===true) Notification.addAlert(undefined, "success", "Delete Succeeded", this.address + " has been deleted!", 5000);
+
                 }
 
                 this.closeModal();
@@ -93,6 +96,8 @@
         mounted() {
 
             if (typeof window === 'undefined') return;
+
+            Notification.setVueInstance(this);
 
         },
 
@@ -127,6 +132,7 @@
     .modalButton{
         background-color: #131313;
         color: #969696;
+        cursor: pointer;
         font-size: 12px;
         width: 140px;
         border: solid 1px #5f5d5d;

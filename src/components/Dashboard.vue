@@ -138,6 +138,11 @@
 
 <style>
 
+    .notificationsBox{
+        width:450px!important;
+        word-break:break-all;
+    }
+
     .success{
         background: #2ea75e!important;
         border-left-color: #006528!important;
@@ -161,10 +166,13 @@
 
     .notification-title{
         font-size: 14px;
+        text-transform:uppercase;
+        margin-bottom:10px;
     }
 
     .notification-content{
         font-size: 12px;
+        text-transform:none;
     }
 
     #webDollar * {
@@ -208,6 +216,14 @@
 
     .notificationsBox{
         margin-bottom: 40px;
+    }
+
+    @media (max-width: 450px){
+
+        .notificationsBox{
+            width:100%!important;
+        }
+
     }
 
 </style>

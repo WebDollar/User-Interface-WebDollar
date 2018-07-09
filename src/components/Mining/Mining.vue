@@ -38,7 +38,7 @@
                         </path>
                 </svg>
 
-                <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" /> <b class="whiteText">WEBD</b>
+                <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b>
 
                 <div class="hoverBalanceInfo" >
                     <div class="balanceText">
@@ -508,6 +508,11 @@
 
     .miningLoader{
         margin-top: 5px;
+    }
+
+    .showSumBallance{
+        vertical-align: top;
+        display: inline-block;
     }
 
     @media only screen and (max-width : 831px) {

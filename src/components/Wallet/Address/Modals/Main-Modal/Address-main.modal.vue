@@ -65,10 +65,6 @@
 
                 <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
-                <buy :style="{display: this.partActivated === 'buy' ? 'block': 'none'}" />
-
-                <sell :style="{display: this.partActivated === 'sell' ? 'block': 'none'}" />
-
             </div>
 
 
@@ -90,8 +86,6 @@
 
     import Transactions from "./parts/Transactions/Transactions.part.vue"
     import Transfer from "./parts/Transfer.part.vue"
-    import Buy from "./parts/Buy.part.vue"
-    import Sell from "./parts/Sell.part.vue"
 
     import Notification from "helpers/Notification.helpers"
 
@@ -109,8 +103,6 @@
             Modal,
             Transactions,
             Transfer,
-            Buy,
-            Sell,
             icon,
             ShowPotentialBalance
         },

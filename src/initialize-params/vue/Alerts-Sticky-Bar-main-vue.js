@@ -1,6 +1,6 @@
 var Vue = require('vue/dist/vue.min.js');
 
-import AlertsStickyBar from 'components/alerts/Alerts-Sticky-Bar.vue';
+import AlertsStickyBar from 'components/alerts/Notifications.vue';
 
 //for safari workaround
 export default (params)=> {

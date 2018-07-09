@@ -19,7 +19,7 @@
 
      export default{
 
-         name: "alerts-sticky-bar",
+         name: "Notifications",
 
          data: () => {
              return {

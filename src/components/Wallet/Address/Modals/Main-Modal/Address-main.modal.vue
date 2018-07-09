@@ -239,5 +239,12 @@
 
     }
 
+    @media (max-width: 600px){
+
+        .balanceContent{
+            padding: 10px!important
+        }
+    }
+
 </style>
 

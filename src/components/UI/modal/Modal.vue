@@ -446,7 +446,8 @@
 
         .balanceText{
             display: inline-block;
-            margin-top: 21px;
+            margin-top: 0px;
+            padding-bottom: 0;
         }
 
         .walletAddress b {
@@ -490,6 +491,10 @@
 
         .modal .transfer .address {
             padding: 10px 0 10px 20px;
+        }
+
+        .balanceContent .miningAddress{
+            padding: 0!important;
         }
 
     }

@@ -3,7 +3,6 @@
     <div id="webDollar">
         <mining :startAutomatically="startAutomatically" :addresses="this.addresses" :currency="this.currency" ref="refMining"></mining>
         <wallet :addresses="this.addresses" :currency="this.currency" ref="refWallet"></wallet>
-        <notifications class="notificationsBox" group="important" position="bottom left" max="5"/>
     </div>
 
 </template>
@@ -138,43 +137,6 @@
 
 <style>
 
-    .notificationsBox{
-        width:450px!important;
-        word-break:break-all;
-    }
-
-    .success{
-        background: #2ea75e!important;
-        border-left-color: #006528!important;
-    }
-
-    .error{
-        background: #d23c25!important;
-        border-left-color: #842b24!important;
-    }
-
-    .warn{
-        background: #ffb648!important;
-        border-left-color: #7b5419!important;
-        color: #523f3c!important;
-    }
-
-    .vue-notification{
-        background: #4a4a4a;
-        border-left: 5px solid #5a5a5a;
-    }
-
-    .notification-title{
-        font-size: 14px;
-        text-transform:uppercase;
-        margin-bottom:10px;
-    }
-
-    .notification-content{
-        font-size: 12px;
-        text-transform:none;
-    }
-
     #webDollar * {
         -webkit-box-sizing: content-box;
         -moz-box-sizing: content-box;
@@ -212,18 +174,6 @@
 
     .helpCursor{
         cursor:help;
-    }
-
-    .notificationsBox{
-        margin-bottom: 40px;
-    }
-
-    @media (max-width: 450px){
-
-        .notificationsBox{
-            width:100%!important;
-        }
-
     }
 
 </style>

@@ -133,7 +133,7 @@
             async handleExport(e){
 
                 if (this.addressLocked === false){
-                    Notification.addAlert(undefined, "info", "Export Warning", "The exported address is not encrypted and could be accessed by anyone who has a copy of the file. We recommend to dellete the pervious downloaded file and to export your wallet encrypted.", 20000);
+                    Notification.addAlert(undefined, "info", "Export Warning", "The exported address is not encrypted and can be accessed by anyone who has a copy of the file. We recommend deleting the previous downloaded file and exporting your encrypted wallet.", 20000);
                 }
 
                 let answer = await WebDollar.Blockchain.Wallet.exportAddressToJSON(this.address);

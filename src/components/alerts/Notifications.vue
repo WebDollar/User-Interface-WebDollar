@@ -84,7 +84,7 @@
                          else {
                              Notification.deleteAlert("error-internet");
                              Notification.deleteAlert("error-firewall");
-                             Notification.addAlert("error-internet", "error", "Connection Error" ,"Internet is no longer working. Check your internet or refresh",86400000);
+                             Notification.addAlert("error-internet", "error", "Connection Error" ,"Internet is no longer working. Check your Internet connection or refresh",86400000);
                          }
 
                          break;
@@ -93,7 +93,7 @@
 
                          Notification.deleteAlert("error-internet");
                          Notification.deleteAlert("error-firewall");
-                         this.addAlert("error-internet", "error", "Internet Error", "Internet is no longer working. Check your internet or refresh",86400000);
+                         this.addAlert("error-internet", "error", "Internet Error", "Internet is no longer working. Check your Internet connection or refresh",86400000);
                          break;
                  }
 
@@ -146,7 +146,7 @@
 
                      case "Wallet is not loaded successfully":
 
-                         Notification.addAlert("pouchDB-error", "error", "PouchDB Error", "<b>Wallet was not loaded</b> There might big a problem with your browser <b style='text-decoration: underline; color:blue'>Refresh</b> or contact us!", 86400000, "/");
+                         Notification.addAlert("pouchDB-error", "error", "PouchDB Error", "<b>Wallet was not loaded</b> There might be a problem with your browser <b style='text-decoration: underline; color:blue'>Refresh</b> or contact us!", 86400000, "/");
 
                          break;
 
@@ -165,7 +165,7 @@
                          if (this.checkIfExistsAlert("web-assembly-warning")) break;
 
                          this.alerts.push("web-assembly-warning");
-                         Notification.addAlert("web-assembly-warning", "warn", "Performance Warning", "<b>WebAssembly is not supported</b>. You use an old browser or one that doesn't support WebAssembly. Install Chrome/Firefox/Safari and mining increases with 70%", 86400000);
+                         Notification.addAlert("web-assembly-warning", "warn", "Performance Warning", "<b>WebAssembly is not supported</b>. You use an old browser or one that doesn't support WebAssembly. Install Chrome/Firefox/Safari/Opera and mining will increse with ~70%", 86400000);
                          break;
 
                      case "ASM.JS not supported":

@@ -179,8 +179,8 @@
 
                 if (response === true) {
 
-                    Notification.addAlert(undefined, "success", "Successful Ecrypted", this.address + " has been encrypted.", 5000);
-                    Notification.addAlert(undefined, "info", "Password Backup", "We have downloaded for you a backup file of the password", 6000);
+                    Notification.addAlert(undefined, "success", "Successfuly Encrypted", this.address + " has been encrypted.", 5000);
+                    Notification.addAlert(undefined, "info", "Password Backup", "We have downloaded a backup file of the password for you.", 6000);
 
                     this.handleExportPassword(this.address);
                     this.closeModal();
@@ -292,4 +292,3 @@
     }
 
 </style>
-

@@ -44,6 +44,16 @@ class InitializeParams{
 
     }
 
+
+    createElements(){
+
+        let networkNativeMapMainVue =require('./vue/Network-Native-Map-main-vue').default;
+        if (this.maps.activated)
+            networkNativeMapMainVue(this.maps);
+
+
+    }
+
     load(){
 
         GlobalInitialization.initializeGlobalSettings();
@@ -55,7 +65,10 @@ class InitializeParams{
         let mainVue = require('./vue/Main-vue').default;
         mainVue(this.mining, this.wallet);
 
+        this.createElements();
     }
+
+
 
 }
 

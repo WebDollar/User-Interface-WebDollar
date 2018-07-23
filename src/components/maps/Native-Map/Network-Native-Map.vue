@@ -226,7 +226,7 @@
 
                     status = "connected";
 
-                    switch (socket.nodeType) {
+                    switch (socket.node.protocol.nodeType) {
                         case WebDollar.Applications.NODE_TYPE.NODE_TERMINAL:
                             nodeType = 'terminal';
                             break;

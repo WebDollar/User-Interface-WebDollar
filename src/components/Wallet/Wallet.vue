@@ -271,7 +271,7 @@
 
                 } else {
 
-                    Notification.addAlert(undefined, "warn", "Wallet Warning", "You can't add new address if you already have 3 addresses", 5000);
+                    Notification.addAlert(undefined, "warn", "Wallet Warning", "You can't add new addresses if you already have 3 addresses", 5000);
 
                 }
 

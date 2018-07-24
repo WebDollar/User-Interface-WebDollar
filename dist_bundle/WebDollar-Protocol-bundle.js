@@ -1921,7 +1921,7 @@ const BigNumber = __webpack_require__(66);
 
 let consts = {
 
-    DEBUG: false,
+    DEBUG: true,
     OPEN_SERVER: true,
 
 };

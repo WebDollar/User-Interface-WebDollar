@@ -1,7 +1,7 @@
 <template>
 
     <div>
-xxxxx
+
         <notifications class="notificationsBox" group="all" position="bottom left" max="5"/>
         <notifications class="notificationsBox" group="error-firewall" position="bottom left"/>
         <notifications class="notificationsBox" group="error-internet" position="bottom left"/>

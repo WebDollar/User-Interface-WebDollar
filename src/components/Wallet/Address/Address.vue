@@ -91,7 +91,6 @@
 
             if (typeof window === 'undefined') return;
 
-            Notification.setVueInstance(this);
 
             if (await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)){
                 this.addressLocked = true;

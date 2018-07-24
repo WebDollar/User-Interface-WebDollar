@@ -132,7 +132,6 @@
             if (typeof window === "undefined") return false;
 
             this.changeScreenBehavior();
-            Notification.setVueInstance(this);
 
             WebDollar.StatusEvents.on("blockchain/mining/address", (data)=>{
                 this.miningAddress = data.address;
@@ -262,12 +261,12 @@
 
             },
 
-            handleAddNewAddress(){
+            async handleAddNewAddress(){
 
                 if (WebDollar.Blockchain.Wallet.addresses.length <= 2) {
 
-                    WebDollar.Blockchain.Wallet.createNewAddress();
-                    Notification.addAlert(undefined, "success", "Wallet Success", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
+                    await WebDollar.Blockchain.Wallet.createNewAddress();
+                    Notification.addAlert(undefined, "success", "Wallet Created", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
 
                 } else {
 

@@ -164,7 +164,6 @@
 
             if (typeof window === 'undefined') return;
 
-            Notification.setVueInstance(this);
 
         },
 

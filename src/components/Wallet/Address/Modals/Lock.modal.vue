@@ -207,7 +207,6 @@
                 return;
 
             this.walletAddressPassword = "";
-            Notification.setVueInstance(this);
 
         },
 

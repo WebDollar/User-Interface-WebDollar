@@ -187,7 +187,6 @@
 
 <style>
 
-
     .notificationsBox{
         width:450px!important;
         word-break:break-all;

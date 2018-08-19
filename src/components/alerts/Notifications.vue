@@ -193,6 +193,10 @@
         word-break:break-all;
     }
 
+    .notificationsBox span{
+        width: 100%!important;
+    }
+
     .success{
         background: #2ea75e!important;
         border-left-color: #006528!important;

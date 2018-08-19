@@ -195,6 +195,7 @@
 
     .notificationsBox span{
         width: 100%!important;
+        cursor:pointer;
     }
 
     .success{

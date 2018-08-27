@@ -34,9 +34,9 @@ class CircleMap {
 
     unhighlightCell(cell, index) {
         cell.setAttribute('class', '');
-        delete cell[index]
-        if (cell === {})
-            cell = null;
+        delete cell.data[index]
+        if (cell.data === {})
+            cell.data = null;
     }
 
     putCellOnTop(cell){
@@ -60,8 +60,8 @@ class CircleMap {
 
         // XXX another hack
         if (data) {
-            if (cell === undefined) cell = {};
-            cell[index] = data;
+            if (cell.data === undefined) cell.data = {};
+            cell.data[index] = data;
         }
     }
 

@@ -68,7 +68,7 @@
         max-height: 350px;
         overflow: hidden;
         width: 300px;
-        background-color: rgba(38, 41, 43, 0.66);
+        background-color: rgba(58, 58, 58, 0.89);
         border-radius: 3px;
         display: block;
         padding: 8px;
@@ -82,6 +82,7 @@
         left: 50%;
         top: 100px;
         z-index: 100;
+        overflow-y: scroll;
     }
 
     @media (max-height: 800px) {

@@ -195,6 +195,67 @@
 
             },
 
+            getNodeDescription(geoLocation, socket){
+
+                let address = '', nodeType = '', status = "node", nodeProtocol = '', nodeIndex=0, uuid='';
+
+                if (geoLocation === undefined)
+                    geoLocation = {};
+
+                if (socket === 'myself') {
+                    status = "connected";
+                    address = geoLocation.address;
+                    uuid = '0';
+                    nodeType = "myself";
+                } else if (socket === 'fake') {
+                    address = geoLocation.country;
+                    uuid = geoLocation.city;
+
+                    if (Math.floor(Math.random() * 2) === 0) status = "connected";
+                    else status = "not connected";
+
+                    if (Math.floor(Math.random() * 2) === 0) nodeType = "browser";
+                    else nodeType = "terminal"
+
+                } else if (socket.connected) {
+                    address = socket.node.sckAddress.toString();
+                    uuid = socket.node.sckAddress.uuid || uuid.v4();
+
+                    status = "connected";
+
+                    nodeType = 'connected node';
+
+                    nodeProtocol = socket.node.type;
+                    nodeIndex = socket.node.index;
+                }
+                else { //its a waitlist
+
+                    address = socket.address + socket.port;
+                    uuid = socket.uuid;
+
+                    nodeType = 'other node';
+
+                    status = "not connected";
+                    nodeProtocol = nodeType;
+                    nodeIndex = -1;
+                }
+
+                let position = {lat: geoLocation.lat||0, lng: geoLocation.lng||0};
+
+                return {
+                    status: status,
+                    city: geoLocation.city||'',
+                    country: geoLocation.country||'',
+                    address: address,
+                    uuid: uuid||nodeIndex,
+                    protocol: nodeProtocol,
+                    isp: geoLocation.isp||'',
+                    pos: position,
+                    nodeType: nodeType,
+                }
+
+            },
+
             addHilightNode(newConnection, cellClass){
 
                 if (newConnection.cell) {
@@ -220,7 +281,7 @@
 
                         // Either change class if there are still known peers there.
                         if (this._circles.get(newConnection.cell) > 0) {
-                            this._circleMap.highlightCell(newConnection.cell, 'peer-network-member', undefined, newConnection.uuid);
+                            this._circleMap.highlightCell(newConnection.cell, 'peer-network-member', newConnection.desc, newConnection.uuid);
                         }
 
                         // Or remove class at all.
@@ -250,7 +311,7 @@
 
                         if( this._nodes[i].cell !== this._selfNode.cell ){
                             this._circleMap.unhighlightCell(this._nodes[i].cell, this._nodes[i].uuid);
-                            this._circleMap.highlightCell(this._nodes[i].cell, 'peer-network-member', undefined, this._nodes[i].uuid);
+                            this._circleMap.highlightCell(this._nodes[i].cell, 'peer-network-member', this._nodes[i].desc, this._nodes[i].uuid);
                         }
 
                     }
@@ -281,7 +342,8 @@
 
                 this._selfNode = await WebDollar.Applications.GeoHelper.getLocationFromAddress('', true);
                 this._selfNode.cell = this._circleMap.getCellByLocation(this._selfNode.lat, this._selfNode.lng);
-                this._selfNode.desc = 'You';
+                this._selfNode.desc = this.getNodeDescription(this._selfNode, 'myself');
+                this._selfNode.uuid = '0';
 
                 this.addHilightNode( this._selfNode, 'peer-own' );
 
@@ -376,7 +438,7 @@
                     nodeParams.uuid = 'waitListUUID'+this._waitListIndex;
                     this._waitListIndex++;
                     nodeParams.cell = this._circleMap.getCellByLocation(nodeParams.lat, nodeParams.lng);
-                    nodeParams.desc = '';
+                    nodeParams.desc = this.getNodeDescription(nodeParams, node.sckAddresses[0]);
                     nodeParams.connected = false
                 }
                 else{
@@ -384,7 +446,7 @@
                     nodeParams.socket = node.socket.node.sckAddress;
                     nodeParams.uuid = node.socket.node.sckAddress.uuid;
                     nodeParams.cell = this._circleMap.getCellByLocation(nodeParams.lat, nodeParams.lng);
-                    nodeParams.desc = '';
+                    nodeParams.desc = this.getNodeDescription(nodeParams, node.socket);
                     nodeParams.connected = true
                 }
 

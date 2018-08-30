@@ -374,7 +374,7 @@
 
             validateInternetConnection(){
 
-                if (this.steps[2].typeCreate && this.checkInternetConnection()){
+                if (this.steps[2].typeCreate && !this.checkInternetConnection()){
 
                     this.steps[2].passed = true;
                     this.steps[2].contentOpen = true;

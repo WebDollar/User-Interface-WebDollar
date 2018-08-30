@@ -42,6 +42,7 @@
 
     import Vue from "vue";
     import Transaction from "./Transaction.element.vue"
+    import Notification from "helpers/Notification.helpers"
 
     export default {
 
@@ -112,7 +113,7 @@
                 Vue.set(this.transactions, transaction.txId, transaction);
 
                 if (transaction.confirmed && (oldTransaction !== undefined && oldTransaction.confirmed === false)){
-                    Notification.addAlert("error-firewall", "success", "Transaction Confirmed", "Transaction to "+ this.toAddress + " with " +  BrowserHelpers.formatMoneyNumber(amountToSend)+"WEBD has been confirmed.",5000);
+                    Notification.addAlert(undefined, "success", "Transaction Confirmed", "Transaction to "+ this.toAddress + " with " +  BrowserHelpers.formatMoneyNumber(amountToSend)+"WEBD has been confirmed.",5000);
                 }
 
             },

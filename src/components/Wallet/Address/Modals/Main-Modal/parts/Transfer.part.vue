@@ -40,8 +40,8 @@
                 <div class="stepContent" v-if="this.steps[1].contentOpen">
 
                     <span v-if="this.steps[1].error">
-                        Your internet connection if <span class="hilight" :class="this.checkInternetConnection() ? '' : 'hilightRed'">{{ this.checkInternetConnection() ? 'Online' : 'Offline'}}</span>,
-                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction first you should {{ this.choseInternetInstruction() }} internet and then recheck the connection by pressing the following button.
+                        Your internet connection is "<span class="hilight" :class="this.checkInternetConnection() ? '' : 'hilightRed'">{{ this.checkInternetConnection() ? 'Online' : 'Offline'}}</span>",
+                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ this.choseInternetInstruction() }} internet and then recheck the connection, by pressing the following button.
                     </span>
 
                     <div class="modalButton fullWidthButton" @click="validateInternetConnection()">
@@ -286,32 +286,36 @@
 
                 this.fee = WebDollar.Blockchain.Transactions.wizard.calculateFeeSimple ( this.toAmount * WebDollar.Applications.CoinsHelper.WEBD) / WebDollar.Applications.CoinsHelper.WEBD;
 
-                try {
+                if(!this.offlineTransaction){
 
-                    let balance = WebDollar.Blockchain.blockchain.accountantTree.getBalance(this.address, undefined);
+                    try {
 
-                    if (balance === null) throw "Balance is empty";
+                        let balance = WebDollar.Blockchain.blockchain.accountantTree.getBalance(this.address, undefined);
 
-                    let total = (parseFloat(this.toAmount) + this.fee ) * WebDollar.Applications.CoinsHelper.WEBD;
+                        if (balance === null) throw "Balance is empty";
 
-                    if ( balance < total ) {
-                        console.error("Insufficient funds", {balance:balance, toAmount: this.toAmount, fee:this.fee})
-                        throw "Insufficient Funds";
+                        let total = (parseFloat(this.toAmount) + this.fee ) * WebDollar.Applications.CoinsHelper.WEBD;
+
+                        if ( balance < total ) {
+                            console.error("Insufficient funds", {balance:balance, toAmount: this.toAmount, fee:this.fee})
+                            throw "Insufficient Funds";
+                        }
+
+                    } catch (exception){
+
+                        if (typeof exception === "string")
+                            this.errorToAmountMessage = exception.toString();
+                        else
+                            this.errorToAmountMessage = exception.message;
+
+                        this.fee = '';
                     }
 
-                } catch (exception){
+                    if (this.fee===0 || this.fee===undefined || this.errorToAmountMessage!==''){
 
-                    if (typeof exception === "string")
-                        this.errorToAmountMessage = exception.toString();
-                    else
-                        this.errorToAmountMessage = exception.message;
+                        this.fee = 10;
 
-                    this.fee = '';
-                }
-
-                if (this.fee===0 || this.fee===undefined || this.errorToAmountMessage!==''){
-
-                    this.fee = 10;
+                    }
 
                 }
 
@@ -370,7 +374,7 @@
 
             validateInternetConnection(){
 
-                if (this.steps[2].typeCreate && !this.checkInternetConnection){
+                if (this.steps[2].typeCreate && this.checkInternetConnection()){
 
                     this.steps[2].passed = true;
                     this.steps[2].contentOpen = true;
@@ -380,7 +384,7 @@
                     return true;
                 }
 
-                if (!this.steps[2].typeCreate && this.checkInternetConnection){
+                if (!this.steps[2].typeCreate && this.checkInternetConnection()){
 
                     this.steps[2].passed = true;
                     this.steps[2].contentOpen = true;
@@ -504,7 +508,7 @@
                 let fileName = "transaction"+".txt";
                 FileSaver.saveAs(transactionData, fileName);
 
-                Notification.addAlert("error-firewall", "warn", "Offline Transaction", "The offline transaction to "+ this.toAddress + " has been created and saved on your device.",5000);
+                Notification.addAlert(undefined, "success", "Offline Transaction", "The offline transaction to "+ this.toAddress + " has been created and saved on your device.",5000);
 
             },
 

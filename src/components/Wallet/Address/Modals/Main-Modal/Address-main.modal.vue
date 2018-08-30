@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" @onTransferSuccess="this.handleTransferSuccess"/>
+                <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal"/>
 
                 <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
@@ -155,7 +155,7 @@
             },
 
             handleTransferSuccess(){
-                this.showTransactions();
+                this.closeModal();
             }
 
         },

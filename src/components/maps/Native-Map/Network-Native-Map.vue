@@ -34,12 +34,10 @@
             this._nodes = [];
             this._links = [];
 
-            this._connections = [];
             this._selfNode= null;
             this._currentPool = {};
             this._waitListIndex = 0;
 
-            this._currentCenter = null;
             this._waitingForPoolOwner = true;
 
             this.createMap();
@@ -288,8 +286,14 @@
                         else
                             this._circleMap.unhighlightCell(newConnection.cell, newConnection.uuid);
 
-                        if (this._selfNode !== marker && this._selfNode !== null)
-                            this._circleMap.removeLink(this._selfNode.cell, marker.cell);
+                        let connection;
+                        if(WebDollar.Blockchain.MinerPoolManagement._minerPoolStarted)
+                            connection = this._currentPool.node;
+                        else
+                            connection = this._selfNode;
+
+                        if (this._selfNode !== newConnection && this._selfNode !== null)
+                            this._circleMap.removeLink(connection.cell, newConnection.cell);
                     }
 
                 }

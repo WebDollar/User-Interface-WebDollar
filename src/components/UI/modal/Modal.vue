@@ -200,7 +200,7 @@
     .modal .transfer input{
         border: none;
         background-color: #333333;
-        padding: 7px 0 7px 10px;
+        padding: 11px 0 11px 10px;
         color: #fff;
         width: 100%;
         border-radius: 5px;
@@ -241,14 +241,13 @@
     }
 
     .modal .transfer .button{
-        margin-top: 10px;
         background-color: #ffc12c;
         color: #1f1f1f;
-        margin-bottom: 15px;
         width: 100%;
         font-weight: bolder;
         font-size: 16px;
         border: none;
+        margin-top: 10px;
         padding: 10px 0 10px 0;
         border-radius: 5px;
         transition: all 0.5s ease;

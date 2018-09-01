@@ -6,64 +6,7 @@
 
             <div slot="content">
 
-                <div v-if="!this.offlineTransaction" class="twoColumns">
-
-                    <div class="section">
-
-                        <div >
-                            <img class="walletAddressImage" :src="this.getAddressPic" >
-                            <b style="color:gray" id="walletID">{{this.address.toString()}}</b>
-                        </div>
-
-                        <div @click="copyToClipboard" class="copyButton" :class=" this.clipboardText!='Copied' ? 'modalButton2' : 'modalButton2Success' ">
-                            {{this.clipboardText}}
-                        </div>
-
-                    </div>
-
-                    <div class="section balanceContent">
-
-                        <div class="balanceText">
-
-                            <div class="balanceTitle" title="Balance available to be spent">
-                                Available Balance:
-                            </div>
-                            <div class="balanceAmount" title="Balance available to be spent">
-                                <show-balance :address="this.address" currency="0x01"/>
-                            </div>
-
-                            <div class="balanceTitle" style="letter-spacing: 0.1px" title="The balance you will have at the next block mined by your pool">
-                                Potential Balance:
-                            </div>
-                            <div class="balanceAmount" title="The balance you will have at the next block mined by your pool">
-                                <show-balance :showPoolReward="isMiningAddress" :address="this.address" currency="0x01"/>
-                            </div>
-
-                        </div>
-
-                        <div class="miningAddress" v-if="isMiningAddress">
-                            You are mining on this Address
-                        </div>
-                        <div  v-if="!isMiningAddress" @click="handleSetAddress" class="modalButton2">
-                            Mine on this address
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div v-if="!this.offlineTransaction" class="addressActions">
-                    <div @click="this.showTransfer" :class="[ this.partActivated === 'transfer' ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Transfer
-                    </div>
-                    <div @click="this.showTransactions" :class="[ this.partActivated === 'transactions' ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Transactions
-                    </div>
-                </div>
-
-                <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" :offlineTransaction="this.offlineTransaction"/>
-
-                <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
+                <transfer :address="this.address" @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" :offlineTransaction="true"/>
 
             </div>
 
@@ -95,8 +38,6 @@
 
         props: {
             address: {default: null},
-            isMiningAddress: {default: false},
-            offlineTransaction:  {default: false},
         },
 
         components: {
@@ -106,19 +47,6 @@
             Transfer,
             icon,
             ShowPotentialBalance
-        },
-
-        data: () => {
-            return {
-                partActivated : 'none',
-                clipboardText: 'Copy Address',
-            }
-        },
-
-        computed:{
-            getAddressPic(){
-                return WebDollar.Blockchain.Wallet.getAddressPic(this.address);
-            }
         },
 
         methods: {
@@ -139,16 +67,11 @@
                 this.$refs['refModal'].closeModal();
             },
 
-            showModal(e,offlineTransactionsMode) {
+            showModal() {
                 if (this.$refs['refModal'].modalOpened === false){
                     this.$refs['refModal'].showModal();
                 }
                 this.clipboardText= 'Copy Address';
-
-                if(offlineTransactionsMode)
-                    this.offlineTransaction = true;
-                else
-                    this.offlineTransaction = false;
             },
             copyToClipboard(){
                 this.clipboardText = 'Copied';

@@ -34,19 +34,23 @@
 
                 <div class="walletController">
 
-                    <div class="btn buttonTextStyle" @click="this.handleAddNewAddress">
-                        Add Address
+                    <div class="btn buttonTextStyle" @click="this.handleAddNewAddress" title="Add new wallet">
+                        Add
                     </div>
 
-                    <label class="myLabel">
+                    <label class="myLabel" title="Import existing wallet">
 
                         <input ref="importedAddress" type="file" v-on:change="this.handleImportAddress" multiple size="50" />
 
                         <div class="btn buttonTextStyle">
-                            Import Address
+                            Import
                         </div>
 
                     </label>
+
+                    <div class="btn buttonTextStyle" title="Create Offline transaction" v-on:click.stop="showOfflineTransactions">
+                        Offline
+                    </div>
 
                 </div>
 
@@ -72,6 +76,8 @@
             </div>
         </div>
 
+        <offline-transactions-modal ref="refOfflineTransactionsModal" :address="this.miningAddress"  />
+
     </div>
 
 </template>
@@ -86,6 +92,7 @@
     import BrowserHelpers from "helpers/Browser.helpers"
     import ShowSumBalances from "./Address/Balance/Balances/Show-Sum-Balances.vue"
     import Notification from "helpers/Notification.helpers"
+    import offlineTransactionsModal from "./Address/Modals/Main-Modal/Address-main.modal.offline.vue"
 
     export default{
 
@@ -93,6 +100,7 @@
             icon,
             "Address": Address,
             ShowSumBalances,
+            offlineTransactionsModal
         },
 
         props: ['addresses', 'currency'],
@@ -165,6 +173,12 @@
         },
 
         methods: {
+
+            showOfflineTransactions(){
+
+                this.$refs['refOfflineTransactionsModal'].showModal();
+
+            },
 
             changeScreenBehavior(){
 
@@ -439,7 +453,7 @@
 
     .walletController{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;
@@ -454,7 +468,7 @@
     }
 
     .walletController .btn:hover{
-        background-color: #44403f;
+        background-color: #575757;
         transition: all .3s linear;
     }
 

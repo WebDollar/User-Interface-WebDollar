@@ -3,10 +3,12 @@
 
         <div class="offlineTransfer" v-if="this.offlineTransaction">
 
+            <h2>Offline Transaction</h2>
+
             <div class="step step1" :class="this.steps[0].passed ? 'passed' : ''">
 
                 <div class="title" @click="backToStepOne()">
-                    1. Action Type
+                    1. Chose Action Type
                 </div>
 
                 <div class="stepContent" v-if="this.steps[0].contentOpen">
@@ -34,18 +36,26 @@
             <div class="step step2" :class="this.steps[1].passed ? 'passed' : ''">
 
                 <div class="title" @click="backToStepTwo()">
-                    2. Internet Connection
+                    2. Secure Offline transaction
                 </div>
 
                 <div class="stepContent" v-if="this.steps[1].contentOpen">
 
-                    <span v-if="this.steps[1].error">
-                        Your internet connection is "<span class="hilight" :class="this.checkInternetConnection() ? '' : 'hilightRed'">{{ this.checkInternetConnection() ? 'Online' : 'Offline'}}</span>",
-                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ this.choseInternetInstruction() }} internet and then recheck the connection, by pressing the following button.
+                     <span v-if="this.steps[1].error===2 && this.steps[2].typeCreate">
+                        You're not in private mode. In order to create a offline transaction, you should use incognito mode for higher level of security.
                     </span>
 
-                    <div class="modalButton fullWidthButton" @click="validateInternetConnection()">
-                        Check Connection
+                    <span v-if="this.steps[1].error===1">
+                        You're not sync with the network yet. In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }}, you should be synchronized.
+                    </span>
+
+                    <span v-if="this.steps[1].error===3">
+                        Your internet connection is "<span class="hilight" :class="this.internetConnection ? '' : 'hilightRed'">{{ this.internetConnection ? 'Online' : 'Offline'}}</span>",
+                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ this.choseInternetInstruction() }} internet and then recheck the connection, by pressing the following button to verify you are "{{ !this.internetConnection ? 'Online' : 'Offline'}}".
+                    </span>
+
+                    <div class="modalButton fullWidthButton" @click="validateSecurity()">
+                        Check Security
                     </div>
 
                 </div>
@@ -55,7 +65,7 @@
             <div class="step step3" :class="this.steps[2].passed ? 'passed' : ''" v-if="this.steps[1].passed">
 
                 <div class="title">
-                    {{ this.steps[2].typeCreate ? '3. Offline Transaction' : '3. Propagate Online Transaction'}}
+                    {{ this.steps[2].typeCreate ? '3. Wallet & Transaction' : '3. Propagate Online Transaction'}}
                 </div>
 
                 <div class="stepContent" v-if="this.steps[2].contentOpen && !this.steps[2].typeCreate">
@@ -69,7 +79,25 @@
                         <input ref="importedTransaction" type="file" v-on:change="this.handleImportTransaction" multiple size="50" />
 
                         <div class="modalButton fullWidthButton">
-                            Propagate Transactions
+                            Chose tx file to propagate
+                        </div>
+
+                    </label>
+
+                </div>
+
+                <div class="stepContent" v-if="this.steps[2].contentOpen && this.steps[2].typeCreate">
+
+                    <span v-if="this.steps[2].error">
+                        eroare
+                    </span>
+
+                    <label v-if="!this.importedAddress" class="myLabel">
+
+                        <input ref="reffImportedAddressOffline" type="file" v-on:change="this.handleImportAddressOffline" multiple size="50" />
+
+                        <div class="modalButton fullWidthButton">
+                            Import your wallet
                         </div>
 
                     </label>
@@ -80,11 +108,11 @@
 
         </div>
 
-        <div class="transfer" @keyup.enter="handleCreateTransaction(undefined,offlineTransaction)" v-if="!this.offlineTransaction || (this.steps[2].contentOpen && this.steps[2].typeCreate)">
+        <div class="transfer" @keyup.enter="handleCreateTransaction(undefined,offlineTransaction)" v-if="!this.offlineTransaction || (this.steps[2].contentOpen && this.steps[2].typeCreate && this.importedAddress)">
             <div >
-                <div class="imageAndInput">
+                <div class="imageAndInput" :class="!this.offlineTransaction ? '' : 'hideTransactionImage'">
 
-                    <div>
+                    <div v-if="!this.offlineTransaction">
                         <img class="walletAddressImage transferWalletAddressImage" :src="this.getAddressPic" :class="this.errorToAddressMessage==='Invalid Address' ? 'hide' : ''" >
                     </div>
                     <div>
@@ -107,12 +135,9 @@
             <span class="editError editError2" v-html="this.errorToAmountMessage" :class="this.errorToAmountMessage ? '' : 'hide'"></span>
 
             <button class="button marginBottomButton" @click="handleCreateTransaction(undefined,offlineTransaction)" :class="this.successMessage ? 'hide' : ''" >
-                {{ this.offlineTransaction ? 'CREATE TRANSACTION' : 'SEND WEBD' }}
+                {{ this.offlineTransaction ? 'EXPORT TRANSACTION' : 'SEND WEBD' }}
             </button>
 
-            <span v-if="!this.offlineTransaction" class="offlineTransaction" @click="switchToOfflineTransfer()">
-                Offline Transaction
-            </span>
         </div>
 
     </div>
@@ -129,14 +154,19 @@
         //@onTransferSuccess
         props:{
             address: {default: null},
+            offlineTransaction: {default:false}
         },
 
         data: () => {
             return {
+                timeLock:0,
+                incognitoMode:false,
+                syncronizedOnce: false,
                 toAddress: '',
+                internetConnection:true,
                 toAmount: '',
+                importedAddress:false,
                 fee: '',
-                offlineTransaction:false,
                 errorMessage: '',
                 errorToAddressMessage: '',
                 errorToAmountMessage: '',
@@ -159,9 +189,12 @@
             }
         },
 
-        mounted(){
+        async mounted(){
 
             if (typeof window === 'undefined') return;
+
+            this.incognitoMode = await this.checkIncognito();
+            this.checkInternetConnection();
 
         },
 
@@ -177,7 +210,71 @@
 
         methods:{
 
-            async handleCreateTransaction(e,offline=false){
+            async handleImportAddressOffline(){
+
+                if(this.internetConnection){
+
+                    this.backToStepTwo();
+
+                }else{
+
+                    // TODO merge with the function for import tx
+                    if ((window.File && window.FileReader && window.FileList && window.Blob) === false){
+                        Notification.addAlert(undefined, "error", "Import Error", "The File import is not fully supported in this browser", 5000);
+                    }
+
+                    let fileInput = this.$refs['reffImportedAddressOffline'];
+
+                    if ('files' in fileInput) {
+                        if (fileInput.files.length === 0) {
+                            Notification.addAlert(undefined, "error", "Import Error", "No file selected", 5000);
+                        } else {
+
+                            for (let i = 0; i < fileInput.files.length; i++) {
+
+                                let file = fileInput.files[i];
+                                let extension = file.name.split('.').pop();
+
+                                if (extension === "webd") {
+                                    let reader = new FileReader();
+
+                                    try {
+                                        reader.onload = async (e) => {
+
+                                            //console.log(reader.result);
+                                            let data = JSON.parse(reader.result);
+
+                                            let answer = await WebDollar.Blockchain.Wallet.importAddressFromJSON(data);
+
+                                            if (answer.result === true){
+                                                this.importedAddress = answer.address;
+                                                Notification.addAlert(undefined, "success", "Import Success", answer.address + " has been imported!", 5000);
+                                            } else {
+                                                Notification.addAlert(undefined, "error", "Import Error", answer.message, 5000);
+                                            }
+
+                                        };
+
+                                    } catch (exception){
+                                        Notification.addAlert(undefined, "error", "Import Error","Your Uploaded file is not a valid JSON format", 5000);
+                                    }
+
+                                    reader.readAsText(file);
+                                } else {
+                                    Notification.addAlert(undefined, "error","Import Error", "File not supported!", 5000);
+                                }
+
+                            }
+
+
+                        }
+                    }
+
+                }
+
+            },
+
+            async handleCreateTransaction(e){
 
                 this.toAmount = Number(this.toAmount);
                 this.fee = Number(this.fee);
@@ -200,30 +297,37 @@
                 let feeToSend = parseInt(this.fee * WebDollar.Applications.CoinsHelper.WEBD);
                 let answer;
 
-                if (offline){
+                if (this.offlineTransaction){
 
-                    answer = await WebDollar.Blockchain.Transactions.wizard.validateTransaction( this.address, this.toAddress, amountToSend, feeToSend );
+                    if(this.internetConnection){
 
-                    if (answer.result){
+                        this.backToStepTwo();
 
-                        let data = {
-                            transaction: answer.transaction.serializeTransaction(),
-                            signature: answer.signature
-                        };
+                    }else{
 
-                        this.handleExportTransaction(data);
+                        answer = await WebDollar.Blockchain.Transactions.wizard.validateTransaction( this.importedAddress, this.toAddress, amountToSend, feeToSend, undefined, undefined, this.timeLock-1, true );
 
-                        this.toAddress = '';
-                        this.toAmount = '';
-                        this.fee = '';
+                        if (answer.result){
 
-                        this.$emit('onTransferSuccess', answer.message);
+                            let data = {
+                                transaction: answer.transaction.serializeTransaction(),
+                                signature: answer.signature
+                            };
 
-                    } else {
-                        this.errorMessage = answer.message;
-                        this.successMessage = '';
+                            this.handleExportTransaction(data);
+
+                            this.toAddress = '';
+                            this.toAmount = '';
+                            this.fee = '';
+
+                            this.$emit('onTransferSuccess', answer.message);
+
+                        } else {
+                            this.errorMessage = answer.message;
+                            this.successMessage = '';
+                        }
+
                     }
-
                 }
                 else{
 
@@ -231,7 +335,7 @@
 
                     if (answer.result){
 
-                        Notification.addAlert("error-firewall", "warn", "Transaction Created", "Transaction to "+ this.toAddress + " with " +  BrowserHelpers.formatMoneyNumber(amountToSend)+"WEBD has been created.",5000);
+                        Notification.addAlert(undefined, "success", "Transaction Created", "Transaction to "+ this.toAddress + " with " +  BrowserHelpers.formatMoneyNumber(amountToSend)+"WEBD has been created.",5000);
 
                         this.toAddress = '';
                         this.toAmount = '';
@@ -329,12 +433,6 @@
 
             },
 
-            switchToOfflineTransfer(){
-
-                this.offlineTransaction = !this.offlineTransaction;
-
-            },
-
             choseActionType(value){
 
                 this.steps[1].passed = true;
@@ -350,20 +448,22 @@
 
             checkInternetConnection(){
 
-                return navigator.onLine
+                this.internetConnection = navigator.onLine;
 
             },
 
             choseInternetInstruction(){
 
+                this.checkInternetConnection();
+
                 if (this.steps[2].typeCreate){
 
-                    if(this.checkInternetConnection)
+                    if(this.internetConnection)
                         return 'disconnect from the';
 
                 }else{
 
-                    if(this.checkInternetConnection)
+                    if(this.internetConnection)
                         return 'connect to the';
 
                 }
@@ -372,19 +472,15 @@
 
             },
 
-            validateInternetConnection(){
+            validateSecurity() {
 
-                if (this.steps[2].typeCreate && !this.checkInternetConnection()){
+                this.checkInternetConnection();
+                this.handleChangeToAmount();
+                this.handleChangeToFee();
 
-                    this.steps[2].passed = true;
-                    this.steps[2].contentOpen = true;
-                    this.steps[1].contentOpen = false;
+                let propagationError = false;
 
-                    this.steps[1].error = false;
-                    return true;
-                }
-
-                if (!this.steps[2].typeCreate && this.checkInternetConnection()){
+                if (!this.steps[2].typeCreate && this.internetConnection) {
 
                     this.steps[2].passed = true;
                     this.steps[2].contentOpen = true;
@@ -392,11 +488,56 @@
 
                     this.steps[1].error = false;
                     return true;
+
+                }else{
+
+                   propagationError = true;
+
                 }
 
-                this.steps[1].error = true;
+                if(this.incognitoMode){
 
-                return false;
+                    if (WebDollar.Blockchain._synchronized || this.syncronizedOnce) {
+
+                        this.syncronizedOnce = true;
+                        this.timeLock = WebDollar.Blockchain.blockchain.blocks.length;
+
+                        if (this.steps[2].typeCreate && !this.internetConnection) {
+
+                            this.steps[2].passed = true;
+                            this.steps[2].contentOpen = true;
+                            this.steps[1].contentOpen = false;
+
+                            this.steps[1].error = false;
+                            return true;
+
+                        }else{
+
+                            this.steps[1].error = 3;
+                            return false;
+
+                        }
+
+                    }else{
+
+                        this.steps[1].error = 1;
+                        return false;
+
+                    }
+
+                }else{
+
+                    if(propagationError){
+
+                        this.steps[1].error = 3;
+                        return false;
+
+                    }
+
+                    this.steps[1].error = 2;
+                    return false;
+
+                }
 
             },
 
@@ -429,6 +570,8 @@
 
                 }
 
+                this.validateSecurity();
+
             },
 
             async handleImportTransaction(){
@@ -452,7 +595,7 @@
                             let file = fileInput.files[i];
                             let extension = file.name.split('.').pop();
 
-                            if (extension === "txt") {
+                            if (extension === "tx") {
                                 let reader = new FileReader();
 
                                 try {
@@ -472,7 +615,6 @@
                                             this.fee = '';
 
                                             this.backToStepOne();
-                                            this.switchToOfflineTransfer();
 
                                             this.$emit('closeModal');
 
@@ -505,12 +647,37 @@
 
                 let transactionData = new Blob( [JSON.stringify(data)], {type: "application/text;charset=utf-8"});
 
-                let fileName = "transaction"+".txt";
+                let fileName = "transaction"+".tx";
                 FileSaver.saveAs(transactionData, fileName);
 
-                Notification.addAlert(undefined, "success", "Offline Transaction", "The offline transaction to "+ this.toAddress + " has been created and saved on your device.",5000);
+                Notification.addAlert(undefined, "success", "Offline Transaction", 'The offline transaction has been created and saved on your device. For keep your wallet totally safe, this browser tab will be closed in 5 seconds.',5000);
+
+                setTimeout(function(){ window.close(); }, 5000);
 
             },
+
+            async checkIncognito() {
+
+                let fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+
+                if (!fs) {
+                    console.error("Not incognito mode");
+                    return false;
+                } else {
+
+                    return await new Promise((resolve)=>{
+
+                        fs(window.TEMPORARY, 100,
+                            ()=> resolve(false),
+                            ()=> resolve(true),
+                        );
+
+                    });
+
+                }
+
+
+            }
 
         },
 
@@ -533,6 +700,7 @@
 
     .step .title{
         text-align: left;
+        margin: 10px 0;
         padding-left: 10px!important;
         font-size: 16px;
         color: #757575;
@@ -591,6 +759,10 @@
         display: grid;
         grid-template-columns: 36px 1fr;
         background-color: #333;
+    }
+
+    .hideTransactionImage{
+        grid-template-columns: 1fr!important;
     }
 
     .moneyBox{
@@ -663,6 +835,17 @@
 
     .marginBottomButton{
         margin-bottom: 10px;
+    }
+
+    .offlineTransfer h2{
+        color: #ffffff;
+        letter-spacing: 2px;
+        font-size: 20px;
+        font-weight: 500!important;
+        line-height: 40px;
+        margin-top: 13px;
+        margin-bottom: 10px;
+        transition: all .5s linear;
     }
 
     input[type=number]::-webkit-inner-spin-button,

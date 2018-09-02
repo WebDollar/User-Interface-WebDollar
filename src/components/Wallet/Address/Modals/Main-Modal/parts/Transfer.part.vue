@@ -195,9 +195,9 @@
 
             this.incognitoMode = await this.checkIncognito();
 
-            this.checkInternetConnection();
+            await this.checkInternetConnection();
 
-            setTimeout(()=>{ this.checkInternetConnection(); }, 3000);
+            setTimeout(async ()=>{ await this.checkInternetConnection(); }, 3000);
 
         },
 
@@ -449,15 +449,9 @@
 
             },
 
-            checkInternetConnection(){
+            async choseInternetInstruction(){
 
-                this.internetConnection = navigator.onLine;
-
-            },
-
-            choseInternetInstruction(){
-
-                this.checkInternetConnection();
+                await this.checkInternetConnection();
 
                 if (this.steps[2].typeCreate){
 
@@ -475,9 +469,9 @@
 
             },
 
-            validateSecurity() {
+            async validateSecurity() {
 
-                this.checkInternetConnection();
+                await this.checkInternetConnection();
                 this.handleChangeToAmount();
                 this.handleChangeToFee();
 
@@ -557,7 +551,7 @@
 
             },
 
-            backToStepTwo(){
+            async backToStepTwo(){
 
                 if(!this.steps[0].contentOpen){
 
@@ -573,7 +567,7 @@
 
                 }
 
-                this.validateSecurity();
+                await this.validateSecurity();
 
             },
 
@@ -679,6 +673,29 @@
 
                 }
 
+
+            },
+
+            async checkInternetConnection() {
+
+                var xhr = new XMLHttpRequest();
+                var file = document.URL+"/public/assets/images/favicon.ico";
+                var randomNum = Math.round(Math.random() * 10000);
+
+                xhr.open('HEAD', file + "?rand=" + randomNum, true);
+                xhr.send();
+
+                return await xhr.addEventListener("readystatechange", processRequest, false);
+
+                async function processRequest(e) {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 304) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                }
 
             }
 

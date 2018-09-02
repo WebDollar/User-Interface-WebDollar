@@ -344,6 +344,11 @@
 
         .balanceText{
             grid-template-columns: 1fr;
+            padding-bottom: 0!important;
+        }
+
+        .balanceText div{
+            text-align: center!important;
         }
 
         .balanceTitle{
@@ -351,7 +356,7 @@
         }
 
         .balanceAmount{
-            text-align: center;
+            text-align: center!important;
         }
 
         .WEBD .balanceAmount{
@@ -364,6 +369,10 @@
 
         .balanceContent{
             padding: 51px 10px 15px 10px;
+        }
+
+        .twoColumns .section{
+            padding-top: 40px!important;
         }
 
     }

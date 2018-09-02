@@ -194,7 +194,10 @@
             if (typeof window === 'undefined') return;
 
             this.incognitoMode = await this.checkIncognito();
+
             this.checkInternetConnection();
+
+            setTimeout(()=>{ this.checkInternetConnection(); }, 3000);
 
         },
 
@@ -454,6 +457,8 @@
 
             choseInternetInstruction(){
 
+                this.checkInternetConnection();
+
                 if (this.steps[2].typeCreate){
 
                     if(this.internetConnection)
@@ -461,7 +466,7 @@
 
                 }else{
 
-                    if(this.internetConnection)
+                    if(!this.internetConnection)
                         return 'connect to the';
 
                 }
@@ -487,7 +492,7 @@
                     this.steps[1].error = false;
                     return true;
 
-                }else{
+                }else if(!this.steps[2].typeCreate && !this.internetConnection){
 
                    propagationError = true;
 
@@ -650,7 +655,7 @@
 
                 Notification.addAlert(undefined, "success", "Offline Transaction", 'The offline transaction has been created and saved on your device. For keep your wallet totally safe, this browser tab will be closed in 5 seconds.',5000);
 
-                setTimeout(function(){ window.close(); }, 5000);
+                setTimeout(()=>{ window.close(); }, 5000);
 
             },
 

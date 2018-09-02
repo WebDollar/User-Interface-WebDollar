@@ -327,7 +327,7 @@
                             this.$emit('onTransferSuccess', answer.message);
 
                         } else {
-                            this.errorMessage = answer.message;
+                            this.errorMessage = answer.message + ' Reason: ' + answer.reason;
                             this.successMessage = '';
                         }
 
@@ -348,7 +348,7 @@
                         this.$emit('onTransferSuccess', answer.message);
 
                     } else {
-                        this.errorMessage = answer.message;
+                        this.errorMessage = answer.message + ' Reason: ' + answer.reason;
                         this.successMessage = '';
                     }
 

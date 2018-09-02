@@ -51,7 +51,7 @@
 
                     <span v-if="this.steps[1].error===3">
                         Your internet connection is "<span class="hilight" :class="this.internetConnection ? '' : 'hilightRed'">{{ this.internetConnection ? 'Online' : 'Offline'}}</span>",
-                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ this.choseInternetInstruction() }} internet and then recheck the connection, by pressing the following button to verify you are "{{ !this.internetConnection ? 'Online' : 'Offline'}}".
+                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ choseInternetInstruction }} internet and then recheck the connection, by pressing the following button to verify you are "{{ !this.internetConnection ? 'Online' : 'Offline'}}".
                     </span>
 
                     <div class="modalButton fullWidthButton" @click="validateSecurity()">
@@ -172,9 +172,9 @@
                 errorToAmountMessage: '',
                 successMessage: '',
                 steps:[{
-                        passed:true,
-                        contentOpen:true
-                    },
+                    passed:true,
+                    contentOpen:true
+                },
                     {
                         passed:false,
                         contentOpen:false,
@@ -194,10 +194,7 @@
             if (typeof window === 'undefined') return;
 
             this.incognitoMode = await this.checkIncognito();
-
             await this.checkInternetConnection();
-
-            setTimeout(async ()=>{ await this.checkInternetConnection(); }, 3000);
 
         },
 
@@ -207,8 +204,25 @@
 
                 return WebDollar.Blockchain.Wallet.getAddressPic(this.toAddress);
 
-            }
+            },
 
+            choseInternetInstruction(){
+
+                if (this.steps[2].typeCreate){
+
+                    if(this.internetConnection)
+                        return 'disconnect from the';
+
+                }else{
+
+                    if(!this.internetConnection)
+                        return 'connect to the';
+
+                }
+
+                return false;
+
+            },
         },
 
         methods:{
@@ -382,7 +396,7 @@
                     - (match[2] ? +match[2] : 0));
 
                 if (decimalsNumber>4) return parseFloat(num).toFixed(4);
-                    else return num;
+                else return num;
             },
 
             handleChangeToAmount(e){
@@ -449,25 +463,6 @@
 
             },
 
-            async choseInternetInstruction(){
-
-                await this.checkInternetConnection();
-
-                if (this.steps[2].typeCreate){
-
-                    if(this.internetConnection)
-                        return 'disconnect from the';
-
-                }else{
-
-                    if(!this.internetConnection)
-                        return 'connect to the';
-
-                }
-
-                return false;
-
-            },
 
             async validateSecurity() {
 
@@ -488,7 +483,7 @@
 
                 }else if(!this.steps[2].typeCreate && !this.internetConnection){
 
-                   propagationError = true;
+                    propagationError = true;
 
                 }
 
@@ -676,27 +671,61 @@
 
             },
 
-            async checkInternetConnection() {
-
-                var xhr = new XMLHttpRequest();
-                var file = document.URL+"/public/assets/images/favicon.ico";
-                var randomNum = Math.round(Math.random() * 10000);
-
-                xhr.open('HEAD', file + "?rand=" + randomNum, true);
-                xhr.send();
-
-                return await xhr.addEventListener("readystatechange", processRequest, false);
-
-                async function processRequest(e) {
-                    if (xhr.readyState == 4) {
-                        if (xhr.status >= 200 && xhr.status < 304) {
-                            return true;
+            makeRequest(url) {
+                return new Promise(function (resolve, reject) {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('HEAD', url);
+                    xhr.onload = function () {
+                        if (this.status >= 200 && this.status < 300) {
+                            resolve(true);
                         } else {
-                            return false;
+                            reject({
+                                status: this.status,
+                                statusText: xhr.statusText
+                            });
                         }
+                    };
+                    xhr.onerror = function () {
+                        reject({
+                            status: this.status,
+                            statusText: xhr.statusText
+                        });
+                    };
+                    xhr.send();
+                });
+            },
+
+            async checkInternetConnection() {
+                var file = document.URL + "/public/assets/images/favicon.ico";
+                var randomNum = Math.round(Math.random() * 10000);
+                try {
+                    let result = await this.makeRequest(file + "?rand=" + randomNum);
+                    if ( result === true ) {
+                        this.internetConnection = true;
+                        return true;
+                    }
+                    else
+                    {
+                        console.log(result);
+                        this.internetConnection = false;
+                        return false;
                     }
                 }
-
+                catch (exception) {
+                    let result = exception;
+                    // este o eroare dar nu inseamna ca nu avem internet!
+                    if (result.status === 0) {
+                        this.internetConnection = false;
+                        return false;
+                    }
+                    else
+                    {
+                        console.log(result);
+                        // un alt tip de eroare, trebuie studiat
+                        this.internetConnection = true;
+                        return false;
+                    }
+                }
             }
 
         },

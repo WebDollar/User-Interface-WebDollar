@@ -322,7 +322,7 @@
 
                     }else{
 
-                        answer = await WebDollar.Blockchain.Transactions.wizard.validateTransaction( this.importedAddress, this.toAddress, amountToSend, feeToSend, undefined, undefined, this.timeLock-1, true );
+                        answer = await WebDollar.Blockchain.Transactions.wizard.validateTransaction( this.importedAddress, this.toAddress, amountToSend, feeToSend, undefined, undefined, this.timeLock-1, undefined );
 
                         if (answer.result){
 

@@ -454,8 +454,6 @@
 
             choseInternetInstruction(){
 
-                this.checkInternetConnection();
-
                 if (this.steps[2].typeCreate){
 
                     if(this.internetConnection)

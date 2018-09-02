@@ -107,7 +107,7 @@
 
             address: function (newVal, oldVal) { // watch it
 
-                WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.subscription);
+                this.subscription();
 
                 let address = newVal;
                 if (typeof newVal === "object" && typeof newVal.hasOwnProperty("address") ) { //it is an address object

@@ -8,7 +8,7 @@
             <div class="step step1" :class="this.steps[0].passed ? 'passed' : ''">
 
                 <div class="title" @click="backToStepOne()">
-                    1. Chose Action Type
+                    1. Choose Action Type
                 </div>
 
                 <div class="stepContent" v-if="this.steps[0].contentOpen">
@@ -19,11 +19,11 @@
 
                     <div class="buttons">
 
-                        <div class="modalButton" @click="choseActionType(true)">
+                        <div class="modalButton" @click="ChooseActionType(true)">
                             Create
                         </div>
 
-                        <div class="modalButton" @click="choseActionType(false)">
+                        <div class="modalButton" @click="ChooseActionType(false)">
                             Propagate
                         </div>
 
@@ -51,7 +51,7 @@
 
                     <span v-if="this.steps[1].error===3">
                         Your internet connection is "<span class="hilight" :class="this.internetConnection ? '' : 'hilightRed'">{{ this.internetConnection ? 'Online' : 'Offline'}}</span>",
-                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ choseInternetInstruction }} internet and then recheck the connection, by pressing the following button to verify you are "{{ !this.internetConnection ? 'Online' : 'Offline'}}".
+                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ ChooseInternetInstruction }} internet and then recheck the connection, by pressing the following button to verify you are "{{ !this.internetConnection ? 'Online' : 'Offline'}}".
                     </span>
 
                     <div class="modalButton fullWidthButton" @click="validateSecurity()">
@@ -138,6 +138,10 @@
                 {{ this.offlineTransaction ? 'EXPORT TRANSACTION' : 'SEND WEBD' }}
             </button>
 
+            <span class="editError errorTransactions" v-if="this.errorMessage!=='' && this.errorMessage!==null && this.errorMessage!==undefined">
+                {{this.errorMessage}}
+            </span>
+
         </div>
 
     </div>
@@ -206,23 +210,6 @@
 
             },
 
-            choseInternetInstruction(){
-
-                if (this.steps[2].typeCreate){
-
-                    if(this.internetConnection)
-                        return 'disconnect from the';
-
-                }else{
-
-                    if(!this.internetConnection)
-                        return 'connect to the';
-
-                }
-
-                return false;
-
-            },
         },
 
         methods:{
@@ -450,7 +437,7 @@
 
             },
 
-            choseActionType(value){
+            ChooseActionType(value){
 
                 this.steps[1].passed = true;
                 this.steps[1].contentOpen = true;
@@ -895,6 +882,12 @@
         margin-top: 13px;
         margin-bottom: 10px;
         transition: all .5s linear;
+    }
+
+    .errorTransactions{
+        color: #dc5f48!important;
+        font-size: 14px!important;
+        text-align: center;
     }
 
     input[type=number]::-webkit-inner-spin-button,

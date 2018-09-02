@@ -46,7 +46,7 @@
                     </span>
 
                     <span v-if="this.steps[1].error===1">
-                        You're not sync with the network yet. In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }}, you should be synchronized.
+                        You're not sync with the network yet. In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }}, you should be synchronized. {{ !this.internetConnection ? 'You should connect to the internet for be able to sync.' : ''}}
                     </span>
 
                     <span v-if="this.steps[1].error===3">

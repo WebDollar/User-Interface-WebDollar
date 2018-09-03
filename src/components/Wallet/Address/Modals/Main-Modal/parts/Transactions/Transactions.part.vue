@@ -43,6 +43,7 @@
     import Vue from "vue";
     import Transaction from "./Transaction.element.vue"
     import Notification from "helpers/Notification.helpers"
+    import BrowserHelpers from "helpers/Browser.helpers"
 
     export default {
 

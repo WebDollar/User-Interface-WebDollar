@@ -51,7 +51,7 @@
 
                     <span v-if="this.steps[1].error===3">
                         Your internet connection is "<span class="hilight" :class="this.internetConnection ? '' : 'hilightRed'">{{ this.internetConnection ? 'Online' : 'Offline'}}</span>",
-                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ ChooseInternetInstruction }} internet and then recheck the connection, by pressing the following button to verify you are "{{ !this.internetConnection ? 'Online' : 'Offline'}}".
+                        In order to {{ this.steps[2].typeCreate ? 'create' : 'propagate' }} the offline transaction, you should first {{ this.ChooseInternetInstruction }} internet and then recheck the connection, by pressing the following button to verify you are "{{ !this.internetConnection ? 'Online' : 'Offline'}}".
                     </span>
 
                     <div class="modalButton fullWidthButton" @click="validateSecurity()">
@@ -207,6 +207,24 @@
             getAddressPic(){
 
                 return WebDollar.Blockchain.Wallet.getAddressPic(this.toAddress);
+
+            },
+
+            ChooseInternetInstruction(){
+
+                if (this.steps[2].typeCreate){
+
+                    if(this.internetConnection)
+                        return 'disconnect from the';
+
+                }else{
+
+                    if(!this.internetConnection)
+                        return 'connect to the';
+
+                }
+
+                return false;
 
             },
 

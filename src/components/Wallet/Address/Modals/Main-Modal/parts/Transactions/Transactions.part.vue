@@ -75,6 +75,7 @@
 
             });
 
+
             if (data !== null && data.result) {
                 this.subscription = data.subscription;
                 this._addTransactions(data.transactions);

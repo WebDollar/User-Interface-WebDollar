@@ -527,6 +527,7 @@
 
         .show-balance-span{
             font-size: 20px;
+            display: none!important;
         }
 
         #dashboardMining{

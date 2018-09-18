@@ -44,16 +44,6 @@ class InitializeParams{
 
     }
 
-
-    createElements(){
-
-        let networkNativeMapMainVue =require('./vue/Network-Native-Map-main-vue').default;
-        if (this.maps.activated)
-            networkNativeMapMainVue(this.maps);
-
-
-    }
-
     load(){
 
         GlobalInitialization.initializeGlobalSettings();
@@ -66,7 +56,21 @@ class InitializeParams{
         mainVue(this.mining, this.wallet);
 
         this.createElements();
+
     }
+
+    createElements(){
+
+        let networkNativeMapMainVue =require('./vue/Network-Native-Map-main-vue').default;
+        if (this.maps.activated)
+            networkNativeMapMainVue(this.maps);
+
+        let alertsStickyBarMainVue = require('./vue/Alerts-Sticky-Bar-main-vue').default;
+        if (this.alertsStickyBar.activated)
+            alertsStickyBarMainVue(this.alertsStickyBar);
+
+    }
+
 
 
 

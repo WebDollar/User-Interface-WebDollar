@@ -54,8 +54,7 @@
             loadAllAddresses(){
 
                 for (let index in this.addresses){
-                    WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[index ].subscription);
-                    this.addresses[ index ].subscription = null;
+                    this.addresses[ index ].subscription();
                     console.log("unsubscribe....");
                 }
 
@@ -122,7 +121,7 @@
                 for (let keyAddress in this.addresses)
                     if (address.toString() === this.addresses[keyAddress].address.toString()){
 
-                        WebDollar.Blockchain.Balances.unsusbribeBalancesChanges(this.addresses[keyAddress].subscription);
+                        this.addresses[keyAddress].subscription();
                         this.addresses.splice(i,1);
                         return true;
                     }

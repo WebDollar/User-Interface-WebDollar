@@ -6,6 +6,8 @@ class Notification{
 
     addAlert(statusId, statusType, title, statusMessage, timeoutDelete, href){
 
+        console.log("Vue.$notify", Vue.$notify)
+
         Vue.$notify({
             group: (statusId === undefined) ? 'all' : statusId,
             title: title,

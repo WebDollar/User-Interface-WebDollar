@@ -31,14 +31,44 @@
 
             if (typeof window === "undefined") return;
 
-            this._markers = [];
-            this._markerMyself = null;
+            this._nodes = [];
+            this._links = [];
+
+            this._selfNode= null;
+            this._currentPool = {};
+            this._waitListIndex = 0;
+
+            this._waitingForPoolOwner = true;
 
             this.createMap();
-            //this.createTestConnections();
+
         },
 
         methods:{
+
+            _createTestConnectionsManual(){
+                let cell1 = this._circleMap.getCellByLocation(66.160507,  -153.369141);
+                let cell2 = this._circleMap.getCellByLocation(73.500823,  -21.755973);
+                let cell3 = this._circleMap.getCellByLocation(-28.083,  23.044);
+                let cell4 = this._circleMap.getCellByLocation(-20.72,  127.10);
+
+                let data = {
+                    status: status,
+                    city: "Bucharest",
+                    country: "RO",
+                    protocol: "peer",
+                    addr: "76.44.22.11"
+                };
+
+                this._circleMap.addLink(cell1, cell2);
+                this._circleMap.addLink(cell2, cell3);
+                this._circleMap.addLink(cell3, cell4);
+
+                this._circleMap.highlightCell(cell1, "peer-connected-browser", data, 1);
+                this._circleMap.highlightCell(cell2, "peer-connected-terminal", data, 2);
+                this._circleMap.highlightCell(cell3, "peer-network-member", data, 3);
+                this._circleMap.highlightCell(cell4, "peer-network-member", data, 4);
+            },
 
             createMap(){
 
@@ -47,9 +77,8 @@
                 let mapSelector = ' svg.WebDollarNativeMap';
 
                 this._mapElem = document.querySelector(mapSelector);
-                if (this._mapElem === null){
+                if (this._mapElem === null)
                     throw "map is not specified. Invalid selector"+mapSelector+". Try  svg.WebDollarNativeMap";
-                }
 
                 this._circleMap = new CircleMap(this._mapElem);
 
@@ -58,147 +87,113 @@
                 this._circles = new Circles();
 
                 this.initialize();
+
+            },
+
+            _mapHighlight(e) {
+
+                if (e.target.data) {
+                    const data = e.target.data;
+                    this.$refs['refDialog'].show(data);
+                } else
+                    this.$refs['refDialog'].hide();
+
+            },
+
+            removeAllLinks(){
+
+                for(let i=0;i<this._links.length;i++)
+                    this.removeLink(this._links[i].start,this._links[i].stop);
+
+                this._links = [];
+
+            },
+
+            removeNodeLinks(node){
+
+                let cell = this._circleMap.getCellByLocation(node.lat, node.lng);
+
+                for(let i=0;i<this._links.length;i++)
+                    if(this._links[i].start === cell || this._links[i].stop === cell){
+                        this.removeLink(this._links[i].start,this._links[i].stop);
+                        this._links.splice(i,1);
+                    }
+
             },
 
             async initialize(){
 
+                await this._showMyself();
 
-                WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (nodesListObject) => {
-                    this._showNodesListNode(nodesListObject);
-                } );
+                WebDollar.Node.NodesList.emitter.on("nodes-list/connected", async (newConnection) => {
+
+                    await this.nodeConnected(newConnection);
+
+                });
 
                 WebDollar.Node.NodesList.emitter.on("nodes-list/disconnected", async (nodesListObject) => {
 
-                    //deleting the marker
-                    let markerIndex = this._findMarkerIndexBySocket(nodesListObject.socket);
-
-                    if (markerIndex !== -1) this._removeMarker(this._markers[markerIndex])
-                });
-
-                //Waitlist p2p
-                WebDollar.Node.NodesWaitlist.emitter.on("waitlist/new-node",  (nodesWaitlistObject)=>{
-                    this._showWaitListNode(nodesWaitlistObject);
-                });
-
-                WebDollar.Node.NodesWaitlist.emitter.on("waitlist/delete-node",  (nodesWaitlistObject)=>{
-
-                    //deleting the marker
-                    let markerIndex = this._findMarkerIndexBySocket(nodesWaitlistObject);
-                    if (markerIndex !== -1) this._removeMarker(this._markers[markerIndex])
+                    await this.nodeDisconnected(nodesListObject)
 
                 });
 
-                WebDollar.Node.NodesList.nodes.forEach(async (nodesListObject)=>{
-                    this._showNodesListNode(nodesListObject);
+                WebDollar.Node.NodesWaitlist.emitter.on("waitlist/new-node", async (nodesWaitlistObject)=>{
+
+                    await this.nodeConnected(nodesWaitlistObject);
+
                 });
 
-                WebDollar.Node.NodesWaitlist.waitListFullNodes.forEach( (nodesWaitlistObject)=>{
-                    this._showWaitListNode(nodesWaitlistObject);
+                WebDollar.Node.NodesWaitlist.emitter.on("waitlist/delete-node", async (nodesWaitlistObject)=>{
+
+                    await this.nodeDisconnected(nodesWaitlistObject)
+
                 });
 
-                WebDollar.Node.NodesWaitlist.waitListLightNodes.forEach( (nodesWaitlistObject)=>{
-                    this._showWaitListNode(nodesWaitlistObject);
-                });
+                WebDollar.StatusEvents.on("miner-pool/settings", async ()=>{
 
-                await this._showMyself();
+                    if(WebDollar.Blockchain.MinerPoolManagement._minerPoolStarted){
 
-            },
+                        this._waitingForPoolOwner=true;
 
-            async _showNodesListNode(nodesListObject){
-                let geoLocation = await nodesListObject.socket.node.sckAddress.geoLocation;
+                        if(this._currentPool.name === undefined || this._currentPool.name === null){
 
-                this._addMarker(geoLocation, nodesListObject.socket);
-            },
+                            this.disconnectFromAllNodes();
+                            this.removeAllLinks();
+                            this._currentPool.name = WebDollar.Blockchain.MinerPoolManagement.minerPoolSettings.poolName;
 
-            async _showWaitListNode(nodesWaitlistObject){
-                let geoLocation = await nodesWaitlistObject.sckAddresses[0].geoLocation;
+                            return;
 
-                this._addMarker(geoLocation, nodesWaitlistObject);
-            },
+                        }else{
 
-            async _showMyself(){
-                let geoLocation = await WebDollar.Applications.GeoHelper.getLocationFromAddress('', true);
+                            if(this._currentPool.name !== WebDollar.Blockchain.MinerPoolManagement.minerPoolSettings.poolName){
 
-                this._addMarker( geoLocation, 'myself');
-            },
+                                this.disconnectFromAllNodes();
+                                this.removeAllLinks();
+                                this._currentPool.node = undefined;
+                                this._currentPool.name = WebDollar.Blockchain.MinerPoolManagement.minerPoolSettings.poolName;
 
-            _addMarker(geoLocation, socket){
+                                return;
 
-                let marker = {
-                    socket: socket,
-                    desc: this._getInfoWindowContent(geoLocation, socket),
-                    linked: false,
-                };
+                            }
 
-
-                this._markers.push(marker);
-
-                if (socket === "myself") this.highlightMe(marker); else
-                if (socket === "fake") this.highlightConnectedPeer(marker);
-                else
-                    this.highlightConnectedPeer(marker)
-
-            },
-
-            highlightMe(marker){
-
-                this._markerMyself = marker;
-
-                let cell = this._circleMap.getCellByLocation(marker.desc.pos.lat, marker.desc.pos.lng);
-                if (cell) {
-                    marker.cell = cell;
-
-                    this._circleMap.highlightCell(cell, 'peer-own', marker.desc, marker.desc.uuid);
-
-                    this._circles.inc(cell);
-
-                    //add links to current nodes
-                    for (let i = 0; i< this._markers.length; i++)
-                        if (this._markers[i] !== marker && this._markers[i].desc.status === "connected" && !this._markers[i].linked) {
-                            this._markers[i].linked = true;
-                            this._circleMap.addLink(cell, this._markers[i].cell);
                         }
 
-                    this._circleMap.putCellOnTop(cell);
+                    }else{
 
-                }
+                        this._waitingForPoolOwner=false;
+                        this._currentPool.name = undefined;
+                        this._currentPool.node = undefined;
+                        this.removeAllLinks();
+                        this.disconnectFromAllNodes();
+
+                    }
+
+                });
+//
+
             },
 
-            highlightConnectedPeer(marker){
-
-                let cell = this._circleMap.getCellByLocation(marker.desc.pos.lat, marker.desc.pos.lng);
-                if (cell) {
-
-                    marker.cell = cell;
-
-                    let cellClass;
-
-                    if (marker.desc.nodeType === "myself") cellClass = "peer-own"; else
-                    if (marker.desc.nodeType === "browser") cellClass = "peer-connected-browser"; else
-                    if (marker.desc.nodeType === "terminal") cellClass = "peer-connected-terminal"; else
-                    if (marker.desc.nodeType === "terminal-waitlist") cellClass = "peer-network-member"; else
-                    if (marker.desc.nodeType === "browser-waitlist") cellClass = "peer-network-member";
-
-
-
-                    this._circleMap.highlightCell(cell, cellClass , marker.desc, marker.desc.uuid);
-
-                    this._circles.inc(cell);
-
-                    //add links to the myselfMarker
-                    if (marker.desc.status === "connected")
-                        if (this._markerMyself !== null && this._markerMyself !== undefined && this._markerMyself !== marker && !marker.linked) {
-                            marker.linked = true;
-                            this._circleMap.addLink(cell, this._markerMyself.cell);
-                        }
-
-                    this._circleMap.putCellOnTop(cell);
-
-                }
-            },
-
-
-            _getInfoWindowContent(geoLocation, socket){
+            getNodeDescription(geoLocation, socket){
 
                 let address = '', nodeType = '', status = "node", nodeProtocol = '', nodeIndex=0, uuid='';
 
@@ -220,39 +215,23 @@
                     if (Math.floor(Math.random() * 2) === 0) nodeType = "browser";
                     else nodeType = "terminal"
 
-                } else if (typeof socket === "object" && socket.node !== undefined && socket.node.protocol !== undefined && socket.node.protocol.helloValidated) {
+                } else if (socket.connected) {
                     address = socket.node.sckAddress.toString();
                     uuid = socket.node.sckAddress.uuid || uuid.v4();
 
                     status = "connected";
 
-                    switch (socket.node.protocol.nodeType) {
-                        case WebDollar.Applications.NODE_TYPE.NODE_TERMINAL:
-                            nodeType = 'terminal';
-                            break;
+                    nodeType = 'connected node';
 
-                        case WebDollar.Applications.NODE_TYPE.NODE_WEB_PEER:
-                            nodeType = 'browser';
-                            break;
-                    }
-
-                    nodeProtocol = socket.nodeType;
+                    nodeProtocol = socket.node.type;
                     nodeIndex = socket.node.index;
                 }
-                else if (socket instanceof WebDollar.Node.NodesWaitlist.NodesWaitlistObject) { //its a waitlist
+                else { //its a waitlist
 
-                    address = socket.sckAddresses[0].toString();
-                    uuid = socket.sckAddresses[0].uuid;
+                    address = socket.address + socket.port;
+                    uuid = socket.uuid;
 
-                    switch ( socket.nodeType ) {
-                        case WebDollar.Applications.NODE_TYPE.NODE_TERMINAL:
-                            nodeType = 'terminal-waitlist';
-                            break;
-
-                        case WebDollar.Applications.NODE_TYPE.NODE_WEB_PEER:
-                            nodeType = 'browser-waitlist';
-                            break;
-                    }
+                    nodeType = 'other node';
 
                     status = "not connected";
                     nodeProtocol = nodeType;
@@ -275,81 +254,214 @@
 
             },
 
-            _mapHighlight(e) {
+            addHilightNode(newConnection, cellClass){
 
-                if (e.target.data) {
-                    const data = e.target.data;
-                    this.$refs['refDialog'].show(data);
-                } else
-                    this.$refs['refDialog'].hide();
+                if (newConnection.cell) {
+
+                    if (newConnection === this._selfNode)
+                        this._selfNode.cell = newConnection.cell;
+
+                    this._circleMap.highlightCell(newConnection.cell, cellClass , newConnection.desc, newConnection.uuid);
+                    this._circles.inc(newConnection.cell);
+
+                    this._circleMap.putCellOnTop(newConnection.cell);
+
+                }
 
             },
 
-            _removeMarker(marker){
+            removeHilightNode(newConnection){
 
-                if (marker.cell !== undefined && marker.cell !== null) {
+                if (newConnection.cell !== undefined && newConnection.cell !== null) {
 
                     // Only remove highlight if there are no more peers on this cell.
-                    if (this._circles.del(marker.cell) === 0) {
+                    if (this._circles.del(newConnection.cell) === 0) {
+
                         // Either change class if there are still known peers there.
-                        if (this._circles.get(marker.cell) > 0) {
-                            this._circleMap.highlightCell(marker.cell, 'peer-connected-browser', undefined, marker.desc.uuid);
+                        if (this._circles.get(newConnection.cell) > 0) {
+                            this._circleMap.highlightCell(newConnection.cell, 'peer-network-member', newConnection.desc, newConnection.uuid);
                         }
+
                         // Or remove class at all.
                         else
-                            this._circleMap.unhighlightCell(marker.cell, marker.desc.uuid);
+                            this._circleMap.unhighlightCell(newConnection.cell, newConnection.uuid);
 
-                        if (this._markerMyself !== marker && this._markerMyself !== null)
-                            this._circleMap.removeLink(this._markerMyself.cell, marker.cell);
+                        let connection;
+                        if(WebDollar.Blockchain.MinerPoolManagement._minerPoolStarted)
+                            connection = this._currentPool.node;
+                        else
+                            connection = this._selfNode;
+
+                        if (this._selfNode !== newConnection && this._selfNode !== null)
+                            this._circleMap.removeLink(connection.cell, newConnection.cell);
                     }
 
                 }
 
                 //delete marker from the list
-                for (let i=0; i<this._markers.length; i++)
-                    if (this._markers[i] === marker) {
-                        this._markers.splice(i, 1);
-                        break;
+                for(var i=0;i<this._nodes.length;i++)
+                    if(this._nodes[i]===newConnection)
+                        this._nodes.splice(i,1);
+
+                //this._circles.del(cell);
+
+            },
+
+            disconnectFromAllNodes(){
+
+                for(var i=0;i<this._nodes.length;i++){
+
+                    if ( this._nodes[i].cell !== undefined &&  this._nodes[i].cell !== null) {
+
+                        if( this._nodes[i].cell !== this._selfNode.cell ){
+                            this._circleMap.unhighlightCell(this._nodes[i].cell, this._nodes[i].uuid);
+                            this._circleMap.highlightCell(this._nodes[i].cell, 'peer-network-member', this._nodes[i].desc, this._nodes[i].uuid);
+                        }
+
                     }
 
-            },
-
-            createTestConnections(){
-
-                let mapsTester = new MapsTester(this);
-                mapsTester.testConnections();
+                }
 
             },
 
-            _createTestConnectionsManual(){
-                let cell1 = this._circleMap.getCellByLocation(66.160507,  -153.369141);
-                let cell2 = this._circleMap.getCellByLocation(73.500823,  -21.755973);
-                let cell3 = this._circleMap.getCellByLocation(-28.083,  23.044);
-                let cell4 = this._circleMap.getCellByLocation(-20.72,  127.10);
+            addLink(firstConnection,secondConnection){
 
-                let data = {
-                    status: status,
-                    city: "Bucharest",
-                    country: "RO",
-                    protocol: "peer",
-                    addr: "76.44.22.11"
-                };
+                let firstCell = this._circleMap.getCellByLocation(firstConnection.lat, firstConnection.lng);
+                let secondCell = this._circleMap.getCellByLocation(secondConnection.lat, secondConnection.lng);
 
-                this._circleMap.addLink(cell1, cell2);
-                this._circleMap.addLink(cell2, cell3);
-                this._circleMap.addLink(cell3, cell4);
-
-                this._circleMap.highlightCell(cell1, 'known-peer', data, 1);
-                this._circleMap.highlightCell(cell2, 'own-peer', data, 2);
-                this._circleMap.highlightCell(cell3, 'own-peer', data, 3);
-                this._circleMap.highlightCell(cell4, 'own-peer', data, 4);
+                this._circleMap.addLink(firstCell, secondCell);
 
             },
 
-            _findMarkerIndexBySocket(socket){
+            removeLink(firstConnection,secondConnection){
 
-                for (let i=0; i< this._markers.length; i++ )
-                    if (this._markers[i].socket === socket)
+                let firstCell = this._circleMap.getCellByLocation(firstConnection.lat, firstConnection.lng);
+                let secondCell = this._circleMap.getCellByLocation(secondConnection.lat, secondConnection.lng);
+
+                this._circleMap.removeLink(firstCell, secondCell);
+
+            },
+
+            async _showMyself(){
+
+                this._selfNode = await WebDollar.Applications.GeoHelper.getLocationFromAddress('', true);
+                this._selfNode.cell = this._circleMap.getCellByLocation(this._selfNode.lat, this._selfNode.lng);
+                this._selfNode.desc = this.getNodeDescription(this._selfNode, 'myself');
+                this._selfNode.uuid = '0';
+
+                this.addHilightNode( this._selfNode, 'peer-own' );
+
+            },
+
+            async nodeConnected(newConnection){
+
+                let nodeParams = await this.processNode(newConnection);
+                this._nodes.push(nodeParams);
+
+                if(this._waitingForPoolOwner===true &&  WebDollar.Blockchain.MinerPoolManagement._minerPoolStarted===true){
+
+                    this.addHilightNode( nodeParams , "peer-connected-terminal" );
+
+                    this._currentPool.node = nodeParams;
+
+                    this.addLink(this._selfNode,this._currentPool.node);
+                    this._links.push({
+                        start: this._selfNode,
+                        stop: this._currentPool.node
+                    });
+
+                    this._waitingForPoolOwner=false;
+
+                }else{
+
+                    let startLink;
+
+                    if(nodeParams.connected){
+
+                        if(WebDollar.Blockchain.MinerPoolManagement._minerPoolStarted){
+                            startLink = this._currentPool.node;
+                            this.addHilightNode( nodeParams , "peer-connected-browser" );
+                        }else{
+                            startLink = this._selfNode;
+                            this.addHilightNode( nodeParams , "peer-connected-terminal" );
+                        }
+
+                        this.addLink(startLink,nodeParams);
+                        this._links.push({
+                            start: startLink,
+                            stop: nodeParams
+                        })
+
+                    }else{
+
+                        if(WebDollar.Blockchain.MinerPoolManagement._minerPoolStarted){
+                            startLink = this._currentPool.node;
+                            this.addHilightNode( nodeParams , "peer-connected-browser" );
+
+                            this.addLink(startLink,nodeParams);
+                            this._links.push({
+                                start: startLink,
+                                stop: nodeParams
+                            })
+                        }
+                        else{
+                            this.addHilightNode( nodeParams , "peer-network-member" );
+                        }
+
+                    }
+
+                }
+
+            },
+
+            async nodeDisconnected(node){
+
+                let foundNode;
+
+                if(node.socket!==undefined || node.socket!==null)
+                    foundNode = this.findNodeByIndex(node.socket.node.sckAddress);
+                else
+                    foundNode = this.findNodeByIndex(node.sckAddresses[0]);
+
+                if (foundNode !== -1){
+
+                    this.removeHilightNode(this._nodes[foundNode]);
+                    this.removeNodeLinks(this._nodes[foundNode]);
+
+                }
+
+            },
+
+            async processNode(node){
+
+                let nodeParams;
+
+                if(node.socket === null || node.socket === undefined){
+                    nodeParams = await node.sckAddresses[0].geoLocation;
+                    nodeParams.socket = node.sckAddresses[0];
+                    nodeParams.uuid = 'waitListUUID'+this._waitListIndex;
+                    this._waitListIndex++;
+                    nodeParams.cell = this._circleMap.getCellByLocation(nodeParams.lat, nodeParams.lng);
+                    nodeParams.desc = this.getNodeDescription(nodeParams, node.sckAddresses[0]);
+                    nodeParams.connected = false
+                }
+                else{
+                    nodeParams = await node.socket.node.sckAddress.geoLocation;
+                    nodeParams.socket = node.socket.node.sckAddress;
+                    nodeParams.uuid = node.socket.node.sckAddress.uuid;
+                    nodeParams.cell = this._circleMap.getCellByLocation(nodeParams.lat, nodeParams.lng);
+                    nodeParams.desc = this.getNodeDescription(nodeParams, node.socket);
+                    nodeParams.connected = true
+                }
+
+                return nodeParams;
+
+            },
+
+            findNodeByIndex(node){
+
+                for (let i=0; i< this._nodes.length; i++ )
+                    if (this._nodes[i].socket === node)
                         return i;
 
                 return -1;
@@ -357,8 +469,6 @@
             },
 
         },
-
-
 
     }
 

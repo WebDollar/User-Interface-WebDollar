@@ -200,7 +200,7 @@
     .modal .transfer input{
         border: none;
         background-color: #333333;
-        padding: 7px 0 7px 10px;
+        padding: 11px 0 11px 10px;
         color: #fff;
         width: 100%;
         border-radius: 5px;
@@ -241,14 +241,13 @@
     }
 
     .modal .transfer .button{
-        margin-top: 10px;
         background-color: #ffc12c;
         color: #1f1f1f;
-        margin-bottom: 15px;
         width: 100%;
         font-weight: bolder;
         font-size: 16px;
         border: none;
+        margin-top: 10px;
         padding: 10px 0 10px 0;
         border-radius: 5px;
         transition: all 0.5s ease;
@@ -345,6 +344,11 @@
 
         .balanceText{
             grid-template-columns: 1fr;
+            padding-bottom: 0!important;
+        }
+
+        .balanceText div{
+            text-align: center!important;
         }
 
         .balanceTitle{
@@ -352,7 +356,7 @@
         }
 
         .balanceAmount{
-            text-align: center;
+            text-align: center!important;
         }
 
         .WEBD .balanceAmount{
@@ -365,6 +369,10 @@
 
         .balanceContent{
             padding: 51px 10px 15px 10px;
+        }
+
+        .twoColumns .section{
+            padding-top: 40px!important;
         }
 
     }

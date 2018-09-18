@@ -16,10 +16,11 @@
 <script>
 
     import Notification from "helpers/Notification.helpers"
+    import Notifications from '../../../node_modules/vue-notification';
 
      export default{
 
-         name: "Notifications",
+         name: "NotificationsX",
 
          data: () => {
              return {
@@ -62,7 +63,7 @@
 
                  Notification.addAlert(undefined, "error", "Protocol Error", message ,10000);
 
-             }
+             };
 
              WebDollar.StatusEvents.on("blockchain/status", (data)=>{
 
@@ -186,10 +187,14 @@
 
 <style>
 
-
     .notificationsBox{
         width:450px!important;
         word-break:break-all;
+    }
+
+    .notificationsBox span{
+        width: 100%!important;
+        cursor:pointer;
     }
 
     .success{

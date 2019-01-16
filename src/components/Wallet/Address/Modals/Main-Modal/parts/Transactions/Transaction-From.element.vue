@@ -3,7 +3,7 @@
     <ul class="destinations">
         <li class="destinationElement transactionElement">
 
-            <img :title="this.fromAddress.address" @click="copyToClipboard" class="walletAddressImage" :src="this.getAddressPic" >
+            <img :title="this.fromAddress.address" @click="copyToClipboard" class="walletAddressImage" :src="this.getAddressPic" alt="Wallet Gravatar" >
 
             <div class="money" title="Amount">
                 <span class="amount">-{{ getAmount }}</span><span class="currency">WEBD</span>

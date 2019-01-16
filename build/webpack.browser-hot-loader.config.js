@@ -21,7 +21,7 @@ const config = merge(base, {
 
 
     devServer: {
-        port: 2224
+        port: 2220
     },
 
     plugins: [

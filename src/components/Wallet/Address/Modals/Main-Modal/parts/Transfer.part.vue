@@ -113,7 +113,7 @@
                 <div class="imageAndInput" :class="!this.offlineTransaction ? '' : 'hideTransactionImage'">
 
                     <div v-if="!this.offlineTransaction">
-                        <img class="walletAddressImage transferWalletAddressImage" :src="this.getAddressPic" :class="this.errorToAddressMessage==='Invalid Address' ? 'hide' : ''" >
+                        <img alt="Wallet Gravatar" class="walletAddressImage transferWalletAddressImage" :src="this.getAddressPic" :class="this.errorToAddressMessage==='Invalid Address' ? 'hide' : ''" >
                     </div>
                     <div>
                         <input class="address " @keyup="this.handleChangeToAddress" v-model="toAddress" placeholder="Recipient Address"/>

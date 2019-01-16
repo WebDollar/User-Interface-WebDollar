@@ -11,7 +11,7 @@
                     <div class="section">
 
                         <div >
-                            <img class="walletAddressImage" :src="this.getAddressPic" >
+                            <img alt="Wallet Gravatar" class="walletAddressImage" :src="this.getAddressPic" >
                             <b style="color:gray" id="walletID">{{this.address.toString()}}</b>
                         </div>
 

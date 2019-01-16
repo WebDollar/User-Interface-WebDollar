@@ -3,7 +3,7 @@
     <div class="walletAddress hoverAddress">
 
         <div class="addressIdentityBox" v-on:click.stop="handleTransferFunds">
-            <img class="walletAddressImage" :src="this.getAddressPic" >
+            <img alt="Wallet Gravatar" class="walletAddressImage" :src="this.getAddressPic" >
             <icon v-if="this.isMiningAddress" class="btn actuallMiningAddress isImining" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
 
             <b class="fontColor">

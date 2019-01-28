@@ -330,19 +330,27 @@
 
             addLink(firstConnection,secondConnection){
 
-                let firstCell = this._circleMap.getCellByLocation(firstConnection.lat, firstConnection.lng);
-                let secondCell = this._circleMap.getCellByLocation(secondConnection.lat, secondConnection.lng);
+                if(!firstConnection && !secondConnection){
 
-                this._circleMap.addLink(firstCell, secondCell);
+                    let firstCell = this._circleMap.getCellByLocation(firstConnection.lat, firstConnection.lng);
+                    let secondCell = this._circleMap.getCellByLocation(secondConnection.lat, secondConnection.lng);
+
+                    this._circleMap.addLink(firstCell, secondCell);
+
+                }
 
             },
 
             removeLink(firstConnection,secondConnection){
 
-                let firstCell = this._circleMap.getCellByLocation(firstConnection.lat, firstConnection.lng);
-                let secondCell = this._circleMap.getCellByLocation(secondConnection.lat, secondConnection.lng);
+                if(!firstConnection && !secondConnection) {
 
-                this._circleMap.removeLink(firstCell, secondCell);
+                    let firstCell = this._circleMap.getCellByLocation(firstConnection.lat, firstConnection.lng);
+                    let secondCell = this._circleMap.getCellByLocation(secondConnection.lat, secondConnection.lng);
+
+                    this._circleMap.removeLink(firstCell, secondCell);
+
+                }
 
             },
 

@@ -111,13 +111,17 @@
 
             removeNodeLinks(node){
 
-                let cell = this._circleMap.getCellByLocation(node.lat, node.lng);
+                if(!node){
 
-                for(let i=0;i<this._links.length;i++)
-                    if(this._links[i].start === cell || this._links[i].stop === cell){
-                        this.removeLink(this._links[i].start,this._links[i].stop);
-                        this._links.splice(i,1);
-                    }
+                    let cell = this._circleMap.getCellByLocation(node.lat, node.lng);
+
+                    for(let i=0;i<this._links.length;i++)
+                        if(this._links[i].start === cell || this._links[i].stop === cell){
+                            this.removeLink(this._links[i].start,this._links[i].stop);
+                            this._links.splice(i,1);
+                        }
+
+                }
 
             },
 

@@ -10,7 +10,7 @@
             </div>
 
             <div id="miningDetails">
-                <p class="" :style="{display: (this.hashesPerSecond==0 && this.started==true) && !WebDollar.Blockchain.blockchainGenesis.isPoSActivated( WebDollar.Blockchain.blockchain.blocks.length) ? 'none' : 'inline-block'}">{{this.started ? ( this.hashesPerSecond === 1 ? 'Staking...' : this.hashesPerSecond + ' hash/sec') : 'not started'}} </p>
+                <p class="" :style="{display: (this.hashesPerSecond==0 && this.started==true) && !this.isPoS ? 'none' : 'inline-block'}">{{this.started ? ( this.hashesPerSecond === 1 ? 'Staking...' : this.hashesPerSecond + ' hash/sec') : 'not started'}} </p>
                 <svg :style="{display: this.hashesPerSecond==0 && this.started==true  ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                       <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
@@ -96,6 +96,7 @@
                 status: '',
                 loaded:false,
                 stopTimerHandler: null,
+                isPos: false,
 
                 _prevWorkers: null,
             }
@@ -181,6 +182,13 @@
                 }
 
             });
+
+            WebDollar.StatusEvents.on("blockchain/blocks-count-changed", (blocksLength)=> {
+
+                this.isPos = WebDollar.Blockchain.blockchainGenesis.isPoSActivated( WebDollar.Blockchain.blockchain.blocks.length);
+
+            });
+
 
         }
         ,

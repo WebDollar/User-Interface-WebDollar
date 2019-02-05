@@ -277,16 +277,16 @@
 
             async handleAddNewAddress(){
 
-                if (WebDollar.Blockchain.Wallet.addresses.length <= 2) {
+                // if (WebDollar.Blockchain.Wallet.addresses.length <= 2) {
 
                     await WebDollar.Blockchain.Wallet.createNewAddress();
                     Notification.addAlert(undefined, "success", "Wallet Created", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
 
-                } else {
-
-                    Notification.addAlert(undefined, "warn", "Wallet Warning", "You can't add new address if you already have 3 addresses", 5000);
-
-                }
+                // } else {
+                //
+                //     Notification.addAlert(undefined, "warn", "Wallet Warning", "You can't add new address if you already have 3 addresses", 5000);
+                //
+                // }
 
             },
 

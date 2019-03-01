@@ -20,7 +20,7 @@
                     <icon class="buttonIcon statusWalletIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
                     Wallet
                 </div>
-                <show-sum-balances ref="refShowSumBalances" :style="{display: 'inline-block'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
+                <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
             </span>
         </div>
 
@@ -509,7 +509,7 @@
         background-color: #1f1f1f;
         height: 358px;
         margin-bottom:-100px;
-        z-index: 90;
+        z-index: 100;
         border-top: solid 1px #3d3d3d;
         border-left: solid 1px #393939;
         transition: all .3s linear;

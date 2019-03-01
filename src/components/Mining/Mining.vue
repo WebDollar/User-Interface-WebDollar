@@ -292,7 +292,7 @@
         left: 0;
         padding-bottom: 3px;
         right: 0;
-        z-index: 95;
+        z-index: 120;
         border-top: solid 1px #3a3939;
     }
 
@@ -533,7 +533,6 @@
 
         .show-balance-span{
             font-size: 20px;
-            display: none!important;
         }
 
         #dashboardMining{

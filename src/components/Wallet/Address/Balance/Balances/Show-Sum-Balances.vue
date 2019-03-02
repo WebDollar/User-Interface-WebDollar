@@ -5,7 +5,7 @@
         <loading-spinner class="fontColor" v-if="!this.loaded" />
 
         <div class="show-balance-span" v-if="this.loaded" >
-            {{ this.formatMoneyNumber( (this.sum + (this.showPoolReward === true ? this.computePoolReward : 0 )) ,2)}}
+            {{ this.showPrefix ? '~' : ''}} {{ this.formatMoneyNumber( (this.sum + (this.showPoolReward === true ? this.computePoolReward : 0 )) ,2)}}
         </div>
 
     </div>
@@ -23,7 +23,7 @@
             LoadingSpinner,
         },
 
-        props: ['addresses', 'currency', 'showPoolReward'],
+        props: ['addresses', 'currency', 'showPoolReward', 'showPrefix'],
 
         data(){
           return {

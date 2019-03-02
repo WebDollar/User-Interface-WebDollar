@@ -38,7 +38,7 @@
                         </path>
                 </svg>
 
-                <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b>
+                <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" :showPrefix="true" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b>
 
                 <div class="hoverBalanceInfo" >
                     <div class="balanceText">

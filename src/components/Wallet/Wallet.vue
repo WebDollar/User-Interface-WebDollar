@@ -54,7 +54,7 @@
 
                 </div>
 
-                <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight}">
+                <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
 
                     <div id="allWallets">
 
@@ -206,7 +206,7 @@
                     this.walletMenuHeightOpen='100%';
                     this.walletMenuHeightClosed='358px';
 
-                    this.walletContentHeight= window.outerHeight-110;
+                    this.walletContentHeight= window.outerHeight-250;
 
                     this.walletButtonRadiusLeftOpen= 0;
                     this.walletButtonRadiusLeftClose= 0;
@@ -445,7 +445,6 @@
     .walletSection{
         display: inline-block;
         vertical-align: top;
-        height: 315px;
         overflow-y: auto;
         overflow-x: hidden;
         width: 100%;
@@ -621,6 +620,9 @@
         .walletAddress b{
             font-size: 22px!important;
             line-height: 60px!important;
+        }
+        #allWallets .walletAddress b{
+            line-height: 0!important;
         }
         .walletController{
             position: relative;

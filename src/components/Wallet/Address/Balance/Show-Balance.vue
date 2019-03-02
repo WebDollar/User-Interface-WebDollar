@@ -177,9 +177,17 @@
 
     @media only screen and (max-width : 831px) {
 
+        .modal .show-balance-span{
+            line-height: 10px!important;
+        }
+
         .show-balance-span{
             margin-left: 5px;
             line-height: 48px;
+        }
+
+        #walletButtonText div:last-child{
+            display: none;
         }
 
     }
@@ -188,6 +196,10 @@
 
         .walletAddress b{
             margin-top: 0!important;
+        }
+
+        #walletButton span{
+            margin-left: -20px;
         }
 
         .addressIdentityBox .show-balance-span{

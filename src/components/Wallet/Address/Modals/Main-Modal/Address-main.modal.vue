@@ -61,7 +61,8 @@
                     </div>
                 </div>
 
-                <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" :offlineTransaction="this.offlineTransaction"/>
+                <transfer :address="this.address" :toAddress="this.toAddress" :toAmount="this.toAmount" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" 
+                @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" :offlineTransaction="this.offlineTransaction"/>
 
                 <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
@@ -112,6 +113,8 @@
             return {
                 partActivated : 'none',
                 clipboardText: 'Copy Address',
+                toAddress: null,
+                toAmount: null,
             }
         },
 
@@ -123,7 +126,9 @@
 
         methods: {
 
-            showTransfer() {
+            showTransfer(toAddress = null, toAmount = null) {
+                this.toAddress = toAddress;
+                this.toAmount = toAmount;
                 this.partActivated = "transfer";
             },
 
@@ -167,10 +172,7 @@
         },
 
         mounted() {
-
             if (typeof window === 'undefined') return;
-
-
         },
 
     }

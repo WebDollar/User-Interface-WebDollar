@@ -118,9 +118,12 @@
             formatMoneyNumber: BrowserHelpers.formatMoneyNumber,
 
             handleTransferFunds(e){
-
                 this.$refs['refAddressMainModal'].showModal(e);
+            },
 
+            openPrefilledTransferModal(toAddress, toAmount) {
+                this.$refs['refAddressMainModal'].showModal({}, false);
+                this.$refs['refAddressMainModal'].showTransfer(toAddress, toAmount);
             },
 
             checkIfWalletIsLock(){

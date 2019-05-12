@@ -158,7 +158,9 @@
         //@onTransferSuccess
         props:{
             address: {default: null},
-            offlineTransaction: {default:false}
+            offlineTransaction: {default: false},
+            toAddress: {default: null},
+            toAmount: {default: null},
         },
 
         data: () => {
@@ -166,9 +168,7 @@
                 timeLock:0,
                 incognitoMode:false,
                 syncronizedOnce: false,
-                toAddress: '',
                 internetConnection:true,
-                toAmount: '',
                 importedAddress:false,
                 fee: '',
                 errorMessage: '',
@@ -199,6 +199,13 @@
 
             this.incognitoMode = await this.checkIncognito();
             await this.checkInternetConnection();
+
+            if (this.toAddress) {
+                this.handleChangeToAddress();
+            }
+            if (this.toAmount) {
+                this.handleChangeToAmount();
+            }
 
         },
 

@@ -146,13 +146,21 @@
             });
             this.miningAddress = WebDollar.Blockchain.Mining.minerAddress;
 
+            WebDollar.StatusEvents.on("wallet/transfer", (data)=>{
+                if (!this.addresses || this.addresses.length == 0) {
+                    throw new Error('No addresses loaded, unable to create a prefilled transfer.');
+                }
+                let defaultAddresIndex = 0;
+                this.$refs['address'+defaultAddresIndex][0].openPrefilledTransferModal(data.toAddress, data.toAmount);
+            });
+
             //onLoad
             BrowserHelpers.addEvent(window, "load", (event) => {
                 this.changeScreenBehavior();
                 this.walletResizeFix();
             });
 
-          //onResize
+            //onResize
             BrowserHelpers.addEvent(window, "resize", (event) => {
                 this.changeScreenBehavior();
                 this.walletResizeFix();

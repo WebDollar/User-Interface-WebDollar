@@ -183,11 +183,11 @@
                 if (!this.addresses || this.addresses.length == 0) {
                     throw new Error('No addresses loaded, so unable to select mining wallet.');
                 }
-                let addressIndex = this.addresses.map((a)=>a.address).indexOf(this.miningAddress);
-                if (addressIndex == -1) {
-                    addressIndex = 0; // fallback to first wallet index
+                let miningAddressIndex = this.addresses.map((a)=>a.address).indexOf(this.miningAddress);
+                if (miningAddressIndex == -1) {
+                    miningAddressIndex = 0; // fallback to first wallet index
                 }
-                return addressIndex
+                return miningAddressIndex
             },
 
             showOfflineTransactions(){

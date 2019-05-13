@@ -114,8 +114,6 @@
             return {
                 partActivated : 'none',
                 clipboardText: 'Copy Address',
-                toAddress: null,
-                toAmount: null,
             }
         },
 

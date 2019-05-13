@@ -126,7 +126,6 @@
         methods: {
 
             showTransfer(event, toAddress = null, toAmount = null) {
-                console.log('$ref', this.$refs["refTransfer"])
                 if (toAddress || toAmount) {
                     this.$refs["refTransfer"].prefillTransfer(toAddress, toAmount);
                 }

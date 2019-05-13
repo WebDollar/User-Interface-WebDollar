@@ -159,17 +159,17 @@
         props:{
             address: {default: null},
             offlineTransaction: {default: false},
-            toAddress: {default: null},
-            toAmount: {default: null},
         },
 
         data: () => {
             return {
-                timeLock:0,
-                incognitoMode:false,
+                toAddress: "",
+                toAmount: "",
+                timeLock: 0,
+                incognitoMode: false,
                 syncronizedOnce: false,
-                internetConnection:true,
-                importedAddress:false,
+                internetConnection: true,
+                importedAddress: false,
                 fee: '',
                 errorMessage: '',
                 errorToAddressMessage: '',
@@ -199,13 +199,6 @@
 
             this.incognitoMode = await this.checkIncognito();
             await this.checkInternetConnection();
-
-            if (this.toAddress) {
-                this.handleChangeToAddress();
-            }
-            if (this.toAmount) {
-                this.handleChangeToAmount();
-            }
 
         },
 
@@ -238,6 +231,17 @@
         },
 
         methods:{
+
+            prefillTransfer(toAddress, toAmount) {
+                if (toAddress) {
+                    this.toAddress = toAddress 
+                    this.handleChangeToAddress();
+                }
+                if (toAmount) {
+                    this.toAmount = toAmount
+                    this.handleChangeToAmount();
+                }
+            },
 
             async handleImportAddressOffline(){
 

@@ -123,7 +123,9 @@
 
             openPrefilledTransferModal(toAddress, toAmount) {
                 this.$refs['refAddressMainModal'].showModal({}, false);
-                this.$refs['refAddressMainModal'].showTransfer(toAddress, toAmount);
+                Vue.nextTick(()=>{
+                    this.$refs['refAddressMainModal'].showTransfer({}, toAddress, toAmount);
+                });
             },
 
             checkIfWalletIsLock(){

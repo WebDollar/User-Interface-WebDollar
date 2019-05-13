@@ -147,14 +147,11 @@
             this.miningAddress = WebDollar.Blockchain.Mining.minerAddress;
 
             WebDollar.StatusEvents.on("wallet/transfer", (data)=>{
-                if (!this.addresses || this.addresses.length == 0) {
-                    throw new Error('No addresses loaded, unable to create a prefilled transfer.');
-                }
-                let defaultAddresIndex = 0;
-                this.$refs['address'+defaultAddresIndex][0].openPrefilledTransferModal(data.toAddress, data.toAmount);
+                let walletIndex = this.getMiningWalletIndex();
+                this.$refs['address'+walletIndex][0].openPrefilledTransferModal(data.toAddress, data.toAmount);
             });
 
-            //onLoad
+            //onLoad    
             BrowserHelpers.addEvent(window, "load", (event) => {
                 this.changeScreenBehavior();
                 this.walletResizeFix();
@@ -181,6 +178,17 @@
         },
 
         methods: {
+
+            getMiningWalletIndex() {
+                if (!this.addresses || this.addresses.length == 0) {
+                    throw new Error('No addresses loaded, so unable to select mining wallet.');
+                }
+                let addressIndex = this.addresses.map((a)=>a.address).indexOf(this.miningAddress);
+                if (addressIndex == -1) {
+                    addressIndex = 0; // fallback to first wallet index
+                }
+                return addressIndex
+            },
 
             showOfflineTransactions(){
 

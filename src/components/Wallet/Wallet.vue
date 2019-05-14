@@ -146,13 +146,18 @@
             });
             this.miningAddress = WebDollar.Blockchain.Mining.minerAddress;
 
-            //onLoad
+            WebDollar.StatusEvents.on("wallet/transfer", (data)=>{
+                let walletIndex = this.getMiningWalletIndex();
+                this.$refs['address'+walletIndex][0].openPrefilledTransferModal(data.toAddress, data.toAmount);
+            });
+
+            //onLoad    
             BrowserHelpers.addEvent(window, "load", (event) => {
                 this.changeScreenBehavior();
                 this.walletResizeFix();
             });
 
-          //onResize
+            //onResize
             BrowserHelpers.addEvent(window, "resize", (event) => {
                 this.changeScreenBehavior();
                 this.walletResizeFix();
@@ -173,6 +178,17 @@
         },
 
         methods: {
+
+            getMiningWalletIndex() {
+                if (!this.addresses || this.addresses.length == 0) {
+                    throw new Error('No addresses loaded, so unable to select mining wallet.');
+                }
+                let miningAddressIndex = this.addresses.map((a)=>a.address).indexOf(this.miningAddress);
+                if (miningAddressIndex == -1) {
+                    miningAddressIndex = 0; // fallback to first wallet index
+                }
+                return miningAddressIndex
+            },
 
             showOfflineTransactions(){
 

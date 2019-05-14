@@ -61,7 +61,9 @@
                     </div>
                 </div>
 
-                <transfer :address="this.address" :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" :offlineTransaction="this.offlineTransaction"/>
+                <transfer ref="refTransfer" :address="this.address" :offlineTransaction="this.offlineTransaction" 
+                :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" 
+                @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" />
 
                 <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
@@ -123,7 +125,10 @@
 
         methods: {
 
-            showTransfer() {
+            showTransfer(event, toAddress = null, toAmount = null) {
+                if (toAddress || toAmount) {
+                    this.$refs["refTransfer"].prefillTransfer(toAddress, toAmount);
+                }
                 this.partActivated = "transfer";
             },
 
@@ -167,10 +172,7 @@
         },
 
         mounted() {
-
             if (typeof window === 'undefined') return;
-
-
         },
 
     }

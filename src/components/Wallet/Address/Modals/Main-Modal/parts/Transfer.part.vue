@@ -158,18 +158,18 @@
         //@onTransferSuccess
         props:{
             address: {default: null},
-            offlineTransaction: {default:false}
+            offlineTransaction: {default: false},
         },
 
         data: () => {
             return {
-                timeLock:0,
-                incognitoMode:false,
+                toAddress: "",
+                toAmount: "",
+                timeLock: 0,
+                incognitoMode: false,
                 syncronizedOnce: false,
-                toAddress: '',
-                internetConnection:true,
-                toAmount: '',
-                importedAddress:false,
+                internetConnection: true,
+                importedAddress: false,
                 fee: '',
                 errorMessage: '',
                 errorToAddressMessage: '',
@@ -231,6 +231,17 @@
         },
 
         methods:{
+
+            prefillTransfer(toAddress, toAmount) {
+                if (toAddress) {
+                    this.toAddress = toAddress 
+                    this.handleChangeToAddress();
+                }
+                if (toAmount) {
+                    this.toAmount = toAmount
+                    this.handleChangeToAmount();
+                }
+            },
 
             async handleImportAddressOffline(){
 

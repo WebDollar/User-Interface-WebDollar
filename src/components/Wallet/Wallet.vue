@@ -147,8 +147,9 @@
             this.miningAddress = WebDollar.Blockchain.Mining.minerAddress;
 
             WebDollar.StatusEvents.on("wallet/transfer", (data)=>{
+                console.warn(data)
                 let walletIndex = this.getMiningWalletIndex();
-                this.$refs['address'+walletIndex][0].openPrefilledTransferModal(data.toAddress, data.toAmount);
+                this.$refs['address'+walletIndex][0].openPrefilledTransferModal(data.toAddress, data.toAmount, data.toFee);
             });
 
             //onLoad    

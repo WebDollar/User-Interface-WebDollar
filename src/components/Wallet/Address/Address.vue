@@ -121,10 +121,10 @@
                 this.$refs['refAddressMainModal'].showModal(e);
             },
 
-            openPrefilledTransferModal(toAddress, toAmount) {
+            openPrefilledTransferModal(toAddress, toAmount, toFee) {
                 this.$refs['refAddressMainModal'].showModal({}, false);
                 Vue.nextTick(()=>{
-                    this.$refs['refAddressMainModal'].showTransfer({}, toAddress, toAmount);
+                    this.$refs['refAddressMainModal'].showTransfer({}, toAddress, toAmount, toFee);
                 });
             },
 

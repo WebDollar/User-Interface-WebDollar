@@ -541,6 +541,7 @@
         display: block;
         font-size: 14px;
         text-align: left;
+        width: 100%;
     }
 
     .editError2{

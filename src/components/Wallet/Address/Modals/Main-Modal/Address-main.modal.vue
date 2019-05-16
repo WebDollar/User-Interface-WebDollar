@@ -54,10 +54,10 @@
 
                 <div v-if="!this.offlineTransaction" class="addressActions">
                     <div @click="this.showTransfer" :class="[ this.partActivated === 'transfer' ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Transfer
+                        Send
                     </div>
                     <div @click="this.showTransactions" :class="[ this.partActivated === 'transactions' ? 'actionButton activeActionButton' : 'actionButton' ]">
-                        Transactions
+                        Request
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@
                 :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" 
                 @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" />
 
-                <transactions :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
+                <request :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
             </div>
 
@@ -86,7 +86,7 @@
     import ShowPotentialBalance from "components/Wallet/Address/Balance/Balances/Show-Sum-Balances.vue"
     import icon from "components/UI/icons/icon.vue"
 
-    import Transactions from "./parts/Transactions/Transactions.part.vue"
+    import Request from "./parts/Request.part.vue"
     import Transfer from "./parts/Transfer.part.vue"
 
     import Notification from "helpers/Notification.helpers"
@@ -104,7 +104,7 @@
         components: {
             ShowBalance,
             Modal,
-            Transactions,
+            Request,
             Transfer,
             icon,
             ShowPotentialBalance

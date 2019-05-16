@@ -26,6 +26,7 @@
 
     import Clipboard from '../../../../../../../node_modules/v-clipboard/dist/index.min'
     import Transaction from "./Transactions/Transaction.element.vue"
+    import Notification from "helpers/Notification.helpers"
 
     Vue.use(Clipboard);
 
@@ -57,7 +58,11 @@
                 if( this.toAmount !== undefined){
 
                     this.errorToAddressMessage = undefined;
-                    this.$clipboard('https://webdollar.io/payment/'+this.address+'/'+this.toAmount);
+
+                    let link = 'https://webdollar.io/payment/'+this.address+'/'+this.toAmount;
+                    this.$clipboard('Direct payment link successful copied');
+
+                    Notification.addAlert(undefined, "success", link);
 
                 }
                 else

@@ -125,9 +125,9 @@
 
         methods: {
 
-            showTransfer(event, toAddress = null, toAmount = null) {
+            showTransfer(event, toAddress = null, toAmount = null, toFee = null) {
                 if (toAddress || toAmount) {
-                    this.$refs["refTransfer"].prefillTransfer(toAddress, toAmount);
+                    this.$refs["refTransfer"].prefillTransfer(toAddress, toAmount, toFee);
                 }
                 this.partActivated = "transfer";
             },

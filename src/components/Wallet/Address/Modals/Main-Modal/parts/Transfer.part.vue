@@ -232,7 +232,7 @@
 
         methods:{
 
-            prefillTransfer(toAddress, toAmount) {
+            prefillTransfer(toAddress, toAmount, toFee) {
                 if (toAddress) {
                     this.toAddress = toAddress 
                     this.handleChangeToAddress();
@@ -240,6 +240,10 @@
                 if (toAmount) {
                     this.toAmount = toAmount
                     this.handleChangeToAmount();
+                }
+                if (toFee) {
+                    this.fee = toFee
+                    this.handleChangeToFee();
                 }
             },
 

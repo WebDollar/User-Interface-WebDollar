@@ -59,6 +59,9 @@
                     <div @click="this.showTransactions" :class="[ this.partActivated === 'transactions' ? 'actionButton activeActionButton' : 'actionButton' ]">
                         Request
                     </div>
+                    <div @click="this.showQR" :class="[ this.partActivated === 'qrCode' ? 'actionButton activeActionButton' : 'actionButton' ]">
+                        QR Code
+                    </div>
                 </div>
 
                 <transfer ref="refTransfer" :address="this.address" :offlineTransaction="this.offlineTransaction" 
@@ -67,8 +70,9 @@
 
                 <request :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
-            </div>
+                <qrCode :style="{display: this.partActivated === 'qrCode' ? 'block': 'none'}" />
 
+            </div>
 
         </modal>
 
@@ -88,6 +92,7 @@
 
     import Request from "./parts/Request.part.vue"
     import Transfer from "./parts/Transfer.part.vue"
+    import qrCode from "./parts/qrCode.part.vue"
 
     import Notification from "helpers/Notification.helpers"
 
@@ -106,6 +111,7 @@
             Modal,
             Request,
             Transfer,
+            qrCode,
             icon,
             ShowPotentialBalance
         },
@@ -137,6 +143,10 @@
             },
             showTransactions(){
                 this.partActivated = "transactions";
+            },
+
+            showQR(){
+                this.partActivated = "qrCode";
             },
 
             closeModal() {

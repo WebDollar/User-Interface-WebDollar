@@ -36,11 +36,11 @@
         methods: {
             change(value) {
                 if (value > 0) {
-                    console.log('Enabled screen sleep prevention.')
                     this.noSleep.enable();
+                    console.log('Enabled screen sleep prevention.')
                 } else {
-                    console.log('Disabled screen sleep prevention.')
                     this.noSleep.disable();
+                    console.log('Disabled screen sleep prevention.')
                 }
                 this.$emit('sliderChanged', value);
             },

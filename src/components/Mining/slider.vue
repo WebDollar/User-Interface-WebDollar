@@ -24,7 +24,7 @@
         data() {
             return {
                 value: localStorage.getItem("miner-settings-worker-count") || 0,
-                disabled: false,
+                disabled: true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderMobileWidth: 200,

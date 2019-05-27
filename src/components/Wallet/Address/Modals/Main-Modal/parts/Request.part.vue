@@ -60,9 +60,9 @@
                     this.errorToAddressMessage = undefined;
 
                     let link = 'https://webdollar.io/payment/'+this.address+'/'+this.toAmount;
-                    this.$clipboard('Direct payment link successful copied');
+                    this.$clipboard(link);
 
-                    Notification.addAlert(undefined, "success", link);
+                    Notification.addAlert(undefined, "success", 'Direct payment link successful copied', link, 8000);
 
                 }
                 else

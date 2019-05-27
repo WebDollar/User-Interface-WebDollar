@@ -122,7 +122,6 @@
                 loaded:false,
                 stopTimerHandler: null,
                 isPos: false,
-                hoverInfoRightValue: -840,
                 _prevWorkers: null,
             }
         },

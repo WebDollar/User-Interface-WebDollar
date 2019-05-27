@@ -25,7 +25,7 @@
                           repeatCount="indefinite"/>
                         </path>
                 </svg>
-                <p class="miningProgressIndicator">{{this.started ? (this.hashesPerSecond <= 1 ? 'Staking...' : this.hashesPerSecond + ' hash/sec ') : null}}</p>
+                <p class="miningProgressIndicator">{{this.started ? (this.hashesPerSecond <= 1 ? 'Staking...' : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}</p>
             </div>
             <div class="hoverInfo miningInfo" :ref="'miningInfo'" v-on:click="toggleMiningInfo()">
 
@@ -114,8 +114,8 @@
 
         data: function () {
             return {
-                started: false,
-                hashesPerSecond: 0,
+                started: true,
+                hashesPerSecond: 2,
                 workers: localStorage.getItem("miner-settings-worker-count") || 0,
                 minerAddress:'',
                 status: '',
@@ -221,7 +221,8 @@
 
             toggleMiningInfo() {
                 let ref = this.$refs['miningInfo']
-                ref.style.right === '0px' ? ref.style.right = -840 : ref.style.right = 0;
+                console.log(ref.style.right)
+                ref.style.right == '0px' ? ref.style.right = '-840px' : ref.style.right = '0px';
             },
         
             changeWorkers(value){
@@ -595,13 +596,14 @@
             position: absolute;
             right: 8px;
             top:0;
+            margin-top:0px;
         }
 
         .miningDetails{
             width:110px;
             position:relative;
-            margin: 4px 0 0 0 !important;
-            line-height: 1.4 !important;
+            margin: 8px 0 0 0 !important;
+            line-height: 13px !important;
             color: #969696;
             float: right;
             margin-right: 15px;

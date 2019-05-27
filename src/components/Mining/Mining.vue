@@ -114,8 +114,8 @@
 
         data: function () {
             return {
-                started: true,
-                hashesPerSecond: 2,
+                started: false,
+                hashesPerSecond: 0,
                 workers: localStorage.getItem("miner-settings-worker-count") || 0,
                 minerAddress:'',
                 status: '',

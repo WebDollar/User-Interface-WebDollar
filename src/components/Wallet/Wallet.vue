@@ -517,7 +517,9 @@
             margin: 15px 0 0 10px!important;
         }
         #allWallets .walletAddress img{
-            margin-top: 5px;
+            height: 60px;
+            margin-bottom: 20px;
+            margin-top: -20px;
         }
         #allWallets .walletAddress .imageAndInput img{
             margin-top: 0!important;

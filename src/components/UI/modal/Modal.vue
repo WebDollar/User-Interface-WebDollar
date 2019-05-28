@@ -404,7 +404,7 @@
         }
 
         .modal{
-            width: 100%;
+            width: 90%;
             max-width: none;
             min-width: none;
             max-height: 100%;

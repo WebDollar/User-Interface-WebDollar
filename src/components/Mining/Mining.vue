@@ -315,7 +315,7 @@
     }
 
     .infoText {
-        font-size: 12px;
+        font-size: 11px;
         margin-bottom: 20px;
         font-weight: 200;
     }

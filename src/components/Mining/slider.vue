@@ -21,7 +21,7 @@
 
         data() {
             return {
-                value: localStorage.getItem("miner-settings-worker-count") || 0,
+                value: localStorage.getItem("miner-settings-worker-count") || 1,
                 disabled:true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
@@ -32,22 +32,7 @@
 
         methods: {
             change(value) {
-
-                console.log("value", value);
-
-                //TODO use halver
-
-//                if (this.disableHalving)
-//                    this.$refs['slider'].setValue(value);
-//                else
-//                    if (value > (this.value||1) *3){
-//
-//                        value = (this.value||1) *3;
-//                        this.$refs['slider'].setValue(value);
-//                        return;
-//
-//                    }
-
+                localStorage.setItem("miner-settings-worker-count", value)
                 this.$emit('sliderChanged', value);
             },
             addEvent(object, type, callback) {

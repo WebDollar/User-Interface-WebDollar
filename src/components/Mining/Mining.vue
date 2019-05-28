@@ -27,7 +27,7 @@
                         </path>
                     </svg>
                     <p class="miningProgressIndicator">
-                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'You need 100 WEBD or wait for PoW') : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}
+                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'You need 100 WEBD or wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}
                     </p>
                 </div>
             </div>

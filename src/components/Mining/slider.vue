@@ -10,6 +10,8 @@
 <script>
 
     import vueSlider from 'vue-slider-component';
+    import * as NoSleep from 'nosleep.js/dist/NoSleep';
+
 
     export default {
 
@@ -27,12 +29,20 @@
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderMobileWidth: 200,
                 disableHalving: false,
+                noSleep: new NoSleep()
             }
         },
 
         methods: {
             change(value) {
                 localStorage.setItem("miner-settings-worker-count", value)
+                if (value > 0) {
+                    this.noSleep.enable();
+                    console.log('Enabled screen sleep prevention.')
+                } else {
+                    this.noSleep.disable();
+                    console.log('Disabled screen sleep prevention.')
+                }
                 this.$emit('sliderChanged', value);
             },
             addEvent(object, type, callback) {

@@ -24,7 +24,7 @@
         data() {
             return {
                 value: localStorage.getItem("miner-settings-worker-count") || 0,
-                disabled: true,
+                disabled:true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderMobileWidth: 200,
@@ -35,6 +35,7 @@
 
         methods: {
             change(value) {
+                localStorage.setItem("miner-settings-worker-count", value)
                 if (value > 0) {
                     this.noSleep.enable();
                     console.log('Enabled screen sleep prevention.')

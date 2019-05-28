@@ -516,20 +516,12 @@
         #allWallets .walletAddress{
             margin: 15px 0 0 10px!important;
         }
-        #allWallets .walletAddress img{
-            height: 60px;
-            margin-bottom: 20px;
-            margin-top: -20px;
-        }
         #allWallets .walletAddress .imageAndInput img{
             margin-top: 0!important;
         }
         .walletAddress b{
             font-size: 22px!important;
             line-height: 60px!important;
-        }
-        #allWallets .walletAddress b{
-            line-height: 0!important;
         }
         .walletController{
             position: relative;

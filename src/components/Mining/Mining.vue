@@ -224,7 +224,6 @@
 
             toggleMiningInfo() {
                 let ref = this.$refs['miningInfo']
-                console.log(ref.style.right)
                 ref.style.right == '0px' ? ref.style.right = '-840px' : ref.style.right = '0px';
             },
         

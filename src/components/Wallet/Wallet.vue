@@ -18,7 +18,7 @@
                         <icon class="buttonIcon statusWalletIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
                         Wallet
                     </div>
-                    <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
+                    <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'contents'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
                 </span>
                 
             </div>
@@ -298,7 +298,10 @@
 </script>
 
 <style>
-
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
     @keyframes jump {
         0%   {transform: translate3d(0,0,0) scale3d(1,1,1);}
         40%  {transform: translate3d(0,30%,0) scale3d(.7,1.5,1);}

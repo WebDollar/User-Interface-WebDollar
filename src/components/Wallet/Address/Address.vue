@@ -401,6 +401,11 @@
             display: block;
         }
 
+        .addressIdentityBox .balanceShowContent svg{
+            line-height: normal;
+            padding: 7px 0 0 0!important;
+         }
+
         .addressButton{
             height: 22px;
             padding: 9px;

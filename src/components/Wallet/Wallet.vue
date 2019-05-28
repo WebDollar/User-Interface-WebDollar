@@ -155,13 +155,11 @@
             //onLoad    
             BrowserHelpers.addEvent(window, "load", (event) => {
                 this.changeScreenBehavior();
-                this.walletResizeFix();
             });
 
             //onResize
             BrowserHelpers.addEvent(window, "resize", (event) => {
                 this.changeScreenBehavior();
-                this.walletResizeFix();
             });
 
         },
@@ -263,48 +261,12 @@
             },
 
             toggleWallet(){
-
                 this.opened = !this.opened;
-
-                if(window.screenWidth < 831){
-                    if (this.opened===true)
-                        document.getElementById('dashboardMining').setAttribute('style', 'display:none');
-                    else
-                        document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-
-                }else
-                    document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-
-
-            },
-
-            walletResizeFix(){
-
-                if(window.screenWidth < 831)
-                    if (this.opened===true)
-                        document.getElementById('dashboardMining').setAttribute('style', 'display:none');
-                    else
-                        document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-
-                else
-                    document.getElementById('dashboardMining').setAttribute('style', 'display:block');
-
-
             },
 
             async handleAddNewAddress(){
-
-                // if (WebDollar.Blockchain.Wallet.addresses.length <= 2) {
-
-                    await WebDollar.Blockchain.Wallet.createNewAddress();
-                    Notification.addAlert(undefined, "success", "Wallet Created", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
-
-                // } else {
-                //
-                //     Notification.addAlert(undefined, "warn", "Wallet Warning", "You can't add new address if you already have 3 addresses", 5000);
-                //
-                // }
-
+                await WebDollar.Blockchain.Wallet.createNewAddress();
+                Notification.addAlert(undefined, "success", "Wallet Created", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
             },
 
             async handleImportAddress(){

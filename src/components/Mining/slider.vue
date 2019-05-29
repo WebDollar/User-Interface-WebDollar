@@ -1,7 +1,8 @@
 <template>
     <div>
         <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
-                    :width="this.screenWidth < 750 ? this.sliderMobileWidth : 330" :tooltip="false" :min="0" :max="this.logicalProcessors"
+                    :width="this.sliderWidth" :tooltip="false" :min="0" :max="this.logicalProcessors"
+                    v-if="this.renderSlider"
                     v-model="value" :disabled="this.disabled"></vue-slider>
     </div>
 </template>
@@ -27,8 +28,9 @@
                 disabled:true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
-                sliderMobileWidth: 200,
+                sliderWidth: null,
                 disableHalving: false,
+                renderSlider: false,
                 noSleep: new NoSleep()
             }
         },
@@ -66,24 +68,27 @@
                 this.screenWidth = window.innerWidth;
 
                 if (window.innerWidth<550){
-                    this.sliderMobileWidth = window.innerWidth-180+'px';
+                    this.sliderWidth = window.innerWidth-180;
                 }else{
-                    this.sliderMobileWidth = '100%';
+                    this.sliderWidth = 330;
                 }
+
+                this.renderSlider = true;
+                this.$refs["slider"].refresh();
 
             });
 
             this.screenWidth = window.innerWidth;
             if (window.innerWidth<550){
-                this.sliderMobileWidth = window.innerWidth-180+'px';
+                this.sliderWidth = window.innerWidth-180;
             }else{
-                this.sliderMobileWidth = '100%';
+                this.sliderWidth = 330;
             }
 
-            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
-
+            this.renderSlider = true;
             this.$refs["slider"].refresh();
 
+            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
 
         }
     }
@@ -96,13 +101,6 @@
         padding-bottom: 15px !important;
         padding-left: 20px !important;
         background-color: #262626;
-        box-sizing:border-box;
-    }
-
-    @media only screen and (max-width : 831px) {
-        .miningSlider {
-            margin-top: -1px;
-        }   
     }
 
     .vue-slider-component .vue-slider-piecewise {

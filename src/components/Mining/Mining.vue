@@ -12,7 +12,7 @@
             <div class="miningDetails" v-on:click="toggleMiningInfo()">
                 <div class="miningLabelContainer">
                     <p class="miningTypeIndicator">
-                        {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Started'}}
+                        {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
                     </p>
                     <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="isImining miningAnimation" alt="Mining" text="Mining Indication"/>
                     <svg :style="{display: (!this.started || this.hashesPerSecond == 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -28,7 +28,7 @@
                         </path>
                     </svg>
                     <p class="miningProgressIndicator">
-                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}
+                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Power'}}
                     </p>
                 </div>
             </div>

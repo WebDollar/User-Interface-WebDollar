@@ -28,7 +28,7 @@
                         </path>
                     </svg>
                     <p class="miningProgressIndicator">
-                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'You need 100 WEBD or wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}
+                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}
                     </p>
                 </div>
             </div>
@@ -121,8 +121,8 @@
 
         data: function () {
             return {
-                started: true,
-                hashesPerSecond: 2,
+                started: false,
+                hashesPerSecond: 0,
                 workers: localStorage.getItem("miner-settings-worker-count") || 0,
                 minerAddress:'',
                 status: '',
@@ -586,8 +586,8 @@
     }
 
     .miningAnimation{
-        width: 18px !important;
-        height: 18px !important;
+        width: 17px !important;
+        height: 17px !important;
         margin-top: 6px !important;
         vertical-align: top;
         margin-left: 3px;
@@ -618,12 +618,12 @@
         .miningAnimation {
             position: absolute;
             right: -5px;
-            top: 0;
+            top: 2px;
         }
 
         .miningLoader {
             position: absolute;
-            right: 0;
+            right: -8px;
             top: 0;
         }
 
@@ -762,7 +762,7 @@
         @media only screen and (max-width : 500px) {
 
         .miningBar{
-            width: 50%;
+            width: 40%;
         }
 
 

@@ -101,7 +101,7 @@
 
     @media only screen and (max-width : 831px) {
         .miningSlider {
-            margin-top: -3px;
+            margin-top: -1px;
         }   
     }
 

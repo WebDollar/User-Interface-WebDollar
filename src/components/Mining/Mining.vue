@@ -13,7 +13,7 @@
                 <p class="mingingTypeIndicator">
                     {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Started'}}
                 </p>
-                <svg :style="{display: this.started==true  ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                <svg :style="{display: (this.started==false ||  this.hashesPerSecond === 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                       <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
                         <animateTransform attributeType="xml"
@@ -25,6 +25,7 @@
                           repeatCount="indefinite"/>
                         </path>
                 </svg>
+                 <icon v-if="this.started && this.hashesPerSecond > 1" class="isImining miningLoader" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
                 <p class="miningProgressIndicator">{{this.started ? (this.hashesPerSecond <= 1 ? 'Staking...' : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}</p>
             </div>
             <div class="hoverInfo miningInfo" :ref="'miningInfo'" v-on:click="toggleMiningInfo()">
@@ -95,6 +96,7 @@
     import ShowSumBalances from "components/Wallet/Address/Balance/Balances/Show-Sum-Balances.vue"
     import slider from "./slider.vue";
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
+    import icon from "components/UI/icons/icon.vue"
     
     export default{
 
@@ -104,6 +106,7 @@
             ShowSumBalances,
             slider,
             ShowBalance,
+            icon
         },
 
         props: [
@@ -266,8 +269,7 @@
                 this.stopTimerHandler = setWorkersTimer(value);
             },
 
-        }
-
+        }, 
 
     }
 
@@ -574,11 +576,12 @@
     }
 
     .miningLoader{
+        margin-left: 3px;
         margin-top: 5px;
-        margin-right: 2px;
+        margin-right: 4px;
         vertical-align: top;
-        width: 24px;
-        height: 24px;
+        width: 18px !important;
+        height: 18px !important;
     }
 
     .showSumBallance{

@@ -147,13 +147,13 @@
 
             WebDollar.StatusEvents.on("mining/status-changed", (status)=>{
 
-                // this.started = WebDollar.Blockchain.Mining.started;
+                this.started = WebDollar.Blockchain.Mining.started;
 
             });
 
             WebDollar.StatusEvents.on("mining/reset", ()=>{
 
-                // this.started = WebDollar.Blockchain.Mining.started;
+                this.started = WebDollar.Blockchain.Mining.started;
 
             });
 

@@ -25,7 +25,7 @@
                           repeatCount="indefinite"/>
                         </path>
                 </svg>
-                 <icon v-if="this.started && this.hashesPerSecond > 1" class="isImining miningLoader" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
+                 <icon v-if="this.started && this.hashesPerSecond >= 1" class="isImining miningLoader" alt="Mining" text="Mining Address" icon="mining" style="display: inline-block" />
                 <p class="miningProgressIndicator">{{this.started ? (this.hashesPerSecond <= 1 ? 'Staking...' : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}</p>
             </div>
             <div class="hoverInfo miningInfo" :ref="'miningInfo'" v-on:click="toggleMiningInfo()">
@@ -117,8 +117,8 @@
 
         data: function () {
             return {
-                started: true,
-                hashesPerSecond: 2,
+                started: false,
+                hashesPerSecond: 0,
                 workers: localStorage.getItem("miner-settings-worker-count") || 0,
                 minerAddress:'',
                 status: '',

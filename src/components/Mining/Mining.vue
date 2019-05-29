@@ -14,7 +14,7 @@
                     <p class="miningTypeIndicator">
                         {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Started'}}
                     </p>
-                    <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="miningLoader miningAnimation" alt="Mining" text="Mining Indication"/>
+                    <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="isImining miningAnimation" alt="Mining" text="Mining Indication"/>
                     <svg :style="{display: (!this.started || this.hashesPerSecond == 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                       <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
@@ -588,7 +588,11 @@
     .miningAnimation{
         width: 18px !important;
         height: 18px !important;
-        margin-top: 8px !important;
+        margin-top: 6px !important;
+        vertical-align: top;
+        margin-left: 3px;
+        margin-top: 5px;
+        margin-right: 4px;
     }
 
     .miningLoader{
@@ -609,6 +613,12 @@
 
         .balanceInfo{
             display: none;
+        }
+
+        .miningAnimation {
+            position: absolute;
+            right: -5px;
+            top: 0;
         }
 
         .miningLoader {

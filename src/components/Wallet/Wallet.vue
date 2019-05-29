@@ -337,6 +337,7 @@
     }
 
     #walletContainer {
+        z-index:10;
         position: fixed;
         width: 299px;
         right: 0;

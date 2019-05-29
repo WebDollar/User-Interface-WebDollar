@@ -96,6 +96,13 @@
         padding-bottom: 15px !important;
         padding-left: 20px !important;
         background-color: #262626;
+        box-sizing:border-box;
+    }
+
+    @media only screen and (max-width : 831px) {
+        .miningSlider {
+            margin-top: -3px;
+        }   
     }
 
     .vue-slider-component .vue-slider-piecewise {

@@ -386,6 +386,9 @@
         margin: 0;
     }
 
+    .walletContainer {
+        z-index: 10;
+    }
 
     .walletStartMining{
         position: relative;

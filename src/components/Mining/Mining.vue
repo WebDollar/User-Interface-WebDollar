@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="hoverInfo miningInfo" :ref="'miningInfo'" :style="{right: showMiningInfo ? '0px' : '-840px'}">
+        <div class="hoverInfo miningInfo" @@click="handleMiningInfoEvent(false, $event)" :ref="'miningInfo'" :style="{right: showMiningInfo ? '0px' : '-840px'}">
             <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
                 WebDollar knows two types of mining. The types cycle in a pattern of 30 blocks (20 minutes). The first 10 blocks are Proof-of-Work. Followed by 20 blocks of Proof-of-Stake.
             </div>

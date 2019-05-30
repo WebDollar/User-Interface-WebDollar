@@ -12,9 +12,10 @@
             <div class="miningDetails" v-on:click="toggleMiningInfo()">
                 <div class="miningLabelContainer">
                     <p class="miningTypeIndicator">
-                        {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Started'}}
+                        {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
                     </p>
-                    <svg :style="{display: (this.started && this.hashesPerSecond > 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="isImining miningAnimation" alt="Mining" text="Mining Indication"/>
+                    <svg :style="{display: (!this.started || this.hashesPerSecond == 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                       <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
                         <animateTransform attributeType="xml"
@@ -27,7 +28,7 @@
                         </path>
                     </svg>
                     <p class="miningProgressIndicator">
-                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'You need 100 WEBD or wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Mining Power'}}
+                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Power'}}
                     </p>
                 </div>
             </div>
@@ -99,6 +100,7 @@
     import ShowSumBalances from "components/Wallet/Address/Balance/Balances/Show-Sum-Balances.vue"
     import slider from "./slider.vue";
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
+    import icon from "components/UI/icons/icon.vue"
     
     export default{
 
@@ -108,6 +110,7 @@
             ShowSumBalances,
             slider,
             ShowBalance,
+            icon
         },
 
         props: [
@@ -268,8 +271,7 @@
                 this.stopTimerHandler = setWorkersTimer(value);
             },
 
-        }
-
+        }, 
 
     }
 
@@ -384,6 +386,9 @@
         margin: 0;
     }
 
+    .walletContainer {
+        z-index: 10;
+    }
 
     .walletStartMining{
         position: relative;
@@ -583,9 +588,20 @@
         margin-left: 0;
     }
 
-    .miningLoader{
+    .miningAnimation{
+        width: 17px !important;
+        height: 17px !important;
+        margin-top: 6px !important;
+        vertical-align: top;
+        margin-left: 3px;
         margin-top: 5px;
-        margin-right: 2px;
+        margin-right: 4px;
+    }
+
+    .miningLoader{
+        margin-left: 3px;
+        margin-top: 5px;
+        margin-right: 4px;
         vertical-align: top;
         width: 24px;
         height: 24px;
@@ -602,9 +618,15 @@
             display: none;
         }
 
+        .miningAnimation {
+            position: absolute;
+            right: -5px;
+            top: 2px;
+        }
+
         .miningLoader {
             position: absolute;
-            right: 0;
+            right: -8px;
             top: 0;
         }
 
@@ -743,7 +765,7 @@
         @media only screen and (max-width : 500px) {
 
         .miningBar{
-            width: 50%;
+            width: 40%;
         }
 
 

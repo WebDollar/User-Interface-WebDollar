@@ -20,7 +20,8 @@ export default {
   data: () => {
     return {
       scannedUrl: null,
-      initialized: false
+      initialized: false,
+      errorMessage: null,
     };
   },
 
@@ -48,12 +49,12 @@ export default {
         })
         .catch(error => {
           if (error.name === "NotAllowedError") {
-            this.errorMessage = "Hey! I need access to your camera";
+            this.errorMessage = "No access to the camera.";
           } else if (error.name === "NotFoundError") {
-            this.errorMessage = "Do you even have a camera on your device?";
+            this.errorMessage = "No camera found on this device.";
           } else if (error.name === "NotSupportedError") {
             this.errorMessage =
-              "Seems like this page is served in non-secure context (HTTPS, localhost or file://)";
+              "Started from inside a non-secure context (should be HTTPS, localhost or file://)";
           } else if (error.name === "NotReadableError") {
             this.errorMessage =
               "Couldn't access your camera. Is it already in use?";

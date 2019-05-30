@@ -49,24 +49,26 @@
 
                     </div>
 
-                    <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
+                    <div class="walletScrollContainer" :ref="'walletScrollContainer'">
+                        <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
 
-                        <div id="allWallets">
+                            <div id="allWallets">
 
-                            <Address v-for="(walletAddress, index) in this.addresses"
-                                :isMiningAddress="miningAddress === walletAddress.address"
-                                :key="walletAddress.address"
-                                :id="'address'+walletAddress.address"
-                                :ref="'address'+index"
-                                :address="walletAddress.address"
-                                style="padding-right: 20px"
-                                @onPendingTransactionsChanges="handlePendingTransactionsChanges"
-                            >
+                                <Address v-for="(walletAddress, index) in this.addresses"
+                                    :isMiningAddress="miningAddress === walletAddress.address"
+                                    :key="walletAddress.address"
+                                    :id="'address'+walletAddress.address"
+                                    :ref="'address'+index"
+                                    :address="walletAddress.address"
+                                    style="padding-right: 20px"
+                                    @onPendingTransactionsChanges="handlePendingTransactionsChanges"
+                                >
 
-                            </Address>
+                                </Address>
+
+                            </div>
 
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -167,10 +169,12 @@
                     this.isMobile = true;
                     this.$refs['walletMenu'].style.height = `${screenHeight}px`;
                     this.$refs['walletContainer'].style.bottom = `${-screenHeight+41}px`
+                    this.$refs['walletScrollContainer'].style.height = `${screenHeight-140}px`
                 } else {
                     this.isMobile = false;
                     this.$refs['walletMenu'].style.height = `358px`;
                     this.$refs['walletContainer'].style.bottom = `-320px`
+                    this.$refs['walletScrollContainer'].style.height = `287px`
                 }
             },
 
@@ -317,6 +321,10 @@
 
     #myWalletImport{
         display: none;
+    }
+
+    .walletScrollContainer {
+        overflow-y: scroll;
     }
 
     .vue-slider-component.vue-slider-horizontal .vue-slider-dot{

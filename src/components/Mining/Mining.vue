@@ -162,7 +162,7 @@
                 this.workers = workers;
                 console.log('mining/workers-changed', workers)
                 if (this.workers !== this.$refs['refMiningSlider'].data) {
-                    this.$refs['refMiningSlider'].changeSliderValueVisually(this.workers);
+                    this.$refs['refMiningSlider'].changeSliderValueVisuallyOnly(this.workers);
                 }
 
             });

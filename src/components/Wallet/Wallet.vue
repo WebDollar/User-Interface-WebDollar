@@ -168,7 +168,7 @@
                 if (window.screenWidth < 831){
                     this.isMobile = true;
                     this.$refs['walletMenu'].style.height = `${screenHeight}px`;
-                    this.$refs['walletContainer'].style.bottom = `${-screenHeight+41}px`
+                    this.$refs['walletContainer'].style.bottom = this.opened ? '-50px' : `${-screenHeight+41}px`
                     this.$refs['walletScrollContainer'].style.height = `${screenHeight-140}px`
                 } else {
                     this.isMobile = false;

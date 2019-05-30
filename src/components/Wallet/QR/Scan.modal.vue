@@ -19,7 +19,8 @@ export default {
 
   data: () => {
     return {
-      scannedUrl: ""
+      scannedUrl: null,
+      initialized: false
     };
   },
 
@@ -34,108 +35,55 @@ export default {
       }
     },
 
-    onDecode (content) {
+    onDecode(content) {
+      this.scannedUrl = content;
       window.location.href = content;
     },
 
-    onInit (promise) {
-      promise.then(() => {
-        console.log('Successfully initilized! Ready for scanning now!')
-      })
-      .catch(error => {
-        if (error.name === 'NotAllowedError') {
-          this.errorMessage = 'Hey! I need access to your camera'
-        } else if (error.name === 'NotFoundError') {
-          this.errorMessage = 'Do you even have a camera on your device?'
-        } else if (error.name === 'NotSupportedError') {
-          this.errorMessage = 'Seems like this page is served in non-secure context (HTTPS, localhost or file://)'
-        } else if (error.name === 'NotReadableError') {
-          this.errorMessage = 'Couldn\'t access your camera. Is it already in use?'
-        } else if (error.name === 'OverconstrainedError') {
-          this.errorMessage = 'Constraints don\'t match any installed camera. Did you asked for the front camera although there is none?'
-        } else {
-          this.errorMessage = 'UNKNOWN ERROR: ' + error.message
-        }
-      })
+    onInit(promise) {
+      promise
+        .then(() => {
+          this.initialized = true;
+          console.log("Successfully initilized! Ready for scanning now!");
+        })
+        .catch(error => {
+          if (error.name === "NotAllowedError") {
+            this.errorMessage = "Hey! I need access to your camera";
+          } else if (error.name === "NotFoundError") {
+            this.errorMessage = "Do you even have a camera on your device?";
+          } else if (error.name === "NotSupportedError") {
+            this.errorMessage =
+              "Seems like this page is served in non-secure context (HTTPS, localhost or file://)";
+          } else if (error.name === "NotReadableError") {
+            this.errorMessage =
+              "Couldn't access your camera. Is it already in use?";
+          } else if (error.name === "OverconstrainedError") {
+            this.errorMessage =
+              "Constraints don't match any installed camera. Did you asked for the front camera although there is none?";
+          } else {
+            this.errorMessage = "UNKNOWN ERROR: " + error.message;
+          }
+        });
     }
   }
-
 };
 </script>
 
 <style>
+.content {
+  margin: auto;
+}
+.temp-img {
+  margin: auto;
+  width: 160px;
+  position: absolute;
+  left:35%;
+  top: 10%;
+
+}
 .descriptionTextPass {
   color: #bdbdbd;
   padding: 30px 10px;
-}
-
-.inputDeleteModalPass {
-  width: 100%;
-  width: -webkit-fill-available;
-  background-color: #2d2d2d;
-  border: none;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  color: #ccc;
-  padding: 7px 0;
-  font-weight: 100;
-  font-size: 14px;
-  padding-left: 5px;
-}
-
-.modalButtonPass {
-  background-color: #131313;
-  color: #969696;
-  font-size: 12px;
-  width: 140px;
-  font-weight: bolder;
-  border-radius: 5px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 8px 20px;
-  margin: 0 auto;
-  cursor: pointer;
-  border: solid 1px #5f5d5d;
-  transition: all 0.3s linear;
-}
-
-.modalButtonPass:hover {
-  background-color: #f6ba2c;
-  color: #000000;
-  transition: all 0.3s linear;
-}
-
-.inputAndGeneratorPass {
-  width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  border: solid 1px #5f5d5d;
-  margin-bottom: 20px;
-}
-
-.generatorButtonPass {
-  margin: 0 !important;
-  width: 100% !important;
-  border-radius: 0 !important;
-  border: none;
-  height: 15px !important;
-  padding: 8px 0 !important;
-}
-
-.errorMessage {
-  color: #de604d;
-  padding-bottom: 20px;
-  display: block;
-}
-
-.info {
-  color: #ffd36c;
-  padding-bottom: 20px;
-  text-transform: uppercase;
-  display: block;
-  font-size: 12px;
 }
 </style>
 

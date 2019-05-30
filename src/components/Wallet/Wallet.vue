@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="btn buttonTextStyle" title="Scan a QR Code" @click="scanQrCode">
-                        QR Code Scanner
+                        Scan
                     </div>
 
                 </div>
@@ -480,7 +480,7 @@
 
     .walletController{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;

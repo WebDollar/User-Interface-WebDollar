@@ -2,11 +2,11 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up' :style=""></icon>
+        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up'></icon>
 
         <icon v-show="!this.opened && isReceivingMoney" :style="{
             right: isSendingMoney ? '20px' : '4px',
-            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump"icon='chevron-double-down'>
+            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump" icon='chevron-double-down'>
         </icon>
 
         <div id="walletContainer" :ref="'walletContainer'">

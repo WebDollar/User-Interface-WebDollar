@@ -64,16 +64,12 @@
             if (typeof window === "undefined") return false;
 
             this.addEvent(window, "resize", (event) => {
-
                 this.screenWidth = window.innerWidth;
-
                 if (window.innerWidth<550){
                     this.sliderWidth = window.innerWidth-180;
                 }else{
                     this.sliderWidth = 330;
                 }
-
-                this.renderSlider = true;
                 this.$refs["slider"].refresh();
 
             });
@@ -84,12 +80,8 @@
             }else{
                 this.sliderWidth = 330;
             }
-
             this.renderSlider = true;
-            this.$refs["slider"].refresh();
-
             this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
-
         }
     }
 </script>

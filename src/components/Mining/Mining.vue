@@ -1,95 +1,91 @@
 <template>
-    <div id="dashboardMining" class="walletSection">
+    <div class="miningContainer">
 
-        <div id="miningController">
-            <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
-            <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
+        <div id="dashboardMining" class="walletSection">
 
-            <div type="button" class="miningBar">
-                <slider ref="refMiningSlider" @sliderChanged="this.changeWorkers" />
-            </div>
+            <div id="miningController">
+                <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
+                <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
 
-            <div class="miningDetails" v-on:click="toggleMiningInfo()">
-                <div class="miningLabelContainer">
-                    <p class="miningTypeIndicator">
-                        {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
-                    </p>
-                    <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="isImining miningAnimation" alt="Mining" text="Mining Indication"/>
-                    <svg :style="{display: (!this.started || this.hashesPerSecond == 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                      <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                        <animateTransform attributeType="xml"
-                          attributeName="transform"
-                          type="rotate"
-                          from="0 25 25"
-                          to="360 25 25"
-                          dur="0.6s"
-                          repeatCount="indefinite"/>
-                        </path>
-                    </svg>
-                    <p class="miningProgressIndicator">
-                         {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Power'}}
-                    </p>
-                </div>
-            </div>
-            <div class="hoverInfo miningInfo" :ref="'miningInfo'" v-on:click="toggleMiningInfo()">
-
-                <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
-                    WebDollar knows two types of mining. The types cycle in a pattern of 30 blocks (20 minutes). The first 10 blocks are Proof-of-Work. Followed by 20 blocks of Proof-of-Stake.
+                <div type="button" class="miningBar">
+                    <slider ref="refMiningSlider" @sliderChanged="changeWorkers" />
                 </div>
 
-                <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
-                    Proof-of-Work Mining
-                </div>
-
-                <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
-                    PoW mining needs processing power. The more processing power you have, the more you mine.
-                </div>
-                
-                <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
-                    Proof-of-Stake Mining
-                </div>
-                <div class="infoText helpCursor" title="Proof-of-Stake (PoW) Mining Information">
-                    PoS mining needs little processing power but needs balance. The more balance you have, the more you mine. You need at least 100 WebDollar for PoS mining.
-                </div>
-                
-            </div>  
-            <p class="WEBD">
-                <svg :style="{display: this.loaded==false ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                      <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                        <animateTransform attributeType="xml"
-                          attributeName="transform"
-                          type="rotate"
-                          from="0 25 25"
-                          to="360 25 25"
-                          dur="0.6s"
-                          repeatCount="indefinite"/>
-                        </path>
-                </svg>
-
-                <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" :showPrefix="true" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b>
-
-                <div class="hoverInfo balanceInfo" >
-                    <div class="balanceText">
-
-                        <div class="balanceTitle helpCursor" title="Balance available to be spent">
-                            Available Balance:
-                        </div>
-                        <div class="balanceAmount helpCursor" title="Balance available to be spent">
-                            <show-sum-balances :addresses="this.addresses" :currency="this.currency" ref="refShowSumAvailableBalances" />
-                        </div>
-
-                        <div class="balanceTitle helpCursor" style="letter-spacing: 0.1px" title="The balance you will have at the next block mined by your pool">
-                            Potential Balance:
-                        </div>
-                        <div class="balanceAmount helpCursor" title="The balance you will have at the next block mined by your pool">
-                            <show-sum-balances :showPoolReward="true" :addresses="this.addresses" :currency="this.currency" ref="refShowSumPotentialBalances"/>
-                        </div>
-
+                <div class="miningDetails" @click="toggleMiningInfo" @mouseover="showMiningInfo=true" @mouseleave="showMiningInfo=false">
+                    <div class="miningLabelContainer">
+                        <p class="miningTypeIndicator">
+                            {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
+                        </p>
+                        <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="isImining miningAnimation" alt="Mining" text="Mining Indication"/>
+                        <svg :style="{display: (!this.started || this.hashesPerSecond == 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                            <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 25 25"
+                            to="360 25 25"
+                            dur="0.6s"
+                            repeatCount="indefinite"/>
+                            </path>
+                        </svg>
+                        <p class="miningProgressIndicator">
+                            {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Power'}}
+                        </p>
                     </div>
                 </div>
-            </p>
+                <div class="WEBD" @mouseover="showBalanceInfo=true" @mouseleave="showBalanceInfo=false">
+                    <svg :style="{display: this.loaded == false ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="#fec02c" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                            <animateTransform attributeType="xml"
+                            attributeName="transform"
+                            type="rotate"
+                            from="0 25 25"
+                            to="360 25 25"
+                            dur="0.6s"
+                            repeatCount="indefinite"/>
+                        </path>
+                    </svg>
+                    <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" :showPrefix="true" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b> 
+                </div>
+        </div>  
+        
+
+       <div class="hoverInfo balanceInfo" :style="{right: showBalanceInfo ? 0 : -330}">
+            <div class="balanceText">
+                    <div class="balanceTitle helpCursor" title="Balance available to be spent">
+                        Available Balance:
+                    </div>
+                    <div class="balanceAmount helpCursor" title="Balance available to be spent">
+                        <show-sum-balances :addresses="this.addresses" :currency="this.currency" ref="refShowSumAvailableBalances" />
+                    </div>
+                    <div class="balanceTitle helpCursor" style="letter-spacing: 0.1px" title="The balance you will have at the next block mined by your pool">
+                        Potential Balance:
+                    </div>
+                    <div class="balanceAmount helpCursor" title="The balance you will have at the next block mined by your pool">
+                        <show-sum-balances :showPoolReward="true" :addresses="this.addresses" :currency="this.currency" ref="refShowSumPotentialBalances"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hoverInfo miningInfo" :ref="'miningInfo'" @click="toggleMiningInfo" :style="{right: showMiningInfo ? 0 : -840}">
+            <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
+                WebDollar knows two types of mining. The types cycle in a pattern of 30 blocks (20 minutes). The first 10 blocks are Proof-of-Work. Followed by 20 blocks of Proof-of-Stake.
+            </div>
+            <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
+                Proof-of-Work Mining
+            </div>
+            <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
+                PoW mining needs processing power. The more processing power you have, the more you mine.
+            </div>
+            <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
+                Proof-of-Stake Mining
+            </div>
+            <div class="infoText helpCursor" title="Proof-of-Stake (PoW) Mining Information">
+                PoS mining needs little processing power but needs balance. The more balance you have, the more you mine. You need at least 100 WebDollar for PoS mining.
+            </div>
         </div>
 
     </div>
@@ -130,6 +126,8 @@
                 stopTimerHandler: null,
                 isPos: false,
                 _prevWorkers: null,
+                showBalanceInfo: false,
+                showMiningInfo: false,
             }
         },
 
@@ -141,6 +139,7 @@
             if (typeof window === 'undefined') return;
 
             WebDollar.StatusEvents.on("mining/hash-rate", (hashesPerSecond)=>{
+
                 this.hashesPerSecond = hashesPerSecond;
 
             });
@@ -278,37 +277,34 @@
 </script>
 
 <style>
-
     .hoverInfo{
         position: fixed;
-        float: right;
         background-color: #383838;
         color: #fff;
         border-top: solid 1px #3a3939;
         border-left: solid 1px #3a3939;
         padding: 15px 30px 15px 15px;
-        box-sizing: border-box!important;
+        box-sizing: border-box !important;
         z-index: 1;
         transition: all 0.5s ease;
         opacity: 0.96;
     }
 
     .miningLabelContainer {
-        margin: auto 5px
+        margin: auto 5px;
     }
 
     .balanceInfo {
         height: 80px;
         width: 300px;
         bottom: 37px;
-        right: -330px;
+        transition: all 0.5s ease;
     }
 
     .miningInfo {
         height: 200px;
         width: 550px;
         bottom: 37px;
-        right: -840px;
     }
 
     .infoTitle {

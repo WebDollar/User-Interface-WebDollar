@@ -11,7 +11,7 @@
                     <slider ref="refMiningSlider" @sliderChanged="changeWorkers" />
                 </div>
 
-                <div class="miningDetails" @click="toggleMiningInfo" @mouseover="showMiningInfo=true" @mouseleave="showMiningInfo=false">
+                <div class="miningDetails" @click="handleMiningInfoEvent(!showMiningInfo, $event)" @mouseover="handleMiningInfoEvent(true, $event)" @mouseleave="handleMiningInfoEvent(false, $event)">
                     <div class="miningLabelContainer">
                         <p class="miningTypeIndicator">
                             {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
@@ -52,7 +52,7 @@
         </div>  
         
 
-       <div class="hoverInfo balanceInfo" :style="{right: showBalanceInfo ? 0 : -330}">
+       <div class="hoverInfo balanceInfo" :style="{right: showBalanceInfo ? '0px' : '-330px'}">
             <div class="balanceText">
                     <div class="balanceTitle helpCursor" title="Balance available to be spent">
                         Available Balance:
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="hoverInfo miningInfo" :ref="'miningInfo'" @click="toggleMiningInfo" :style="{right: showMiningInfo ? 0 : -840}">
+        <div class="hoverInfo miningInfo" :ref="'miningInfo'" :style="{right: showMiningInfo ? '0px' : '-840px'}">
             <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
                 WebDollar knows two types of mining. The types cycle in a pattern of 30 blocks (20 minutes). The first 10 blocks are Proof-of-Work. Followed by 20 blocks of Proof-of-Stake.
             </div>
@@ -97,6 +97,7 @@
     import slider from "./slider.vue";
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
     import icon from "components/UI/icons/icon.vue"
+    import {Vue} from 'vue'
     
     export default{
 
@@ -224,9 +225,12 @@
         ,
         methods: {
 
-            toggleMiningInfo() {
-                let ref = this.$refs['miningInfo']
-                ref.style.right == '0px' ? ref.style.right = '-840px' : ref.style.right = '0px';
+            handleMiningInfoEvent(showMiningInfo, event) {
+                console.log(event)
+                if (window.innerWidth < 830 && event.type === 'mouseover') {
+                    return;
+                }
+                this.showMiningInfo = showMiningInfo
             },
         
             changeWorkers(value){

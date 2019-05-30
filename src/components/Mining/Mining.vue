@@ -289,7 +289,7 @@
         border-left: solid 1px #3a3939;
         padding: 15px 30px 15px 15px;
         box-sizing: border-box !important;
-        z-index: 1;
+        z-index: 11;
         transition: all 0.5s ease;
         opacity: 0.96;
     }

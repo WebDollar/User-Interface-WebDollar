@@ -14,7 +14,7 @@
                 <div class="miningDetails" @click="handleMiningInfoEvent(!showMiningInfo, $event)" @mouseover="handleMiningInfoEvent(true, $event)" @mouseleave="handleMiningInfoEvent(false, $event)">
                     <div class="miningLabelContainer">
                         <p class="miningTypeIndicator">
-                            {{this.started ? ((this.hashesPerSecond <= 1) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
+                            {{this.started ? ((this.hashesPerSecond <= 2) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
                         </p>
                         <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="isImining miningAnimation" alt="Mining" text="Mining Indication"/>
                         <svg :style="{display: (!this.started || this.hashesPerSecond == 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -30,7 +30,7 @@
                             </path>
                         </svg>
                         <p class="miningProgressIndicator">
-                            {{this.started ? (this.hashesPerSecond <= 1 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Power'}}
+                            {{this.started ? (this.hashesPerSecond <= 2 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Power'}}
                         </p>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
             return {
                 started: false,
                 hashesPerSecond: 0,
-                workers: localStorage.getItem("miner-settings-worker-count") || 0,
+                workers: 0,
                 minerAddress:'',
                 status: '',
                 loaded:false,
@@ -160,8 +160,9 @@
             WebDollar.StatusEvents.on("mining/workers-changed", (workers)=>{
 
                 this.workers = workers;
+                console.log('mining/workers-changed', workers)
                 if (this.workers !== this.$refs['refMiningSlider'].data) {
-                    this.$refs['refMiningSlider'].$refs['slider'].setValue(this.workers);
+                    this.$refs['refMiningSlider'].changeSliderValueVisually(this.workers);
                 }
 
             });
@@ -234,9 +235,9 @@
             },
         
             changeWorkers(value){
-
+                
                 WebDollar.Blockchain.Mining.setWorkers(value);
-
+                
                 let setWorkersTimer = (value) => {
 
                     let timer;
@@ -247,9 +248,9 @@
 
                     function run() {
                         console.log("A new default mining power was set:", value);
-                        localStorage.setItem("miner-settings-worker-count", value);
-                    }
-
+                            localStorage.setItem("miner-settings-worker-count", value);
+                        }
+                    
                     let time = 20*1000; //default 20 sec
 
                     if (WebDollar.Applications.VersionCheckerHelper.detectMobileAndTablet()){

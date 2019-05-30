@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
+        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="change" :piecewise="true"
                     :width="this.sliderWidth" :tooltip="false" :min="0" :max="this.logicalProcessors"
                     v-if="this.renderSlider"
                     v-model="value" :disabled="this.disabled"></vue-slider>
@@ -13,7 +13,6 @@
     import vueSlider from 'vue-slider-component';
     import * as NoSleep from 'nosleep.js/dist/NoSleep';
 
-
     export default {
 
         name: 'slider',
@@ -24,20 +23,25 @@
 
         data() {
             return {
-                value: localStorage.getItem("miner-settings-worker-count") || 0,
-                disabled:true,
+                value: 0,
+                disabled: true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderWidth: null,
                 disableHalving: false,
                 renderSlider: false,
-                noSleep: new NoSleep()
+                noSleep: new NoSleep(),
+                changedByUser: true,
             }
         },
 
         methods: {
+            changeSliderValueVisually(value) {
+                this.changedByUser = false;
+                this.value = value;
+            },
             change(value) {
-                localStorage.setItem("miner-settings-worker-count", value)
+                console.log('Slider value changed to', value)
                 if (value > 0) {
                     this.noSleep.enable();
                     console.log('Enabled screen sleep prevention.')
@@ -45,7 +49,11 @@
                     this.noSleep.disable();
                     console.log('Disabled screen sleep prevention.')
                 }
-                this.$emit('sliderChanged', value);
+                if (this.changedByUser) {
+                    this.$emit('sliderChanged', value);
+                    localStorage.setItem('miner-settings-worker-count', value)
+                }
+                this.changedByUser = true;
             },
             addEvent(object, type, callback) {
                 if (object === null || typeof(object) === 'undefined') return;

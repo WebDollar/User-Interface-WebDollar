@@ -52,6 +52,10 @@
                         Offline
                     </div>
 
+                    <div class="btn buttonTextStyle" title="Scan a QR Code" @click="scanQrCode">
+                        Scan
+                    </div>
+
                 </div>
 
                 <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
@@ -77,6 +81,7 @@
         </div>
 
         <offline-transactions-modal ref="refOfflineTransactionsModal" :address="this.miningAddress"  />
+        <qr-scan-modal ref="qrScanModal" />
 
     </div>
 
@@ -93,6 +98,7 @@
     import ShowSumBalances from "./Address/Balance/Balances/Show-Sum-Balances.vue"
     import Notification from "helpers/Notification.helpers"
     import offlineTransactionsModal from "./Address/Modals/Main-Modal/Address-main.modal.offline.vue"
+    import qrScanModal from './QR/Scan.modal.vue';
 
     export default{
 
@@ -100,7 +106,8 @@
             icon,
             "Address": Address,
             ShowSumBalances,
-            offlineTransactionsModal
+            offlineTransactionsModal,
+            qrScanModal
         },
 
         props: ['addresses', 'currency'],
@@ -179,6 +186,10 @@
         },
 
         methods: {
+
+            scanQrCode() {
+                this.$refs['qrScanModal'].showModal()
+            },
 
             getMiningWalletIndex() {
                 if (!this.addresses || this.addresses.length == 0) {
@@ -469,7 +480,7 @@
 
     .walletController{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;

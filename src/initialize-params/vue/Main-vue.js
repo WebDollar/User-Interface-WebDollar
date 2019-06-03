@@ -3,6 +3,9 @@ var Vue = require('vue/dist/vue.min.js');
 import Dashboard from 'components/Dashboard.vue';
 import Notifications from 'vue-notification';
 
+import VueQrcodeReader from "vue-qrcode-reader";
+
+Vue.use(VueQrcodeReader);
 Vue.use(Notifications);
 
 //for safari workaround

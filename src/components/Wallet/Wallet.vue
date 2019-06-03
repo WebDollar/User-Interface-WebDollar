@@ -2,11 +2,11 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up' :style=""></icon>
+        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up'></icon>
 
         <icon v-show="!this.opened && isReceivingMoney" :style="{
             right: isSendingMoney ? '20px' : '4px',
-            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump"icon='chevron-double-down'>
+            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump" icon='chevron-double-down'>
         </icon>
 
         <div id="walletContainer" :ref="'walletContainer'">
@@ -49,24 +49,26 @@
 
                     </div>
 
-                    <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
+                    <div class="walletScrollContainer" :ref="'walletScrollContainer'">
+                        <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
 
-                        <div id="allWallets">
+                            <div id="allWallets">
 
-                            <Address v-for="(walletAddress, index) in this.addresses"
-                                :isMiningAddress="miningAddress === walletAddress.address"
-                                :key="walletAddress.address"
-                                :id="'address'+walletAddress.address"
-                                :ref="'address'+index"
-                                :address="walletAddress.address"
-                                style="padding-right: 20px"
-                                @onPendingTransactionsChanges="handlePendingTransactionsChanges"
-                            >
+                                <Address v-for="(walletAddress, index) in this.addresses"
+                                    :isMiningAddress="miningAddress === walletAddress.address"
+                                    :key="walletAddress.address"
+                                    :id="'address'+walletAddress.address"
+                                    :ref="'address'+index"
+                                    :address="walletAddress.address"
+                                    style="padding-right: 20px"
+                                    @onPendingTransactionsChanges="handlePendingTransactionsChanges"
+                                >
 
-                            </Address>
+                                </Address>
+
+                            </div>
 
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -166,11 +168,13 @@
                 if (window.screenWidth < 831){
                     this.isMobile = true;
                     this.$refs['walletMenu'].style.height = `${screenHeight}px`;
-                    this.$refs['walletContainer'].style.bottom = `${-screenHeight+41}px`
+                    this.$refs['walletContainer'].style.bottom = this.opened ? '-50px' : `${-screenHeight+41}px`
+                    this.$refs['walletScrollContainer'].style.height = `${screenHeight-140}px`
                 } else {
                     this.isMobile = false;
                     this.$refs['walletMenu'].style.height = `358px`;
                     this.$refs['walletContainer'].style.bottom = `-320px`
+                    this.$refs['walletScrollContainer'].style.height = `287px`
                 }
             },
 
@@ -317,6 +321,10 @@
 
     #myWalletImport{
         display: none;
+    }
+
+    .walletScrollContainer {
+        overflow-y: scroll;
     }
 
     .vue-slider-component.vue-slider-horizontal .vue-slider-dot{

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
+        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="change" :piecewise="true"
                     :width="this.sliderWidth" :tooltip="false" :min="0" :max="this.logicalProcessors"
                     v-if="this.renderSlider"
                     v-model="value" :disabled="this.disabled"></vue-slider>
@@ -13,7 +13,6 @@
     import vueSlider from 'vue-slider-component';
     import * as NoSleep from 'nosleep.js/dist/NoSleep';
 
-
     export default {
 
         name: 'slider',
@@ -24,20 +23,24 @@
 
         data() {
             return {
-                value: localStorage.getItem("miner-settings-worker-count") || 0,
-                disabled:true,
+                value: 0,
+                disabled: true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderWidth: null,
                 disableHalving: false,
                 renderSlider: false,
-                noSleep: new NoSleep()
+                noSleep: new NoSleep(),
+                changedByUser: true,
             }
         },
 
         methods: {
+            changeSliderValueVisuallyOnly(value) {
+                this.value = value;
+            },
             change(value) {
-                localStorage.setItem("miner-settings-worker-count", value)
+                console.log('Slider value changed to', value)
                 if (value > 0) {
                     this.noSleep.enable();
                     console.log('Enabled screen sleep prevention.')
@@ -46,6 +49,7 @@
                     console.log('Disabled screen sleep prevention.')
                 }
                 this.$emit('sliderChanged', value);
+                localStorage.setItem('miner-settings-worker-count', value)
             },
             addEvent(object, type, callback) {
                 if (object === null || typeof(object) === 'undefined') return;
@@ -64,16 +68,12 @@
             if (typeof window === "undefined") return false;
 
             this.addEvent(window, "resize", (event) => {
-
                 this.screenWidth = window.innerWidth;
-
                 if (window.innerWidth<550){
                     this.sliderWidth = window.innerWidth-180;
                 }else{
                     this.sliderWidth = 330;
                 }
-
-                this.renderSlider = true;
                 this.$refs["slider"].refresh();
 
             });
@@ -84,12 +84,8 @@
             }else{
                 this.sliderWidth = 330;
             }
-
             this.renderSlider = true;
-            this.$refs["slider"].refresh();
-
             this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
-
         }
     }
 </script>

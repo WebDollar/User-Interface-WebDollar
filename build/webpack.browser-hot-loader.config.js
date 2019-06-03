@@ -19,14 +19,15 @@ const config = merge(base, {
         filename: "WebDollar-User-Interface-bundle.js"
     },
 
-
     devServer: {
-        port: 4999
+        port: 4999,
+        host: '0.0.0.0',
+        https: true
     },
 
     plugins: [
 
-        new OpenBrowserPlugin( { url: 'http://localhost:4999' } ),
+        new OpenBrowserPlugin( { url: 'https://localhost:4999' } ),
 
         new webpack.DefinePlugin({
             "process.env": {

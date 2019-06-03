@@ -3,21 +3,21 @@
     <div v-if="this.modalOpened">
         <div class="modalBackground" @click="this.closeModal"> </div>
         <div class="modal" ref="refModal">
+            <div class="modalBody">
+                <div class="close" @click="this.closeModal">
+                    x
+                </div>
 
-            <div class="close" @click="this.closeModal">
-                x
-            </div>
+                <div class="headerModal">
+                    <div class="title">
+                        {{this.title}}
+                    </div>
+                </div>
 
-            <div class="headerModal">
-                <div class="title">
-                    {{this.title}}
+                <div class="content modifyPadding">
+                    <slot name="content"></slot>
                 </div>
             </div>
-
-            <div class="content modifyPadding">
-                <slot name="content"></slot>
-            </div>
-
         </div>
     </div>
 

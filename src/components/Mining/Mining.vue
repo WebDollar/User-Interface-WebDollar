@@ -297,6 +297,7 @@
 
     .miningLabelContainer {
         margin: auto 5px;
+        margin-top: 9px;
     }
 
     .balanceInfo {
@@ -615,6 +616,10 @@
 
     @media only screen and (max-width : 831px) {
 
+        .miningLabelContainer{
+            margin-top: 9px;
+        }
+
         .balanceInfo{
             display: none;
         }
@@ -628,7 +633,7 @@
         .miningLoader {
             position: absolute;
             right: -8px;
-            top: 0;
+            top: 6px;
         }
 
         .miningDetails{

@@ -2,79 +2,86 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up'></icon>
+        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up' :style=""></icon>
 
         <icon v-show="!this.opened && isReceivingMoney" :style="{
             right: isSendingMoney ? '20px' : '4px',
-            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump" icon='chevron-double-down'>
+            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump"icon='chevron-double-down'>
         </icon>
 
-        <div id="walletContainer" :ref="'walletContainer'">
+        <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet" :style="{
+            marginBottom: this.opened ? this.walletButtonMarginOpened+'px': this.walletButtonMarginClosed+'px',
+            top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
+            borderTopLeftRadius: this.opened ? this.walletButtonRadiusLeftOpen+'px' : this.walletButtonRadiusLeftClose+'px',
+            borderTopRightRadius: this.opened ? this.walletButtonRadiusRightOpen+'px' : this.walletButtonRadiusRightClose+'px'}">
 
-            <div id="walletButton" ref="walletMenuButton" @click="this.toggleWallet">
-                
-                <span id="walletButtonText">
-                    <div style="display: inline-block">
-                        <icon class="buttonIcon statusWalletIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
-                        Wallet
-                    </div>
-                    <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'contents'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
-                </span>
-                
-            </div>
+            <span id="walletButtonText">
+                <div style="display: inline-block">
+                    <icon class="buttonIcon statusWalletIcon" :icon="this.opened ? 'chevron-down' : 'chevron-up'" style="fill: black"></icon>
+                    Wallet
+                </div>
+                <show-sum-balances ref="refShowSumBalances" :style="{display: this.isMobile==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency"> </show-sum-balances>
+            </span>
+        </div>
 
-            <div id="walletMenu" :ref="'walletMenu'">
+        <div id="walletMenu" ref="walletMenu" :style="{
+            marginBottom: this.opened ? this.walletMarginOpened+'px': this.walletMarginClosed+'px',
+            top: this.opened ? this.buttonTopDistanceOpen : this.buttonTopDistanceClose,
+            marginTop: this.opened ? this.walletMenuMarginTopOpen : this.walletMenuMarginTopClose,
+            height: this.opened ? this.walletMenuHeightOpen : this.walletMenuHeightClosed}">
 
-                <div id="dashboardWallet">
+            <div id="dashboardWallet">
 
-                    <div class="walletController">
+                <div class="walletController">
 
-                        <div class="btn buttonTextStyle" @click="this.handleAddNewAddress" title="Add new wallet">
-                            Add
-                        </div>
-
-                        <label class="myLabel" title="Import existing wallet">
-
-                            <input ref="importedAddress" type="file" v-on:change="this.handleImportAddress" multiple size="50" />
-
-                            <div class="btn buttonTextStyle">
-                                Import
-                            </div>
-
-                        </label>
-
-                        <div class="btn buttonTextStyle" title="Create Offline transaction" v-on:click.stop="showOfflineTransactions">
-                            Offline
-                        </div>
-
+                    <div class="btn buttonTextStyle" @click="this.handleAddNewAddress" title="Add new wallet">
+                        Add
                     </div>
 
-                    <div class="walletScrollContainer" :ref="'walletScrollContainer'">
-                        <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
+                    <label class="myLabel" title="Import existing wallet">
 
-                            <div id="allWallets">
+                        <input ref="importedAddress" type="file" v-on:change="this.handleImportAddress" multiple size="50" />
 
-                                <Address v-for="(walletAddress, index) in this.addresses"
-                                    :isMiningAddress="miningAddress === walletAddress.address"
-                                    :key="walletAddress.address"
-                                    :id="'address'+walletAddress.address"
-                                    :ref="'address'+index"
-                                    :address="walletAddress.address"
-                                    style="padding-right: 20px"
-                                    @onPendingTransactionsChanges="handlePendingTransactionsChanges"
-                                >
-
-                                </Address>
-
-                            </div>
-
+                        <div class="btn buttonTextStyle">
+                            Import
                         </div>
+
+                    </label>
+
+                    <div class="btn buttonTextStyle" title="Create Offline transaction" v-on:click.stop="showOfflineTransactions">
+                        Offline
                     </div>
+
+                    <div class="btn buttonTextStyle" title="Scan a QR Code" @click="scanQrCode">
+                        Scan
+                    </div>
+
+                </div>
+
+                <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
+
+                    <div id="allWallets">
+
+                        <Address v-for="(walletAddress, index) in this.addresses"
+                             :isMiningAddress="miningAddress === walletAddress.address"
+                             :key="walletAddress.address"
+                             :id="'address'+walletAddress.address"
+                             :ref="'address'+index"
+                             :address="walletAddress.address"
+                             style="padding-right: 20px"
+                             @onPendingTransactionsChanges="handlePendingTransactionsChanges"
+                        >
+
+                        </Address>
+
+                    </div>
+
                 </div>
             </div>
         </div>
 
         <offline-transactions-modal ref="refOfflineTransactionsModal" :address="this.miningAddress"  />
+        <qr-scan-modal ref="qrScanModal" />
 
     </div>
 
@@ -91,7 +98,7 @@
     import ShowSumBalances from "./Address/Balance/Balances/Show-Sum-Balances.vue"
     import Notification from "helpers/Notification.helpers"
     import offlineTransactionsModal from "./Address/Modals/Main-Modal/Address-main.modal.offline.vue"
-    import {TweenLite} from "gsap/TweenLite";
+    import qrScanModal from './QR/Scan.modal.vue';
 
     export default{
 
@@ -99,7 +106,8 @@
             icon,
             "Address": Address,
             ShowSumBalances,
-            offlineTransactionsModal
+            offlineTransactionsModal,
+            qrScanModal
         },
 
         props: ['addresses', 'currency'],
@@ -108,13 +116,28 @@
             return {
                 opened: false,
                 balanceHover: false,
-                miningAddress: null,
+                miningAddress: '',
 
-                isMobile: false,
-                screenHeight: null,
-                
+                isMobile:false,
+
                 sendingMoney:{},
                 receivingMoney:{},
+
+                walletButtonMarginOpened: 0,
+                walletButtonMarginClosed: 0,
+                buttonTopDistanceOpen: 0,
+                buttonTopDistanceClose: 0,
+                walletMarginOpened: 0,
+                walletMarginClosed: 0,
+                walletMenuMarginTopOpen: 0,
+                walletMenuMarginTopClose: 0,
+                walletMenuHeightOpen: 0,
+                walletMenuHeightClosed: 0,
+                walletContentHeight: 315,
+                walletButtonRadiusLeftOpen: 0,
+                walletButtonRadiusLeftClose: 0,
+                walletButtonRadiusRightOpen: 0,
+                walletButtonRadiusRightClose: 0,
             }
         },
 
@@ -138,12 +161,14 @@
 
             //onLoad    
             BrowserHelpers.addEvent(window, "load", (event) => {
-                this.initScreenSettings(window)
+                this.changeScreenBehavior();
+                this.walletResizeFix();
             });
 
             //onResize
             BrowserHelpers.addEvent(window, "resize", (event) => {
-                this.initScreenSettings(window)
+                this.changeScreenBehavior();
+                this.walletResizeFix();
             });
 
         },
@@ -162,35 +187,8 @@
 
         methods: {
 
-            initScreenSettings(window) {    
-                this.changeScreenBehavior();
-                this.screenHeight = window.screenHeight;
-                if (window.screenWidth < 831){
-                    this.isMobile = true;
-                    this.$refs['walletMenu'].style.height = `${screenHeight}px`;
-                    this.$refs['walletContainer'].style.bottom = this.opened ? '-50px' : `${-screenHeight+41}px`
-                    this.$refs['walletScrollContainer'].style.height = `${screenHeight-140}px`
-                } else {
-                    this.isMobile = false;
-                    this.$refs['walletMenu'].style.height = `358px`;
-                    this.$refs['walletContainer'].style.bottom = `-320px`
-                    this.$refs['walletScrollContainer'].style.height = `287px`
-                }
-            },
-
-            toggleWallet(){
-                this.opened = !this.opened;
-                let ref = this.$refs['walletContainer'];
-                if (!ref.style.bottom) {
-                    ref.style.bottom =  '-320px';
-                }
-                let newValue = ''
-                if (this.isMobile) {
-                    ref.style.bottom == '-50px' ? newValue = `${-screenHeight+41}px`: newValue = '-50px';
-                } else {
-                    ref.style.bottom == '-320px' ? newValue = '0px' : newValue = '-320px';
-                }
-                TweenLite.to(ref.style, .3, {ease: Power1.easeInOut, bottom: newValue});
+            scanQrCode() {
+                this.$refs['qrScanModal'].showModal()
             },
 
             getMiningWalletIndex() {
@@ -205,19 +203,119 @@
             },
 
             showOfflineTransactions(){
+
                 this.$refs['refOfflineTransactionsModal'].showModal();
+
             },
 
             changeScreenBehavior(){
+
                 if (this.$refs['walletMenuButton'] === undefined) {
                     console.log("not ready..");
                     return;
                 }
+
+                if (window.screenWidth < 831){
+
+                    this.isMobile = true;
+
+                    this.walletButtonMarginOpened = 452;
+                    this.walletButtonMarginClosed = 43;
+
+                    this.walletMarginOpened = 42;
+                    this.walletMarginClosed = -325;
+
+                    this.buttonTopDistanceOpen = '0';
+                    this.buttonTopDistanceClose = 'auto';
+
+                    this.walletMenuMarginTopOpen=this.$refs['walletMenuButton'].clientHeight;
+                    this.walletMenuMarginTopClose='0';
+
+                    this.walletMenuHeightOpen='100%';
+                    this.walletMenuHeightClosed='358px';
+
+                    this.walletContentHeight= window.outerHeight-250;
+
+                    this.walletButtonRadiusLeftOpen= 0;
+                    this.walletButtonRadiusLeftClose= 0;
+
+                    this.walletButtonRadiusRightOpen= 0;
+                    this.walletButtonRadiusRightClose= 0;
+
+                }else{
+
+                    this.isMobile=false;
+
+                    this.walletContentHeight= 315;
+
+                    this.walletButtonMarginOpened = 392;
+                    this.walletButtonMarginClosed = 30;
+
+                    this.walletMarginOpened = 34;
+                    this.walletMarginClosed = -325;
+
+                    this.buttonTopDistanceOpen = 'auto';
+                    this.buttonTopDistanceClose = 'auto';
+
+                    this.walletMenuMarginTopOpen=this.$refs['walletMenuButton'].clientHeight;
+                    this.walletMenuMarginTopClose='0';
+
+                    this.walletMenuHeightOpen='358px';
+                    this.walletMenuHeightClosed='0';
+
+                    this.walletButtonRadiusLeftOpen= 60;
+                    this.walletButtonRadiusLeftClose= 60;
+
+                    this.walletButtonRadiusRightOpen= 0;
+                    this.walletButtonRadiusRightClose= 0;
+
+                }
+
+            },
+
+            toggleWallet(){
+
+                this.opened = !this.opened;
+
+                if(window.screenWidth < 831){
+                    if (this.opened===true)
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:none');
+                    else
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+
+                }else
+                    document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+
+
+            },
+
+            walletResizeFix(){
+
+                if(window.screenWidth < 831)
+                    if (this.opened===true)
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:none');
+                    else
+                        document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+
+                else
+                    document.getElementById('dashboardMining').setAttribute('style', 'display:block');
+
+
             },
 
             async handleAddNewAddress(){
-                await WebDollar.Blockchain.Wallet.createNewAddress();
-                Notification.addAlert(undefined, "success", "Wallet Created", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
+
+                // if (WebDollar.Blockchain.Wallet.addresses.length <= 2) {
+
+                    await WebDollar.Blockchain.Wallet.createNewAddress();
+                    Notification.addAlert(undefined, "success", "Wallet Created", WebDollar.Blockchain.Wallet.addresses[WebDollar.Blockchain.Wallet.addresses.length-1].address + " has been added to your wallet!", 5000);
+
+                // } else {
+                //
+                //     Notification.addAlert(undefined, "warn", "Wallet Warning", "You can't add new address if you already have 3 addresses", 5000);
+                //
+                // }
+
             },
 
             async handleImportAddress(){
@@ -241,12 +339,18 @@
                             let file = fileInput.files[i];
                             let extension = file.name.split('.').pop();
 
+//                            console.log(file);
+//                            console.log(extension);
+
                             if (extension === "webd") {
                                 let reader = new FileReader();
 
                                 try {
                                     reader.onload = async (e) => {
+
+                                        //console.log(reader.result);
                                         let data = JSON.parse(reader.result);
+
                                         let answer = await WebDollar.Blockchain.Wallet.importAddressFromJSON(data);
 
                                         if (answer.result === true){
@@ -254,6 +358,7 @@
                                         } else {
                                             Notification.addAlert(undefined, "error", "Import Error", answer.message, 5000);
                                         }
+
                                     };
 
                                 } catch (exception){
@@ -267,8 +372,11 @@
 
                         }
 
+
                     }
                 }
+
+
 
             },
 
@@ -305,9 +413,7 @@
 </script>
 
 <style>
-    body {
-        overflow-x: hidden;
-    }
+
     @keyframes jump {
         0%   {transform: translate3d(0,0,0) scale3d(1,1,1);}
         40%  {transform: translate3d(0,30%,0) scale3d(.7,1.5,1);}
@@ -316,15 +422,11 @@
     .jump.sendingImg, .jump.receivingImg {
         fill: #000!important;
         transform-origin: 50% 50%;
-        animation: jump .5s ease-in-out alternate infinite;
+        animation: jump .5s linear alternate infinite;
     }
 
     #myWalletImport{
         display: none;
-    }
-
-    .walletScrollContainer {
-        overflow-y: scroll;
     }
 
     .vue-slider-component.vue-slider-horizontal .vue-slider-dot{
@@ -346,39 +448,26 @@
         background-color: #fec02c14;
     }
 
-    #walletContainer {
-        z-index:10;
-        position: fixed;
-        width: 299px;
-        right: 0;
-    }
-
     #walletButton {
-        width:100%;
-        position: relative;
-        z-index: 10;
-        display: block;
+        margin: 0 auto;
+        position: fixed;
+        z-index: 85;
+        bottom: 0;
+        width: 299px!important;
+        right: 0;
         text-align: center;
         height: 50px;
         border-top-left-radius: 60px;
         cursor: pointer;
         background-color: #fec02c;
         color: #1f1f1f;
-    }
-
-    #walletMenu{
-        width: 100%;
-        position: relative;
-        display: block;
-        background-color: #1f1f1f;
-        height: 358px;
-        z-index: 10;
-        border-top: solid 1px #3d3d3d;
-        border-left: solid 1px #3d3d3d;
+        margin-bottom: 20px;
+        transition: all .3s linear;
     }
 
     #walletButton:hover{
         background-color: #fec02c;
+        transition: all .3s linear;
     }
 
     .walletSection{
@@ -391,7 +480,7 @@
 
     .walletController{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;
@@ -407,6 +496,7 @@
 
     .walletController .btn:hover{
         background-color: #575757;
+        transition: all .3s linear;
     }
 
     .walletController .btn:first-child{
@@ -417,14 +507,39 @@
         border: solid 1px #545454;
     }
 
+    #walletButton:hover{
+        transition: all .3s linear;
+    }
+
     #walletButton span{
         width: 100%;
         line-height: 50px;
         font-size: 20px;
+        font-weight: bolder;
+        transition: all .3s linear;
+    }
+
+    #walletButton span:hover{
+        transition: all .3s linear;
     }
 
     .statusWalletIcon{
         margin-top: 10px!important;
+    }
+
+    #walletMenu{
+        margin: 0 auto;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+        background-color: #1f1f1f;
+        height: 358px;
+        margin-bottom:-100px;
+        z-index: 100;
+        border-top: solid 1px #3d3d3d;
+        border-left: solid 1px #393939;
+        transition: all .3s linear;
     }
 
     .buttonIcon{
@@ -455,6 +570,7 @@
 
     #walletButton .buttonIcon{
         fill: #000;
+        transition: all .3s linear;
     }
 
     .walletAddress b{
@@ -470,6 +586,7 @@
         bottom: 57px;
         z-index: 1000;
         fill:#262626;
+        transition: all 1.2s linear;
     }
 
     .buttonTextStyle{
@@ -497,18 +614,17 @@
             bottom: 67px;
         }
 
-        #walletContainer {
-            width:100%;
-        }
         #walletMenu{
             width: 100%;
+            margin-top: 50px!important;
         }
         #walletButton{
-            width: 100%;
+            width: 100%!important;
             border:0;
             height: 50px;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            margin-bottom: 90px;
         }
         #walletButton span{
             line-height: 50px;
@@ -524,12 +640,18 @@
         #allWallets .walletAddress{
             margin: 15px 0 0 10px!important;
         }
+        #allWallets .walletAddress img{
+            margin-top: 5px;
+        }
         #allWallets .walletAddress .imageAndInput img{
             margin-top: 0!important;
         }
         .walletAddress b{
             font-size: 22px!important;
             line-height: 60px!important;
+        }
+        #allWallets .walletAddress b{
+            line-height: 0!important;
         }
         .walletController{
             position: relative;

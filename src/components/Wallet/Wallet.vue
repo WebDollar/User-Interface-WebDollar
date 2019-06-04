@@ -52,10 +52,6 @@
                         Offline
                     </div>
 
-                    <div class="btn buttonTextStyle" title="Scan a QR Code" @click="scanQrCode">
-                        Scan
-                    </div>
-
                 </div>
 
                 <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
@@ -98,7 +94,6 @@
     import ShowSumBalances from "./Address/Balance/Balances/Show-Sum-Balances.vue"
     import Notification from "helpers/Notification.helpers"
     import offlineTransactionsModal from "./Address/Modals/Main-Modal/Address-main.modal.offline.vue"
-    import qrScanModal from './QR/Scan.modal.vue';
 
     export default{
 
@@ -107,7 +102,6 @@
             "Address": Address,
             ShowSumBalances,
             offlineTransactionsModal,
-            qrScanModal
         },
 
         props: ['addresses', 'currency'],
@@ -480,7 +474,7 @@
 
     .walletController{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         position: relative;
         width: 100%;
         border-bottom: solid 1px #333333;

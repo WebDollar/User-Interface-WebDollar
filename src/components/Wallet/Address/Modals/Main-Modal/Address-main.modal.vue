@@ -70,7 +70,7 @@
 
                 <request :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
 
-                <qrCode :style="{display: this.partActivated === 'qrCode' ? 'block': 'none'}" />
+                <qrCode :address="this.address" :style="{display: this.partActivated === 'qrCode' ? 'block': 'none'}" />
 
             </div>
 

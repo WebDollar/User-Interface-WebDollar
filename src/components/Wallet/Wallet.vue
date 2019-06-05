@@ -77,6 +77,7 @@
         </div>
 
         <offline-transactions-modal ref="refOfflineTransactionsModal" :address="this.miningAddress"  />
+        <qr-scan-modal ref="qrScanModal" />
 
     </div>
 
@@ -100,7 +101,7 @@
             icon,
             "Address": Address,
             ShowSumBalances,
-            offlineTransactionsModal
+            offlineTransactionsModal,
         },
 
         props: ['addresses', 'currency'],
@@ -179,6 +180,10 @@
         },
 
         methods: {
+
+            scanQrCode() {
+                this.$refs['qrScanModal'].showModal()
+            },
 
             getMiningWalletIndex() {
                 if (!this.addresses || this.addresses.length == 0) {

@@ -3,7 +3,7 @@
     <div class="transferList qrCodeContainer" ref="qrCode">
 
         {{this.address}}
-        <qr-code :text="this.address"></qr-code>
+        <qr-code color="#ffc12c" bg-color="#1f1f1f" :text="this.address"></qr-code>
         <!--<img class="qrCodeImage" src="https://cdn.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png"/>-->
 
     </div>

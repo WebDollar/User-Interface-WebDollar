@@ -25,7 +25,7 @@ export default {
 
 <style>
 .scan-btn-image {
-  background-image: url('./assets/qr-icon.gif');
+  background-image: url('/public/assets/images/qr-icon.gif');
   background-size: contain;
   position: relative;
   height: 80%;

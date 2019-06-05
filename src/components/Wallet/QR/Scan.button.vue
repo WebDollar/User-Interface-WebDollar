@@ -27,9 +27,12 @@ export default {
 .scan-btn-image {
   background-image: url('./assets/qr-icon.gif');
   background-size: contain;
-  position: absolute;
-      height: 100%;
-    width: 100%;
+  position: relative;
+  height: 80%;
+  width: 80%;
+  cursor: pointer;
+  margin-top: 4px;
+  margin-left: 6px;
 }
 .scan-btn-container {
 

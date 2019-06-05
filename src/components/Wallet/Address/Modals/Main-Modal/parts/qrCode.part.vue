@@ -2,8 +2,7 @@
 
     <div class="transferList qrCodeContainer" ref="qrCode">
 
-        {{this.address}}
-        <qr-code color="#ffc12c" bg-color="#1f1f1f" :text="this.address"></qr-code>
+        <vue-q-r-code-component color="#ffc12c" bg-color="#1f1f1f" :text="this.address"></vue-q-r-code-component>
         <!--<img class="qrCodeImage" src="https://cdn.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png"/>-->
 
     </div>
@@ -17,6 +16,8 @@
     Vue.component('qr-code', VueQRCodeComponent);
 
     export default {
+
+        components:{ VueQRCodeComponent },
 
         props:{
             address: {default: null},
@@ -59,6 +60,12 @@
         font-size: 14px;
         padding: 10px 0;
         margin-top: 0;
+    }
+
+    .qrCodeContainer img{
+        width: 100%!important;
+        height: auto!important;
+        border-radius: 0!important;
     }
 
 </style>

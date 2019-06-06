@@ -2,13 +2,8 @@
 
     <div class="transferList qrCodeContainer" ref="qrCode">
 
-        <div class="extraInfo">
-             <span @click="changeQR" class="copyButton modalButton2 qrCodeButton">
-                 {{ this.qrType === 'link' ? 'Switch to WEBD Address QR Code' : 'Switch to direct payment link QR Code' }}
-             </span>
-        </div>
-
-        <img class="qrCodeImage" :src=" this.qrType === 'link' ? 'http://chart.apis.google.com/chart?chs=300x300&cht=qr&chld=|0&chl=http%3A%2F%2Fwww.the-qrcode-generator.com%2F' : 'https://cdn.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png'"/>
+        <vue-q-r-code-component color="#ffc12c" bg-color="#1f1f1f" :text="this.address"></vue-q-r-code-component>
+        <!--<img class="qrCodeImage" src="https://cdn.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png"/>-->
 
     </div>
 
@@ -16,29 +11,21 @@
 
 <script>
 
+    import Vue from 'vue'
+    import VueQRCodeComponent from 'vue-qrcode-component'
+    Vue.component('qr-code', VueQRCodeComponent);
+
     export default {
 
-        data: () => {
-            return {
-                qrType: "link",
-            }
+        components:{ VueQRCodeComponent },
+
+        props:{
+            address: {default: null},
         },
 
-
-        methods:{
-
-            changeQR(){
-
-                if (this.qrType === 'link')
-                    this.qrType = 'address';
-                else
-                    this.qrType = 'link';
-
-            }
-
-        }
-
     }
+
+
 </script>
 
 
@@ -73,6 +60,12 @@
         font-size: 14px;
         padding: 10px 0;
         margin-top: 0;
+    }
+
+    .qrCodeContainer img{
+        width: 100%!important;
+        height: auto!important;
+        border-radius: 0!important;
     }
 
 </style>

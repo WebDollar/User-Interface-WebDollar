@@ -188,6 +188,7 @@
 <style>
 
     .notificationsBox{
+        color: #fff;
         width:450px!important;
         word-break:break-all;
     }

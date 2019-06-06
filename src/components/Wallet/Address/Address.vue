@@ -344,6 +344,7 @@
         float: right;
         text-align:right;
         margin-right: 20px;
+        margin-left: -5px;
         display: block!important;
     }
 

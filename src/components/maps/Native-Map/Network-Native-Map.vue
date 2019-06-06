@@ -1,8 +1,8 @@
 <template>
 
     <div>
-        <NetworkNativeMapCanvas />
-        <NetworkNativeMapDialog ref="refDialog" />
+        <network-native-map-canvas />
+        <network-native-map-dialog ref="refDialog" />
     </div>
 
 </template>
@@ -22,8 +22,8 @@
 
         components:{
 
-            "NetworkNativeMapCanvas": NetworkNativeMapCanvas,
-            "NetworkNativeMapDialog": NetworkNativeMapDialog,
+            NetworkNativeMapCanvas,
+            NetworkNativeMapDialog,
 
         },
 

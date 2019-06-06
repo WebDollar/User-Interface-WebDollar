@@ -297,7 +297,6 @@
 
     .miningLabelContainer {
         margin: auto 5px;
-        margin-top: 9px;
     }
 
     .balanceInfo {

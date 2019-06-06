@@ -2,8 +2,14 @@
   <div>
     <Modal title="QR Scanner" ref="qrScanner">
       <div slot="content">
-        <qrcode-stream @decode="onDecode" @init="onInit"></qrcode-stream>
-        <div v-if="errorMessage">{{errorMessage}}</div>
+        <div v-if="!initialized" class="cam-placeholder">
+          <span v-if="errorMessage">{{errorMessage}}</span>
+        </div>
+        <qrcode-stream
+          @decode="onDecode"
+          @init="onInit"
+          :style="{height: this.initialized ? auto : 0}"
+        ></qrcode-stream>
       </div>
     </Modal>
   </div>
@@ -72,6 +78,14 @@ export default {
 </script>
 
 <style>
+.cam-placeholder {
+  background-image: url("./assets/cam-placeholder.png");
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  color: #797979;
+  margin: 20px;
+}
 .content {
   margin: auto;
 }

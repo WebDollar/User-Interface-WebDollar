@@ -3,6 +3,7 @@
     <Modal title="QR Scanner" ref="qrScanner">
       <div slot="content">
         <qrcode-stream @decode="onDecode" @init="onInit"></qrcode-stream>
+        <div v-if="errorMessage">{{errorMessage}}</div>
       </div>
     </Modal>
   </div>
@@ -21,7 +22,7 @@ export default {
     return {
       scannedUrl: null,
       initialized: false,
-      errorMessage: null,
+      errorMessage: null
     };
   },
 
@@ -78,9 +79,8 @@ export default {
   margin: auto;
   width: 160px;
   position: absolute;
-  left:35%;
+  left: 35%;
   top: 10%;
-
 }
 .descriptionTextPass {
   color: #bdbdbd;

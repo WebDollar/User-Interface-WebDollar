@@ -40,11 +40,15 @@ let webpackConfig = {
 
     rules: [
       {
-        test: /\.(png|jpe?g|gif)$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         use: [
           {
             loader: 'file-loader',
-            options: {}
+            options: {
+              name: '[path][name].[ext]?[hash]',
+              context: 'src',
+              outputPath: 'assets'
+            }
           }
         ]
       },

@@ -35,6 +35,7 @@ export default {
   methods: {
     closeModal() {
       this.$refs["qrScanner"].closeModal();
+      this.initialized = false;
     },
 
     showModal(e) {

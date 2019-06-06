@@ -7,10 +7,13 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 var WebpackDevServer = require('webpack-dev-server');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 
 const isProd = process.env.NODE_ENV === 'production';
 //const isAnalyze = process.argv.includes('--analyze') || process.argv.includes('--analyse');
 const isAnalyze = false;
+
 
 let webpackConfig = {
   //define entry point
@@ -19,7 +22,7 @@ let webpackConfig = {
   // send to distribution
   output: {
     path: path.resolve(__dirname, '../dist_bundle'),
-    publicPath: '/dist/',
+    publicPath: 'public/WebDollar-dist/',
     filename: '[name].[chunkhash].js'
   },
   resolve: {
@@ -45,9 +48,7 @@ let webpackConfig = {
           {
             loader: 'file-loader',
             options: {
-              name: '[path][name].[ext]?[hash]',
-              context: 'src',
-              outputPath: 'assets'
+              name: 'assets/images/[name].[ext]?[hash]'
             }
           }
         ]
@@ -65,21 +66,17 @@ let webpackConfig = {
               fallback: 'vue-style-loader'
             })
           : ['vue-style-loader', 'css-loader']
-      }
-    ],
-
-    loaders: [
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: [/node_modules/],
         query: {
-          presets: ['es2017', 'env']
+          presets: ['@babel/preset-env']
         }
       }
     ]
   },
-
   plugins: isProd
     ? [
         ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
@@ -89,11 +86,13 @@ let webpackConfig = {
         }),
         new ExtractTextPlugin({
           filename: 'common.[chunkhash].css'
-        })
+        }),
+        new VueLoaderPlugin(),
       ]
     : [
         ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
-        new FriendlyErrorsPlugin()
+        new FriendlyErrorsPlugin(),
+        new VueLoaderPlugin(),
       ]
 };
 

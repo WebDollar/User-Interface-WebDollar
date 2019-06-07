@@ -38,9 +38,15 @@
         methods: {
             changeSliderValueVisuallyOnly(value) {
                 this.value = value;
+                this.setSleepScreenProtection(value);
             },
             change(value) {
                 console.log('Slider value changed to', value)
+                this.setSleepScreenProtection(value);
+                this.$emit('sliderChanged', value);
+                localStorage.setItem('miner-settings-worker-count', value)
+            },
+            setSleepScreenProtection(value) {
                 if (value > 0) {
                     this.noSleep.enable();
                     console.log('Enabled screen sleep prevention.')
@@ -48,8 +54,6 @@
                     this.noSleep.disable();
                     console.log('Disabled screen sleep prevention.')
                 }
-                this.$emit('sliderChanged', value);
-                localStorage.setItem('miner-settings-worker-count', value)
             },
             addEvent(object, type, callback) {
                 if (object === null || typeof(object) === 'undefined') return;

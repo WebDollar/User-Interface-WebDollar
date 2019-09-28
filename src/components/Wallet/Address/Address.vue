@@ -352,6 +352,7 @@
         float: right;
         text-align:right;
         margin-right: 20px;
+        margin-left: -20px;
         display: block!important;
     }
 

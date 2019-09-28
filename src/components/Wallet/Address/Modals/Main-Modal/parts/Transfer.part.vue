@@ -115,8 +115,9 @@
                     <div v-if="!this.offlineTransaction">
                         <img alt="Wallet Gravatar" class="walletAddressImage transferWalletAddressImage" :src="this.getAddressPic" :class="this.errorToAddressMessage==='Invalid Address' ? 'hide' : ''" >
                     </div>
-                    <div>
+                    <div class="address-container">
                         <input class="address " @keyup="this.handleChangeToAddress" v-model="toAddress" placeholder="Recipient Address"/>
+                        <qr-scan-btn class="scan-btn"></qr-scan-btn>
                     </div>
 
                 </div>
@@ -152,6 +153,7 @@
     import Notification from "helpers/Notification.helpers"
     import BrowserHelpers from "helpers/Browser.helpers"
     import FileSaver from './../../../../../../../node_modules/file-saver'
+    import qrScanBtn from '../../../../QR/Scan.button.vue'
 
     export default {
 
@@ -159,6 +161,10 @@
         props:{
             address: {default: null},
             offlineTransaction: {default: false},
+        },
+
+        components : {
+            qrScanBtn
         },
 
         data: () => {
@@ -754,6 +760,21 @@
 </script>
 
 <style>
+
+    .address-container {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 50px;
+   
+    }
+    .scan-btn {
+        position: absolute;
+        top:0;
+        right:0;
+        height:100%;
+        width:40px;
+    
+    }
 
     .modal .title {
         background-color: #262626;

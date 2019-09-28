@@ -3,21 +3,21 @@
     <div v-if="this.modalOpened">
         <div class="modalBackground" @click="this.closeModal"> </div>
         <div class="modal" ref="refModal">
+            <div class="modalBody">
+                <div class="close" @click="this.closeModal">
+                    x
+                </div>
 
-            <div class="close" @click="this.closeModal">
-                x
-            </div>
+                <div class="headerModal">
+                    <div class="title">
+                        {{this.title}}
+                    </div>
+                </div>
 
-            <div class="headerModal">
-                <div class="title">
-                    {{this.title}}
+                <div class="content modifyPadding">
+                    <slot name="content"></slot>
                 </div>
             </div>
-
-            <div class="content modifyPadding">
-                <slot name="content"></slot>
-            </div>
-
         </div>
     </div>
 
@@ -266,7 +266,7 @@
 
     .addressActions{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         border-bottom: solid 1px #313131;
     }
 
@@ -404,7 +404,7 @@
         }
 
         .modal{
-            width: 90%;
+            width: 95%;
             max-width: none;
             min-width: none;
             max-height: 100%;

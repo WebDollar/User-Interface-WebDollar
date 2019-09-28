@@ -2,11 +2,11 @@
 
     <div class="dashboardWallet" ref="dashboardWallet">
 
-        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up' :style=""></icon>
+        <icon v-show="!this.opened && isSendingMoney" class="miningStatus sendingImg jump" icon='chevron-double-up'></icon>
 
         <icon v-show="!this.opened && isReceivingMoney" :style="{
             right: isSendingMoney ? '20px' : '4px',
-            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump"icon='chevron-double-down'>
+            marginBottom: isSendingMoney ? '-2px' : '0'}" class="miningStatus receivingImg jump" icon='chevron-double-down'>
         </icon>
 
         <div id="walletContainer" :ref="'walletContainer'">
@@ -49,24 +49,26 @@
 
                     </div>
 
-                    <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
+                    <div class="walletScrollContainer" :ref="'walletScrollContainer'">
+                        <div class="walletSection walletsContainer" :style="{height: this.walletContentHeight+'px'}">
 
-                        <div id="allWallets">
+                            <div id="allWallets">
 
-                            <Address v-for="(walletAddress, index) in this.addresses"
-                                :isMiningAddress="miningAddress === walletAddress.address"
-                                :key="walletAddress.address"
-                                :id="'address'+walletAddress.address"
-                                :ref="'address'+index"
-                                :address="walletAddress.address"
-                                style="padding-right: 20px"
-                                @onPendingTransactionsChanges="handlePendingTransactionsChanges"
-                            >
+                                <Address v-for="(walletAddress, index) in this.addresses"
+                                    :isMiningAddress="miningAddress === walletAddress.address"
+                                    :key="walletAddress.address"
+                                    :id="'address'+walletAddress.address"
+                                    :ref="'address'+index"
+                                    :address="walletAddress.address"
+                                    style="padding-right: 20px"
+                                    @onPendingTransactionsChanges="handlePendingTransactionsChanges"
+                                >
 
-                            </Address>
+                                </Address>
+
+                            </div>
 
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -89,6 +91,7 @@
     import ShowSumBalances from "./Address/Balance/Balances/Show-Sum-Balances.vue"
     import Notification from "helpers/Notification.helpers"
     import offlineTransactionsModal from "./Address/Modals/Main-Modal/Address-main.modal.offline.vue"
+    import {TweenLite} from "gsap/TweenLite";
 
     export default{
 
@@ -165,12 +168,29 @@
                 if (window.screenWidth < 831){
                     this.isMobile = true;
                     this.$refs['walletMenu'].style.height = `${screenHeight}px`;
-                    this.$refs['walletContainer'].style.bottom = `${-58-screenHeight+99}px`
+                    this.$refs['walletContainer'].style.bottom = this.opened ? '-50px' : `${-screenHeight+41}px`
+                    this.$refs['walletScrollContainer'].style.height = `${screenHeight-140}px`
                 } else {
                     this.isMobile = false;
                     this.$refs['walletMenu'].style.height = `358px`;
                     this.$refs['walletContainer'].style.bottom = `-320px`
+                    this.$refs['walletScrollContainer'].style.height = `287px`
                 }
+            },
+
+            toggleWallet(){
+                this.opened = !this.opened;
+                let ref = this.$refs['walletContainer'];
+                if (!ref.style.bottom) {
+                    ref.style.bottom =  '-320px';
+                }
+                let newValue = ''
+                if (this.isMobile) {
+                    ref.style.bottom == '-50px' ? newValue = `${-screenHeight+41}px`: newValue = '-50px';
+                } else {
+                    ref.style.bottom == '-320px' ? newValue = '0px' : newValue = '-320px';
+                }
+                TweenLite.to(ref.style, .3, {ease: Power1.easeInOut, bottom: newValue});
             },
 
             getMiningWalletIndex() {
@@ -192,19 +212,6 @@
                 if (this.$refs['walletMenuButton'] === undefined) {
                     console.log("not ready..");
                     return;
-                }
-            },
-
-            toggleWallet(){
-                this.opened = !this.opened;
-                let ref = this.$refs['walletContainer'];
-                if (!ref.style.bottom) {
-                    ref.style.bottom =  '-320px';
-                }
-                if (this.isMobile) {
-                    ref.style.bottom == '-47px' ? ref.style.bottom = `${-58-this.screenHeight+99}px`: ref.style.bottom = `-47px`;
-                } else {
-                    ref.style.bottom == '-320px' ? ref.style.bottom = '0px' : ref.style.bottom = '-320px';
                 }
             },
 
@@ -298,8 +305,7 @@
 </script>
 
 <style>
-    html, body {
-        max-width: 100%;
+    body {
         overflow-x: hidden;
     }
     @keyframes jump {
@@ -315,6 +321,10 @@
 
     #myWalletImport{
         display: none;
+    }
+
+    .walletScrollContainer {
+        overflow-y: scroll;
     }
 
     .vue-slider-component.vue-slider-horizontal .vue-slider-dot{
@@ -337,10 +347,10 @@
     }
 
     #walletContainer {
+        z-index:10;
         position: fixed;
         width: 299px;
         right: 0;
-        transition: bottom .3s ease-in-out;
     }
 
     #walletButton {
@@ -369,7 +379,6 @@
 
     #walletButton:hover{
         background-color: #fec02c;
-        transition: all .3s ease-in-out;
     }
 
     .walletSection{
@@ -398,7 +407,6 @@
 
     .walletController .btn:hover{
         background-color: #575757;
-        transition: all .3s ease-in-out;
     }
 
     .walletController .btn:first-child{
@@ -447,7 +455,6 @@
 
     #walletButton .buttonIcon{
         fill: #000;
-        transition: all .3s ease-in-out;
     }
 
     .walletAddress b{
@@ -463,7 +470,6 @@
         bottom: 57px;
         z-index: 1000;
         fill:#262626;
-        transition: all 1.2s ease-in-out;
     }
 
     .buttonTextStyle{
@@ -493,7 +499,6 @@
 
         #walletContainer {
             width:100%;
-            transition: bottom .3s ease-in-out;
         }
         #walletMenu{
             width: 100%;

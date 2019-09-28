@@ -1,7 +1,8 @@
 <template>
     <div>
-        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="this.change" :piecewise="true"
-                    :width="this.screenWidth < 750 ? this.sliderMobileWidth : 330" :tooltip="false" :min="0" :max="this.logicalProcessors"
+        <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="change" :piecewise="true"
+                    :width="this.sliderWidth" :tooltip="false" :min="0" :max="this.logicalProcessors"
+                    v-if="this.renderSlider"
                     v-model="value" :disabled="this.disabled"></vue-slider>
     </div>
 </template>
@@ -11,7 +12,6 @@
 
     import vueSlider from 'vue-slider-component';
     import * as NoSleep from 'nosleep.js/dist/NoSleep';
-
 
     export default {
 
@@ -23,19 +23,30 @@
 
         data() {
             return {
-                value: localStorage.getItem("miner-settings-worker-count") || 0,
-                disabled:true,
+                value: 0,
+                disabled: true,
                 screenWidth: window.innerWidth,
                 logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
-                sliderMobileWidth: 200,
+                sliderWidth: null,
                 disableHalving: false,
-                noSleep: new NoSleep()
+                renderSlider: false,
+                noSleep: new NoSleep(),
+                changedByUser: true,
             }
         },
 
         methods: {
+            changeSliderValueVisuallyOnly(value) {
+                this.value = value;
+                this.setSleepScreenProtection(value);
+            },
             change(value) {
-                localStorage.setItem("miner-settings-worker-count", value)
+                console.log('Slider value changed to', value)
+                this.setSleepScreenProtection(value);
+                this.$emit('sliderChanged', value);
+                localStorage.setItem('miner-settings-worker-count', value)
+            },
+            setSleepScreenProtection(value) {
                 if (value > 0) {
                     this.noSleep.enable();
                     console.log('Enabled screen sleep prevention.')
@@ -43,7 +54,6 @@
                     this.noSleep.disable();
                     console.log('Disabled screen sleep prevention.')
                 }
-                this.$emit('sliderChanged', value);
             },
             addEvent(object, type, callback) {
                 if (object === null || typeof(object) === 'undefined') return;
@@ -62,29 +72,24 @@
             if (typeof window === "undefined") return false;
 
             this.addEvent(window, "resize", (event) => {
-
                 this.screenWidth = window.innerWidth;
-
                 if (window.innerWidth<550){
-                    this.sliderMobileWidth = window.innerWidth-180+'px';
+                    this.sliderWidth = window.innerWidth-180;
                 }else{
-                    this.sliderMobileWidth = '100%';
+                    this.sliderWidth = 330;
                 }
+                this.$refs["slider"].refresh();
 
             });
 
             this.screenWidth = window.innerWidth;
             if (window.innerWidth<550){
-                this.sliderMobileWidth = window.innerWidth-180+'px';
+                this.sliderWidth = window.innerWidth-180;
             }else{
-                this.sliderMobileWidth = '100%';
+                this.sliderWidth = 330;
             }
-
+            this.renderSlider = true;
             this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
-
-            this.$refs["slider"].refresh();
-
-
         }
     }
 </script>

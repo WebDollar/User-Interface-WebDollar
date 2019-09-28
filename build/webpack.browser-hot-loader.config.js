@@ -21,12 +21,12 @@ const config = merge(base, {
 
 
     devServer: {
-        port: 2220
+        port: 4999
     },
 
     plugins: [
 
-        new OpenBrowserPlugin( { url: 'http://localhost:2220' } ),
+        new OpenBrowserPlugin( { url: 'http://localhost:4999' } ),
 
         new webpack.DefinePlugin({
             "process.env": {

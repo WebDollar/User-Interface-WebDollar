@@ -144,10 +144,18 @@
 
                 if (answer.result){
 
-                    let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
-                    let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
-                    FileSaver.saveAs(addressFile, fileName);
-                    Notification.addAlert(undefined, "success", "Export Success", "Your address has been exported.", 5000);
+                    if (answer.data && answer.data.version && answer.data.address && answer.data.publicKey && answer.data.privateKey){
+
+                        let addressFile = new Blob([JSON.stringify(answer.data)], {type: "application/json;charset=utf-8"});
+                        let fileName = "WEBD$" + WebDollar.Blockchain.Wallet.getUnencodedAddress(this.address).toString("hex") + ".webd";
+                        FileSaver.saveAs(addressFile, fileName);
+                        Notification.addAlert(undefined, "success", "Export Success", "Your address has been exported.", 5000);
+
+                    } else {
+                        //Sergio safeguard
+                        alert('Error exporting wallet! Try again! Please kindly report this error to alexandru@webdollar.io');
+                    }
+
 
                 } else {
                     Notification.addAlert(undefined, "error", "Export Error", answer.message, 5000);

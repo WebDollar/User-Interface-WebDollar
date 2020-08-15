@@ -32,13 +32,6 @@
                                 <show-balance :address="this.address" currency="0x01"/>
                             </div>
 
-                            <div class="balanceTitle" style="letter-spacing: 0.1px" title="The balance you will have at the next block mined by your pool">
-                                Potential Balance:
-                            </div>
-                            <div class="balanceAmount" title="The balance you will have at the next block mined by your pool">
-                                <show-balance :showPoolReward="isMiningAddress" :address="this.address" currency="0x01"/>
-                            </div>
-
                         </div>
 
                         <div class="miningAddress" v-if="isMiningAddress">
@@ -64,8 +57,8 @@
                     </div>
                 </div>
 
-                <transfer ref="refTransfer" :address="this.address" :offlineTransaction="this.offlineTransaction" 
-                :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}" 
+                <transfer ref="refTransfer" :address="this.address" :offlineTransaction="this.offlineTransaction"
+                :style="{display: this.partActivated === 'transfer' ? 'block': 'none'}"
                 @onTransferSuccess="this.handleTransferSuccess" @closeModal="this.closeModal" />
 
                 <request :address="this.address" :style="{display: this.partActivated === 'transactions' ? 'block': 'none'}" />
@@ -112,8 +105,8 @@
             Request,
             Transfer,
             qrCode,
-            icon,
-            ShowPotentialBalance
+            icon,ShowPotentialBalance
+
         },
 
         data: () => {

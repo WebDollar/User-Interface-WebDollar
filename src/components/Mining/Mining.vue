@@ -47,27 +47,8 @@
                             repeatCount="indefinite"/>
                         </path>
                     </svg>
-                    <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" :showPrefix="true" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b> 
+                    <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" :showPrefix="true" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b>
                 </div>
-        </div>  
-        
-
-       <div class="hoverInfo balanceInfo" :style="{right: showBalanceInfo ? '0px' : '-330px'}">
-            <div class="balanceText">
-                    <div class="balanceTitle helpCursor" title="Balance available to be spent">
-                        Available Balance:
-                    </div>
-                    <div class="balanceAmount helpCursor" title="Balance available to be spent">
-                        <show-sum-balances :addresses="this.addresses" :currency="this.currency" ref="refShowSumAvailableBalances" />
-                    </div>
-                    <div class="balanceTitle helpCursor" style="letter-spacing: 0.1px" title="The balance you will have at the next block mined by your pool">
-                        Potential Balance:
-                    </div>
-                    <div class="balanceAmount helpCursor" title="The balance you will have at the next block mined by your pool">
-                        <show-sum-balances :showPoolReward="true" :addresses="this.addresses" :currency="this.currency" ref="refShowSumPotentialBalances"/>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="hoverInfo miningInfo" @click="handleMiningInfoEvent(false, $event)" :ref="'miningInfo'" :style="{right: showMiningInfo ? '0px' : '-840px'}">
@@ -98,7 +79,7 @@
     import ShowBalance from "components/Wallet/Address/Balance/Show-Balance.vue"
     import icon from "components/UI/icons/icon.vue"
     import {Vue} from 'vue'
-    
+
     export default{
 
         name: 'Mining',
@@ -233,11 +214,11 @@
                 }
                 this.showMiningInfo = showMiningInfo
             },
-        
+
             changeWorkers(value){
-                
+
                 WebDollar.Blockchain.Mining.setWorkers(value);
-                
+
                 let setWorkersTimer = (value) => {
 
                     let timer;
@@ -250,7 +231,7 @@
                         console.log("A new default mining power was set:", value);
                             localStorage.setItem("miner-settings-worker-count", value);
                         }
-                    
+
                     let time = 20*1000; //default 20 sec
 
                     if (WebDollar.Applications.VersionCheckerHelper.detectMobileAndTablet()){
@@ -268,14 +249,14 @@
                         }
                     }
                 };
-                
+
                 if (this.stopTimerHandler)
                     this.stopTimerHandler();
 
                 this.stopTimerHandler = setWorkersTimer(value);
             },
 
-        }, 
+        },
 
     }
 
@@ -675,8 +656,8 @@
         }
         #miningController, .walletStartMining, .WEBD{
             display: inline-block;
-            
-            
+
+
         }
         #miningController{
             background-color: #0000;
@@ -697,7 +678,7 @@
             font-size: 16px;
             margin-right: -4px;
         }
-    
+
         .miningPowerText{
             display: none;
         }

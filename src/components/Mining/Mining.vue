@@ -55,7 +55,7 @@
 
         <div class="hoverInfo miningInfo" @click="handleMiningInfoEvent(false, $event)" :ref="'miningInfo'" :style="{right: showMiningInfo ? '0px' : '-840px'}">
             <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
-                WebDollar knows two types of mining. The types cycle in a pattern of 30 blocks (20 minutes). The first 10 blocks are Proof-of-Work. Followed by 20 blocks of Proof-of-Stake.
+                WebDollar knows two types of mining. The types cycle in a pattern of 100 blocks (~1 hr). The first 90 blocks are Proof-of-Stake. Followed by 10 blocks of Proof-of-Work.
             </div>
             <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
                 Proof-of-Work Mining
@@ -67,7 +67,7 @@
                 Proof-of-Stake Mining
             </div>
             <div class="infoText helpCursor" title="Proof-of-Stake (PoW) Mining Information">
-                PoS mining needs little processing power but needs balance. The more balance you have, the more you mine. You need at least 100 WebDollar for PoS mining.
+                PoS mining needs minimum processing power but needs balance. The more balance you have, the more you mine. You need at least 100 WebDollar for PoS mining in browser.
             </div>
         </div>
 

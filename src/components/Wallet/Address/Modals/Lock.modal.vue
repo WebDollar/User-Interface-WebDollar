@@ -68,16 +68,15 @@
             closeModal() {
 
                 this.walletAddressPassword = "";
-                this.$refs['refPassModal'].closeModal();
-
+                return this.$refs['refPassModal'].closeModal();
             },
 
             showModal(e) {
 
                 if (this.$refs['refPassModal'].modalOpened === false){
-                    this.$refs['refPassModal'].showModal();
+                    return this.$refs['refPassModal'].showModal();
                 }
-
+                return this.$refs['refPassModal'].promise;
             },
 
             copyToClipboard(){

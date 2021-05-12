@@ -22,8 +22,12 @@
                 <icon class="btn" alt="Secure Wallet" text="Download Address" icon="download"/>
             </div>
 
-            <div v-show="this.addressLocked" class="addressButton" v-on:click.stop="handleLock">
-                <icon class="btn" alt="Secure Wallet" text="Lock Address" :icon="this.addressLocked ? 'lock-closed' : 'lock-open'" />
+            <div v-if="this.addressLocked" class="addressButton" v-on:click.stop="handleUnlock">
+                <icon class="btn" alt="Secure Wallet" text="Lock Address" icon="lock-closed" />
+            </div>
+
+            <div v-if="!this.addressLocked" class="addressButton" v-on:click.stop="handleLock">
+                <icon class="btn" alt="Secure Wallet" text="Lock Address" icon="lock-open" />
             </div>
 
             <div class="addressButton" v-on:click.stop="handleDelete">
@@ -129,9 +133,7 @@
             },
 
             async checkIfWalletIsLock(){
-                if ( await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address) ){
-                    this.addressLocked = true;
-                }
+                this.addressLocked = await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)
             },
 
             async handleExport(e){
@@ -163,30 +165,24 @@
 
             },
 
-            handleLock(e){
+            async handleLock(e){
 
-                this.$refs['refLockModal'].showModal(e);
-                this.verifyIfBecomeLocked(0);
-
-            },
-
-            verifyIfBecomeLocked(calledTime){
+                await this.$refs['refLockModal'].showModal(e);
 
                 this.checkIfWalletIsLock();
-
-                setInterval(function(){
-
-                    if(this.addressLocked===false){
-
-                        if (calledTime < 100){
-                            this.verifyIfBecomeLocked(calledTime+1)
-                        }
-
-                    }
-
-                }, 500);
-
             },
+
+            async handleUnlock(e){
+
+                let response = await WebDollar.Blockchain.Wallet.removeEncryptionAddress(this.address);
+
+                if (response === true) {
+                    Notification.addAlert(undefined, "success", "Successful Unecrypted", this.address + " has been unencrypted.", 5000);
+                }
+
+                this.checkIfWalletIsLock();
+            },
+
 
             handleDelete(e){
 

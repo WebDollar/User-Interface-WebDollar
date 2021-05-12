@@ -22,12 +22,12 @@
                 <icon class="btn" alt="Secure Wallet" text="Download Address" icon="download"/>
             </div>
 
-            <div class="addressButton" v-on:click.stop="handleLock">
+            <div v-show="this.addressLocked" class="addressButton" v-on:click.stop="handleLock">
                 <icon class="btn" alt="Secure Wallet" text="Lock Address" :icon="this.addressLocked ? 'lock-closed' : 'lock-open'" />
             </div>
 
             <div class="addressButton" v-on:click.stop="handleDelete">
-                <icon class="btn" alt="Secure Wallet" text="Delete Address" icon="x" />
+                <icon class="btn" alt="Delete Wallet" text="Delete Address" icon="x" />
             </div>
         </div>
 
@@ -128,8 +128,8 @@
                 });
             },
 
-            checkIfWalletIsLock(){
-                if (WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)){
+            async checkIfWalletIsLock(){
+                if ( await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address) ){
                     this.addressLocked = true;
                 }
             },
@@ -153,7 +153,7 @@
 
                     } else {
                         //Sergio safeguard
-                        alert('Error exporting wallet! Try again! Please kindly report this error to alexandru@webdollar.io');
+                        alert('Error exporting wallet! Try again! Please kindly report this error to WebDollar telegram group');
                     }
 
 
@@ -184,7 +184,7 @@
 
                     }
 
-                }, 2000);
+                }, 500);
 
             },
 

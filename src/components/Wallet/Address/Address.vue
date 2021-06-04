@@ -22,12 +22,16 @@
                 <icon class="btn" alt="Secure Wallet" text="Download Address" icon="download"/>
             </div>
 
-            <div class="addressButton" v-on:click.stop="handleLock">
-                <icon class="btn" alt="Secure Wallet" text="Lock Address" :icon="this.addressLocked ? 'lock-closed' : 'lock-open'" />
+            <div v-if="this.addressLocked" class="addressButton" v-on:click.stop="handleUnlock">
+                <icon class="btn" alt="Secure Wallet" text="Lock Address" icon="lock-closed" />
+            </div>
+
+            <div v-if="!this.addressLocked" class="addressButton" v-on:click.stop="handleLock">
+                <icon class="btn" alt="Secure Wallet" text="Lock Address" icon="lock-open" />
             </div>
 
             <div class="addressButton" v-on:click.stop="handleDelete">
-                <icon class="btn" alt="Secure Wallet" text="Delete Address" icon="x" />
+                <icon class="btn" alt="Delete Wallet" text="Delete Address" icon="x" />
             </div>
         </div>
 
@@ -128,10 +132,8 @@
                 });
             },
 
-            checkIfWalletIsLock(){
-                if (WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)){
-                    this.addressLocked = true;
-                }
+            async checkIfWalletIsLock(){
+                this.addressLocked = await WebDollar.Blockchain.Wallet.isAddressEncrypted(this.address)
             },
 
             async handleExport(e){
@@ -153,7 +155,7 @@
 
                     } else {
                         //Sergio safeguard
-                        alert('Error exporting wallet! Try again! Please kindly report this error to alexandru@webdollar.io');
+                        alert('Error exporting wallet! Try again! Please kindly report this error to WebDollar telegram group');
                     }
 
 
@@ -163,30 +165,24 @@
 
             },
 
-            handleLock(e){
+            async handleLock(e){
 
-                this.$refs['refLockModal'].showModal(e);
-                this.verifyIfBecomeLocked(0);
-
-            },
-
-            verifyIfBecomeLocked(calledTime){
+                await this.$refs['refLockModal'].showModal(e);
 
                 this.checkIfWalletIsLock();
-
-                setInterval(function(){
-
-                    if(this.addressLocked===false){
-
-                        if (calledTime < 100){
-                            this.verifyIfBecomeLocked(calledTime+1)
-                        }
-
-                    }
-
-                }, 2000);
-
             },
+
+            async handleUnlock(e){
+
+                let response = await WebDollar.Blockchain.Wallet.removeEncryptionAddress(this.address);
+
+                if (response === true) {
+                    Notification.addAlert(undefined, "success", "Successful Unecrypted", this.address + " has been unencrypted.", 5000);
+                }
+
+                this.checkIfWalletIsLock();
+            },
+
 
             handleDelete(e){
 

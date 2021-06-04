@@ -35,6 +35,8 @@
         data: () => {
             return {
                 modalOpened: false,
+                promise: null,
+                resolver: null,
             }
         },
 
@@ -49,9 +51,10 @@
 
             closeModal(e){
 
-                if( e !== undefined) e.stopPropagation();
+                if ( e !== undefined) e.stopPropagation();
 
                 this.modalOpened = false;
+                this.resolver(true)
 
             },
 
@@ -60,6 +63,9 @@
                 if (e !== undefined) e.stopPropagation();
 
                 this.modalOpened = true;
+                return this.promise = new Promise((resolver)=>{
+                    this.resolver = resolver
+                })
             },
 
         }

@@ -108,21 +108,9 @@
                          Notification.addAlert("indexedDB-error-reason", "error", "IndexDB Error", "IndexedDB returned an error <b>"+data.reason+"</b>", 86400000);
                          break;
 
-                     case "Network Adjusted Time Error":
-                         Notification.deleteAlert("network-adjusted-time-error");
-                         Notification.addAlert("network-adjusted-time-error", "error", "Network Time Error", "Network Adjusted Time didn't work <b>"+data.reason+"</b>", 86400000);
-
-                         break;
-
-                     case "Network Adjusted Time Success":
-                         Notification.deleteAlert("network-adjusted-time-error");
-                         break;
-
                      case "You mined way too many blocks":
-
                          Notification.addAlert("too-many-blocks-mined", "warn", "Fork Warning", "You mined way too many blocks. You are not sync. Refresh in 15 sec", 9000);
                          WebDollar.Blockchain.Mining.stopMining();
-
                          break;
                  }
 

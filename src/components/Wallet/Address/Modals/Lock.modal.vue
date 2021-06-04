@@ -178,7 +178,7 @@
 
                 if (response === true) {
 
-                    Notification.addAlert(undefined, "success", "Successful Ecrypted", this.address + " has been encrypted.", 5000);
+                    Notification.addAlert(undefined, "success", "Successful Encrypted", this.address + " has been encrypted.", 5000);
                     Notification.addAlert(undefined, "info", "Password Backup", "We have downloaded for you a backup file of the password", 6000);
 
                     this.handleExportPassword(this.address);

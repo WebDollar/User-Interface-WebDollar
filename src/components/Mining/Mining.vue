@@ -4,7 +4,7 @@
         <div id="dashboardMining" class="walletSection">
 
             <div id="miningController">
-                <p class="miningPowerText">Mining <br/> <span class="secondWord">Power</span></p>
+                <p class="miningPowerText">Staking <br/> <span class="secondWord">Activated</span></p>
                 <strong id="threadsNumber" :style="{background: this.workers ? 0 : '#d23c25'}">{{this.workers}}</strong>
 
                 <div type="button" class="miningBar">
@@ -14,7 +14,7 @@
                 <div class="miningDetails" @click="handleMiningInfoEvent(!showMiningInfo, $event)" @mouseover="handleMiningInfoEvent(true, $event)" @mouseleave="handleMiningInfoEvent(false, $event)">
                     <div class="miningLabelContainer">
                         <p class="miningTypeIndicator">
-                            {{this.started ? ((this.hashesPerSecond <= 2) ? 'PoS Mining ' : 'PoW Mining ') : 'Not Mining'}}
+                            {{this.started ? 'PoS Staking' : 'Not Staking'}}
                         </p>
                         <icon icon="mining" v-if="this.started && this.hashesPerSecond > 0" class="isImining miningAnimation" alt="Mining" text="Mining Indication"/>
                         <svg :style="{display: (!this.started || this.hashesPerSecond == 0) ? 'inline-block' : 'none'}" version="1.1" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -30,7 +30,7 @@
                             </path>
                         </svg>
                         <p class="miningProgressIndicator">
-                            {{this.started ? (this.hashesPerSecond <= 2 ? (this.hashesPerSecond == 1 ? 'Staking...' : 'Wait for PoW ⓘ') : this.hashesPerSecond + ' hash/sec ') : 'No Power'}}
+                            {{this.started ? (this.hashesPerSecond === 0 ? 'Not Staking...' : 'Staking' + this.hashesPerSecond + ' hash/sec ') : 'No Power' }}
                         </p>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                             repeatCount="indefinite"/>
                         </path>
                     </svg>
-                    <show-sum-balances :showPoolReward="true" :style="{display: this.loaded==false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" :showPrefix="true" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b>
+                    <show-sum-balances :showPoolReward="true" :style="{display: this.loaded===false ? 'none' : 'inline-block'}" :addresses="this.addresses" :currency="this.currency" :showPrefix="true" ref="refShowSumBalances" class="showSumBallance"/> <b class="whiteText">WEBD</b>
                 </div>
         </div>
 
@@ -55,19 +55,19 @@
 
         <div class="hoverInfo miningInfo" @click="handleMiningInfoEvent(false, $event)" :ref="'miningInfo'" :style="{right: showMiningInfo ? '0px' : '-840px'}">
             <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
-                WebDollar knows two types of mining. The types cycle in a pattern of 100 blocks (~1 hr). The first 90 blocks are Proof-of-Stake. Followed by 10 blocks of Proof-of-Work.
+                WebDollar switched to Proof of Stake 100%
+            </div>
+            <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
+                Proof-of-Stake
+            </div>
+            <div class="infoText helpCursor" title="Proof-of-Stake (PoW) Mining Information">
+                PoS mining needs minimum processing power but needs balance. The more balance you have, the more you mine. You need at least 100 WebDollar for PoS mining in browser.
             </div>
             <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
                 Proof-of-Work Mining
             </div>
-            <div class="infoText helpCursor" style="letter-spacing: 0.1px" title="Proof-of-Work (PoW) Mining Information">
-                PoW mining needs processing power. The more processing power you have, the more you mine.
-            </div>
-            <div class="infoTitle helpCursor" title="Proof-of-Stake (PoW) Mining Information">
-                Proof-of-Stake Mining
-            </div>
             <div class="infoText helpCursor" title="Proof-of-Stake (PoW) Mining Information">
-                PoS mining needs minimum processing power but needs balance. The more balance you have, the more you mine. You need at least 100 WebDollar for PoS mining in browser.
+                WebDollar was at the launch 100% minable using Argon2d, but later on we decided to switch more and more to proof of stake in three phases. 66% Proof of Stake, then 90% Proof of Stake, and finally in 2021 100% Proof-of-Stake.
             </div>
         </div>
 
@@ -176,10 +176,7 @@
                         else
                             number_of_workers = localStorage.getItem("miner-settings-worker-count");
 
-
-                        this.$refs['refMiningSlider'].disableHalving = true;
-                        WebDollar.Blockchain.Mining.setWorkers(number_of_workers || 1);
-                        this.$refs['refMiningSlider'].disableHalving = false;
+                        WebDollar.Blockchain.Mining.setWorkers( Math.max( number_of_workers || 1, 1) );
 
                     }
 
@@ -210,7 +207,6 @@
         methods: {
 
             handleMiningInfoEvent(showMiningInfo, event) {
-                console.log(event)
                 if (window.innerWidth < 830 && event.type === 'mouseover') {
                     return;
                 }

@@ -158,7 +158,6 @@
                         alert('Error exporting wallet! Try again! Please kindly report this error to WebDollar telegram group');
                     }
 
-
                 } else {
                     Notification.addAlert(undefined, "error", "Export Error", answer.message, 5000);
                 }

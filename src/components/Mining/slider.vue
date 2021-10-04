@@ -1,7 +1,7 @@
 <template>
     <div>
         <vue-slider id="miningWorkersSlider" class="miningSlider" ref="slider" @callback="change" :piecewise="true"
-                    :width="this.sliderWidth" :tooltip="false" :min="0" :max="this.logicalProcessors"
+                    :width="this.sliderWidth" :tooltip="false" :min="0" :max="1"
                     v-if="this.renderSlider"
                     v-model="value" :disabled="this.disabled"></vue-slider>
     </div>
@@ -26,9 +26,7 @@
                 value: 0,
                 disabled: true,
                 screenWidth: window.innerWidth,
-                logicalProcessors: window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1,
                 sliderWidth: null,
-                disableHalving: false,
                 renderSlider: false,
                 noSleep: new NoSleep(),
                 changedByUser: true,
@@ -89,7 +87,6 @@
                 this.sliderWidth = 330;
             }
             this.renderSlider = true;
-            this.logicalProcessors = window.navigator.hardwareConcurrency === undefined ? 4 : window.navigator.hardwareConcurrency * 1;
         }
     }
 </script>

@@ -14,6 +14,7 @@ const isProd = process.env.NODE_ENV === 'production';
 //const isAnalyze = process.argv.includes('--analyze') || process.argv.includes('--analyse');
 const isAnalyze = false;
 
+console.log('isProd', isProd)
 
 let webpackConfig = {
   //define entry point
@@ -60,12 +61,7 @@ let webpackConfig = {
       },
       {
         test: /\.css$/,
-        use: isProd
-          ? ExtractTextPlugin.extract({
-              use: 'css-loader?minimize',
-              fallback: 'vue-style-loader'
-            })
-          : ['vue-style-loader', 'css-loader']
+        use: ['vue-style-loader', 'css-loader']
       },
       {
         test: /\.js$/,
@@ -81,11 +77,14 @@ let webpackConfig = {
     ? [
         ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
 
-        new webpack.optimize.UglifyJsPlugin({
-          compress: { warnings: false }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //   compress: { warnings: false }
+        // }),
         new ExtractTextPlugin({
           filename: 'common.[chunkhash].css'
+        }),
+        new webpack.DefinePlugin({
+          __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
         }),
         new VueLoaderPlugin(),
       ]

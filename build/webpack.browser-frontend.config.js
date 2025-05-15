@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const base = require('./webpack.browser.config');
 const merge = require('webpack-merge');
-const CopyPlugin = require('copy-webpack-plugin');
 
 const config = merge(base, {
   output: {
@@ -10,9 +9,7 @@ const config = merge(base, {
   },
 
   plugins: [
-    new CopyPlugin([
-        { from: './dist_bundle/assets', to: '../../vue-Frontend/public/WebDollar-dist/assets' }
-    ])
+
   ]
 });
 
